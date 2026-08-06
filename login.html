@@ -203,12 +203,9 @@
         </form>
         
         <!-- Footer Link -->
-        <div class="mt-auto md:mt-10 flex flex-col gap-3 pt-6 border-t border-gray-100">
-          <p class="text-center text-sm text-gray-500 font-medium">Don't have an account yet?</p>
-          <a href="/signup.html" class="w-full bg-white border-2 border-slate-950 text-slate-950 py-3 rounded-full font-bold hover:bg-slate-50 hover:-translate-y-0.5 transition-all duration-300 text-sm flex items-center justify-center gap-2">
-            Create an Account
-          </a>
-        </div>
+        <p class="text-center text-sm text-gray-500 font-medium mt-auto md:mt-10 pt-6 border-t border-gray-100">
+          Don't have an account? <a href="/signup.html" class="text-slate-950 font-extrabold hover:text-blue-600 hover:underline transition-colors ml-1">Sign Up</a>
+        </p>
       </div>
 
       <!-- ==================== STEP 2: OTP VERIFICATION ==================== -->
@@ -527,7 +524,9 @@
     </div>
     <div class="flex items-center gap-2 shrink-0">
       <button onclick="dismissPwaBanner()" class="w-8 h-8 flex items-center justify-center bg-gray-50 rounded-full text-gray-400 hover:text-slate-950 hover:bg-gray-100 transition-colors"><i data-lucide="x" class="w-4 h-4"></i></button>
-      <button onclick="installPwa()" class="bg-blue-600 hover:bg-blue-700 text-white px-4 md:px-5 py-2 md:py-2.5 rounded-full text-xs md:text-sm font-bold shadow-lg shadow-blue-600/30 transition-all hover:-translate-y-0.5 whitespace-nowrap">Install App</button>
+      <button onclick="installPwa()" class="bg-blue-600 hover:bg-blue-700 text-white flex items-center gap-1.5 px-4 md:px-5 py-2 md:py-2.5 rounded-full text-xs md:text-sm font-bold shadow-lg shadow-blue-600/30 transition-all hover:-translate-y-0.5 whitespace-nowrap">
+        <i data-lucide="download" class="w-4 h-4"></i> Install App
+      </button>
     </div>
   </div>
 
