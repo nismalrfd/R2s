@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Nestora - Explore</title>
+  <title>R2s Realtors</title>
   <link rel="stylesheet" href="/src/style.css" />
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -326,7 +326,7 @@
 
 
   <!-- FULL SCREEN PROPERTY DETAIL MODAL -->
-  <div id="fullscreenModal" class="fixed inset-0 z-[2000] bg-white transform translate-y-full transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] flex flex-col h-screen overflow-hidden">
+  <div id="fullscreenModal" class="fixed inset-0 z-[2000] bg-white transform translate-y-[200%] transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] flex flex-col h-screen overflow-hidden">
     
     <!-- Modal Header -->
     <div class="h-[80px] border-b border-gray-100 bg-white shrink-0 flex items-center px-4 md:px-8">
@@ -988,12 +988,12 @@
 
     function openFullscreenModal() {
       const modal = document.getElementById('fullscreenModal');
-      modal.classList.remove('translate-y-full');
+      modal.classList.remove('translate-y-[200%]');
     }
 
     function closeFullscreenModal() {
       const modal = document.getElementById('fullscreenModal');
-      modal.classList.add('translate-y-full');
+      modal.classList.add('translate-y-[200%]');
     }
 
     
@@ -1420,7 +1420,7 @@
             ];
             
             openModals.forEach(modal => {
-                if (modal && !modal.classList.contains('opacity-0') && !modal.classList.contains('translate-y-full')) {
+                if (modal && !modal.classList.contains('opacity-0') && !modal.classList.contains('translate-y-[200%]')) {
                     // Trigger the respective close functions based on ID
                     if(modal.id === 'addPropertyModal') toggleAddProperty();
                     else if(modal.id === 'editProfileModal') toggleEditProfile();
@@ -1574,7 +1574,7 @@
   
 
   <!-- PWA Install Banner -->
-  <div id="pwaInstallBanner" class="fixed bottom-0 left-0 w-full bg-white border-t border-gray-100 shadow-[0_-10px_40px_rgba(0,0,0,0.1)] p-4 md:p-6 z-[1000] transform translate-y-full transition-transform duration-700 flex items-center justify-between gap-4 rounded-t-3xl md:rounded-none md:max-w-md md:left-1/2 md:-translate-x-1/2 md:bottom-6 md:border md:shadow-2xl md:rounded-2xl">
+  <div id="pwaInstallBanner" class="fixed bottom-0 left-0 w-full bg-white border-t border-gray-100 shadow-[0_-10px_40px_rgba(0,0,0,0.1)] p-4 md:p-6 z-[1000] transform translate-y-[200%] transition-transform duration-700 flex items-center justify-between gap-4 rounded-t-3xl md:rounded-none md:max-w-md md:left-1/2 md:-translate-x-1/2 md:bottom-6 md:border md:shadow-2xl md:rounded-2xl">
     <div class="flex items-center gap-3 md:gap-4">
       <div class="w-12 h-12 md:w-14 md:h-14 bg-gray-50 rounded-xl flex items-center justify-center p-1.5 border border-gray-100 shrink-0">
         <img src="/LOGO.png" alt="R2s App" class="w-full h-full object-contain">
@@ -1613,13 +1613,13 @@
       deferredPrompt = e;
       if (!localStorage.getItem('pwaBannerDismissed')) {
         setTimeout(() => {
-          if(pwaBanner) pwaBanner.classList.remove('translate-y-full');
+          if(pwaBanner) pwaBanner.classList.remove('translate-y-[200%]');
         }, 1500);
       }
     });
 
     function dismissPwaBanner() {
-      if(pwaBanner) pwaBanner.classList.add('translate-y-full');
+      if(pwaBanner) pwaBanner.classList.add('translate-y-[200%]');
       localStorage.setItem('pwaBannerDismissed', 'true');
     }
 
