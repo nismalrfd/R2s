@@ -122,8 +122,8 @@ files.forEach(file => {
 
     if (changed) {
         fs.writeFileSync(file, content);
-        console.log(\`Injected PWA features into \${file}\`);
+        console.log('Injected PWA features into ' + file);
     } else {
-        console.log(\`PWA features already up to date in \${file}\`);
+        console.log('PWA features already up to date in ' + file);
     }
 });
