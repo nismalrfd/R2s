@@ -31,6 +31,16 @@ const pwaHTML = `
       // Stash the event so it can be triggered later.
       deferredPrompt = e;
       
+      // Unhide navbar install buttons
+      const navBtn = document.getElementById('navInstallBtn');
+      const navBtnMobile = document.getElementById('navInstallBtnMobile');
+      if (navBtn) navBtn.classList.remove('hidden');
+      // navInstallBtnMobile starts as hidden, so we remove hidden and add flex
+      if (navBtnMobile) {
+          navBtnMobile.classList.remove('hidden');
+          navBtnMobile.classList.add('flex');
+      }
+
       // Check if not already dismissed
       if (!localStorage.getItem('pwaBannerDismissed')) {
         // Show banner after a short delay for dramatic effect
@@ -60,12 +70,28 @@ const pwaHTML = `
         // We no longer need the prompt
         deferredPrompt = null;
         dismissPwaBanner();
+        
+        // Hide navbar buttons after install
+        const navBtn = document.getElementById('navInstallBtn');
+        const navBtnMobile = document.getElementById('navInstallBtnMobile');
+        if (navBtn) navBtn.classList.add('hidden');
+        if (navBtnMobile) {
+            navBtnMobile.classList.add('hidden');
+            navBtnMobile.classList.remove('flex');
+        }
       }
     }
     
     // Also track successful installation
     window.addEventListener('appinstalled', () => {
       dismissPwaBanner();
+      const navBtn = document.getElementById('navInstallBtn');
+      const navBtnMobile = document.getElementById('navInstallBtnMobile');
+      if (navBtn) navBtn.classList.add('hidden');
+      if (navBtnMobile) {
+          navBtnMobile.classList.add('hidden');
+          navBtnMobile.classList.remove('flex');
+      }
     });
   </script>
 `;
@@ -117,7 +143,36 @@ files.forEach(file => {
                 // Note: The original file had </body> after, so this is safe assuming the banner was right before </body>
                 changed = true;
             }
+        } else {
+            // Also update the script if it doesn't have the navBtn logic
+            if (!content.includes('navInstallBtn')) {
+                const parts = content.split('<!-- PWA Install Banner -->');
+                if (parts.length > 1) {
+                    content = parts[0] + pwaHTML + '\n</body>';
+                    changed = true;
+                }
+            }
         }
+    }
+
+    // Inject into navbar if toggleNotifications exists
+    const navTarget = '<button onclick="toggleNotifications()" class="w-10 h-10 rounded-full bg-gray-50 flex items-center justify-center text-slate-600 hover:bg-gray-100 hover:text-slate-950 transition-colors relative border border-transparent hover:border-gray-200 focus:outline-none z-[950]">';
+    
+    const navButtons = `
+        <!-- Install App Button (Hidden by default, shown by JS when PWA is installable) -->
+        <button id="navInstallBtn" onclick="installPwa()" class="hidden md:flex items-center gap-2 bg-blue-50 hover:bg-blue-100 text-blue-600 px-4 py-2 rounded-full text-sm font-bold transition-colors border border-blue-100 shadow-sm z-[950]">
+          <i data-lucide="download" class="w-4 h-4"></i>
+          Install App
+        </button>
+        <button id="navInstallBtnMobile" onclick="installPwa()" class="hidden md:hidden w-10 h-10 rounded-full bg-blue-50 items-center justify-center text-blue-600 hover:bg-blue-100 transition-colors relative border border-blue-100 focus:outline-none z-[950] shadow-sm">
+          <i data-lucide="download" class="w-5 h-5" aria-hidden="true"></i>
+        </button>
+
+        <button onclick="toggleNotifications()" class="w-10 h-10 rounded-full bg-gray-50 flex items-center justify-center text-slate-600 hover:bg-gray-100 hover:text-slate-950 transition-colors relative border border-transparent hover:border-gray-200 focus:outline-none z-[950] ">`;
+
+    if (content.includes(navTarget) && !content.includes('navInstallBtn')) {
+        content = content.replace(navTarget, navButtons);
+        changed = true;
     }
 
     if (changed) {
