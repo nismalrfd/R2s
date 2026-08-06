@@ -1,44 +1,48 @@
-const CACHE_NAME = 'r2s-pwa-v2'; // Incremented cache version
+const CACHE_NAME = 'r2s-cache-v1';
 const urlsToCache = [
   '/',
-  '/index.html',
-  '/dashboard.html',
   '/login.html',
-  '/verify.html',
-  '/signup.html',
-  '/property-detail.html',
-  '/add-property.html',
-  '/profile.html',
-  '/edit-profile.html'
+  '/style.css',
+  '/main.js',
+  '/LOGO.png'
 ];
 
 self.addEventListener('install', event => {
-  self.skipWaiting(); // Force the waiting service worker to become the active service worker
   event.waitUntil(
     caches.open(CACHE_NAME)
-      .then(cache => cache.addAll(urlsToCache))
-  );
-});
-
-self.addEventListener('activate', event => {
-  event.waitUntil(
-    caches.keys().then(cacheNames => {
-      return Promise.all(
-        cacheNames.map(cacheName => {
-          if (cacheName !== CACHE_NAME) {
-            return caches.delete(cacheName); // Delete old v1 cache
-          }
-        })
-      );
-    }).then(() => self.clients.claim()) // Take control of all open pages immediately
+      .then(cache => {
+        return cache.addAll(urlsToCache);
+      })
   );
 });
 
 self.addEventListener('fetch', event => {
-  // NETWORK FIRST STRATEGY (great for active development)
   event.respondWith(
-    fetch(event.request).catch(() => {
-      return caches.match(event.request);
+    caches.match(event.request)
+      .then(response => {
+        // Cache hit - return response
+        if (response) {
+          return response;
+        }
+        return fetch(event.request).catch(() => {
+          // Fallback for offline mode if the fetch fails
+          return caches.match('/login.html');
+        });
+      })
+  );
+});
+
+self.addEventListener('activate', event => {
+  const cacheWhitelist = [CACHE_NAME];
+  event.waitUntil(
+    caches.keys().then(cacheNames => {
+      return Promise.all(
+        cacheNames.map(cacheName => {
+          if (cacheWhitelist.indexOf(cacheName) === -1) {
+            return caches.delete(cacheName);
+          }
+        })
+      );
     })
   );
 });
