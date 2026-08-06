@@ -3,6 +3,6 @@
   "version": "1.0.0",
   "description": "Pure static HTML deployment for Vercel",
   "scripts": {
-    "build": "echo 'Static site deployed successfully'"
+    "build": "mkdir -p dist && cp *.html *.js *.css *.png dist/ || true"
   }
 }
