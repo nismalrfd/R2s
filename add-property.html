@@ -1,0 +1,565 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Nestora - Add Property</title>
+  <link rel="stylesheet" href="/src/style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <!-- PWA Meta Tags -->
+  <link rel="manifest" href="/manifest.json" />
+  <meta name="theme-color" content="#ffffff" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="apple-mobile-web-app-title" content="R2s Realtors" />
+  
+  <!-- Premium Mobile App CSS Physics -->
+  <style>
+    /* Prevent text selection to feel like native app */
+    body, h1, h2, h3, h4, p, span, div, button, a, i {
+      -webkit-user-select: none;
+      user-select: none;
+    }
+    /* Allow text selection in inputs */
+    input, textarea {
+      -webkit-user-select: text;
+      user-select: text;
+    }
+    /* Remove blue tap highlight */
+    * {
+      -webkit-tap-highlight-color: transparent;
+    }
+    /* Prevent bounce on scroll for rigid native feel */
+    body {
+      overscroll-behavior-y: none;
+    }
+  </style>
+
+
+  <style>
+    /* Premium Visual Animations & Patterns */
+    @keyframes float {
+      0%, 100% { transform: translateY(0) rotate(0deg); }
+      50% { transform: translateY(-20px) rotate(5deg); }
+    }
+    @keyframes float-reverse {
+      0%, 100% { transform: translateY(0) rotate(0deg); }
+      50% { transform: translateY(20px) rotate(-5deg); }
+    }
+    .animate-float-slow {
+      animation: float 20s ease-in-out infinite;
+    }
+    .animate-float-reverse-slow {
+      animation: float-reverse 25s ease-in-out infinite;
+    }
+    .bg-dotted-pattern {
+      background-image: radial-gradient(circle, #e5e7eb 1px, transparent 1px);
+      background-size: 24px 24px;
+    }
+    .top-accent-blue {
+      border-top: 4px solid #2563EB !important;
+    }
+    .top-accent-red {
+      border-top: 4px solid #EF4444 !important;
+    }
+  </style>
+
+</head>
+<body class="overflow-x-hidden bg-white m-0 p-0 w-full min-h-screen font-sans pb-10 md:h-screen md:overflow-hidden">
+
+  <!-- Premium Mesh Background -->
+
+  <!-- Advanced Geometric Accent Layer -->
+  <div class="fixed inset-0 z-[-1] pointer-events-none overflow-hidden opacity-40">
+    <!-- Floating Outline Ring -->
+    <svg class="absolute top-[15%] left-[5%] w-20 h-20 text-blue-600 animate-[spin_30s_linear_infinite]" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="0.5"><circle cx="12" cy="12" r="10"/></svg>
+    <!-- Floating Diamond -->
+    <svg class="absolute top-[65%] right-[8%] w-14 h-14 text-red-500 animate-[spin_25s_linear_infinite_reverse]" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="0.5"><rect x="4" y="4" width="16" height="16" rx="2" transform="rotate(45 12 12)"/></svg>
+    <!-- Floating Plus -->
+    <svg class="absolute top-[10%] right-[35%] w-10 h-10 text-blue-400 animate-float-slow" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4"/></svg>
+    <!-- Floating Concentric Circles -->
+    <svg class="absolute bottom-[15%] left-[20%] w-32 h-32 text-blue-300 opacity-20 animate-float-reverse-slow" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="0.5"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg>
+    <!-- Floating Triangle -->
+    <svg class="absolute top-[40%] left-[40%] w-12 h-12 text-blue-500 opacity-30 animate-[spin_40s_linear_infinite]" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="0.5"><polygon points="12,2 22,20 2,20" stroke-linejoin="round"/></svg>
+  </div>
+
+  <div class="fixed inset-0 z-[-1] overflow-hidden bg-[#FAFBFF]">
+    <div class="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-blue-400/20 rounded-full blur-[100px] animate-float-slow"></div>
+    <div class="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] bg-red-400/10 rounded-full blur-[100px] animate-float-reverse-slow"></div>
+  </div>
+  <div class="fixed inset-0 z-[-2] bg-dotted-pattern opacity-40 pointer-events-none"></div>
+
+
+  <!-- Global Desktop Header -->
+  
+  <!-- Global Navigation Bar -->
+  <header class="fixed top-0 left-0 w-full bg-white/90 backdrop-blur-md border-b border-gray-100 z-[900] transition-all duration-300">
+    <div class="max-w-[1600px] mx-auto px-4 md:px-8 h-[70px] md:h-[80px] flex items-center justify-between">
+      
+      <!-- Left: Logo & Brand -->
+      <a href="/dashboard.html" class="flex items-center gap-3 group z-[910]">
+        <div class="w-10 h-10 flex items-center justify-center bg-gray-50 rounded-xl group-hover:bg-blue-50 transition-colors border border-gray-100 group-hover:border-red-100 shrink-0">
+          <img src="/LOGO.png" alt="R2s" class="w-full h-full object-contain p-1.5">
+        </div>
+        <span class="text-lg md:text-xl font-extrabold tracking-tight text-slate-950 hidden sm:block">R2s Realtors</span>
+      </a>
+
+      <!-- Center: Location Pin (Hidden on small mobile) -->
+      <div class="hidden md:flex items-center gap-2 px-4 py-2 bg-gray-50 rounded-full border border-gray-100 cursor-pointer hover:bg-white hover:shadow-sm transition-all group z-[910]">
+        <i data-lucide="map-pin" class="w-4 h-4 text-blue-600 group-hover:animate-bounce"></i>
+        <span class="text-sm font-semibold text-slate-700">Kozhikode, Kerala</span>
+      </div>
+
+      <!-- Center-Right: Navigation Links (Desktop) -->
+      <nav class="hidden lg:flex items-center gap-8 ml-8 z-[910]">
+        <a href="/dashboard.html" class="text-sm font-bold text-slate-950 hover:text-blue-600 transition-colors">Find Property</a>
+        <div class="relative group cursor-pointer flex items-center gap-1">
+          <span class="text-sm font-bold text-slate-500 group-hover:text-blue-600 transition-colors">My Properties</span>
+          <i data-lucide="chevron-down" class="w-4 h-4 text-slate-400 group-hover:text-blue-600 transition-transform group-hover:rotate-180"></i>
+        </div>
+        <a href="/properties.html" class="text-sm font-bold text-slate-500 hover:text-blue-600 transition-colors">Agents</a>
+      </nav>
+
+      <!-- Right: Actions & Profile -->
+      <div class="flex items-center gap-3 md:gap-4 ml-auto z-[910]">
+        <button class="hidden md:flex w-10 h-10 rounded-full bg-gray-50 items-center justify-center text-slate-600 hover:bg-gray-100 hover:text-slate-950 transition-colors relative group border border-transparent hover:border-gray-200">
+          <i data-lucide="settings" class="w-5 h-5 group-hover:rotate-45 transition-transform duration-300"></i>
+        </button>
+        <button class="w-10 h-10 rounded-full bg-gray-50 flex items-center justify-center text-slate-600 hover:bg-gray-100 hover:text-slate-950 transition-colors relative border border-transparent hover:border-gray-200">
+          <i data-lucide="bell" class="w-5 h-5"></i>
+          <span class="absolute top-2 right-2.5 w-2 h-2 bg-blue-600 hover:-translate-y-0.5 hover:shadow-lg rounded-full border-2 border-white"></span>
+        </button>
+        
+        <!-- Profile Dropdown Container -->
+        <div class="relative ml-1 md:ml-2">
+          <button onclick="toggleProfileDropdown()" class="w-10 h-10 rounded-full overflow-hidden border-2 border-transparent hover:border-blue-500 transition-all focus:outline-none focus:border-blue-500 shadow-sm relative z-[950]">
+            <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80" alt="User" class="w-full h-full object-cover">
+          </button>
+
+          <!-- Dropdown Menu (Becomes Bottom Sheet on Mobile) -->
+          <div id="profileDropdown" class="absolute right-0 top-[calc(100%+15px)] w-72 bg-white rounded-2xl shadow-[0_10px_40px_rgba(0,0,0,0.1)] border border-gray-100 opacity-0 translate-y-4 pointer-events-none transition-all duration-300 z-[940] transform origin-top-right">
+            <!-- User Info Header -->
+            <div class="p-4 border-b border-gray-100 bg-gray-50/50 rounded-t-2xl mobile-rounded-top">
+              <h4 class="font-bold text-slate-950">Rajesh Kumar</h4>
+              <p class="text-xs font-medium text-gray-500 mt-0.5">rajesh@example.com</p>
+              <div class="mt-2 inline-flex items-center gap-1.5 bg-red-100 px-2 py-1 rounded-md">
+                <i data-lucide="building-2" class="w-3 h-3 text-blue-600"></i>
+                <span class="text-[10px] font-bold text-red-700 uppercase tracking-wider">Builder</span>
+              </div>
+            </div>
+            
+            <!-- Actions -->
+            <div class="p-2 flex flex-col gap-1">
+              <a href="/edit-profile.html" class="flex items-center gap-3 px-3 py-2.5 rounded-xl hover:bg-gray-50 text-sm font-bold text-slate-700 hover:text-slate-950 transition-colors">
+                <div class="w-8 h-8 rounded-full bg-white border border-gray-200 flex items-center justify-center shadow-sm">
+                  <i data-lucide="user-cog" class="w-4 h-4 text-slate-500"></i>
+                </div>
+                Update Profile
+              </a>
+              <button class="flex items-center gap-3 px-3 py-2.5 rounded-xl hover:bg-gray-50 text-sm font-bold text-slate-700 hover:text-slate-950 transition-colors w-full text-left">
+                <div class="w-8 h-8 rounded-full bg-white border border-gray-200 flex items-center justify-center shadow-sm">
+                  <i data-lucide="arrow-left-right" class="w-4 h-4 text-slate-500"></i>
+                </div>
+                Change Role
+              </button>
+            </div>
+            
+            <!-- Logout -->
+            <div class="p-2 border-t border-gray-100">
+              <a href="/login.html" class="flex items-center gap-3 px-3 py-2.5 rounded-xl hover:bg-blue-50 text-sm font-bold text-blue-600 transition-colors group pb-4 md:pb-2.5">
+                <div class="w-8 h-8 rounded-full bg-white border border-red-100 flex items-center justify-center shadow-sm group-hover:bg-blue-600 hover:-translate-y-0.5 hover:shadow-lg transition-colors">
+                  <i data-lucide="log-out" class="w-4 h-4 text-red-500 group-hover:text-white transition-colors"></i>
+                </div>
+                Log Out
+              </a>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Mobile Overlay for Dropdown -->
+    <div id="mobileOverlay" class="fixed inset-0 bg-slate-950/40 backdrop-blur-sm z-[930] opacity-0 pointer-events-none transition-opacity duration-300"></div>
+
+    <script>
+      function toggleProfileDropdown() {
+        const dropdown = document.getElementById('profileDropdown');
+        const overlay = document.getElementById('mobileOverlay');
+        const isOpen = !dropdown.classList.contains('pointer-events-none');
+
+        if (isOpen) {
+          // Close
+          dropdown.classList.add('opacity-0', 'pointer-events-none');
+          dropdown.classList.remove('opacity-100');
+          
+          if (window.innerWidth < 768) {
+            dropdown.classList.add('translate-y-full');
+            dropdown.classList.remove('translate-y-0');
+          } else {
+            dropdown.classList.add('translate-y-4');
+            dropdown.classList.remove('translate-y-0');
+          }
+        } else {
+          // Open
+          dropdown.classList.remove('opacity-0', 'pointer-events-none', 'translate-y-4', 'translate-y-full');
+          dropdown.classList.add('opacity-100', 'translate-y-0');
+          overlay.classList.remove('opacity-0', 'pointer-events-none');
+          overlay.classList.add('opacity-100');
+          
+          // Apply mobile bottom-sheet styling dynamically if on small screen
+          if (window.innerWidth < 768) {
+             dropdown.classList.add('!fixed', '!bottom-0', '!top-auto', '!left-0', '!w-full', '!rounded-b-none', '!rounded-t-[32px]');
+             dropdown.querySelector('.mobile-rounded-top').classList.add('!rounded-t-[32px]');
+          }
+        }
+      }
+
+      // Close on overlay click
+      document.getElementById('mobileOverlay')?.addEventListener('click', toggleProfileDropdown);
+    </script>
+  </header>
+
+
+
+  <div class="mt-[80px] md:mt-[90px] bg-white min-h-screen md:min-h-0 relative shadow-xl border border-gray-100 md:my-8 md:rounded-[40px] md:border border-gray-100 px-6 md:px-12 py-8 md:h-[calc(100vh-110px)] md:overflow-y-auto hide-scrollbar custom-scrollbar w-full">
+    
+    <!-- Header -->
+    <div class="flex items-center gap-4 mb-10 border-b border-gray-50 pb-6">
+      <button onclick="window.history.back()" class="w-12 h-12 flex items-center justify-center bg-gray-50 rounded-full shadow-sm hover:bg-gray-50 hover:-translate-x-1 hover:shadow-md transition-all duration-300 transition-colors border border-gray-100">
+        <i data-lucide="arrow-left" class="w-6 h-6 text-slate-950"></i>
+      </button>
+      <h1 class="text-3xl font-bold text-slate-950 tracking-tight">Create New Property</h1>
+    </div>
+
+    <form class="flex flex-col gap-10" onsubmit="handleGenericForm(event)" novalidate>
+      
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-6 gap-y-6">
+        
+        <!-- Property Name -->
+        <div class="flex flex-col gap-2 relative lg:col-span-2">
+          <label class="text-sm font-bold text-gray-700">Property Name *</label>
+          <input type="text" class="w-full bg-gray-50 rounded-2xl px-5 py-4 border border-gray-200 outline-none focus:border-blue-500 focus:bg-white transition-colors text-slate-950 font-semibold" placeholder="e.g. Skyline Apartments" required>
+        </div>
+        
+        <!-- Property Service Type -->
+        <div class="flex flex-col gap-2 relative">
+          <label class="text-sm font-bold text-gray-700">Property Service Type</label>
+          <div class="relative">
+            <select class="w-full bg-gray-50 rounded-2xl px-5 py-4 border border-gray-200 outline-none focus:border-blue-500 focus:bg-white transition-colors text-slate-950 font-semibold appearance-none cursor-pointer">
+              <option value="" disabled selected>Select</option>
+              <option value="sale">For Sale</option>
+              <option value="rent">For Rent</option>
+              <option value="lease">For Lease</option>
+            </select>
+            <i data-lucide="chevron-down" class="w-5 h-5 absolute right-5 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none"></i>
+          </div>
+        </div>
+
+        <!-- Expecting Price -->
+        <div class="flex flex-col gap-2 relative">
+          <label class="text-sm font-bold text-gray-700">Expecting Price</label>
+          <input type="number" class="w-full bg-gray-50 rounded-2xl px-5 py-4 border border-gray-200 outline-none focus:border-blue-500 focus:bg-white transition-colors text-slate-950 font-semibold" placeholder="Enter Price">
+        </div>
+
+        <!-- Unit -->
+        <div class="flex flex-col gap-2 relative">
+          <label class="text-sm font-bold text-gray-700">Unit</label>
+          <div class="relative">
+            <select class="w-full bg-gray-50 rounded-2xl px-5 py-4 border border-gray-200 outline-none focus:border-blue-500 focus:bg-white transition-colors text-slate-950 font-semibold appearance-none cursor-pointer">
+              <option value="" disabled selected>Sq Ft / Cent / Acre</option>
+              <option value="sqft">Sq Ft</option>
+              <option value="cent">Cent</option>
+              <option value="acre">Acre</option>
+            </select>
+            <i data-lucide="chevron-down" class="w-5 h-5 absolute right-5 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none"></i>
+          </div>
+        </div>
+
+        <!-- Total Floor -->
+        <div class="flex flex-col gap-2 relative">
+          <label class="text-sm font-bold text-gray-700">Total Floors</label>
+          <input type="number" class="w-full bg-gray-50 rounded-2xl px-5 py-4 border border-gray-200 outline-none focus:border-blue-500 focus:bg-white transition-colors text-slate-950 font-semibold" placeholder="e.g. 5">
+        </div>
+
+        <!-- Property Kind -->
+        <div class="flex flex-col gap-2 relative">
+          <label class="text-sm font-bold text-gray-700">Property Kind</label>
+          <div class="relative">
+            <select class="w-full bg-gray-50 rounded-2xl px-5 py-4 border border-gray-200 outline-none focus:border-blue-500 focus:bg-white transition-colors text-slate-950 font-semibold appearance-none cursor-pointer">
+              <option value="" disabled selected>Select</option>
+              <option value="residential">Residential</option>
+              <option value="commercial">Commercial</option>
+              <option value="estate">Estate</option>
+            </select>
+            <i data-lucide="chevron-down" class="w-5 h-5 absolute right-5 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none"></i>
+          </div>
+        </div>
+
+        <!-- Residential Type -->
+        <div class="flex flex-col gap-2 relative">
+          <label class="text-sm font-bold text-gray-700">Residential Type</label>
+          <div class="relative">
+            <select class="w-full bg-gray-50 rounded-2xl px-5 py-4 border border-gray-200 outline-none focus:border-blue-500 focus:bg-white transition-colors text-slate-950 font-semibold appearance-none cursor-pointer">
+              <option value="" disabled selected>Select</option>
+              <option value="apartment">Apartment</option>
+              <option value="villa">Villa</option>
+              <option value="house">Independent House</option>
+            </select>
+            <i data-lucide="chevron-down" class="w-5 h-5 absolute right-5 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none"></i>
+          </div>
+        </div>
+
+        <!-- Commercial Type -->
+        <div class="flex flex-col gap-2 relative">
+          <label class="text-sm font-bold text-gray-700">Commercial Type</label>
+          <div class="relative">
+            <select class="w-full bg-gray-50 rounded-2xl px-5 py-4 border border-gray-200 outline-none focus:border-blue-500 focus:bg-white transition-colors text-slate-950 font-semibold appearance-none cursor-pointer">
+              <option value="" disabled selected>Select</option>
+              <option value="office">Office Space</option>
+              <option value="shop">Shop</option>
+              <option value="warehouse">Warehouse</option>
+            </select>
+            <i data-lucide="chevron-down" class="w-5 h-5 absolute right-5 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none"></i>
+          </div>
+        </div>
+
+        <!-- Estate Type -->
+        <div class="flex flex-col gap-2 relative">
+          <label class="text-sm font-bold text-gray-700">Estate Type</label>
+          <div class="relative">
+            <select class="w-full bg-gray-50 rounded-2xl px-5 py-4 border border-gray-200 outline-none focus:border-blue-500 focus:bg-white transition-colors text-slate-950 font-semibold appearance-none cursor-pointer">
+              <option value="" disabled selected>Select</option>
+              <option value="agricultural">Agricultural Land</option>
+              <option value="plantation">Plantation</option>
+              <option value="farmhouse">Farmhouse</option>
+            </select>
+            <i data-lucide="chevron-down" class="w-5 h-5 absolute right-5 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none"></i>
+          </div>
+        </div>
+
+        <!-- Property Status -->
+        <div class="flex flex-col gap-2 relative">
+          <label class="text-sm font-bold text-gray-700">Property Status</label>
+          <div class="relative">
+            <select class="w-full bg-gray-50 rounded-2xl px-5 py-4 border border-gray-200 outline-none focus:border-blue-500 focus:bg-white transition-colors text-slate-950 font-semibold appearance-none cursor-pointer">
+              <option value="" disabled selected>Select</option>
+              <option value="ready">Ready to Move</option>
+              <option value="construction">Under Construction</option>
+            </select>
+            <i data-lucide="chevron-down" class="w-5 h-5 absolute right-5 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none"></i>
+          </div>
+        </div>
+
+        <!-- Date of Completion -->
+        <div class="flex flex-col gap-2 relative">
+          <label class="text-sm font-bold text-gray-700">Date of Completion</label>
+          <input type="date" class="w-full bg-gray-50 rounded-2xl px-5 py-4 border border-gray-200 outline-none focus:border-blue-500 focus:bg-white transition-colors text-slate-950 font-semibold uppercase cursor-pointer">
+        </div>
+      </div>
+
+      <!-- Image Upload Area -->
+      <div class="flex flex-col gap-2 mt-2">
+        <label class="text-sm font-bold text-gray-700">Property Images</label>
+        <div class="w-full border-2 border-dashed border-gray-300 rounded-[32px] bg-gray-50 hover:bg-gray-100 hover:border-slate-950 transition-all flex flex-col items-center justify-center py-16 px-6 text-center cursor-pointer relative group">
+          <input type="file" id="propertyImages" multiple accept=".jpg,.jpeg,.png,.webp" class="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10">
+          <div class="w-20 h-20 bg-white rounded-full flex items-center justify-center shadow-sm mb-6 group-hover:scale-110 transition-transform">
+            <i data-lucide="image-plus" class="w-10 h-10 text-slate-950"></i>
+          </div>
+          <h3 class="font-bold text-slate-950 text-xl mb-2">Drag & drop or click to upload images</h3>
+          <p id="fileCountText" class="text-base font-medium text-gray-500">No file chosen</p>
+          <p class="text-xs font-bold text-gray-400 mt-6 bg-gray-200 px-4 py-1.5 rounded-full uppercase tracking-wider">JPG, PNG, WEBP — Multiple allowed</p>
+        </div>
+        
+        <!-- Image Preview Grid -->
+        <div id="imagePreviewGrid" class="grid grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4 mt-4 hidden">
+          <!-- Thumbnails will be injected here via JS -->
+        </div>
+      </div>
+
+      <!-- Submit -->
+      <div class="pt-6 border-t border-gray-100 flex justify-end">
+        <button type="submit" class="w-full md:w-auto bg-blue-600 hover:-translate-y-0.5 hover:shadow-lg text-white px-12 py-5 rounded-2xl font-bold hover:scale-[1.02] transition-transform shadow-lg text-lg flex items-center justify-center gap-2">
+          List Property <i data-lucide="check-circle" class="w-5 h-5"></i>
+        </button>
+      </div>
+
+    </form>
+
+  </div>
+
+  <script>
+    if (typeof lucide !== 'undefined') lucide.createIcons();
+
+    // ==================== ADVANCED CUSTOM VALIDATION ====================
+    function showFieldError(inputEl, message) {
+      const wrapper = inputEl.parentElement.classList.contains('flex') && !inputEl.parentElement.classList.contains('flex-col') ? inputEl.parentElement : inputEl;
+      let errBox = wrapper.nextElementSibling;
+      if (!errBox || !errBox.classList.contains('custom-error-box')) {
+        errBox = document.createElement('div');
+        errBox.className = 'custom-error-box hidden opacity-0 translate-y-1 transition-all duration-300 flex items-center gap-2 text-blue-600 bg-blue-50 p-2.5 rounded-lg border border-red-100 text-xs font-bold mt-2';
+        errBox.innerHTML = '<i data-lucide="alert-circle" class="w-4 h-4 shrink-0"></i> <span></span>';
+        wrapper.parentNode.insertBefore(errBox, wrapper.nextSibling);
+        if (typeof lucide !== 'undefined') lucide.createIcons();
+      }
+      errBox.querySelector('span').innerText = message;
+      errBox.classList.remove('hidden');
+      setTimeout(() => {
+        errBox.classList.remove('opacity-0', 'translate-y-1');
+        errBox.classList.add('opacity-100', 'translate-y-0');
+      }, 10);
+      wrapper.classList.add('border-blue-500', 'ring-4', 'ring-red-500/10');
+      
+      wrapper.style.transform = 'translateX(4px)';
+      setTimeout(() => wrapper.style.transform = 'translateX(-4px)', 100);
+      setTimeout(() => wrapper.style.transform = 'translateX(4px)', 200);
+      setTimeout(() => wrapper.style.transform = 'translateX(0)', 300);
+    }
+
+    function clearFieldError(inputEl) {
+      const wrapper = inputEl.parentElement.classList.contains('flex') && !inputEl.parentElement.classList.contains('flex-col') ? inputEl.parentElement : inputEl;
+      let errBox = wrapper.nextElementSibling;
+      if (errBox && errBox.classList.contains('custom-error-box')) {
+        errBox.classList.remove('opacity-100', 'translate-y-0');
+        errBox.classList.add('opacity-0', 'translate-y-1');
+        setTimeout(() => errBox.classList.add('hidden'), 300);
+      }
+      wrapper.classList.remove('border-blue-500', 'ring-4', 'ring-red-500/10');
+    }
+
+    // Auto-clear on input
+    document.addEventListener('DOMContentLoaded', () => {
+      document.querySelectorAll('input[required], select[required], textarea[required]').forEach(input => {
+        input.addEventListener('input', () => clearFieldError(input));
+      });
+    });
+
+    function validateForm(form) {
+      let isValid = true;
+      let firstErr = null;
+      form.querySelectorAll('input[required], select[required], textarea[required]').forEach(input => {
+        if (!input.value.trim()) {
+          showFieldError(input, 'This field is required.');
+          isValid = false;
+          if (!firstErr) firstErr = input;
+        } else if (input.type === 'email' && !input.value.includes('@')) {
+          showFieldError(input, 'Please enter a valid email address.');
+          isValid = false;
+          if (!firstErr) firstErr = input;
+        } else if (input.type === 'tel' && input.value.length < 10) {
+          showFieldError(input, 'Please enter a valid 10-digit number.');
+          isValid = false;
+          if (!firstErr) firstErr = input;
+        }
+      });
+      if (firstErr) {
+        firstErr.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }
+      return isValid;
+    }
+
+    function handleGenericForm(e) {
+      e.preventDefault();
+      if (validateForm(e.target)) {
+        window.location.href = '/dashboard.html';
+      }
+    }
+
+
+    // Advanced Image Upload Logic
+    const fileInput = document.getElementById('propertyImages');
+    const previewGrid = document.getElementById('imagePreviewGrid');
+    const fileCountText = document.getElementById('fileCountText');
+    
+    // We use a DataTransfer object to manage the files in the input programmatically
+    let dt = new DataTransfer();
+
+    fileInput.addEventListener('change', function(e) {
+      const newFiles = Array.from(e.target.files);
+      
+      // Add new files to our DataTransfer object
+      newFiles.forEach(file => {
+        // Prevent duplicates based on name and size
+        const isDuplicate = Array.from(dt.files).some(f => f.name === file.name && f.size === file.size);
+        if (!isDuplicate) {
+          dt.items.add(file);
+        }
+      });
+      
+      updateFileInputAndUI();
+    });
+
+    function updateFileInputAndUI() {
+      // Update the actual input element's files
+      fileInput.files = dt.files;
+      const files = fileInput.files;
+      
+      // Update text
+      if (files.length === 0) {
+        fileCountText.textContent = "No file chosen";
+        previewGrid.classList.add('hidden');
+      } else {
+        fileCountText.textContent = files.length === 1 ? "1 file selected" : `₹{files.length} files selected`;
+        previewGrid.classList.remove('hidden');
+      }
+      
+      // Clear current previews
+      previewGrid.innerHTML = '';
+      
+      // Render new previews
+      Array.from(files).forEach((file, index) => {
+        const objectURL = URL.createObjectURL(file);
+        
+        const thumbContainer = document.createElement('div');
+        thumbContainer.className = 'relative w-full aspect-square rounded-2xl overflow-hidden shadow-sm border border-gray-200 group bg-gray-50';
+        
+        const img = document.createElement('img');
+        img.src = objectURL;
+        img.className = 'w-full h-full object-cover';
+        
+        const removeBtn = document.createElement('button');
+        removeBtn.type = 'button';
+        removeBtn.className = 'absolute top-2 right-2 w-8 h-8 bg-white/90 backdrop-blur-md rounded-full flex items-center justify-center text-red-500 shadow-sm opacity-100 md:opacity-0 md:group-hover:opacity-100 transition-opacity z-20 hover:bg-blue-50';
+        removeBtn.innerHTML = '<i data-lucide="x" class="w-4 h-4"></i>';
+        
+        // Remove logic
+        removeBtn.addEventListener('click', (e) => {
+          e.preventDefault(); 
+          e.stopPropagation();
+          
+          const tempDt = new DataTransfer();
+          Array.from(dt.files).forEach((f, i) => {
+            if (i !== index) tempDt.items.add(f);
+          });
+          dt = tempDt;
+          
+          URL.revokeObjectURL(objectURL);
+          updateFileInputAndUI();
+        });
+        
+        thumbContainer.appendChild(img);
+        thumbContainer.appendChild(removeBtn);
+        previewGrid.appendChild(thumbContainer);
+      });
+      
+      lucide.createIcons();
+    }
+  </script>
+
+  <!-- PWA Service Worker Registration -->
+  <script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('/sw.js').then(registration => {
+          console.log('SW registered: ', registration.scope);
+        }).catch(err => {
+          console.log('SW registration failed: ', err);
+        });
+      });
+    }
+  </script>
+
+</body>
+</html>
