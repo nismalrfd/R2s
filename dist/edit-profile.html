@@ -3,35 +3,30 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Nestora - Add Property</title>
-  <link rel="stylesheet" href="/src/style.css" />
+  <title>Nestora - Edit Profile</title>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <script src="https://unpkg.com/lucide@latest"></script>
 
   <!-- PWA Meta Tags -->
-  <link rel="manifest" href="/manifest.json" />
-  <meta name="theme-color" content="#ffffff" />
+  <link rel="manifest" href="/assets/manifest-Dmh49lm3.json" />
+  <meta name="theme-color" content="#F8F9FA" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
   <meta name="apple-mobile-web-app-title" content="R2s Realtors" />
   
   <!-- Premium Mobile App CSS Physics -->
   <style>
-    /* Prevent text selection to feel like native app */
     body, h1, h2, h3, h4, p, span, div, button, a, i {
       -webkit-user-select: none;
       user-select: none;
     }
-    /* Allow text selection in inputs */
-    input, textarea {
+    input, textarea, select {
       -webkit-user-select: text;
       user-select: text;
     }
-    /* Remove blue tap highlight */
     * {
       -webkit-tap-highlight-color: transparent;
     }
-    /* Prevent bounce on scroll for rigid native feel */
     body {
       overscroll-behavior-y: none;
     }
@@ -66,10 +61,9 @@
     }
   </style>
 
-  <script src="https://unpkg.com/@tailwindcss/browser@4"></script>
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" crossorigin href="/assets/style-BmcS4mw_.css">
 </head>
-<body class="overflow-x-hidden bg-white m-0 p-0 w-full min-h-screen font-sans pb-10 md:h-screen md:overflow-hidden">
+<body class="bg-[#FAFBFF] overflow-x-hidden m-0 p-0 w-full min-h-screen font-sans md:h-screen md:overflow-hidden relative overflow-x-hidden">
 
   <!-- Premium Mesh Background -->
 
@@ -103,7 +97,7 @@
       <!-- Left: Logo & Brand -->
       <a href="/dashboard.html" class="flex items-center gap-3 group z-[910]">
         <div class="w-10 h-10 flex items-center justify-center bg-gray-50 rounded-xl group-hover:bg-blue-50 transition-colors border border-gray-100 group-hover:border-red-100 shrink-0">
-          <img src="/LOGO.png" alt="R2s" class="w-full h-full object-contain p-1.5">
+          <img src="/assets/LOGO-CO8alMZY.png" alt="R2s" class="w-full h-full object-contain p-1.5">
         </div>
         <span class="text-lg md:text-xl font-extrabold tracking-tight text-slate-950 hidden sm:block">R2s Realtors</span>
       </a>
@@ -225,171 +219,135 @@
   </header>
 
 
-
-  <div class="mt-[80px] md:mt-[90px] bg-white min-h-screen md:min-h-0 relative shadow-xl border border-gray-100 md:my-8 md:rounded-[40px] md:border border-gray-100 px-6 md:px-12 py-8 md:h-[calc(100vh-110px)] md:overflow-y-auto hide-scrollbar custom-scrollbar w-full">
+  <!-- Main Scrollable Container -->
+  <div class="md:mt-[90px] w-full max-w-4xl mx-auto px-6 py-10 pb-32 md:pb-12 md:h-[calc(100vh-90px)] md:overflow-y-auto hide-scrollbar custom-scrollbar relative">
     
-    <!-- Header -->
-    <div class="flex items-center gap-4 mb-10 border-b border-gray-50 pb-6">
-      <button onclick="window.history.back()" class="w-12 h-12 flex items-center justify-center bg-gray-50 rounded-full shadow-sm hover:bg-gray-50 hover:-translate-x-1 hover:shadow-md transition-all duration-300 transition-colors border border-gray-100">
-        <i data-lucide="arrow-left" class="w-6 h-6 text-slate-950"></i>
+    <!-- Header with Advanced Button Physics -->
+    <div class="flex items-center justify-between gap-4 mb-8">
+      <div class="flex items-center gap-4">
+        <button onclick="window.history.back()" class="w-10 h-10 flex items-center justify-center bg-white border border-gray-200 rounded-full hover:bg-gray-50 hover:-translate-x-1 hover:shadow-md transition-all duration-300 shrink-0 shadow-sm">
+          <i data-lucide="arrow-left" class="w-5 h-5 text-slate-950"></i>
+        </button>
+        <h1 class="text-3xl font-bold text-slate-950 tracking-tight">Edit Profile</h1>
+      </div>
+      
+      <!-- Premium Logout Button -->
+      <button onclick="window.location.href='/login.html'" class="flex items-center gap-2 bg-white text-blue-600 px-5 py-2.5 rounded-full font-bold hover:bg-blue-50 hover:shadow-md transition-all duration-300 border border-gray-100 shadow-sm">
+        <i data-lucide="log-out" class="w-4 h-4"></i>
+        <span class="hidden md:inline">Log Out</span>
       </button>
-      <h1 class="text-3xl font-bold text-slate-950 tracking-tight">Create New Property</h1>
     </div>
 
-    <form class="flex flex-col gap-10" onsubmit="handleGenericForm(event)" novalidate>
+    
+    
+    <form class="w-full flex flex-col gap-6" onsubmit="handleGenericForm(event)" novalidate>
       
-      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-6 gap-y-6">
+      <!-- Personal Details Segmented Card -->
+      <div class="bg-white rounded-[24px] p-6 md:p-8 shadow-sm border border-gray-100 hover:shadow-md transition-shadow duration-300">
+        <div class="flex items-center gap-4 mb-6">
+          <div class="w-10 h-10 bg-gray-50 rounded-xl flex items-center justify-center shrink-0">
+            <i data-lucide="user" class="w-5 h-5 text-slate-950"></i>
+          </div>
+          <div>
+            <h2 class="text-lg font-bold text-slate-950">Personal Details</h2>
+            <p class="text-xs font-medium text-gray-400">Manage your basic information</p>
+          </div>
+        </div>
         
-        <!-- Property Name -->
-        <div class="flex flex-col gap-2 relative lg:col-span-2">
-          <label class="text-sm font-bold text-gray-700">Property Name *</label>
-          <input type="text" class="w-full bg-gray-50 rounded-2xl px-5 py-4 border border-gray-200 outline-none focus:border-blue-500 focus:bg-white transition-colors text-slate-950 font-semibold" placeholder="e.g. Skyline Apartments" required>
-        </div>
-        
-        <!-- Property Service Type -->
-        <div class="flex flex-col gap-2 relative">
-          <label class="text-sm font-bold text-gray-700">Property Service Type</label>
-          <div class="relative">
-            <select class="w-full bg-gray-50 rounded-2xl px-5 py-4 border border-gray-200 outline-none focus:border-blue-500 focus:bg-white transition-colors text-slate-950 font-semibold appearance-none cursor-pointer">
-              <option value="" disabled selected>Select</option>
-              <option value="sale">For Sale</option>
-              <option value="rent">For Rent</option>
-              <option value="lease">For Lease</option>
-            </select>
-            <i data-lucide="chevron-down" class="w-5 h-5 absolute right-5 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none"></i>
+        <div class="flex flex-col gap-6">
+          <div class="flex flex-col gap-2 relative">
+            <label class="text-[10px] font-bold text-gray-500 uppercase tracking-wider">Full Name <span class="text-red-500">*</span></label>
+            <input type="text" class="w-full bg-gray-50 rounded-xl px-4 py-3.5 border border-gray-100 outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-500/20 focus:bg-white transition-all text-slate-950 font-medium text-sm" value="Stefani Wong" required>
           </div>
-        </div>
+          
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div class="flex flex-col gap-2">
+              <label class="text-[10px] font-bold text-gray-500 uppercase tracking-wider">Phone Number <span class="text-red-500">*</span></label>
+              <div class="flex bg-gray-50 rounded-xl border border-gray-100 focus-within:border-slate-950 focus-within:ring-4 focus-within:ring-slate-950/5 focus-within:bg-white transition-all overflow-hidden">
+                <span class="px-4 py-3.5 border-r border-gray-100 font-bold text-gray-500 text-xs flex items-center gap-1.5">IN +91</span>
+                <input type="tel" id="mainPhone" class="flex-1 px-4 py-3.5 bg-transparent outline-none font-medium text-slate-950 text-sm" value="9876543210" maxlength="10" required>
+              </div>
+            </div>
 
-        <!-- Expecting Price -->
-        <div class="flex flex-col gap-2 relative">
-          <label class="text-sm font-bold text-gray-700">Expecting Price</label>
-          <input type="number" class="w-full bg-gray-50 rounded-2xl px-5 py-4 border border-gray-200 outline-none focus:border-blue-500 focus:bg-white transition-colors text-slate-950 font-semibold" placeholder="Enter Price">
-        </div>
-
-        <!-- Unit -->
-        <div class="flex flex-col gap-2 relative">
-          <label class="text-sm font-bold text-gray-700">Unit</label>
-          <div class="relative">
-            <select class="w-full bg-gray-50 rounded-2xl px-5 py-4 border border-gray-200 outline-none focus:border-blue-500 focus:bg-white transition-colors text-slate-950 font-semibold appearance-none cursor-pointer">
-              <option value="" disabled selected>Sq Ft / Cent / Acre</option>
-              <option value="sqft">Sq Ft</option>
-              <option value="cent">Cent</option>
-              <option value="acre">Acre</option>
-            </select>
-            <i data-lucide="chevron-down" class="w-5 h-5 absolute right-5 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none"></i>
+            <div class="flex flex-col gap-2">
+              <div class="flex justify-between items-center">
+                <label class="text-[10px] font-bold text-gray-500 uppercase tracking-wider">WhatsApp</label>
+                <label class="flex items-center gap-1.5 cursor-pointer group">
+                  <input type="checkbox" id="sameAsPhone" class="w-3.5 h-3.5 rounded border-gray-300 text-slate-950 focus:ring-slate-950 cursor-pointer" onchange="toggleWhatsApp()">
+                  <span class="text-[10px] font-bold text-gray-400 uppercase tracking-wider group-hover:text-slate-950 transition-colors">Same as above</span>
+                </label>
+              </div>
+              <div class="flex bg-gray-50 rounded-xl border border-gray-100 focus-within:border-slate-950 focus-within:ring-4 focus-within:ring-slate-950/5 focus-within:bg-white transition-all overflow-hidden">
+                <span class="px-4 py-3.5 border-r border-gray-100 font-bold text-gray-500 text-xs flex items-center gap-1.5">IN +91</span>
+                <input type="tel" id="whatsappPhone" class="flex-1 px-4 py-3.5 bg-transparent outline-none font-medium text-slate-950 text-sm" placeholder="Same as above?">
+              </div>
+            </div>
           </div>
-        </div>
 
-        <!-- Total Floor -->
-        <div class="flex flex-col gap-2 relative">
-          <label class="text-sm font-bold text-gray-700">Total Floors</label>
-          <input type="number" class="w-full bg-gray-50 rounded-2xl px-5 py-4 border border-gray-200 outline-none focus:border-blue-500 focus:bg-white transition-colors text-slate-950 font-semibold" placeholder="e.g. 5">
-        </div>
-
-        <!-- Property Kind -->
-        <div class="flex flex-col gap-2 relative">
-          <label class="text-sm font-bold text-gray-700">Property Kind</label>
-          <div class="relative">
-            <select class="w-full bg-gray-50 rounded-2xl px-5 py-4 border border-gray-200 outline-none focus:border-blue-500 focus:bg-white transition-colors text-slate-950 font-semibold appearance-none cursor-pointer">
-              <option value="" disabled selected>Select</option>
-              <option value="residential">Residential</option>
-              <option value="commercial">Commercial</option>
-              <option value="estate">Estate</option>
-            </select>
-            <i data-lucide="chevron-down" class="w-5 h-5 absolute right-5 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none"></i>
+          <div class="flex flex-col gap-2">
+            <label class="text-[10px] font-bold text-gray-500 uppercase tracking-wider">Email Address <span class="text-red-500">*</span></label>
+            <input type="email" class="w-full bg-gray-50 rounded-xl px-4 py-3.5 border border-gray-100 outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-500/20 focus:bg-white transition-all text-slate-950 font-medium text-sm" value="stefani.wong@example.com" required>
           </div>
-        </div>
-
-        <!-- Residential Type -->
-        <div class="flex flex-col gap-2 relative">
-          <label class="text-sm font-bold text-gray-700">Residential Type</label>
-          <div class="relative">
-            <select class="w-full bg-gray-50 rounded-2xl px-5 py-4 border border-gray-200 outline-none focus:border-blue-500 focus:bg-white transition-colors text-slate-950 font-semibold appearance-none cursor-pointer">
-              <option value="" disabled selected>Select</option>
-              <option value="apartment">Apartment</option>
-              <option value="villa">Villa</option>
-              <option value="house">Independent House</option>
-            </select>
-            <i data-lucide="chevron-down" class="w-5 h-5 absolute right-5 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none"></i>
-          </div>
-        </div>
-
-        <!-- Commercial Type -->
-        <div class="flex flex-col gap-2 relative">
-          <label class="text-sm font-bold text-gray-700">Commercial Type</label>
-          <div class="relative">
-            <select class="w-full bg-gray-50 rounded-2xl px-5 py-4 border border-gray-200 outline-none focus:border-blue-500 focus:bg-white transition-colors text-slate-950 font-semibold appearance-none cursor-pointer">
-              <option value="" disabled selected>Select</option>
-              <option value="office">Office Space</option>
-              <option value="shop">Shop</option>
-              <option value="warehouse">Warehouse</option>
-            </select>
-            <i data-lucide="chevron-down" class="w-5 h-5 absolute right-5 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none"></i>
-          </div>
-        </div>
-
-        <!-- Estate Type -->
-        <div class="flex flex-col gap-2 relative">
-          <label class="text-sm font-bold text-gray-700">Estate Type</label>
-          <div class="relative">
-            <select class="w-full bg-gray-50 rounded-2xl px-5 py-4 border border-gray-200 outline-none focus:border-blue-500 focus:bg-white transition-colors text-slate-950 font-semibold appearance-none cursor-pointer">
-              <option value="" disabled selected>Select</option>
-              <option value="agricultural">Agricultural Land</option>
-              <option value="plantation">Plantation</option>
-              <option value="farmhouse">Farmhouse</option>
-            </select>
-            <i data-lucide="chevron-down" class="w-5 h-5 absolute right-5 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none"></i>
-          </div>
-        </div>
-
-        <!-- Property Status -->
-        <div class="flex flex-col gap-2 relative">
-          <label class="text-sm font-bold text-gray-700">Property Status</label>
-          <div class="relative">
-            <select class="w-full bg-gray-50 rounded-2xl px-5 py-4 border border-gray-200 outline-none focus:border-blue-500 focus:bg-white transition-colors text-slate-950 font-semibold appearance-none cursor-pointer">
-              <option value="" disabled selected>Select</option>
-              <option value="ready">Ready to Move</option>
-              <option value="construction">Under Construction</option>
-            </select>
-            <i data-lucide="chevron-down" class="w-5 h-5 absolute right-5 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none"></i>
-          </div>
-        </div>
-
-        <!-- Date of Completion -->
-        <div class="flex flex-col gap-2 relative">
-          <label class="text-sm font-bold text-gray-700">Date of Completion</label>
-          <input type="date" class="w-full bg-gray-50 rounded-2xl px-5 py-4 border border-gray-200 outline-none focus:border-blue-500 focus:bg-white transition-colors text-slate-950 font-semibold uppercase cursor-pointer">
         </div>
       </div>
 
-      <!-- Image Upload Area -->
-      <div class="flex flex-col gap-2 mt-2">
-        <label class="text-sm font-bold text-gray-700">Property Images</label>
-        <div class="w-full border-2 border-dashed border-gray-300 rounded-[32px] bg-gray-50 hover:bg-gray-100 hover:border-slate-950 transition-all flex flex-col items-center justify-center py-16 px-6 text-center cursor-pointer relative group">
-          <input type="file" id="propertyImages" multiple accept=".jpg,.jpeg,.png,.webp" class="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10">
-          <div class="w-20 h-20 bg-white rounded-full flex items-center justify-center shadow-sm mb-6 group-hover:scale-110 transition-transform">
-            <i data-lucide="image-plus" class="w-10 h-10 text-slate-950"></i>
+      <!-- Location Details Segmented Card -->
+      <div class="bg-white rounded-[24px] p-6 md:p-8 shadow-sm border border-gray-100 hover:shadow-md transition-shadow duration-300">
+        <div class="flex items-center gap-4 mb-6">
+          <div class="w-10 h-10 bg-gray-50 rounded-xl flex items-center justify-center shrink-0">
+            <i data-lucide="map-pin" class="w-5 h-5 text-slate-950"></i>
           </div>
-          <h3 class="font-bold text-slate-950 text-xl mb-2">Drag & drop or click to upload images</h3>
-          <p id="fileCountText" class="text-base font-medium text-gray-500">No file chosen</p>
-          <p class="text-xs font-bold text-gray-400 mt-6 bg-gray-200 px-4 py-1.5 rounded-full uppercase tracking-wider">JPG, PNG, WEBP — Multiple allowed</p>
+          <div>
+            <h2 class="text-lg font-bold text-slate-950">Location Details</h2>
+            <p class="text-xs font-medium text-gray-400">Where you operate</p>
+          </div>
         </div>
         
-        <!-- Image Preview Grid -->
-        <div id="imagePreviewGrid" class="grid grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4 mt-4 hidden">
-          <!-- Thumbnails will be injected here via JS -->
+        <div class="flex flex-col gap-6">
+          <div class="flex flex-col gap-2">
+            <label class="text-[10px] font-bold text-gray-500 uppercase tracking-wider">Full Address</label>
+            <input type="text" class="w-full bg-gray-50 rounded-xl px-4 py-3.5 border border-gray-100 outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-500/20 focus:bg-white transition-all text-slate-950 font-medium text-sm" value="123 Main St, Block B">
+          </div>
+          
+          <div class="grid grid-cols-2 gap-6">
+            <div class="flex flex-col gap-2">
+              <label class="text-[10px] font-bold text-gray-500 uppercase tracking-wider">City</label>
+              <input type="text" class="w-full bg-gray-50 rounded-xl px-4 py-3.5 border border-gray-100 outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-500/20 focus:bg-white transition-all text-slate-950 font-medium text-sm" value="Kozhikode">
+            </div>
+            <div class="flex flex-col gap-2">
+              <label class="text-[10px] font-bold text-gray-500 uppercase tracking-wider">PIN Code</label>
+              <input type="text" class="w-full bg-gray-50 rounded-xl px-4 py-3.5 border border-gray-100 outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-500/20 focus:bg-white transition-all text-slate-950 font-medium text-sm" value="673001">
+            </div>
+          </div>
+
+          <div class="flex flex-col gap-2">
+            <label class="text-[10px] font-bold text-gray-500 uppercase tracking-wider">State</label>
+            <div class="relative">
+              <select class="w-full bg-gray-50 rounded-xl px-4 py-3.5 border border-gray-100 outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-500/20 focus:bg-white transition-all text-slate-950 font-medium text-sm appearance-none cursor-pointer">
+                <option value="KL" selected>Kerala</option>
+                <option value="KA">Karnataka</option>
+                <option value="TN">Tamil Nadu</option>
+                <option value="MH">Maharashtra</option>
+                <option value="DL">Delhi</option>
+              </select>
+              <i data-lucide="chevron-down" class="w-4 h-4 absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none"></i>
+            </div>
+          </div>
+
+          <div class="flex flex-col gap-2">
+            <label class="text-[10px] font-bold text-gray-500 uppercase tracking-wider">Area of Operation</label>
+            <input type="text" class="w-full bg-gray-50 rounded-xl px-4 py-3.5 border border-gray-100 outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-500/20 focus:bg-white transition-all text-slate-950 font-medium text-sm" value="North Kerala">
+          </div>
         </div>
       </div>
 
-      <!-- Submit -->
-      <div class="pt-6 border-t border-gray-100 flex justify-end">
-        <button type="submit" class="w-full md:w-auto bg-blue-600 hover:-translate-y-0.5 hover:shadow-lg text-white px-12 py-5 rounded-2xl font-bold hover:scale-[1.02] transition-transform shadow-lg text-lg flex items-center justify-center gap-2">
-          List Property <i data-lucide="check-circle" class="w-5 h-5"></i>
+      <div class="flex justify-end mt-4">
+        <button type="submit" class="bg-blue-600 hover:-translate-y-0.5 hover:shadow-lg text-white px-10 py-4 rounded-full font-bold hover:bg-blue-700 hover:scale-105 hover:shadow-[0_4px_20px_rgba(37,99,235,0.4)] transition-all duration-300 text-sm flex items-center justify-center gap-2 group">
+          Save Changes <i data-lucide="save" class="w-4 h-4 transition-transform group-hover:scale-110"></i>
         </button>
       </div>
-
+      
     </form>
-
   </div>
 
   <script>
@@ -469,85 +427,28 @@
       }
     }
 
-
-    // Advanced Image Upload Logic
-    const fileInput = document.getElementById('propertyImages');
-    const previewGrid = document.getElementById('imagePreviewGrid');
-    const fileCountText = document.getElementById('fileCountText');
     
-    // We use a DataTransfer object to manage the files in the input programmatically
-    let dt = new DataTransfer();
-
-    fileInput.addEventListener('change', function(e) {
-      const newFiles = Array.from(e.target.files);
+    function toggleWhatsApp() {
+      const isChecked = document.getElementById('sameAsPhone').checked;
+      const mainPhone = document.getElementById('mainPhone').value;
+      const waPhone = document.getElementById('whatsappPhone');
       
-      // Add new files to our DataTransfer object
-      newFiles.forEach(file => {
-        // Prevent duplicates based on name and size
-        const isDuplicate = Array.from(dt.files).some(f => f.name === file.name && f.size === file.size);
-        if (!isDuplicate) {
-          dt.items.add(file);
-        }
-      });
-      
-      updateFileInputAndUI();
-    });
-
-    function updateFileInputAndUI() {
-      // Update the actual input element's files
-      fileInput.files = dt.files;
-      const files = fileInput.files;
-      
-      // Update text
-      if (files.length === 0) {
-        fileCountText.textContent = "No file chosen";
-        previewGrid.classList.add('hidden');
+      if (isChecked) {
+        waPhone.value = mainPhone;
+        waPhone.readOnly = true;
+        waPhone.classList.add('text-gray-400');
       } else {
-        fileCountText.textContent = files.length === 1 ? "1 file selected" : `₹{files.length} files selected`;
-        previewGrid.classList.remove('hidden');
+        waPhone.value = '';
+        waPhone.readOnly = false;
+        waPhone.classList.remove('text-gray-400');
       }
-      
-      // Clear current previews
-      previewGrid.innerHTML = '';
-      
-      // Render new previews
-      Array.from(files).forEach((file, index) => {
-        const objectURL = URL.createObjectURL(file);
-        
-        const thumbContainer = document.createElement('div');
-        thumbContainer.className = 'relative w-full aspect-square rounded-2xl overflow-hidden shadow-sm border border-gray-200 group bg-gray-50';
-        
-        const img = document.createElement('img');
-        img.src = objectURL;
-        img.className = 'w-full h-full object-cover';
-        
-        const removeBtn = document.createElement('button');
-        removeBtn.type = 'button';
-        removeBtn.className = 'absolute top-2 right-2 w-8 h-8 bg-white/90 backdrop-blur-md rounded-full flex items-center justify-center text-red-500 shadow-sm opacity-100 md:opacity-0 md:group-hover:opacity-100 transition-opacity z-20 hover:bg-blue-50';
-        removeBtn.innerHTML = '<i data-lucide="x" class="w-4 h-4"></i>';
-        
-        // Remove logic
-        removeBtn.addEventListener('click', (e) => {
-          e.preventDefault(); 
-          e.stopPropagation();
-          
-          const tempDt = new DataTransfer();
-          Array.from(dt.files).forEach((f, i) => {
-            if (i !== index) tempDt.items.add(f);
-          });
-          dt = tempDt;
-          
-          URL.revokeObjectURL(objectURL);
-          updateFileInputAndUI();
-        });
-        
-        thumbContainer.appendChild(img);
-        thumbContainer.appendChild(removeBtn);
-        previewGrid.appendChild(thumbContainer);
-      });
-      
-      lucide.createIcons();
     }
+
+    document.getElementById('mainPhone').addEventListener('input', (e) => {
+      if (document.getElementById('sameAsPhone').checked) {
+        document.getElementById('whatsappPhone').value = e.target.value;
+      }
+    });
   </script>
 
   <!-- PWA Service Worker Registration -->
@@ -563,6 +464,5 @@
     }
   </script>
 
-  <script src="main.js"></script>
 </body>
 </html>

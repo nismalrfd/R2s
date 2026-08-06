@@ -1,0 +1,21 @@
+{
+  "name": "R2s Realtors Network",
+  "short_name": "R2s",
+  "start_url": "/index.html",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#ffffff",
+  "description": "Premium real estate networking and property management platform.",
+  "icons": [
+    {
+      "src": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e0/Placeholder.png/512px-Placeholder.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e0/Placeholder.png/512px-Placeholder.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
