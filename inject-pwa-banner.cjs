@@ -1,4 +1,5 @@
 const fs = require('fs');
+const path = require('path');
 
 const pwaHTML = `
   <!-- PWA Install Banner -->
@@ -14,7 +15,9 @@ const pwaHTML = `
     </div>
     <div class="flex items-center gap-2 shrink-0">
       <button onclick="dismissPwaBanner()" class="w-8 h-8 flex items-center justify-center bg-gray-50 rounded-full text-gray-400 hover:text-slate-950 hover:bg-gray-100 transition-colors"><i data-lucide="x" class="w-4 h-4"></i></button>
-      <button onclick="installPwa()" class="bg-blue-600 hover:bg-blue-700 text-white px-4 md:px-5 py-2 md:py-2.5 rounded-full text-xs md:text-sm font-bold shadow-lg shadow-blue-600/30 transition-all hover:-translate-y-0.5 whitespace-nowrap">Install App</button>
+      <button onclick="installPwa()" class="bg-blue-600 hover:bg-blue-700 text-white flex items-center gap-1.5 px-4 md:px-5 py-2 md:py-2.5 rounded-full text-xs md:text-sm font-bold shadow-lg shadow-blue-600/30 transition-all hover:-translate-y-0.5 whitespace-nowrap">
+        <i data-lucide="download" class="w-4 h-4"></i> Install App
+      </button>
     </div>
   </div>
 
@@ -32,13 +35,13 @@ const pwaHTML = `
       if (!localStorage.getItem('pwaBannerDismissed')) {
         // Show banner after a short delay for dramatic effect
         setTimeout(() => {
-          pwaBanner.classList.remove('translate-y-full');
+          if(pwaBanner) pwaBanner.classList.remove('translate-y-full');
         }, 1500);
       }
     });
 
     function dismissPwaBanner() {
-      pwaBanner.classList.add('translate-y-full');
+      if(pwaBanner) pwaBanner.classList.add('translate-y-full');
       // Store in localStorage so it doesn't bother them for a while
       localStorage.setItem('pwaBannerDismissed', 'true');
     }
@@ -67,12 +70,60 @@ const pwaHTML = `
   </script>
 `;
 
-let content = fs.readFileSync('login.html', 'utf8');
+const swRegistrationHTML = `
+  <!-- PWA Service Worker Registration -->
+  <script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('/sw.js').then(registration => {
+          console.log('SW registered: ', registration.scope);
+        }).catch(err => {
+          console.log('SW registration failed: ', err);
+        });
+      });
+    }
+  </script>
+`;
 
-if (!content.includes('pwaInstallBanner')) {
-    content = content.replace('</body>', pwaHTML + '\n</body>');
-    fs.writeFileSync('login.html', content);
-    console.log('Injected PWA banner into login.html');
-} else {
-    console.log('PWA banner already exists.');
-}
+const files = fs.readdirSync(__dirname).filter(file => file.endsWith('.html'));
+
+files.forEach(file => {
+    let content = fs.readFileSync(file, 'utf8');
+    let changed = false;
+
+    // Check if manifest link exists in head
+    if (!content.includes('href="/manifest.json"')) {
+        content = content.replace('</head>', '  <link rel="manifest" href="/manifest.json" />\n</head>');
+        changed = true;
+    }
+
+    // Check if SW registration exists
+    if (!content.includes("navigator.serviceWorker.register('/sw.js')")) {
+        content = content.replace('</body>', swRegistrationHTML + '\n</body>');
+        changed = true;
+    }
+
+    // Check if PWA banner exists
+    if (!content.includes('pwaInstallBanner')) {
+        content = content.replace('</body>', pwaHTML + '\n</body>');
+        changed = true;
+    } else {
+        // If it exists but doesn't have the download icon, replace the old banner logic
+        if (!content.includes('data-lucide="download"')) {
+            // Remove the old banner (crude way since we know it's at the bottom)
+            const parts = content.split('<!-- PWA Install Banner -->');
+            if (parts.length > 1) {
+                content = parts[0] + pwaHTML + '\n</body>';
+                // Note: The original file had </body> after, so this is safe assuming the banner was right before </body>
+                changed = true;
+            }
+        }
+    }
+
+    if (changed) {
+        fs.writeFileSync(file, content);
+        console.log(\`Injected PWA features into \${file}\`);
+    } else {
+        console.log(\`PWA features already up to date in \${file}\`);
+    }
+});
