@@ -92,40 +92,35 @@ function createParticleLoader(containerId, isMinimal = false) {
 }
 
 
-const _appInitialized = sessionStorage.getItem('r2s_app_initialized');
-
-if (!_appInitialized) {
-  // INITIAL BOOT LOADER (Full Screen White)
-  const _loaderHTML = `
-    <div id="global-page-loader" class="fixed inset-0 bg-white z-[999999] flex flex-col items-center justify-center transition-opacity duration-500">
-      <style>
-        #global-page-loader .scene-wrap { width: min(46vw, 170px); aspect-ratio: 1/1; }
-        #global-page-loader .scene-wrap svg { width: 100%; height: 100%; display: block; overflow: visible; }
-      </style>
-      <div class="scene-wrap">
-        <svg viewBox="0 0 300 300" id="scene">
-          <g id="particles-boot"></g>
-        </svg>
-      </div>
+// INITIAL BOOT LOADER (Full Screen White)
+const _loaderHTML = `
+  <div id="global-page-loader" class="fixed inset-0 bg-white z-[999999] flex flex-col items-center justify-center transition-opacity duration-500">
+    <style>
+      #global-page-loader .scene-wrap { width: min(46vw, 170px); aspect-ratio: 1/1; }
+      #global-page-loader .scene-wrap svg { width: 100%; height: 100%; display: block; overflow: visible; }
+    </style>
+    <div class="scene-wrap">
+      <svg viewBox="0 0 300 300" id="scene">
+        <g id="particles-boot"></g>
+      </svg>
     </div>
-  `;
-  document.body.insertAdjacentHTML('afterbegin', _loaderHTML);
-  const stopAnim = createParticleLoader('particles-boot');
+  </div>
+`;
+document.body.insertAdjacentHTML('afterbegin', _loaderHTML);
+const stopAnim = createParticleLoader('particles-boot');
 
-  window.addEventListener('load', () => {
-    setTimeout(() => {
-      const loader = document.getElementById('global-page-loader');
-      if(loader) {
-        loader.classList.add('opacity-0');
-        setTimeout(() => {
-          loader.remove(); 
-          if(stopAnim) stopAnim();
-        }, 500);
-      }
-      sessionStorage.setItem('r2s_app_initialized', 'true');
-    }, 600);
-  });
-}
+window.addEventListener('load', () => {
+  setTimeout(() => {
+    const loader = document.getElementById('global-page-loader');
+    if(loader) {
+      loader.classList.add('opacity-0');
+      setTimeout(() => {
+        loader.remove(); 
+        if(stopAnim) stopAnim();
+      }, 500);
+    }
+  }, 600);
+});
 
 // MINIMAL NAVIGATION LOADER
 function showMinimalLoader(callback) {
