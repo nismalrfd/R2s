@@ -269,7 +269,7 @@
             
             <div class="flex flex-col gap-2 relative">
               <label class="text-[10px] font-bold text-gray-500 uppercase tracking-wider">Phone Number *</label>
-              <div class="flex bg-gray-50 rounded-xl border border-gray-100 focus-within:border-slate-950 focus-within:ring-4 focus-within:ring-slate-950/5 focus-within:bg-white transition-all overflow-hidden">
+              <div class="flex bg-gray-50 rounded-xl border border-gray-100 focus-within:border-blue-500 focus-within:ring-4 focus-within:ring-slate-950/5 focus-within:bg-white transition-all overflow-hidden">
                 <span class="px-3 py-2.5 border-r border-gray-100 font-bold text-gray-500 text-xs flex items-center gap-1.5">IN +91</span>
                 <input type="tel" id="f_phone" class="flex-1 px-3 py-2.5 bg-transparent outline-none font-bold text-slate-950 text-sm" placeholder="98765 43210" maxlength="10" required>
               </div>
@@ -283,7 +283,7 @@
                   <span class="text-[10px] font-bold text-gray-400 uppercase tracking-wider group-hover:text-slate-950 transition-colors">Same as above</span>
                 </label>
               </div>
-              <div class="flex bg-gray-50 rounded-xl border border-gray-100 focus-within:border-slate-950 focus-within:ring-4 focus-within:ring-slate-950/5 focus-within:bg-white transition-all overflow-hidden">
+              <div class="flex bg-gray-50 rounded-xl border border-gray-100 focus-within:border-blue-500 focus-within:ring-4 focus-within:ring-slate-950/5 focus-within:bg-white transition-all overflow-hidden">
                 <span class="px-3 py-2.5 border-r border-gray-100 font-bold text-gray-500 text-xs flex items-center gap-1.5">IN +91</span>
                 <input type="tel" id="f_wa" class="flex-1 px-3 py-2.5 bg-transparent outline-none font-bold text-slate-950 text-sm" placeholder="WhatsApp Number" maxlength="10">
               </div>
@@ -727,19 +727,13 @@
   <!-- Success Modal -->
   <div id="successModal" class="fixed inset-0 z-[5000] flex items-center justify-center p-4 opacity-0 pointer-events-none transition-opacity duration-300">
     <div class="absolute inset-0 bg-slate-950/80 backdrop-blur-md"></div>
-    <div class="relative bg-white p-8 md:p-10 rounded-[32px] shadow-[0_20px_60px_-15px_rgba(0,0,0,0.5)] flex flex-col items-center text-center max-w-sm w-full transform scale-95 transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)]" id="successContent">
-      <div class="w-24 h-24 bg-green-50 rounded-full flex items-center justify-center mb-6 relative">
+    <div class="relative flex flex-col items-center text-center transform scale-95 transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)]" id="successContent">
+      <div class="w-32 h-32 bg-green-50 rounded-full flex items-center justify-center relative">
         <div class="absolute inset-0 bg-green-400 rounded-full animate-ping opacity-20"></div>
-        <i data-lucide="check-circle-2" class="w-12 h-12 text-green-500 relative z-10" aria-hidden="true"></i>
-      </div>
-      <h3 class="text-3xl font-extrabold text-slate-950 mb-3 tracking-tight">Welcome to R2s!</h3>
-      <p class="text-sm font-medium text-gray-500 mb-8">Your professional account has been successfully created. Redirecting to your dashboard...</p>
-      
-      <!-- Progress Bar -->
-      <div class="w-full bg-gray-100 rounded-full h-1.5 overflow-hidden">
-        <div class="bg-green-500 h-1.5 rounded-full w-0 transition-all duration-[2000ms] ease-linear" id="redirectProgress"></div>
+        <i data-lucide="check-circle-2" class="w-16 h-16 text-green-500 relative z-10" aria-hidden="true"></i>
       </div>
     </div>
+  </div>
   </div>
 
   <script src="main.js"></script>
@@ -857,8 +851,9 @@
 
 
   <!-- Powered By Watermark -->
-  <div class="fixed bottom-6 right-6 md:bottom-8 md:right-8 z-[40] flex items-center justify-center pointer-events-none">
-    <img src="/watermark.png" alt="RHenova Tech" class="w-[80px] md:w-[110px] h-auto object-contain grayscale opacity-10">
+  <div class="fixed bottom-6 right-6 md:bottom-8 md:right-8 z-[40] flex flex-col items-end pointer-events-none opacity-75">
+    <span class="text-[10px] font-bold text-gray-400 mb-1 tracking-wider uppercase">Powered by</span>
+    <img src="/watermark.png" alt="RHenova Tech" class="w-[80px] md:w-[110px] h-auto object-contain grayscale">
   </div>
 
 </body>

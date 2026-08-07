@@ -265,7 +265,7 @@
           <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div class="flex flex-col gap-2">
               <label class="text-[10px] font-bold text-gray-500 uppercase tracking-wider">Phone Number <span class="text-red-500">*</span></label>
-              <div class="flex bg-gray-50 rounded-xl border border-gray-100 focus-within:border-slate-950 focus-within:ring-4 focus-within:ring-slate-950/5 focus-within:bg-white transition-all overflow-hidden">
+              <div class="flex bg-gray-50 rounded-xl border border-gray-100 focus-within:border-blue-500 focus-within:ring-4 focus-within:ring-slate-950/5 focus-within:bg-white transition-all overflow-hidden">
                 <span class="px-4 py-3.5 border-r border-gray-100 font-bold text-gray-500 text-xs flex items-center gap-1.5">IN +91</span>
                 <input type="tel" id="mainPhone" class="flex-1 px-4 py-3.5 bg-transparent outline-none font-medium text-slate-950 text-sm" value="9876543210" maxlength="10" required>
               </div>
@@ -279,7 +279,7 @@
                   <span class="text-[10px] font-bold text-gray-400 uppercase tracking-wider group-hover:text-slate-950 transition-colors">Same as above</span>
                 </label>
               </div>
-              <div class="flex bg-gray-50 rounded-xl border border-gray-100 focus-within:border-slate-950 focus-within:ring-4 focus-within:ring-slate-950/5 focus-within:bg-white transition-all overflow-hidden">
+              <div class="flex bg-gray-50 rounded-xl border border-gray-100 focus-within:border-blue-500 focus-within:ring-4 focus-within:ring-slate-950/5 focus-within:bg-white transition-all overflow-hidden">
                 <span class="px-4 py-3.5 border-r border-gray-100 font-bold text-gray-500 text-xs flex items-center gap-1.5">IN +91</span>
                 <input type="tel" id="whatsappPhone" class="flex-1 px-4 py-3.5 bg-transparent outline-none font-medium text-slate-950 text-sm" placeholder="Same as above?">
               </div>
@@ -567,8 +567,9 @@
 
 
   <!-- Powered By Watermark -->
-  <div class="fixed bottom-6 right-6 md:bottom-8 md:right-8 z-[40] flex items-center justify-center pointer-events-none">
-    <img src="/watermark.png" alt="RHenova Tech" class="w-[80px] md:w-[110px] h-auto object-contain grayscale opacity-10">
+  <div class="fixed bottom-6 right-6 md:bottom-8 md:right-8 z-[40] flex flex-col items-end pointer-events-none opacity-75">
+    <span class="text-[10px] font-bold text-gray-400 mb-1 tracking-wider uppercase">Powered by</span>
+    <img src="/watermark.png" alt="RHenova Tech" class="w-[80px] md:w-[110px] h-auto object-contain grayscale">
   </div>
 
 </body>

@@ -130,12 +130,12 @@ if (!_appInitialized) {
 // MINIMAL NAVIGATION LOADER
 function showMinimalLoader(callback) {
   const _minimalHTML = `
-    <div id="minimal-nav-loader" class="fixed inset-0 bg-white/40 backdrop-blur-sm z-[999999] flex flex-col items-center justify-center opacity-0 transition-opacity duration-300 pointer-events-none">
+    <div id="minimal-nav-loader" class="fixed inset-0 bg-white z-[999999] flex flex-col items-center justify-center opacity-0 transition-opacity duration-300 pointer-events-none">
       <style>
-        #minimal-nav-loader .scene-wrap { width: 80px; aspect-ratio: 1/1; }
+        #minimal-nav-loader .scene-wrap { width: min(46vw, 170px); aspect-ratio: 1/1; }
         #minimal-nav-loader .scene-wrap svg { width: 100%; height: 100%; display: block; overflow: visible; }
       </style>
-      <div class="scene-wrap bg-white rounded-2xl p-3 shadow-xl border border-gray-100/50">
+      <div class="scene-wrap">
         <svg viewBox="0 0 300 300" id="scene-nav">
           <g id="particles-nav"></g>
         </svg>

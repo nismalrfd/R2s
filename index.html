@@ -105,8 +105,8 @@
       
       <!-- Left: Logo & Brand -->
       <a href="/dashboard.html" class="flex items-center gap-3 group z-[910]">
-        <div class="w-10 h-10 flex items-center justify-center bg-gray-50 rounded-xl group-hover:bg-red-50 transition-colors border border-gray-100 group-hover:border-red-100 shrink-0">
-          <img src="/LOGO.png" alt="R2s" class="w-full h-full object-contain p-1.5" loading="lazy">
+        <div class="h-8 md:h-10 flex items-center justify-center shrink-0">
+          <img src="/LOGO.png" alt="R2s" class="h-full w-auto object-contain" loading="lazy">
         </div>
         <span class="text-lg md:text-xl font-extrabold tracking-tight text-slate-950 hidden sm:block">R2s Realtors</span>
       </a>
@@ -382,8 +382,9 @@
 
 
   <!-- Powered By Watermark -->
-  <div class="fixed bottom-6 right-6 md:bottom-8 md:right-8 z-[40] flex items-center justify-center pointer-events-none">
-    <img src="/watermark.png" alt="RHenova Tech" class="w-[80px] md:w-[110px] h-auto object-contain grayscale opacity-10">
+  <div class="fixed bottom-6 right-6 md:bottom-8 md:right-8 z-[40] flex flex-col items-end pointer-events-none opacity-75">
+    <span class="text-[10px] font-bold text-gray-400 mb-1 tracking-wider uppercase">Powered by</span>
+    <img src="/watermark.png" alt="RHenova Tech" class="w-[80px] md:w-[110px] h-auto object-contain grayscale">
   </div>
 
 </body>

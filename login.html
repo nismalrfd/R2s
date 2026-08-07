@@ -169,7 +169,7 @@
           <!-- Mobile Number Input -->
           <div id="mobileInputGroup" class="flex flex-col gap-2 relative transition-all duration-300">
             <label class="text-[10px] font-bold text-gray-500 uppercase tracking-wider">Mobile Number</label>
-            <div id="mobileInputWrapper" class="flex bg-white rounded-xl border border-gray-200 focus-within:border-slate-950 focus-within:ring-4 focus-within:ring-slate-950/5 transition-all overflow-hidden shadow-sm hover:border-gray-300">
+            <div id="mobileInputWrapper" class="flex bg-white rounded-xl border border-gray-200 focus-within:border-blue-500 focus-within:ring-4 focus-within:ring-slate-950/5 transition-all overflow-hidden shadow-sm hover:border-gray-300">
               <span class="px-4 py-3.5 border-r border-gray-100 font-bold text-gray-500 bg-gray-50 text-sm flex items-center gap-1.5">IN +91</span>
               <input type="tel" id="phoneInput" oninput="hideFieldError('mobile')" class="flex-1 px-4 py-3.5 bg-transparent outline-none font-bold text-slate-950 text-base" placeholder="98765 43210" maxlength="10" required>
             </div>
@@ -183,7 +183,7 @@
           <!-- Email Input (Hidden by default) -->
           <div id="emailInputGroup" class="hidden flex flex-col gap-2 relative transition-all duration-300">
             <label class="text-[10px] font-bold text-gray-500 uppercase tracking-wider">Email Address</label>
-            <div id="emailInputWrapper" class="flex bg-white rounded-xl border border-gray-200 focus-within:border-slate-950 focus-within:ring-4 focus-within:ring-slate-950/5 transition-all overflow-hidden shadow-sm hover:border-gray-300">
+            <div id="emailInputWrapper" class="flex bg-white rounded-xl border border-gray-200 focus-within:border-blue-500 focus-within:ring-4 focus-within:ring-slate-950/5 transition-all overflow-hidden shadow-sm hover:border-gray-300">
               <span class="px-4 py-3.5 border-r border-gray-100 bg-gray-50 flex items-center justify-center">
                 <i data-lucide="mail" class="w-4 h-4 text-gray-400"></i>
               </span>
@@ -224,10 +224,10 @@
         
         <form id="otpForm" class="w-full flex flex-col gap-6" onsubmit="handleVerify(event)">
           <div class="flex justify-between gap-3 px-1">
-            <input type="number" maxlength="1" class="w-16 h-20 text-center text-3xl font-bold bg-white border border-gray-200 rounded-2xl focus:border-blue-500 focus:ring-2 focus:ring-slate-950/10 outline-none transition-all shadow-sm otp-input text-slate-950" />
-            <input type="number" maxlength="1" class="w-16 h-20 text-center text-3xl font-bold bg-white border border-gray-200 rounded-2xl focus:border-blue-500 focus:ring-2 focus:ring-slate-950/10 outline-none transition-all shadow-sm otp-input text-slate-950" />
-            <input type="number" maxlength="1" class="w-16 h-20 text-center text-3xl font-bold bg-white border border-gray-200 rounded-2xl focus:border-blue-500 focus:ring-2 focus:ring-slate-950/10 outline-none transition-all shadow-sm otp-input text-slate-950" />
-            <input type="number" maxlength="1" class="w-16 h-20 text-center text-3xl font-bold bg-white border border-gray-200 rounded-2xl focus:border-blue-500 focus:ring-2 focus:ring-slate-950/10 outline-none transition-all shadow-sm otp-input text-slate-950" />
+            <input type="number" maxlength="1" class="w-16 h-20 text-center text-3xl font-bold bg-white border border-gray-200 rounded-2xl focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 outline-none transition-all shadow-sm otp-input text-slate-950" />
+            <input type="number" maxlength="1" class="w-16 h-20 text-center text-3xl font-bold bg-white border border-gray-200 rounded-2xl focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 outline-none transition-all shadow-sm otp-input text-slate-950" />
+            <input type="number" maxlength="1" class="w-16 h-20 text-center text-3xl font-bold bg-white border border-gray-200 rounded-2xl focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 outline-none transition-all shadow-sm otp-input text-slate-950" />
+            <input type="number" maxlength="1" class="w-16 h-20 text-center text-3xl font-bold bg-white border border-gray-200 rounded-2xl focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 outline-none transition-all shadow-sm otp-input text-slate-950" />
           </div>
           
           <!-- Elegant Minimal Warning -->
@@ -610,8 +610,9 @@
 
 
   <!-- Powered By Watermark -->
-  <div class="fixed bottom-6 right-6 md:bottom-8 md:right-8 z-[40] flex items-center justify-center pointer-events-none">
-    <img src="/watermark.png" alt="RHenova Tech" class="w-[80px] md:w-[110px] h-auto object-contain grayscale opacity-10">
+  <div class="fixed bottom-6 right-6 md:bottom-8 md:right-8 z-[40] flex flex-col items-end pointer-events-none opacity-75">
+    <span class="text-[10px] font-bold text-gray-400 mb-1 tracking-wider uppercase">Powered by</span>
+    <img src="/watermark.png" alt="RHenova Tech" class="w-[80px] md:w-[110px] h-auto object-contain grayscale">
   </div>
 
 </body>
