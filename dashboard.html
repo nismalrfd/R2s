@@ -204,7 +204,7 @@
       <div class="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-8">
         <div>
           <p class="text-sm text-gray-500 font-medium mb-1">Welcome back,</p>
-          <h1 class="text-3xl font-extrabold text-slate-950 mb-2">Rajesh Kumar 👋</h1>
+          <h1 class="text-3xl font-extrabold text-slate-950 mb-2">Rajesh Kumar</h1>
           <p class="text-sm font-medium text-gray-500">Manage and view all your listed properties</p>
         </div>
         <div class="flex items-center gap-4">
@@ -308,17 +308,15 @@
 
       </div>
 
-      <!-- Pagination (Static Mockup) -->
-      <div class="flex items-center justify-between mt-8 mb-4">
-        <p class="text-sm font-medium text-gray-500">Showing 1 to 2 of 12 properties</p>
-        <div class="flex items-center gap-1">
-          <button class="w-8 h-8 rounded-lg border border-gray-200 flex items-center justify-center text-gray-500 hover:bg-gray-50"><i data-lucide="chevron-left" class="w-4 h-4" aria-hidden="true"></i></button>
-          <button class="w-8 h-8 rounded-lg bg-[#1e293b] text-white flex items-center justify-center text-sm font-bold shadow-md">1</button>
-          <button class="w-8 h-8 rounded-lg border border-gray-200 flex items-center justify-center text-gray-500 hover:bg-gray-50 text-sm font-bold">2</button>
-          <button class="w-8 h-8 rounded-lg border border-gray-200 flex items-center justify-center text-gray-500 hover:bg-gray-50 text-sm font-bold">3</button>
-          <button class="w-8 h-8 rounded-lg border border-gray-200 flex items-center justify-center text-gray-500 hover:bg-gray-50"><i data-lucide="chevron-right" class="w-4 h-4" aria-hidden="true"></i></button>
+      
+      <!-- Infinite Scroll Loader -->
+      <div id="infiniteScrollLoader" class="flex flex-col items-center justify-center py-10 my-4">
+        <div class="relative w-10 h-10 mb-3">
+           <div class="absolute inset-0 border-4 border-gray-100 border-t-[#736DB3] rounded-full animate-spin"></div>
         </div>
+        <p class="text-sm font-bold text-gray-400 tracking-wide">Loading more properties...</p>
       </div>
+    
 
     </div>
 
@@ -1688,4 +1686,56 @@
   </div>
 
 
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const propertyCards = document.querySelectorAll('#propertyListContainer .property-card');
+      const loader = document.getElementById('infiniteScrollLoader');
+      
+      if(propertyCards.length > 0 && loader) {
+        // Hide all except first 2
+        propertyCards.forEach((card, index) => {
+          if(index >= 2) {
+            card.style.display = 'none';
+            card.classList.add('opacity-0', 'translate-y-8');
+          }
+        });
+        
+        let currentIndex = 2;
+        
+        if(propertyCards.length <= 2) {
+          loader.style.display = 'none';
+          return;
+        }
+
+        const observer = new IntersectionObserver((entries) => {
+          if(entries[0].isIntersecting) {
+            if(currentIndex < propertyCards.length) {
+              // Simulate network load time for effect
+              setTimeout(() => {
+                const end = Math.min(currentIndex + 2, propertyCards.length);
+                for(let i = currentIndex; i < end; i++) {
+                  const card = propertyCards[i];
+                  // Restore flex/block display
+                  card.style.display = ''; 
+                  
+                  // Trigger reflow for animation
+                  void card.offsetWidth;
+                  
+                  card.classList.remove('opacity-0', 'translate-y-8');
+                }
+                currentIndex = end;
+                
+                if(currentIndex >= propertyCards.length) {
+                  loader.style.display = 'none';
+                }
+              }, 1200); // 1.2s fake load time to show off the spinner
+            }
+          }
+        }, { threshold: 0.1 });
+        
+        observer.observe(loader);
+      }
+    });
+  </script>
 </body>
