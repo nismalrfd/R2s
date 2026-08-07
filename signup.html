@@ -144,7 +144,7 @@
       </a>
       
       <!-- Progress Indicator -->
-      <div class="flex items-center gap-3">
+      <div class="flex flex-col items-center justify-center w-full">
         <div class="flex items-center gap-2">
           <div id="dot1" class="w-2 h-2 rounded-full bg-slate-950 transition-colors duration-500"></div>
           <div id="dot2" class="w-2 h-2 rounded-full bg-gray-200 transition-colors duration-500"></div>
@@ -171,11 +171,9 @@
             <label class="radio-card cursor-pointer relative h-full group">
               <input type="radio" name="role" value="owner" class="absolute opacity-0 w-0 h-0" checked>
               <div class="w-full h-full bg-white border border-gray-200 rounded-[16px] p-3 flex flex-col items-center justify-center text-center transition-all duration-300 hover:border-gray-300 hover:-translate-y-1 hover:shadow-md">
-                <div class="relative w-10 h-10 mx-auto mb-2 transition-transform duration-300 group-hover:scale-110">
-                  <div class="absolute right-0 top-0 w-8 h-8 bg-gradient-to-br from-red-400 to-red-600 rounded-full shadow-sm"></div>
-                  <div class="absolute left-0 bottom-0 w-9 h-9 bg-white/60 backdrop-blur-md border border-white/80 rounded-xl shadow-[0_4px_12px_rgba(0,0,0,0.08)] flex items-center justify-center">
-                    <i data-lucide="home" class="w-4 h-4 text-blue-600" aria-hidden="true"></i>
-                  </div>
+                
+                <div class="w-14 h-14 mx-auto mb-3 rounded-[16px] bg-gradient-to-br from-white via-white to-red-50 shadow-[0_8px_24px_rgba(239,68,68,0.15)] flex items-center justify-center border border-red-50 transition-transform duration-300 group-hover:scale-110">
+                  <i data-lucide="home" class="w-6 h-6 text-red-600" stroke-width="2.5" aria-hidden="true"></i>
                 </div>
                 <h3 class="font-bold text-slate-950 text-xs mb-0.5">Owner</h3>
                 <p class="text-[10px] font-medium text-gray-400">List own properties</p>
@@ -186,11 +184,9 @@
             <label class="radio-card cursor-pointer relative h-full group">
               <input type="radio" name="role" value="nar" class="absolute opacity-0 w-0 h-0">
               <div class="w-full h-full bg-white border border-gray-200 rounded-[16px] p-3 flex flex-col items-center justify-center text-center transition-all duration-300 hover:border-gray-300 hover:-translate-y-1 hover:shadow-md">
-                <div class="relative w-10 h-10 mx-auto mb-2 transition-transform duration-300 group-hover:scale-110">
-                  <div class="absolute right-0 top-0 w-8 h-8 bg-gradient-to-br from-red-400 to-red-600 rounded-lg rotate-12 shadow-sm"></div>
-                  <div class="absolute left-0 bottom-0 w-9 h-9 bg-white/60 backdrop-blur-md border border-white/80 rounded-xl shadow-[0_4px_12px_rgba(0,0,0,0.08)] flex items-center justify-center">
-                    <i data-lucide="award" class="w-4 h-4 text-blue-600" aria-hidden="true"></i>
-                  </div>
+                
+                <div class="w-14 h-14 mx-auto mb-3 rounded-[16px] bg-gradient-to-br from-white via-white to-red-50 shadow-[0_8px_24px_rgba(239,68,68,0.15)] flex items-center justify-center border border-red-50 transition-transform duration-300 group-hover:scale-110">
+                  <i data-lucide="contact" class="w-6 h-6 text-red-600" stroke-width="2.5" aria-hidden="true"></i>
                 </div>
                 <h3 class="font-bold text-slate-950 text-xs mb-0.5">NAR Realtor</h3>
                 <p class="text-[10px] font-medium text-gray-400">Association Member</p>
@@ -201,12 +197,9 @@
             <label class="radio-card cursor-pointer relative h-full group">
               <input type="radio" name="role" value="partner" class="absolute opacity-0 w-0 h-0">
               <div class="w-full h-full bg-white border border-gray-200 rounded-[16px] p-3 flex flex-col items-center justify-center text-center transition-all duration-300 hover:border-gray-300 hover:-translate-y-1 hover:shadow-md">
-                <div class="relative w-10 h-10 mx-auto mb-2 transition-transform duration-300 group-hover:scale-110">
-                  <div class="absolute right-1 top-0 w-7 h-7 bg-gradient-to-br from-red-400 to-red-600 rounded-full shadow-sm"></div>
-                  <div class="absolute right-4 top-2 w-4 h-4 bg-gradient-to-br from-red-300 to-red-500 rounded-full shadow-sm"></div>
-                  <div class="absolute left-0 bottom-0 w-9 h-9 bg-white/60 backdrop-blur-md border border-white/80 rounded-xl shadow-[0_4px_12px_rgba(0,0,0,0.08)] flex items-center justify-center">
-                    <i data-lucide="users" class="w-4 h-4 text-blue-600" aria-hidden="true"></i>
-                  </div>
+                
+                <div class="w-14 h-14 mx-auto mb-3 rounded-[16px] bg-gradient-to-br from-white via-white to-red-50 shadow-[0_8px_24px_rgba(239,68,68,0.15)] flex items-center justify-center border border-red-50 transition-transform duration-300 group-hover:scale-110">
+                  <i data-lucide="users" class="w-6 h-6 text-red-600" stroke-width="2.5" aria-hidden="true"></i>
                 </div>
                 <h3 class="font-bold text-slate-950 text-xs mb-0.5">Partner</h3>
                 <p class="text-[10px] font-medium text-gray-400">Referral & co-broking</p>
@@ -217,11 +210,9 @@
             <label class="radio-card cursor-pointer relative h-full group">
               <input type="radio" name="role" value="builder" class="absolute opacity-0 w-0 h-0">
               <div class="w-full h-full bg-white border border-gray-200 rounded-[16px] p-3 flex flex-col items-center justify-center text-center transition-all duration-300 hover:border-gray-300 hover:-translate-y-1 hover:shadow-md">
-                <div class="relative w-10 h-10 mx-auto mb-2 transition-transform duration-300 group-hover:scale-110">
-                  <div class="absolute right-0 top-0 w-8 h-8 bg-gradient-to-br from-red-400 to-red-600 rounded-xl shadow-sm"></div>
-                  <div class="absolute left-0 bottom-0 w-9 h-9 bg-white/60 backdrop-blur-md border border-white/80 rounded-xl shadow-[0_4px_12px_rgba(0,0,0,0.08)] flex items-center justify-center">
-                    <i data-lucide="building-2" class="w-4 h-4 text-blue-600" aria-hidden="true"></i>
-                  </div>
+                
+                <div class="w-14 h-14 mx-auto mb-3 rounded-[16px] bg-gradient-to-br from-white via-white to-red-50 shadow-[0_8px_24px_rgba(239,68,68,0.15)] flex items-center justify-center border border-red-50 transition-transform duration-300 group-hover:scale-110">
+                  <i data-lucide="building-2" class="w-6 h-6 text-red-600" stroke-width="2.5" aria-hidden="true"></i>
                 </div>
                 <h3 class="font-bold text-slate-950 text-xs mb-0.5">Builder</h3>
                 <p class="text-[10px] font-medium text-gray-400">Developments</p>
@@ -233,13 +224,11 @@
               <input type="radio" name="role" value="agent" class="absolute opacity-0 w-0 h-0">
               <div class="w-full h-full bg-white border border-gray-200 rounded-[16px] p-3 flex flex-col items-center justify-center text-center transition-all duration-300 hover:border-gray-300 hover:-translate-y-1 hover:shadow-md">
                 <div class="flex items-center gap-3">
-                  <div class="relative w-10 h-10 shrink-0 transition-transform duration-300 group-hover:scale-110">
-                    <div class="absolute right-0 top-0 w-8 h-8 bg-gradient-to-br from-red-400 to-red-600 rounded-full shadow-sm"></div>
-                    <div class="absolute left-0 bottom-0 w-9 h-9 bg-white/60 backdrop-blur-md border border-white/80 rounded-xl shadow-[0_4px_12px_rgba(0,0,0,0.08)] flex items-center justify-center">
-                      <i data-lucide="user" class="w-4 h-4 text-blue-600" aria-hidden="true"></i>
-                    </div>
-                  </div>
-                  <div class="text-left">
+                  
+                <div class="w-14 h-14 mx-auto mb-3 rounded-[16px] bg-gradient-to-br from-white via-white to-red-50 shadow-[0_8px_24px_rgba(239,68,68,0.15)] flex items-center justify-center border border-red-50 transition-transform duration-300 group-hover:scale-110">
+                  <i data-lucide="briefcase" class="w-6 h-6 text-red-600" stroke-width="2.5" aria-hidden="true"></i>
+                </div>
+                  <div class="text-center">
                     <h3 class="font-bold text-slate-950 text-sm mb-0.5">Agent</h3>
                     <p class="text-[10px] font-medium text-gray-400">Represent buyers & sellers</p>
                   </div>
@@ -863,7 +852,7 @@
   
   
   <!-- Powered By Watermark -->
-  <div class="fixed bottom-4 right-4 md:bottom-6 md:right-6 z-[40] flex items-center justify-center opacity-40 hover:opacity-100 transition-all duration-500 pointer-events-auto cursor-pointer bg-white/60 backdrop-blur-md px-3 py-2 rounded-xl border border-gray-200/50 shadow-sm hover:shadow-lg hover:-translate-y-0.5 group">
+  <div class="fixed bottom-4 left-1/2 -translate-x-1/2 md:bottom-6 z-[40] flex items-center justify-center opacity-40 hover:opacity-100 transition-all duration-500 pointer-events-auto cursor-pointer bg-white/60 backdrop-blur-md px-3 py-2 rounded-xl border border-gray-200/50 shadow-sm hover:shadow-lg hover:-translate-y-0.5 group">
     <img src="/watermark.png" alt="RHenova Tech" class="h-2.5 md:h-3 w-auto object-contain grayscale group-hover:grayscale-0 transition-all duration-500">
   </div>
 
