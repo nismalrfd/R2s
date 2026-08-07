@@ -130,7 +130,7 @@
   </div>
 
   
-  <div class="w-full md:w-1/2 h-screen flex flex-col p-4 sm:p-8 bg-white overflow-hidden relative" style="view-transition-name: auth-right;">
+  <div class="w-full md:w-1/2 h-screen flex flex-col p-4 sm:p-8 bg-white overflow-y-auto overflow-x-hidden relative custom-scrollbar" style="view-transition-name: auth-right;">
     
     <!-- Mobile Logo -->
     <div class="md:hidden flex items-center justify-center w-12 h-12 mb-2 shrink-0">
@@ -161,7 +161,7 @@
       <form id="signupForm" class="w-full h-full relative" onsubmit="handleGenericForm(event)" novalidate>
         
         <!-- STEP 1: Role Selection -->
-        <div id="step1" class="absolute inset-0 w-full step-container flex flex-col justify-center pb-12">
+        <div id="step1" class="absolute inset-0 w-full step-container flex flex-col justify-start pt-4 sm:pt-8 pb-12">
           <h2 class="text-2xl font-bold text-slate-950 mb-1 tracking-tight">What brings you to R2s?</h2>
           <p class="text-gray-500 font-medium text-sm mb-4">Choose your registration type to adapt your profile.</p>
           
@@ -248,7 +248,7 @@
         </div>
 
         <!-- STEP 2: Personal Details -->
-        <div id="step2" class="absolute inset-0 w-full step-container step-hidden-right flex flex-col justify-center pb-12">
+        <div id="step2" class="absolute inset-0 w-full step-container step-hidden-right flex flex-col justify-start pt-4 sm:pt-8 pb-12">
           <div class="flex items-center gap-3 mb-4 animate-stagger-1">
             <button type="button" onclick="goToStep(2, 1)" class="w-10 h-10 flex items-center justify-center bg-gray-50 rounded-full hover:bg-white hover:-translate-x-1 hover:shadow-md transition-all duration-300 shrink-0 border border-gray-100">
               <i data-lucide="arrow-left" class="w-5 h-5 text-slate-950" aria-hidden="true"></i>
@@ -301,7 +301,7 @@
         </div>
 
         <!-- STEP 3: Professional / Role Details (Dynamic) -->
-        <div id="step3" class="absolute inset-0 w-full step-container step-hidden-right flex flex-col justify-center pb-12">
+        <div id="step3" class="absolute inset-0 w-full step-container step-hidden-right flex flex-col justify-start pt-4 sm:pt-8 pb-12">
           <div class="flex items-center gap-3 mb-4 animate-stagger-1">
             <button type="button" onclick="goToStep(3, 2)" class="w-10 h-10 flex items-center justify-center bg-gray-50 rounded-full hover:bg-white hover:-translate-x-1 hover:shadow-md transition-all duration-300 shrink-0 border border-gray-100">
               <i data-lucide="arrow-left" class="w-5 h-5 text-slate-950" aria-hidden="true"></i>
@@ -392,7 +392,7 @@
 
 
         <!-- STEP 4: Location Details -->
-        <div id="step4" class="absolute inset-0 w-full step-container step-hidden-right flex flex-col justify-center pb-12">
+        <div id="step4" class="absolute inset-0 w-full step-container step-hidden-right flex flex-col justify-start pt-4 sm:pt-8 pb-12">
           <div class="flex items-center gap-3 mb-4 animate-stagger-1">
             <button type="button" onclick="goToStep(4, 3)" class="w-10 h-10 flex items-center justify-center bg-gray-50 rounded-full hover:bg-white hover:-translate-x-1 hover:shadow-md transition-all duration-300 shrink-0 border border-gray-100">
               <i data-lucide="arrow-left" class="w-5 h-5 text-slate-950" aria-hidden="true"></i>
@@ -451,7 +451,7 @@
 
 
         <!-- STEP 5: Terms & Conditions -->
-        <div id="step5" class="absolute inset-0 w-full step-container step-hidden-right flex flex-col justify-center pb-12">
+        <div id="step5" class="absolute inset-0 w-full step-container step-hidden-right flex flex-col justify-start pt-4 sm:pt-8 pb-12">
           <div class="flex items-center gap-3 mb-4 animate-stagger-1">
             <button type="button" onclick="goToStep(5, 4)" class="w-10 h-10 flex items-center justify-center bg-gray-50 rounded-full hover:bg-white hover:-translate-x-1 hover:shadow-md transition-all duration-300 shrink-0 border border-gray-100">
               <i data-lucide="arrow-left" class="w-5 h-5 text-slate-950" aria-hidden="true"></i>
