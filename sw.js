@@ -1,10 +1,11 @@
-const CACHE_NAME = 'r2s-cache-v2';
+const CACHE_NAME = 'r2s-realtors-v2.0.1';
 
 const urlsToCache = [
   '/',
   '/login.html',
   '/dashboard.html',
-  '/LOGO.png'
+  '/LOGO.png',
+  '/style.css'
 ];
 
 self.addEventListener('install', event => {
@@ -28,6 +29,7 @@ self.addEventListener('activate', event => {
       return Promise.all(
         cacheNames.map(cacheName => {
           if (cacheName !== CACHE_NAME) {
+            console.log('Deleting old cache:', cacheName);
             return caches.delete(cacheName);
           }
         })
@@ -37,12 +39,22 @@ self.addEventListener('activate', event => {
 });
 
 self.addEventListener('fetch', event => {
-  // Skip cross-origin requests
-  if (!event.request.url.startsWith(self.location.origin)) {
+  const url = new URL(event.request.url);
+
+  // Skip cross-origin requests entirely
+  if (url.origin !== self.location.origin) {
     return;
   }
 
-  // Use a Network-First strategy: 
+  // Do not cache API requests, dynamic data, login/session data, or sensitive info
+  if (url.pathname.startsWith('/api/') || 
+      url.pathname.startsWith('/auth/') || 
+      url.search.includes('dynamic=true') ||
+      event.request.method !== 'GET') {
+    return event.respondWith(fetch(event.request));
+  }
+
+  // Use a Network-First strategy for safe production updates:
   // Always try to fetch the latest version from the server first.
   event.respondWith(
     fetch(event.request)

@@ -554,8 +554,20 @@
   <script>
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', () => {
-        navigator.serviceWorker.register('/sw.js').then(registration => {
+        navigator.serviceWorker.register('/sw.js', { updateViaCache: 'none' }).then(registration => {
           console.log('SW registered: ', registration.scope);
+          
+          // Force an immediate update check
+          registration.update();
+          
+          // Listen for the new Service Worker taking control
+          let refreshing = false;
+          navigator.serviceWorker.addEventListener('controllerchange', () => {
+            if (!refreshing) {
+              refreshing = true;
+              window.location.reload();
+            }
+          });
         }).catch(err => {
           console.log('SW registration failed: ', err);
         });
