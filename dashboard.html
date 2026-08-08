@@ -157,6 +157,12 @@
           </div>
           Update Profile
         </button>
+        <button onclick="openDocumentModal()" class="flex items-center gap-4 px-4 py-3 rounded-2xl hover:bg-gray-50 text-sm font-bold text-slate-700 hover:text-slate-950 transition-colors w-full text-left">
+          <div class="w-10 h-10 rounded-full bg-white border border-gray-200 flex items-center justify-center shadow-sm shrink-0">
+            <i data-lucide="file-check-2" class="w-5 h-5 text-slate-500" aria-hidden="true"></i>
+          </div>
+          Company Documents
+        </button>
         <button onclick="filterProperties('all', this)" class="filter-btn flex items-center gap-4 px-4 py-3 rounded-2xl bg-blue-50 text-blue-600 text-sm font-bold transition-colors w-full text-left">
           <div class="w-10 h-10 rounded-full bg-white border-red-200 flex items-center justify-center shadow-sm shrink-0">
             <i data-lucide="list" class="w-5 h-5 text-red-500" aria-hidden="true"></i>
@@ -1743,4 +1749,116 @@
 
   
 
+
+  <!-- Company Documents Modal -->
+  <div id="documentModal" class="fixed inset-0 z-[9999] hidden">
+    <!-- Backdrop -->
+    <div class="absolute inset-0 bg-slate-900/40 backdrop-blur-sm transition-opacity opacity-0 duration-300" id="docModalBackdrop" onclick="closeDocumentModal()"></div>
+    
+    <!-- Modal Content -->
+    <div class="absolute inset-0 flex items-center justify-center p-4 pointer-events-none">
+      <div id="docModalContent" class="bg-white w-full max-w-md rounded-[32px] shadow-2xl p-6 md:p-8 pointer-events-auto transform scale-95 opacity-0 transition-all duration-300 relative">
+        
+        <!-- Header -->
+        <div class="flex items-center justify-between mb-6">
+          <div class="flex items-center gap-3">
+            <div class="w-12 h-12 rounded-2xl bg-blue-50 border border-blue-100 flex items-center justify-center shadow-inner">
+              <i data-lucide="file-check-2" class="w-6 h-6 text-blue-600"></i>
+            </div>
+            <div>
+              <h3 class="font-extrabold text-slate-950 text-lg">Documents</h3>
+              <p class="text-[10px] font-bold text-gray-500 uppercase tracking-wider">Company Verification</p>
+            </div>
+          </div>
+          <button onclick="closeDocumentModal()" class="w-8 h-8 flex items-center justify-center bg-gray-50 border border-gray-100 rounded-full text-gray-400 hover:text-slate-950 hover:bg-gray-100 transition-colors absolute top-6 right-6">
+            <i data-lucide="x" class="w-4 h-4"></i>
+          </button>
+        </div>
+
+        <div class="w-full h-px bg-gray-100 mb-6"></div>
+
+        <!-- Body -->
+        <p class="text-xs text-gray-500 mb-4 font-medium text-center">Upload up to 3 files. Supported formats: PDF, JPG, PNG.<br>Max size: 2MB each.</p>
+        
+        <div class="grid grid-cols-1 gap-3 mb-8">
+          <!-- File 1 -->
+          <div class="relative group">
+            <input type="file" accept=".pdf, .jpg, .jpeg, .png" class="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10" onchange="updateDashFileName(this)">
+            <div class="w-full bg-white rounded-2xl border-2 border-dashed border-gray-200 p-4 flex flex-col items-center justify-center gap-2 transition-all group-hover:border-blue-500 group-hover:bg-blue-50/30">
+              <i data-lucide="upload-cloud" class="w-6 h-6 text-gray-400 group-hover:text-blue-500 transition-colors"></i>
+              <span class="text-xs font-bold text-slate-700 truncate max-w-[250px]">Upload Document 1</span>
+            </div>
+          </div>
+          <!-- File 2 -->
+          <div class="relative group">
+            <input type="file" accept=".pdf, .jpg, .jpeg, .png" class="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10" onchange="updateDashFileName(this)">
+            <div class="w-full bg-white rounded-2xl border-2 border-dashed border-gray-200 p-4 flex flex-col items-center justify-center gap-2 transition-all group-hover:border-blue-500 group-hover:bg-blue-50/30">
+              <i data-lucide="upload-cloud" class="w-6 h-6 text-gray-400 group-hover:text-blue-500 transition-colors"></i>
+              <span class="text-xs font-bold text-slate-700 truncate max-w-[250px]">Upload Document 2</span>
+            </div>
+          </div>
+          <!-- File 3 -->
+          <div class="relative group">
+            <input type="file" accept=".pdf, .jpg, .jpeg, .png" class="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10" onchange="updateDashFileName(this)">
+            <div class="w-full bg-white rounded-2xl border-2 border-dashed border-gray-200 p-4 flex flex-col items-center justify-center gap-2 transition-all group-hover:border-blue-500 group-hover:bg-blue-50/30">
+              <i data-lucide="upload-cloud" class="w-6 h-6 text-gray-400 group-hover:text-blue-500 transition-colors"></i>
+              <span class="text-xs font-bold text-slate-700 truncate max-w-[250px]">Upload Document 3</span>
+            </div>
+          </div>
+        </div>
+
+        <button onclick="closeDocumentModal()" class="w-full bg-blue-600 text-white py-4 rounded-xl font-bold text-sm hover:bg-blue-700 hover:-translate-y-0.5 hover:shadow-lg hover:shadow-blue-600/20 transition-all duration-300 flex items-center justify-center gap-2 group">
+          Save Documents <i data-lucide="check" class="w-4 h-4"></i>
+        </button>
+
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function openDocumentModal() {
+      const modal = document.getElementById('documentModal');
+      const backdrop = document.getElementById('docModalBackdrop');
+      const content = document.getElementById('docModalContent');
+      
+      modal.classList.remove('hidden');
+      
+      // Trigger reflow
+      void modal.offsetWidth;
+      
+      backdrop.classList.remove('opacity-0');
+      content.classList.remove('scale-95', 'opacity-0');
+      
+      // Close sidebar if on mobile
+      const sideNav = document.getElementById('sideNav');
+      if(sideNav && !sideNav.classList.contains('-translate-x-full') && window.innerWidth < 768) {
+        toggleNav();
+      }
+    }
+
+    function closeDocumentModal() {
+      const modal = document.getElementById('documentModal');
+      const backdrop = document.getElementById('docModalBackdrop');
+      const content = document.getElementById('docModalContent');
+      
+      backdrop.classList.add('opacity-0');
+      content.classList.add('scale-95', 'opacity-0');
+      
+      setTimeout(() => {
+        modal.classList.add('hidden');
+      }, 300);
+    }
+
+    function updateDashFileName(input) {
+      if(input.files && input.files.length > 0) {
+        const fileName = input.files[0].name;
+        const span = input.nextElementSibling.querySelector('span');
+        const icon = input.nextElementSibling.querySelector('i');
+        span.textContent = fileName;
+        span.classList.add('text-blue-600');
+        icon.setAttribute('data-lucide', 'file-check');
+        if(typeof lucide !== 'undefined') lucide.createIcons();
+      }
+    }
+  </script>
 </body>
