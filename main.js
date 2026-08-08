@@ -194,3 +194,48 @@ window.saveProperty = function(property) {
   props.unshift(property);
   localStorage.setItem('r2s_properties', JSON.stringify(props));
 };
+
+
+window.showPremiumAlert = function(type) {
+  const overlay = document.createElement('div');
+  overlay.className = 'fixed inset-0 z-[999999] flex items-center justify-center p-4 bg-slate-950/30 backdrop-blur-sm opacity-0 transition-opacity duration-300 pointer-events-none';
+  
+  const content = document.createElement('div');
+  content.className = 'relative flex flex-col items-center text-center transform scale-95 transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)]';
+  
+  if (type === 'success') {
+    content.innerHTML = `
+      <div class="w-32 h-32 bg-white rounded-full flex items-center justify-center relative shadow-2xl">
+        <div class="absolute inset-0 bg-emerald-400 rounded-full animate-ping opacity-20"></div>
+        <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="text-emerald-500 relative z-10 transform transition-transform duration-500 hover:scale-110"><path d="M20 6 9 17l-5-5"/></svg>
+      </div>
+    `;
+  } else {
+    content.innerHTML = `
+      <div class="w-32 h-32 bg-white rounded-full flex items-center justify-center relative shadow-2xl">
+        <div class="absolute inset-0 bg-red-400 rounded-full animate-ping opacity-20"></div>
+        <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="text-red-500 relative z-10 transform transition-transform duration-500 hover:scale-110"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
+      </div>
+    `;
+  }
+  
+  overlay.appendChild(content);
+  document.body.appendChild(overlay);
+  
+  requestAnimationFrame(() => {
+    overlay.classList.remove('opacity-0');
+    content.classList.remove('scale-95');
+    content.classList.add('scale-100');
+  });
+  
+  setTimeout(() => {
+    overlay.classList.add('opacity-0');
+    content.classList.remove('scale-100');
+    content.classList.add('scale-95');
+    setTimeout(() => {
+      if (document.body.contains(overlay)) {
+        overlay.remove();
+      }
+    }, 300);
+  }, 1500);
+};

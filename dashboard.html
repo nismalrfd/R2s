@@ -1219,7 +1219,7 @@
     
     function submitProperty() {
       if(!validateForm('wizardStep1')) {
-        alert('Please fill in all required fields marked with a red border.');
+        showPremiumAlert('error');
         return;
       }
       // Close the Add Property Modal
@@ -1951,7 +1951,7 @@
     const propUnit = document.getElementById('wiz_unit') || document.getElementById('prop_unit');
     const propLocation = document.getElementById('wiz_location') || document.getElementById('prop_loc'); // assuming ID
     
-    if(!propName || !propName.value) return alert('Property name is required!');
+    if(!propName || !propName.value) return showPremiumAlert('error');
 
     const property = {
       name: propName.value,
@@ -1967,8 +1967,7 @@
     }
     
     // Show success
-    if(window.showSuccessToast) window.showSuccessToast();
-    else alert('Property Saved Successfully!');
+    showPremiumAlert('success');
 
     // Redirect or update UI
     setTimeout(() => {
