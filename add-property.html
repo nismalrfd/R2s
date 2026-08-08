@@ -237,15 +237,14 @@
       </button>
       <h1 class="text-3xl font-bold text-slate-950 tracking-tight">Create New Property</h1>
     </div>
-
-    <form class="flex flex-col gap-10" onsubmit="handleGenericForm(event)" novalidate>
+    <form class="flex flex-col gap-10" onsubmit="submitPropertyForm(event)" novalidate>
       
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-6 gap-y-6">
         
         <!-- Property Name -->
         <div class="flex flex-col gap-2 relative lg:col-span-2">
           <label class="text-sm font-bold text-gray-700">Property Name *</label>
-          <input type="text" class="w-full bg-gray-50 rounded-2xl px-5 py-4 border border-gray-200 outline-none focus:border-blue-500 focus:bg-white transition-colors text-slate-950 font-semibold" placeholder="e.g. Skyline Apartments" required>
+          <input type="text" id="prop_name" class="w-full bg-gray-50 rounded-2xl px-5 py-4 border border-gray-200 outline-none focus:border-blue-500 focus:bg-white transition-colors text-slate-950 font-semibold" placeholder="e.g. Skyline Apartments" required>
         </div>
         
         <!-- Property Service Type -->
@@ -703,4 +702,102 @@
       }
     });
 </script>
+
+<script>
+  function renderProperties() {
+    const props = window.getProperties ? window.getProperties() : [];
+    const container = document.getElementById('dynamicPropertiesContainer');
+    const emptyState = document.getElementById('emptyStateContainer');
+    
+    if(!container || !emptyState) return;
+
+    if (props.length === 0) {
+      container.classList.add('hidden');
+      emptyState.classList.remove('hidden');
+    } else {
+      emptyState.classList.add('hidden');
+      container.classList.remove('hidden');
+      
+      container.innerHTML = props.map(p => `
+        <div class="property-card bg-white rounded-[24px] overflow-hidden border-b-0 relative p-3 md:p-4 border border-gray-100 shadow-[0_4px_20px_rgb(0,0,0,0.03)] hover:shadow-[0_8px_30px_rgb(0,0,0,0.08)] hover:-translate-y-1 transition-all duration-300 flex flex-col xl:flex-row gap-6 items-start xl:items-center relative cursor-pointer group" onclick="window.location.href='property-detail.html'">
+          <div class="absolute bottom-0 left-0 w-full h-1 bg-gradient-to-r from-blue-500 via-purple-500 to-red-500"></div>
+          <button class="absolute top-4 right-4 text-gray-400 hover:text-slate-950 z-10"><i data-lucide="more-vertical" class="w-5 h-5" aria-hidden="true"></i></button>
+
+          <div class="relative w-full xl:w-[320px] h-[200px] shrink-0 rounded-2xl overflow-hidden">
+            <img src="${p.image || 'https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" loading="lazy">
+            <div class="absolute top-3 left-3 bg-[#1e293b]/90 backdrop-blur-md text-white px-3 py-1 rounded text-[10px] font-bold uppercase tracking-wider">${p.kind || 'Property'}</div>
+          </div>
+          
+          <div class="flex flex-col flex-1 py-1 w-full">
+            <h3 class="text-xl font-extrabold text-slate-950 mb-1">${p.name || 'Untitled Property'} – ID:${p.id.slice(-6)}</h3>
+            <p class="text-sm font-semibold text-gray-500 mb-6 flex items-center gap-1.5"><i data-lucide="map-pin" class="w-3.5 h-3.5" aria-hidden="true"></i> ${p.location || 'Location Not Set'}</p>
+            
+            <div class="flex flex-wrap items-center gap-6 md:gap-8 mb-6">
+              ${p.kind !== 'Land' ? `<div class="flex items-center gap-2"><i data-lucide="bed-double" class="w-5 h-5 text-red-600" aria-hidden="true"></i><div><p class="text-sm font-bold text-slate-950 leading-tight">3</p><p class="text-[10px] font-bold text-gray-400 uppercase">Bedrooms</p></div></div>
+              <div class="flex items-center gap-2"><i data-lucide="bath" class="w-5 h-5 text-red-600" aria-hidden="true"></i><div><p class="text-sm font-bold text-slate-950 leading-tight">2</p><p class="text-[10px] font-bold text-gray-400 uppercase">Bathrooms</p></div></div>` : ''}
+              <div class="flex items-center gap-2"><i data-lucide="ruler" class="w-5 h-5 text-red-600" aria-hidden="true"></i><div><p class="text-sm font-bold text-slate-950 leading-tight">${p.unit || '1200'}</p><p class="text-[10px] font-bold text-gray-400 uppercase">Sq Ft</p></div></div>
+            </div>
+            
+            <div class="flex items-center gap-6 md:gap-8 text-xs font-semibold text-gray-500 pt-4 border-t border-gray-100 w-full">
+              <p>Listed on ${p.date}</p>
+              <p>ID: ${p.id.slice(-6)}</p>
+              <p class="flex items-center gap-1.5 ml-auto text-blue-600 bg-blue-50 px-3 py-1.5 rounded-lg border border-blue-100 shadow-sm font-bold"><i data-lucide="eye" class="w-3.5 h-3.5"></i> 0 Visitors</p>
+            </div>
+          </div>
+
+          <div class="price-section xl:w-[220px] shrink-0 flex flex-col xl:items-end justify-center py-2 xl:pr-6 border-t xl:border-t-0 xl:border-l border-gray-100 pt-4 xl:pt-0 w-full text-left xl:text-right">
+            <div class="bg-green-50 text-green-600 px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider mb-4 xl:mb-8 inline-block w-fit xl:ml-auto">${p.status || 'For Sale'}</div>
+            <h2 class="text-2xl font-black text-slate-950 mb-1">₹${p.price || '0'}</h2>
+            <p class="text-[10px] font-bold text-gray-400 uppercase tracking-wide">Inclusive of all charges</p>
+          </div>
+        </div>
+      `).join('');
+      if(typeof lucide !== 'undefined') lucide.createIcons();
+    }
+  }
+
+  // Hook into generic submission in dashboard/add-property
+  window.submitPropertyForm = function(e) {
+    e.preventDefault();
+    const propName = document.getElementById('wiz_prop_name') || document.getElementById('prop_name');
+    const propPrice = document.getElementById('wiz_price') || document.getElementById('prop_price');
+    const propKind = document.getElementById('wiz_kind') || document.getElementById('prop_kind');
+    const propStatus = document.getElementById('wiz_status') || document.getElementById('prop_status');
+    const propUnit = document.getElementById('wiz_unit') || document.getElementById('prop_unit');
+    const propLocation = document.getElementById('wiz_location') || document.getElementById('prop_loc'); // assuming ID
+    
+    if(!propName || !propName.value) return alert('Property name is required!');
+
+    const property = {
+      name: propName.value,
+      price: propPrice ? propPrice.value : '',
+      kind: propKind ? propKind.value : '',
+      status: propStatus ? propStatus.value : '',
+      unit: propUnit ? propUnit.value : '',
+      location: propLocation ? propLocation.value : 'Kochi, Kerala'
+    };
+    
+    if (window.saveProperty) {
+      window.saveProperty(property);
+    }
+    
+    // Show success
+    if(window.showSuccessToast) window.showSuccessToast();
+    else alert('Property Saved Successfully!');
+
+    // Redirect or update UI
+    setTimeout(() => {
+      if(window.location.pathname.includes('add-property.html')) {
+        window.location.href = 'dashboard.html';
+      } else {
+        if(typeof toggleAddProperty !== 'undefined') toggleAddProperty();
+        renderProperties();
+        if(typeof updateDashboardStats !== 'undefined') updateDashboardStats();
+      }
+    }, 1000);
+  };
+
+  document.addEventListener('DOMContentLoaded', renderProperties);
+</script>
+
 </body>

@@ -175,3 +175,22 @@ if (typeof lucide !== 'undefined') {
 document.addEventListener('DOMContentLoaded', () => {
     document.body.classList.add('page-transition');
 });
+
+// --- Storage Utility for Testing ---
+window.getProperties = function() {
+  const props = localStorage.getItem('r2s_properties');
+  return props ? JSON.parse(props) : [];
+};
+
+window.saveProperty = function(property) {
+  const props = window.getProperties();
+  property.id = Date.now().toString();
+  
+  // Format date like '21 Jan 2026'
+  const date = new Date();
+  const months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+  property.date = `${date.getDate()} ${months[date.getMonth()]} ${date.getFullYear()}`;
+  
+  props.unshift(property);
+  localStorage.setItem('r2s_properties', JSON.stringify(props));
+};
