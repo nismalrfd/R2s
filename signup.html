@@ -238,6 +238,38 @@
 
           </div>
 
+          
+          <!-- Dynamic Builder Options -->
+          <div id="builderSubtypeContainer" class="hidden w-full mb-2">
+            <h3 class="text-sm font-bold text-slate-950 mb-3 animate-stagger-1">Are you an Owner or Staff?</h3>
+            <div class="grid grid-cols-2 gap-3 mb-4 animate-stagger-2">
+              <label class="radio-card cursor-pointer relative h-full group">
+                <input type="radio" name="builder_type" value="owner" class="absolute opacity-0 w-0 h-0" checked>
+                <div class="w-full h-full bg-white border border-gray-200 rounded-[12px] p-3 flex flex-col items-center justify-center text-center transition-all duration-300 hover:border-gray-300 shadow-sm">
+                  <h4 class="font-bold text-slate-950 text-xs">Owner</h4>
+                </div>
+              </label>
+              <label class="radio-card cursor-pointer relative h-full group">
+                <input type="radio" name="builder_type" value="staff" class="absolute opacity-0 w-0 h-0">
+                <div class="w-full h-full bg-white border border-gray-200 rounded-[12px] p-3 flex flex-col items-center justify-center text-center transition-all duration-300 hover:border-gray-300 shadow-sm">
+                  <h4 class="font-bold text-slate-950 text-xs">Staff</h4>
+                </div>
+              </label>
+            </div>
+            
+            <!-- Staff Fields -->
+            <div id="staffFields" class="hidden flex-col gap-3 mb-4 animate-stagger-3">
+              <div class="flex flex-col gap-2 relative">
+                <label class="text-[10px] font-bold text-gray-500 uppercase tracking-wider">Staff Name *</label>
+                <input type="text" id="bl_staff_name" required class="w-full bg-gray-50 rounded-xl px-3 py-2.5 border border-gray-100 outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-500/20 focus:bg-white transition-all text-slate-950 font-bold text-sm" placeholder="Full Name">
+              </div>
+              <div class="flex flex-col gap-2 relative">
+                <label class="text-[10px] font-bold text-gray-500 uppercase tracking-wider">Designation *</label>
+                <input type="text" id="bl_staff_desig" required class="w-full bg-gray-50 rounded-xl px-3 py-2.5 border border-gray-100 outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-500/20 focus:bg-white transition-all text-slate-950 font-bold text-sm" placeholder="e.g. Sales Manager">
+              </div>
+            </div>
+          </div>
+
           <button type="button" onclick="goToStep(1, 2)" class="w-full bg-blue-600 text-white py-3 rounded-xl font-bold text-sm hover:bg-blue-700 hover:-translate-y-0.5 hover:scale-[1.02] hover:shadow-lg transition-all duration-300 flex items-center justify-center gap-2 group mt-4">
             Continue <i data-lucide="arrow-right" class="w-4 h-4 transition-transform group-hover:translate-x-1" aria-hidden="true"></i>
           </button>
@@ -381,6 +413,37 @@
                   <label class="text-[10px] font-bold text-gray-500 uppercase tracking-wider">Project Name</label>
                   <textarea id="bl_project" class="w-full bg-gray-50 rounded-xl px-3 py-2.5 border border-gray-100 outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-500/20 focus:bg-white transition-all text-slate-950 font-medium text-sm min-h-[60px]" placeholder="List your current / upcoming projects..."></textarea>
                 </div>
+
+                <div class="w-full h-px bg-gray-100 my-2"></div>
+                <h4 class="text-xs font-bold text-slate-950 flex items-center gap-1.5"><i data-lucide="file-check-2" class="w-3.5 h-3.5 text-blue-600"></i> Company Documents</h4>
+                <p class="text-[10px] text-gray-500 mb-2">Upload up to 3 files. PDF, JPG, PNG allowed. Max size: 2MB each.</p>
+                <div class="grid grid-cols-1 gap-3">
+                  <!-- File 1 -->
+                  <div class="relative group">
+                    <input type="file" id="bl_doc_1" accept=".pdf, .jpg, .jpeg, .png" class="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10">
+                    <div class="w-full bg-white rounded-xl border border-dashed border-gray-300 p-4 flex flex-col items-center justify-center text-center transition-all group-hover:border-blue-500 group-hover:bg-blue-50/50">
+                      <i data-lucide="upload-cloud" class="w-5 h-5 text-gray-400 mb-1 group-hover:text-blue-500 transition-colors"></i>
+                      <span class="text-xs font-bold text-slate-950">Upload Document 1</span>
+                    </div>
+                  </div>
+                  <!-- File 2 -->
+                  <div class="relative group">
+                    <input type="file" id="bl_doc_2" accept=".pdf, .jpg, .jpeg, .png" class="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10">
+                    <div class="w-full bg-white rounded-xl border border-dashed border-gray-300 p-4 flex flex-col items-center justify-center text-center transition-all group-hover:border-blue-500 group-hover:bg-blue-50/50">
+                      <i data-lucide="upload-cloud" class="w-5 h-5 text-gray-400 mb-1 group-hover:text-blue-500 transition-colors"></i>
+                      <span class="text-xs font-bold text-slate-950">Upload Document 2</span>
+                    </div>
+                  </div>
+                  <!-- File 3 -->
+                  <div class="relative group">
+                    <input type="file" id="bl_doc_3" accept=".pdf, .jpg, .jpeg, .png" class="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10">
+                    <div class="w-full bg-white rounded-xl border border-dashed border-gray-300 p-4 flex flex-col items-center justify-center text-center transition-all group-hover:border-blue-500 group-hover:bg-blue-50/50">
+                      <i data-lucide="upload-cloud" class="w-5 h-5 text-gray-400 mb-1 group-hover:text-blue-500 transition-colors"></i>
+                      <span class="text-xs font-bold text-slate-950">Upload Document 3</span>
+                    </div>
+                  </div>
+                </div>
+
               </div>
             </div>
 
@@ -856,4 +919,51 @@
     <img src="/watermark.png" alt="RHenova Tech" class="w-[80px] md:w-[110px] h-auto object-contain grayscale">
   </div>
 
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const roleRadios = document.querySelectorAll('input[name="role"]');
+      const subtypeContainer = document.getElementById('builderSubtypeContainer');
+      const staffFields = document.getElementById('staffFields');
+      const typeRadios = document.querySelectorAll('input[name="builder_type"]');
+      
+      roleRadios.forEach(radio => {
+        radio.addEventListener('change', (e) => {
+          if(e.target.value === 'builder') {
+            subtypeContainer.classList.remove('hidden');
+          } else {
+            subtypeContainer.classList.add('hidden');
+          }
+        });
+      });
+
+      typeRadios.forEach(radio => {
+        radio.addEventListener('change', (e) => {
+          if(e.target.value === 'staff') {
+            staffFields.classList.remove('hidden');
+            staffFields.classList.add('flex');
+          } else {
+            staffFields.classList.add('hidden');
+            staffFields.classList.remove('flex');
+          }
+        });
+      });
+      
+      // Update file upload UI when a file is selected
+      const fileInputs = document.querySelectorAll('input[type="file"]');
+      fileInputs.forEach(input => {
+        input.addEventListener('change', (e) => {
+           if(e.target.files.length > 0) {
+             const fileName = e.target.files[0].name;
+             const span = e.target.nextElementSibling.querySelector('span');
+             const icon = e.target.nextElementSibling.querySelector('i');
+             span.textContent = fileName;
+             span.classList.add('text-blue-600');
+             icon.setAttribute('data-lucide', 'file-check');
+             if(typeof lucide !== 'undefined') lucide.createIcons();
+           }
+        });
+      });
+    });
+  </script>
 </body>
