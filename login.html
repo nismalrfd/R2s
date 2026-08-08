@@ -248,14 +248,15 @@
         <div class="mt-8 text-center text-sm font-medium">
           <span class="text-gray-500">Didn't receive the code?</span>
           <button type="button" class="text-slate-950 ml-1 font-bold hover:underline transition-all active:scale-95">Resend in 00:59</button>
-        </div>
       </div>
+    </div> <!-- Close max-w-[400px] container here, before the watermark -->
 
+    <!-- Watermark moved outside the sliding container to stick to bottom of viewport -->
     <div class="mt-auto pt-4 pb-4 flex items-center justify-center w-full z-[40] flex flex-col items-center pointer-events-none opacity-75">
-    <span class="text-[7px] md:text-[8px] font-bold text-gray-400 tracking-widest uppercase -mb-3 md:-mb-4">Powered by</span>
-    <img src="/watermark.png" alt="RHenova Tech" class="w-[80px] md:w-[110px] h-auto object-contain grayscale">
-  </div>
-  </div>
+      <span class="text-[7px] md:text-[8px] font-bold text-gray-400 tracking-widest uppercase -mb-3 md:-mb-4">Powered by</span>
+      <img src="/watermark.png" alt="RHenova Tech" class="w-[80px] md:w-[110px] h-auto object-contain grayscale">
+    </div>
+  </div> <!-- Close the right-side split screen container -->
   <script>
     if (typeof lucide !== 'undefined') lucide.createIcons();
     
