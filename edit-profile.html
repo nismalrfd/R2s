@@ -247,7 +247,7 @@
     <form class="w-full flex flex-col gap-6" onsubmit="handleGenericForm(event)" novalidate>
       
       <!-- Personal Details Segmented Card -->
-      <div class="bg-white rounded-[24px] p-6 md:p-8 shadow-sm border border-gray-100 hover:shadow-md transition-shadow duration-300">
+      <div class="bg-white rounded-[24px] p-4 sm:p-6 md:p-8 shadow-sm border border-gray-100 hover:shadow-md transition-shadow duration-300">
         <div class="flex items-center gap-4 mb-6">
           <div class="w-10 h-10 bg-gray-50 rounded-xl flex items-center justify-center shrink-0">
             <i data-lucide="user" class="w-5 h-5 text-slate-950"></i>
@@ -261,15 +261,15 @@
         <div class="flex flex-col gap-6">
           <div class="flex flex-col gap-2 relative">
             <label class="text-[10px] font-bold text-gray-500 uppercase tracking-wider">Full Name <span class="text-red-500">*</span></label>
-            <input type="text" class="w-full bg-gray-50 rounded-xl px-4 py-3.5 border border-gray-100 outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-500/20 focus:bg-white transition-all text-slate-950 font-medium text-sm" value="Stefani Wong" required>
+            <input type="text" class="w-full bg-gray-50 rounded-xl px-3 py-2.5 sm:px-4 sm:py-3.5 border border-gray-100 outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-500/20 focus:bg-white transition-all text-slate-950 font-medium text-sm" value="Stefani Wong" required>
           </div>
           
           <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div class="flex flex-col gap-2">
               <label class="text-[10px] font-bold text-gray-500 uppercase tracking-wider">Phone Number <span class="text-red-500">*</span></label>
               <div class="flex bg-gray-50 rounded-xl border border-gray-100 focus-within:border-blue-500 focus-within:ring-4 focus-within:ring-slate-950/5 focus-within:bg-white transition-all overflow-hidden">
-                <span class="px-4 py-3.5 border-r border-gray-100 font-bold text-gray-500 text-xs flex items-center gap-1.5">IN +91</span>
-                <input type="tel" id="mainPhone" class="flex-1 px-4 py-3.5 bg-transparent outline-none font-medium text-slate-950 text-sm" value="9876543210" maxlength="10" required>
+                <span class="px-3 py-2.5 sm:px-4 sm:py-3.5 border-r border-gray-100 font-bold text-gray-500 text-xs flex items-center gap-1.5">IN +91</span>
+                <input type="tel" id="mainPhone" class="flex-1 px-3 py-2.5 sm:px-4 sm:py-3.5 bg-transparent outline-none font-medium text-slate-950 text-sm" value="9876543210" maxlength="10" required>
               </div>
             </div>
 
@@ -282,21 +282,21 @@
                 </label>
               </div>
               <div class="flex bg-gray-50 rounded-xl border border-gray-100 focus-within:border-blue-500 focus-within:ring-4 focus-within:ring-slate-950/5 focus-within:bg-white transition-all overflow-hidden">
-                <span class="px-4 py-3.5 border-r border-gray-100 font-bold text-gray-500 text-xs flex items-center gap-1.5">IN +91</span>
-                <input type="tel" id="whatsappPhone" class="flex-1 px-4 py-3.5 bg-transparent outline-none font-medium text-slate-950 text-sm" placeholder="Same as above?">
+                <span class="px-3 py-2.5 sm:px-4 sm:py-3.5 border-r border-gray-100 font-bold text-gray-500 text-xs flex items-center gap-1.5">IN +91</span>
+                <input type="tel" id="whatsappPhone" class="flex-1 px-3 py-2.5 sm:px-4 sm:py-3.5 bg-transparent outline-none font-medium text-slate-950 text-sm" placeholder="Same as above?">
               </div>
             </div>
           </div>
 
           <div class="flex flex-col gap-2">
             <label class="text-[10px] font-bold text-gray-500 uppercase tracking-wider">Email Address <span class="text-red-500">*</span></label>
-            <input type="email" class="w-full bg-gray-50 rounded-xl px-4 py-3.5 border border-gray-100 outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-500/20 focus:bg-white transition-all text-slate-950 font-medium text-sm" value="stefani.wong@example.com" required>
+            <input type="email" class="w-full bg-gray-50 rounded-xl px-3 py-2.5 sm:px-4 sm:py-3.5 border border-gray-100 outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-500/20 focus:bg-white transition-all text-slate-950 font-medium text-sm" value="stefani.wong@example.com" required>
           </div>
         </div>
       </div>
 
       <!-- Location Details Segmented Card -->
-      <div class="bg-white rounded-[24px] p-6 md:p-8 shadow-sm border border-gray-100 hover:shadow-md transition-shadow duration-300">
+      <div class="bg-white rounded-[24px] p-4 sm:p-6 md:p-8 shadow-sm border border-gray-100 hover:shadow-md transition-shadow duration-300">
         <div class="flex items-center gap-4 mb-6">
           <div class="w-10 h-10 bg-gray-50 rounded-xl flex items-center justify-center shrink-0">
             <i data-lucide="map-pin" class="w-5 h-5 text-slate-950"></i>
@@ -310,24 +310,24 @@
         <div class="flex flex-col gap-6">
           <div class="flex flex-col gap-2">
             <label class="text-[10px] font-bold text-gray-500 uppercase tracking-wider">Full Address</label>
-            <input type="text" class="w-full bg-gray-50 rounded-xl px-4 py-3.5 border border-gray-100 outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-500/20 focus:bg-white transition-all text-slate-950 font-medium text-sm" value="123 Main St, Block B">
+            <input type="text" class="w-full bg-gray-50 rounded-xl px-3 py-2.5 sm:px-4 sm:py-3.5 border border-gray-100 outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-500/20 focus:bg-white transition-all text-slate-950 font-medium text-sm" value="123 Main St, Block B">
           </div>
           
           <div class="grid grid-cols-2 gap-6">
             <div class="flex flex-col gap-2">
               <label class="text-[10px] font-bold text-gray-500 uppercase tracking-wider">City</label>
-              <input type="text" class="w-full bg-gray-50 rounded-xl px-4 py-3.5 border border-gray-100 outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-500/20 focus:bg-white transition-all text-slate-950 font-medium text-sm" value="Kozhikode">
+              <input type="text" class="w-full bg-gray-50 rounded-xl px-3 py-2.5 sm:px-4 sm:py-3.5 border border-gray-100 outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-500/20 focus:bg-white transition-all text-slate-950 font-medium text-sm" value="Kozhikode">
             </div>
             <div class="flex flex-col gap-2">
               <label class="text-[10px] font-bold text-gray-500 uppercase tracking-wider">PIN Code</label>
-              <input type="text" class="w-full bg-gray-50 rounded-xl px-4 py-3.5 border border-gray-100 outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-500/20 focus:bg-white transition-all text-slate-950 font-medium text-sm" value="673001">
+              <input type="text" class="w-full bg-gray-50 rounded-xl px-3 py-2.5 sm:px-4 sm:py-3.5 border border-gray-100 outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-500/20 focus:bg-white transition-all text-slate-950 font-medium text-sm" value="673001">
             </div>
           </div>
 
           <div class="flex flex-col gap-2">
             <label class="text-[10px] font-bold text-gray-500 uppercase tracking-wider">State</label>
             <div class="relative">
-              <select class="w-full bg-gray-50 rounded-xl px-4 py-3.5 border border-gray-100 outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-500/20 focus:bg-white transition-all text-slate-950 font-medium text-sm appearance-none cursor-pointer">
+              <select class="w-full bg-gray-50 rounded-xl px-3 py-2.5 sm:px-4 sm:py-3.5 border border-gray-100 outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-500/20 focus:bg-white transition-all text-slate-950 font-medium text-sm appearance-none cursor-pointer">
                 <option value="KL" selected>Kerala</option>
                 <option value="KA">Karnataka</option>
                 <option value="TN">Tamil Nadu</option>
@@ -340,7 +340,7 @@
 
           <div class="flex flex-col gap-2">
             <label class="text-[10px] font-bold text-gray-500 uppercase tracking-wider">Area of Operation</label>
-            <input type="text" class="w-full bg-gray-50 rounded-xl px-4 py-3.5 border border-gray-100 outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-500/20 focus:bg-white transition-all text-slate-950 font-medium text-sm" value="North Kerala">
+            <input type="text" class="w-full bg-gray-50 rounded-xl px-3 py-2.5 sm:px-4 sm:py-3.5 border border-gray-100 outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-500/20 focus:bg-white transition-all text-slate-950 font-medium text-sm" value="North Kerala">
           </div>
         </div>
       </div>

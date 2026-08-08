@@ -161,19 +161,19 @@
       <form id="signupForm" class="w-full h-full relative" onsubmit="handleGenericForm(event)" novalidate>
         
         <!-- STEP 1: Role Selection -->
-        <div id="step1" class="absolute inset-0 w-full step-container flex flex-col justify-start pt-4 sm:pt-8 pb-12">
-          <h2 class="text-2xl font-bold text-slate-950 mb-1 tracking-tight">What brings you to R2s?</h2>
-          <p class="text-gray-500 font-medium text-sm mb-4">Choose your registration type to adapt your profile.</p>
+        <div id="step1" class="absolute inset-0 w-full step-container flex flex-col justify-start pt-2 sm:pt-4 pb-4">
+          <h2 class="text-xl sm:text-2xl font-bold text-slate-950 mb-1 tracking-tight">What brings you to R2s?</h2>
+          <p class="text-gray-500 font-medium text-xs sm:text-sm mb-3 sm:mb-4">Choose your registration type to adapt your profile.</p>
           
-          <div class="grid grid-cols-2 gap-3 mb-6">
+          <div class="grid grid-cols-2 gap-2 sm:gap-3 mb-4 sm:mb-6">
             
             <!-- 1. Owner -->
             <label class="radio-card cursor-pointer relative h-full group">
               <input type="radio" name="role" value="owner" class="absolute opacity-0 w-0 h-0" checked>
-              <div class="w-full h-full bg-white border border-gray-200 rounded-[16px] p-3 flex flex-col items-center justify-center text-center transition-all duration-300 hover:border-gray-300 hover:-translate-y-1 hover:shadow-md">
+              <div class="w-full h-full bg-white border border-gray-200 rounded-[16px] p-2 sm:p-3 flex flex-col items-center justify-center text-center transition-all duration-300 hover:border-gray-300 hover:-translate-y-1 hover:shadow-md">
                 
-                <div class="w-14 h-14 mx-auto mb-3 rounded-[16px] bg-gradient-to-br from-white via-white to-red-50 shadow-[0_8px_24px_rgba(239,68,68,0.15)] flex items-center justify-center border border-red-50 transition-transform duration-300 group-hover:scale-110">
-                  <i data-lucide="home" class="w-6 h-6 text-red-600" stroke-width="2.5" aria-hidden="true"></i>
+                <div class="w-10 h-10 sm:w-12 sm:h-12 mx-auto mb-2 rounded-[12px] sm:rounded-[16px] bg-gradient-to-br from-white via-white to-red-50 shadow-[0_8px_24px_rgba(239,68,68,0.15)] flex items-center justify-center border border-red-50 transition-transform duration-300 group-hover:scale-110">
+                  <i data-lucide="home" class="w-5 h-5 sm:w-6 sm:h-6 text-red-600" stroke-width="2.5" aria-hidden="true"></i>
                 </div>
                 <h3 class="font-bold text-slate-950 text-xs mb-0.5">Owner</h3>
                 <p class="text-[10px] font-medium text-gray-400">List own properties</p>
@@ -183,10 +183,10 @@
             <!-- 2. NAR Realtor -->
             <label class="radio-card cursor-pointer relative h-full group">
               <input type="radio" name="role" value="nar" class="absolute opacity-0 w-0 h-0">
-              <div class="w-full h-full bg-white border border-gray-200 rounded-[16px] p-3 flex flex-col items-center justify-center text-center transition-all duration-300 hover:border-gray-300 hover:-translate-y-1 hover:shadow-md">
+              <div class="w-full h-full bg-white border border-gray-200 rounded-[16px] p-2 sm:p-3 flex flex-col items-center justify-center text-center transition-all duration-300 hover:border-gray-300 hover:-translate-y-1 hover:shadow-md">
                 
-                <div class="w-14 h-14 mx-auto mb-3 rounded-[16px] bg-gradient-to-br from-white via-white to-red-50 shadow-[0_8px_24px_rgba(239,68,68,0.15)] flex items-center justify-center border border-red-50 transition-transform duration-300 group-hover:scale-110">
-                  <i data-lucide="contact" class="w-6 h-6 text-red-600" stroke-width="2.5" aria-hidden="true"></i>
+                <div class="w-10 h-10 sm:w-12 sm:h-12 mx-auto mb-2 rounded-[12px] sm:rounded-[16px] bg-gradient-to-br from-white via-white to-red-50 shadow-[0_8px_24px_rgba(239,68,68,0.15)] flex items-center justify-center border border-red-50 transition-transform duration-300 group-hover:scale-110">
+                  <i data-lucide="contact" class="w-5 h-5 sm:w-6 sm:h-6 text-red-600" stroke-width="2.5" aria-hidden="true"></i>
                 </div>
                 <h3 class="font-bold text-slate-950 text-xs mb-0.5">NAR Realtor</h3>
                 <p class="text-[10px] font-medium text-gray-400">Association Member</p>
@@ -196,10 +196,10 @@
             <!-- 3. Partner -->
             <label class="radio-card cursor-pointer relative h-full group">
               <input type="radio" name="role" value="partner" class="absolute opacity-0 w-0 h-0">
-              <div class="w-full h-full bg-white border border-gray-200 rounded-[16px] p-3 flex flex-col items-center justify-center text-center transition-all duration-300 hover:border-gray-300 hover:-translate-y-1 hover:shadow-md">
+              <div class="w-full h-full bg-white border border-gray-200 rounded-[16px] p-2 sm:p-3 flex flex-col items-center justify-center text-center transition-all duration-300 hover:border-gray-300 hover:-translate-y-1 hover:shadow-md">
                 
-                <div class="w-14 h-14 mx-auto mb-3 rounded-[16px] bg-gradient-to-br from-white via-white to-red-50 shadow-[0_8px_24px_rgba(239,68,68,0.15)] flex items-center justify-center border border-red-50 transition-transform duration-300 group-hover:scale-110">
-                  <i data-lucide="users" class="w-6 h-6 text-red-600" stroke-width="2.5" aria-hidden="true"></i>
+                <div class="w-10 h-10 sm:w-12 sm:h-12 mx-auto mb-2 rounded-[12px] sm:rounded-[16px] bg-gradient-to-br from-white via-white to-red-50 shadow-[0_8px_24px_rgba(239,68,68,0.15)] flex items-center justify-center border border-red-50 transition-transform duration-300 group-hover:scale-110">
+                  <i data-lucide="users" class="w-5 h-5 sm:w-6 sm:h-6 text-red-600" stroke-width="2.5" aria-hidden="true"></i>
                 </div>
                 <h3 class="font-bold text-slate-950 text-xs mb-0.5">Channel Partner</h3>
                 <p class="text-[10px] font-medium text-gray-400">Referral & co-broking</p>
@@ -209,10 +209,10 @@
             <!-- 4. Builder -->
             <label class="radio-card cursor-pointer relative h-full group">
               <input type="radio" name="role" value="builder" class="absolute opacity-0 w-0 h-0">
-              <div class="w-full h-full bg-white border border-gray-200 rounded-[16px] p-3 flex flex-col items-center justify-center text-center transition-all duration-300 hover:border-gray-300 hover:-translate-y-1 hover:shadow-md">
+              <div class="w-full h-full bg-white border border-gray-200 rounded-[16px] p-2 sm:p-3 flex flex-col items-center justify-center text-center transition-all duration-300 hover:border-gray-300 hover:-translate-y-1 hover:shadow-md">
                 
-                <div class="w-14 h-14 mx-auto mb-3 rounded-[16px] bg-gradient-to-br from-white via-white to-red-50 shadow-[0_8px_24px_rgba(239,68,68,0.15)] flex items-center justify-center border border-red-50 transition-transform duration-300 group-hover:scale-110">
-                  <i data-lucide="building-2" class="w-6 h-6 text-red-600" stroke-width="2.5" aria-hidden="true"></i>
+                <div class="w-10 h-10 sm:w-12 sm:h-12 mx-auto mb-2 rounded-[12px] sm:rounded-[16px] bg-gradient-to-br from-white via-white to-red-50 shadow-[0_8px_24px_rgba(239,68,68,0.15)] flex items-center justify-center border border-red-50 transition-transform duration-300 group-hover:scale-110">
+                  <i data-lucide="building-2" class="w-5 h-5 sm:w-6 sm:h-6 text-red-600" stroke-width="2.5" aria-hidden="true"></i>
                 </div>
                 <h3 class="font-bold text-slate-950 text-xs mb-0.5">Builder</h3>
                 <p class="text-[10px] font-medium text-gray-400">Developments</p>
@@ -222,14 +222,14 @@
             <!-- 5. Agent -->
             <label class="radio-card cursor-pointer relative h-full col-span-2 group">
               <input type="radio" name="role" value="agent" class="absolute opacity-0 w-0 h-0">
-              <div class="w-full h-full bg-white border border-gray-200 rounded-[16px] p-3 flex flex-col items-center justify-center text-center transition-all duration-300 hover:border-gray-300 hover:-translate-y-1 hover:shadow-md">
+              <div class="w-full h-full bg-white border border-gray-200 rounded-[16px] p-2 sm:p-3 flex flex-col items-center justify-center text-center transition-all duration-300 hover:border-gray-300 hover:-translate-y-1 hover:shadow-md">
                 <div class="flex items-center gap-3">
                   
-                <div class="w-14 h-14 mx-auto mb-3 rounded-[16px] bg-gradient-to-br from-white via-white to-red-50 shadow-[0_8px_24px_rgba(239,68,68,0.15)] flex items-center justify-center border border-red-50 transition-transform duration-300 group-hover:scale-110">
-                  <i data-lucide="briefcase" class="w-6 h-6 text-red-600" stroke-width="2.5" aria-hidden="true"></i>
+                <div class="w-10 h-10 sm:w-12 sm:h-12 mx-auto mb-2 rounded-[12px] sm:rounded-[16px] bg-gradient-to-br from-white via-white to-red-50 shadow-[0_8px_24px_rgba(239,68,68,0.15)] flex items-center justify-center border border-red-50 transition-transform duration-300 group-hover:scale-110">
+                  <i data-lucide="briefcase" class="w-5 h-5 sm:w-6 sm:h-6 text-red-600" stroke-width="2.5" aria-hidden="true"></i>
                 </div>
                   <div class="text-center">
-                    <h3 class="font-bold text-slate-950 text-sm mb-0.5">Agent</h3>
+                    <h3 class="font-bold text-slate-950 text-sm mb-0.5">Associate</h3>
                     <p class="text-[10px] font-medium text-gray-400">Represent buyers & sellers</p>
                   </div>
                 </div>
@@ -239,7 +239,7 @@
           </div>
 
           
-          <button type="button" onclick="goToStep(1, 2)" class="w-full bg-blue-600 text-white py-3 rounded-xl font-bold text-sm hover:bg-blue-700 hover:-translate-y-0.5 hover:scale-[1.02] hover:shadow-lg transition-all duration-300 flex items-center justify-center gap-2 group mt-4">
+          <button type="button" onclick="goToStep(1, 2)" class="w-full bg-blue-600 text-white py-2.5 sm:py-3 rounded-xl font-bold text-sm hover:bg-blue-700 hover:-translate-y-0.5 hover:scale-[1.02] hover:shadow-lg transition-all duration-300 flex items-center justify-center gap-2 group mt-4">
             Continue <i data-lucide="arrow-right" class="w-4 h-4 transition-transform group-hover:translate-x-1" aria-hidden="true"></i>
           </button>
           
@@ -250,7 +250,7 @@
 
         
         <!-- STEP 1.5: Builder Subtype -->
-        <div id="step1.5" class="absolute inset-0 w-full step-container step-hidden-right flex flex-col justify-start pt-4 sm:pt-8 pb-12">
+        <div id="step1.5" class="absolute inset-0 w-full step-container step-hidden-right flex flex-col justify-start pt-2 sm:pt-4 pb-4">
           <div class="flex items-center gap-3 mb-6 animate-stagger-1">
             <button type="button" onclick="goToStep(1.5, 1)" class="w-10 h-10 flex items-center justify-center bg-gray-50 rounded-full hover:bg-white hover:-translate-x-1 hover:shadow-md transition-all duration-300 shrink-0 border border-gray-100">
               <i data-lucide="arrow-left" class="w-5 h-5 text-slate-950" aria-hidden="true"></i>
@@ -267,7 +267,7 @@
                 <input type="radio" name="builder_type" value="owner" class="absolute opacity-0 w-0 h-0" checked>
                 <div class="w-full h-full bg-white border border-gray-200 rounded-[16px] p-4 flex flex-col items-center justify-center text-center transition-all duration-300 hover:border-gray-300 hover:-translate-y-1 hover:shadow-md">
                   <div class="w-12 h-12 mx-auto mb-2 rounded-full bg-blue-50 flex items-center justify-center text-blue-600 group-hover:scale-110 transition-transform">
-                    <i data-lucide="crown" class="w-6 h-6"></i>
+                    <i data-lucide="crown" class="w-5 h-5 sm:w-6 sm:h-6"></i>
                   </div>
                   <h4 class="font-bold text-slate-950 text-sm">Owner</h4>
                 </div>
@@ -276,7 +276,7 @@
                 <input type="radio" name="builder_type" value="staff" class="absolute opacity-0 w-0 h-0">
                 <div class="w-full h-full bg-white border border-gray-200 rounded-[16px] p-4 flex flex-col items-center justify-center text-center transition-all duration-300 hover:border-gray-300 hover:-translate-y-1 hover:shadow-md">
                   <div class="w-12 h-12 mx-auto mb-2 rounded-full bg-blue-50 flex items-center justify-center text-blue-600 group-hover:scale-110 transition-transform">
-                    <i data-lucide="user-badge" class="w-6 h-6"></i>
+                    <i data-lucide="user-badge" class="w-5 h-5 sm:w-6 sm:h-6"></i>
                   </div>
                   <h4 class="font-bold text-slate-950 text-sm">Staff</h4>
                 </div>
@@ -287,22 +287,22 @@
             <div id="staffFields" class="hidden flex-col gap-3 animate-stagger-3 mb-6">
               <div class="flex flex-col gap-2 relative">
                 <label class="text-[10px] font-bold text-gray-500 uppercase tracking-wider">Staff Name *</label>
-                <input type="text" id="bl_staff_name" required class="w-full bg-gray-50 rounded-xl px-3 py-2.5 border border-gray-100 outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-500/20 focus:bg-white transition-all text-slate-950 font-bold text-sm" placeholder="Full Name">
+                <input type="text" id="bl_staff_name" required class="w-full bg-gray-50 rounded-xl px-3 py-2 sm:py-2.5 border border-gray-100 outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-500/20 focus:bg-white transition-all text-slate-950 font-bold text-sm" placeholder="Full Name">
               </div>
               <div class="flex flex-col gap-2 relative">
                 <label class="text-[10px] font-bold text-gray-500 uppercase tracking-wider">Designation *</label>
-                <input type="text" id="bl_staff_desig" required class="w-full bg-gray-50 rounded-xl px-3 py-2.5 border border-gray-100 outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-500/20 focus:bg-white transition-all text-slate-950 font-bold text-sm" placeholder="e.g. Sales Manager">
+                <input type="text" id="bl_staff_desig" required class="w-full bg-gray-50 rounded-xl px-3 py-2 sm:py-2.5 border border-gray-100 outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-500/20 focus:bg-white transition-all text-slate-950 font-bold text-sm" placeholder="e.g. Sales Manager">
               </div>
             </div>
 
-            <button type="button" onclick="goToStep(1.5, 2)" class="w-full bg-blue-600 text-white py-3 rounded-xl font-bold text-sm hover:bg-blue-700 hover:-translate-y-0.5 hover:scale-[1.02] hover:shadow-lg transition-all duration-300 flex items-center justify-center gap-2 group mt-auto">
+            <button type="button" onclick="goToStep(1.5, 2)" class="w-full bg-blue-600 text-white py-2.5 sm:py-3 rounded-xl font-bold text-sm hover:bg-blue-700 hover:-translate-y-0.5 hover:scale-[1.02] hover:shadow-lg transition-all duration-300 flex items-center justify-center gap-2 group mt-auto">
               Continue <i data-lucide="arrow-right" class="w-4 h-4 transition-transform group-hover:translate-x-1" aria-hidden="true"></i>
             </button>
           </div>
         </div>
 
         <!-- STEP 2: Personal Details -->
-        <div id="step2" class="absolute inset-0 w-full step-container step-hidden-right flex flex-col justify-start pt-4 sm:pt-8 pb-12">
+        <div id="step2" class="absolute inset-0 w-full step-container step-hidden-right flex flex-col justify-start pt-2 sm:pt-4 pb-4">
           <div class="flex items-center gap-3 mb-4 animate-stagger-1">
             <button type="button" onclick="goToStep(2, 1)" class="w-10 h-10 flex items-center justify-center bg-gray-50 rounded-full hover:bg-white hover:-translate-x-1 hover:shadow-md transition-all duration-300 shrink-0 border border-gray-100">
               <i data-lucide="arrow-left" class="w-5 h-5 text-slate-950" aria-hidden="true"></i>
@@ -318,14 +318,14 @@
             
             <div class="flex flex-col gap-2 relative">
               <label class="text-[10px] font-bold text-gray-500 uppercase tracking-wider">Full Name *</label>
-              <input type="text" id="f_name" class="w-full bg-gray-50 rounded-xl px-3 py-2.5 border border-gray-100 outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-500/20 focus:bg-white transition-all text-slate-950 font-bold text-sm" placeholder="e.g. Rajesh Kumar" required>
+              <input type="text" id="f_name" class="w-full bg-gray-50 rounded-xl px-3 py-2 sm:py-2.5 border border-gray-100 outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-500/20 focus:bg-white transition-all text-slate-950 font-bold text-sm" placeholder="e.g. Rajesh Kumar" required>
             </div>
             
             <div class="flex flex-col gap-2 relative">
               <label class="text-[10px] font-bold text-gray-500 uppercase tracking-wider">Phone Number *</label>
               <div class="flex bg-gray-50 rounded-xl border border-gray-100 focus-within:border-blue-500 focus-within:ring-4 focus-within:ring-slate-950/5 focus-within:bg-white transition-all overflow-hidden">
-                <span class="px-3 py-2.5 border-r border-gray-100 font-bold text-gray-500 text-xs flex items-center gap-1.5">IN +91</span>
-                <input type="tel" id="f_phone" class="flex-1 px-3 py-2.5 bg-transparent outline-none font-bold text-slate-950 text-sm" placeholder="98765 43210" maxlength="10" required>
+                <span class="px-3 py-2 sm:py-2.5 border-r border-gray-100 font-bold text-gray-500 text-xs flex items-center gap-1.5">IN +91</span>
+                <input type="tel" id="f_phone" class="flex-1 px-3 py-2 sm:py-2.5 bg-transparent outline-none font-bold text-slate-950 text-sm" placeholder="98765 43210" maxlength="10" required>
               </div>
             </div>
 
@@ -338,14 +338,14 @@
                 </label>
               </div>
               <div class="flex bg-gray-50 rounded-xl border border-gray-100 focus-within:border-blue-500 focus-within:ring-4 focus-within:ring-slate-950/5 focus-within:bg-white transition-all overflow-hidden">
-                <span class="px-3 py-2.5 border-r border-gray-100 font-bold text-gray-500 text-xs flex items-center gap-1.5">IN +91</span>
-                <input type="tel" id="f_wa" class="flex-1 px-3 py-2.5 bg-transparent outline-none font-bold text-slate-950 text-sm" placeholder="WhatsApp Number" maxlength="10">
+                <span class="px-3 py-2 sm:py-2.5 border-r border-gray-100 font-bold text-gray-500 text-xs flex items-center gap-1.5">IN +91</span>
+                <input type="tel" id="f_wa" class="flex-1 px-3 py-2 sm:py-2.5 bg-transparent outline-none font-bold text-slate-950 text-sm" placeholder="WhatsApp Number" maxlength="10">
               </div>
             </div>
 
             <div class="flex flex-col gap-2 relative">
               <label class="text-[10px] font-bold text-gray-500 uppercase tracking-wider">Email Address *</label>
-              <input type="email" id="f_email" class="w-full bg-gray-50 rounded-xl px-3 py-2.5 border border-gray-100 outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-500/20 focus:bg-white transition-all text-slate-950 font-bold text-sm" placeholder="you@example.com" required>
+              <input type="email" id="f_email" class="w-full bg-gray-50 rounded-xl px-3 py-2 sm:py-2.5 border border-gray-100 outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-500/20 focus:bg-white transition-all text-slate-950 font-bold text-sm" placeholder="you@example.com" required>
             </div>
             
             <button type="button" onclick="goToStep(2, 3)" class="w-full bg-blue-600 text-white py-3 mt-4 rounded-xl font-bold text-sm hover:bg-blue-700 hover:-translate-y-0.5 hover:scale-[1.02] hover:shadow-lg transition-all duration-300 flex items-center justify-center gap-2 group">
@@ -355,7 +355,7 @@
         </div>
 
         <!-- STEP 3: Professional / Role Details (Dynamic) -->
-        <div id="step3" class="absolute inset-0 w-full step-container step-hidden-right flex flex-col justify-start pt-4 sm:pt-8 pb-12">
+        <div id="step3" class="absolute inset-0 w-full step-container step-hidden-right flex flex-col justify-start pt-2 sm:pt-4 pb-4">
           <div class="flex items-center gap-3 mb-4 animate-stagger-1">
             <button type="button" onclick="goToStep(3, 2)" class="w-10 h-10 flex items-center justify-center bg-gray-50 rounded-full hover:bg-white hover:-translate-x-1 hover:shadow-md transition-all duration-300 shrink-0 border border-gray-100">
               <i data-lucide="arrow-left" class="w-5 h-5 text-slate-950" aria-hidden="true"></i>
@@ -382,11 +382,11 @@
               <div class="flex flex-col gap-3">
                 <div class="flex flex-col gap-2 relative">
                   <label class="text-[10px] font-bold text-gray-500 uppercase tracking-wider">Website / Profile URL</label>
-                  <input type="url" id="f_website" class="w-full bg-gray-50 rounded-xl px-3 py-2.5 border border-gray-100 outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-500/20 focus:bg-white transition-all text-slate-950 font-bold text-sm" placeholder="https://www.yoursite.com">
+                  <input type="url" id="f_website" class="w-full bg-gray-50 rounded-xl px-3 py-2 sm:py-2.5 border border-gray-100 outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-500/20 focus:bg-white transition-all text-slate-950 font-bold text-sm" placeholder="https://www.yoursite.com">
                 </div>
                 <div class="flex flex-col gap-2 relative">
                   <label class="text-[10px] font-bold text-gray-500 uppercase tracking-wider">NAR Member ID</label>
-                  <input type="text" id="f_nar_id" class="w-full bg-gray-50 rounded-xl px-3 py-2.5 border border-gray-100 outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-500/20 focus:bg-white transition-all text-slate-950 font-bold text-sm uppercase" placeholder="NAR-XXXXXXXX">
+                  <input type="text" id="f_nar_id" class="w-full bg-gray-50 rounded-xl px-3 py-2 sm:py-2.5 border border-gray-100 outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-500/20 focus:bg-white transition-all text-slate-950 font-bold text-sm uppercase" placeholder="NAR-XXXXXXXX">
                 </div>
               </div>
             </div>
@@ -398,7 +398,7 @@
                 <div class="flex flex-col gap-2 relative">
                   <label class="text-[10px] font-bold text-gray-500 uppercase tracking-wider">RERA Registered *</label>
                   <div class="relative">
-                    <select id="cp_rera_reg" class="w-full bg-gray-50 rounded-xl px-3 py-2.5 border border-gray-100 outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-500/20 focus:bg-white transition-all text-slate-950 font-bold text-sm appearance-none cursor-pointer">
+                    <select id="cp_rera_reg" class="w-full bg-gray-50 rounded-xl px-3 py-2 sm:py-2.5 border border-gray-100 outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-500/20 focus:bg-white transition-all text-slate-950 font-bold text-sm appearance-none cursor-pointer">
                       <option value="">— Select —</option>
                       <option>Yes</option>
                       <option>No</option>
@@ -408,7 +408,7 @@
                 </div>
                 <div class="flex flex-col gap-2 relative">
                   <label class="text-[10px] font-bold text-gray-500 uppercase tracking-wider">RERA Register Number</label>
-                  <input type="text" id="cp_rera_no" class="w-full bg-gray-50 rounded-xl px-3 py-2.5 border border-gray-100 outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-500/20 focus:bg-white transition-all text-slate-950 font-bold text-sm uppercase" placeholder="KRERA-XXXX-00000">
+                  <input type="text" id="cp_rera_no" class="w-full bg-gray-50 rounded-xl px-3 py-2 sm:py-2.5 border border-gray-100 outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-500/20 focus:bg-white transition-all text-slate-950 font-bold text-sm uppercase" placeholder="KRERA-XXXX-00000">
                 </div>
               </div>
             </div>
@@ -419,21 +419,21 @@
               <div class="flex flex-col gap-3">
                 <div class="flex flex-col gap-2 relative">
                   <label class="text-[10px] font-bold text-gray-500 uppercase tracking-wider">Builder Name *</label>
-                  <input type="text" id="bl_name" class="w-full bg-gray-50 rounded-xl px-3 py-2.5 border border-gray-100 outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-500/20 focus:bg-white transition-all text-slate-950 font-bold text-sm" placeholder="Company / Developer Name">
+                  <input type="text" id="bl_name" class="w-full bg-gray-50 rounded-xl px-3 py-2 sm:py-2.5 border border-gray-100 outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-500/20 focus:bg-white transition-all text-slate-950 font-bold text-sm" placeholder="Company / Developer Name">
                 </div>
                 <div class="grid grid-cols-2 gap-3">
                   <div class="flex flex-col gap-2 relative">
                     <label class="text-[10px] font-bold text-gray-500 uppercase tracking-wider">Primary Contact</label>
-                    <input type="text" id="bl_pc_name" class="w-full bg-gray-50 rounded-xl px-3 py-2.5 border border-gray-100 outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-500/20 focus:bg-white transition-all text-slate-950 font-bold text-sm" placeholder="Name">
+                    <input type="text" id="bl_pc_name" class="w-full bg-gray-50 rounded-xl px-3 py-2 sm:py-2.5 border border-gray-100 outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-500/20 focus:bg-white transition-all text-slate-950 font-bold text-sm" placeholder="Name">
                   </div>
                   <div class="flex flex-col gap-2 relative">
                     <label class="text-[10px] font-bold text-gray-500 uppercase tracking-wider">Number</label>
-                    <input type="tel" id="bl_pc_ph" class="w-full bg-gray-50 rounded-xl px-3 py-2.5 border border-gray-100 outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-500/20 focus:bg-white transition-all text-slate-950 font-bold text-sm" placeholder="Phone">
+                    <input type="tel" id="bl_pc_ph" class="w-full bg-gray-50 rounded-xl px-3 py-2 sm:py-2.5 border border-gray-100 outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-500/20 focus:bg-white transition-all text-slate-950 font-bold text-sm" placeholder="Phone">
                   </div>
                 </div>
                 <div class="flex flex-col gap-2 relative">
                   <label class="text-[10px] font-bold text-gray-500 uppercase tracking-wider">Project Name</label>
-                  <textarea id="bl_project" class="w-full bg-gray-50 rounded-xl px-3 py-2.5 border border-gray-100 outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-500/20 focus:bg-white transition-all text-slate-950 font-medium text-sm min-h-[60px]" placeholder="List your current / upcoming projects..."></textarea>
+                  <textarea id="bl_project" class="w-full bg-gray-50 rounded-xl px-3 py-2 sm:py-2.5 border border-gray-100 outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-500/20 focus:bg-white transition-all text-slate-950 font-medium text-sm min-h-[60px]" placeholder="List your current / upcoming projects..."></textarea>
                 </div>
 
                 
@@ -449,7 +449,7 @@
 
 
         <!-- STEP 4: Location Details -->
-        <div id="step4" class="absolute inset-0 w-full step-container step-hidden-right flex flex-col justify-start pt-4 sm:pt-8 pb-12">
+        <div id="step4" class="absolute inset-0 w-full step-container step-hidden-right flex flex-col justify-start pt-2 sm:pt-4 pb-4">
           <div class="flex items-center gap-3 mb-4 animate-stagger-1">
             <button type="button" onclick="goToStep(4, 3)" class="w-10 h-10 flex items-center justify-center bg-gray-50 rounded-full hover:bg-white hover:-translate-x-1 hover:shadow-md transition-all duration-300 shrink-0 border border-gray-100">
               <i data-lucide="arrow-left" class="w-5 h-5 text-slate-950" aria-hidden="true"></i>
@@ -465,24 +465,24 @@
             <div class="flex flex-col gap-3">
               <div class="flex flex-col gap-2 relative">
                 <label class="text-[10px] font-bold text-gray-500 uppercase tracking-wider">Full Address</label>
-                <textarea id="f_address" class="w-full bg-gray-50 rounded-xl px-3 py-2.5 border border-gray-100 outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-500/20 focus:bg-white transition-all text-slate-950 font-medium text-sm min-h-[70px]" placeholder="House / Flat No, Street, Area..."></textarea>
+                <textarea id="f_address" class="w-full bg-gray-50 rounded-xl px-3 py-2 sm:py-2.5 border border-gray-100 outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-500/20 focus:bg-white transition-all text-slate-950 font-medium text-sm min-h-[70px]" placeholder="House / Flat No, Street, Area..."></textarea>
               </div>
 
               <div class="grid grid-cols-2 gap-3">
                 <div class="flex flex-col gap-2 relative">
                   <label class="text-[10px] font-bold text-gray-500 uppercase tracking-wider">City</label>
-                  <input type="text" id="f_city" class="w-full bg-gray-50 rounded-xl px-3 py-2.5 border border-gray-100 outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-500/20 focus:bg-white transition-all text-slate-950 font-bold text-sm" placeholder="e.g. Kozhikode">
+                  <input type="text" id="f_city" class="w-full bg-gray-50 rounded-xl px-3 py-2 sm:py-2.5 border border-gray-100 outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-500/20 focus:bg-white transition-all text-slate-950 font-bold text-sm" placeholder="e.g. Kozhikode">
                 </div>
                 <div class="flex flex-col gap-2 relative">
                   <label class="text-[10px] font-bold text-gray-500 uppercase tracking-wider">PIN Code</label>
-                  <input type="text" id="f_pin" class="w-full bg-gray-50 rounded-xl px-3 py-2.5 border border-gray-100 outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-500/20 focus:bg-white transition-all text-slate-950 font-bold text-sm uppercase" placeholder="673001" maxlength="6">
+                  <input type="text" id="f_pin" class="w-full bg-gray-50 rounded-xl px-3 py-2 sm:py-2.5 border border-gray-100 outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-500/20 focus:bg-white transition-all text-slate-950 font-bold text-sm uppercase" placeholder="673001" maxlength="6">
                 </div>
               </div>
 
               <div class="flex flex-col gap-2 relative">
                 <label class="text-[10px] font-bold text-gray-500 uppercase tracking-wider">State</label>
                 <div class="relative">
-                  <select id="f_state" class="w-full bg-gray-50 rounded-xl px-3 py-2.5 border border-gray-100 outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-500/20 focus:bg-white transition-all text-slate-950 font-bold text-sm appearance-none cursor-pointer">
+                  <select id="f_state" class="w-full bg-gray-50 rounded-xl px-3 py-2 sm:py-2.5 border border-gray-100 outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-500/20 focus:bg-white transition-all text-slate-950 font-bold text-sm appearance-none cursor-pointer">
                     <option value="">Select State</option>
                     <option>Kerala</option>
                     <option>Tamil Nadu</option>
@@ -496,7 +496,7 @@
 
               <div class="flex flex-col gap-2 relative">
                 <label class="text-[10px] font-bold text-gray-500 uppercase tracking-wider">Area of Operation</label>
-                <input type="text" id="f_area" class="w-full bg-gray-50 rounded-xl px-3 py-2.5 border border-gray-100 outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-500/20 focus:bg-white transition-all text-slate-950 font-bold text-sm" placeholder="e.g. North Kerala">
+                <input type="text" id="f_area" class="w-full bg-gray-50 rounded-xl px-3 py-2 sm:py-2.5 border border-gray-100 outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-500/20 focus:bg-white transition-all text-slate-950 font-bold text-sm" placeholder="e.g. North Kerala">
               </div>
             </div>
             
@@ -508,7 +508,7 @@
 
 
         <!-- STEP 5: Terms & Conditions -->
-        <div id="step5" class="absolute inset-0 w-full step-container step-hidden-right flex flex-col justify-start pt-4 sm:pt-8 pb-12">
+        <div id="step5" class="absolute inset-0 w-full step-container step-hidden-right flex flex-col justify-start pt-2 sm:pt-4 pb-4">
           <div class="flex items-center gap-3 mb-4 animate-stagger-1">
             <button type="button" onclick="goToStep(5, 4)" class="w-10 h-10 flex items-center justify-center bg-gray-50 rounded-full hover:bg-white hover:-translate-x-1 hover:shadow-md transition-all duration-300 shrink-0 border border-gray-100">
               <i data-lucide="arrow-left" class="w-5 h-5 text-slate-950" aria-hidden="true"></i>
@@ -542,9 +542,11 @@
         </div>
 
       </form>
-    </div>
+    <div class="mt-auto pt-4 pb-4 flex items-center justify-center w-full z-[40] flex flex-col items-center pointer-events-none opacity-75">
+    <span class="text-[7px] md:text-[8px] font-bold text-gray-400 tracking-widest uppercase -mb-3 md:-mb-4">Powered by</span>
+    <img src="/watermark.png" alt="RHenova Tech" class="w-[80px] md:w-[110px] h-auto object-contain grayscale">
   </div>
-
+  </div>
   <script>
     if (typeof lucide !== 'undefined') lucide.createIcons();
 
@@ -916,10 +918,7 @@
 
 
   <!-- Powered By Watermark -->
-  <div class="absolute bottom-6 left-1/2 md:left-3/4 -translate-x-1/2 md:bottom-8 z-[40] flex flex-col items-center pointer-events-none opacity-75">
-    <span class="text-[7px] md:text-[8px] font-bold text-gray-400 tracking-widest uppercase -mb-3 md:-mb-4">Powered by</span>
-    <img src="/watermark.png" alt="RHenova Tech" class="w-[80px] md:w-[110px] h-auto object-contain grayscale">
-  </div>
+  
 
 
   <script>
