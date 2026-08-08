@@ -252,11 +252,11 @@
         <div class="flex flex-col gap-2 relative">
           <label class="text-sm font-bold text-gray-700">Property Service Type</label>
           <div class="relative">
-            <select class="w-full bg-gray-50 rounded-2xl px-5 py-4 border border-gray-200 outline-none focus:border-blue-500 focus:bg-white transition-colors text-slate-950 font-semibold appearance-none cursor-pointer">
+            <select id="prop_kind" class="w-full bg-gray-50 rounded-2xl px-5 py-4 border border-gray-200 outline-none focus:border-blue-500 focus:bg-white transition-colors text-slate-950 font-semibold appearance-none cursor-pointer">
               <option value="" disabled selected>Select</option>
-              <option value="sale">For Sale</option>
-              <option value="rent">For Rent</option>
-              <option value="lease">For Lease</option>
+              <option value="Residential">Residential</option>
+              <option value="Commercial">Commercial</option>
+              <option value="Estate">Estate</option>
             </select>
             <i data-lucide="chevron-down" class="w-5 h-5 absolute right-5 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none"></i>
           </div>
@@ -303,42 +303,47 @@
         </div>
 
         <!-- Residential Type -->
-        <div class="flex flex-col gap-2 relative">
+        <div id="prop_res_container" class="flex flex-col gap-2 relative hidden">
           <label class="text-sm font-bold text-gray-700">Residential Type</label>
           <div class="relative">
-            <select class="w-full bg-gray-50 rounded-2xl px-5 py-4 border border-gray-200 outline-none focus:border-blue-500 focus:bg-white transition-colors text-slate-950 font-semibold appearance-none cursor-pointer">
-              <option value="" disabled selected>Select</option>
-              <option value="apartment">Apartment</option>
-              <option value="villa">Villa</option>
-              <option value="house">Independent House</option>
+            <select id="prop_res_type" class="w-full bg-gray-50 rounded-2xl px-5 py-4 border border-gray-200 outline-none focus:border-blue-500 focus:bg-white transition-colors text-slate-950 font-semibold appearance-none cursor-pointer">
+              <option value="">-None-</option>
+              <option value="Apartment">Apartment</option>
+              <option value="Villa">Villa</option>
+              <option value="Plot">Plot</option>
+              <option value="Farmhouse">Farmhouse</option>
+              <option value="Sky Villa">Sky Villa</option>
             </select>
             <i data-lucide="chevron-down" class="w-5 h-5 absolute right-5 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none"></i>
           </div>
         </div>
 
         <!-- Commercial Type -->
-        <div class="flex flex-col gap-2 relative">
+        <div id="prop_com_container" class="flex flex-col gap-2 relative hidden">
           <label class="text-sm font-bold text-gray-700">Commercial Type</label>
           <div class="relative">
-            <select class="w-full bg-gray-50 rounded-2xl px-5 py-4 border border-gray-200 outline-none focus:border-blue-500 focus:bg-white transition-colors text-slate-950 font-semibold appearance-none cursor-pointer">
-              <option value="" disabled selected>Select</option>
-              <option value="office">Office Space</option>
-              <option value="shop">Shop</option>
-              <option value="warehouse">Warehouse</option>
+            <select id="prop_com_type" class="w-full bg-gray-50 rounded-2xl px-5 py-4 border border-gray-200 outline-none focus:border-blue-500 focus:bg-white transition-colors text-slate-950 font-semibold appearance-none cursor-pointer">
+              <option value="">-None-</option>
+              <option value="Godown">Godown</option>
+              <option value="Office Space">Office Space</option>
+              <option value="Land">Land</option>
+              <option value="Building">Building</option>
+              <option value="Co-Working Space">Co-Working Space</option>
             </select>
             <i data-lucide="chevron-down" class="w-5 h-5 absolute right-5 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none"></i>
           </div>
         </div>
 
         <!-- Estate Type -->
-        <div class="flex flex-col gap-2 relative">
+        <div id="prop_est_container" class="flex flex-col gap-2 relative hidden">
           <label class="text-sm font-bold text-gray-700">Estate Type</label>
           <div class="relative">
-            <select class="w-full bg-gray-50 rounded-2xl px-5 py-4 border border-gray-200 outline-none focus:border-blue-500 focus:bg-white transition-colors text-slate-950 font-semibold appearance-none cursor-pointer">
-              <option value="" disabled selected>Select</option>
-              <option value="agricultural">Agricultural Land</option>
-              <option value="plantation">Plantation</option>
-              <option value="farmhouse">Farmhouse</option>
+            <select id="prop_est_type" class="w-full bg-gray-50 rounded-2xl px-5 py-4 border border-gray-200 outline-none focus:border-blue-500 focus:bg-white transition-colors text-slate-950 font-semibold appearance-none cursor-pointer">
+              <option value="">-None-</option>
+              <option value="Agriculture land">Agriculture land</option>
+              <option value="Resort">Resort</option>
+              <option value="Homestay">Homestay</option>
+              <option value="Others">Others</option>
             </select>
             <i data-lucide="chevron-down" class="w-5 h-5 absolute right-5 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none"></i>
           </div>
@@ -671,4 +676,24 @@
     <img src="/watermark.png" alt="RHenova Tech" class="w-[80px] md:w-[110px] h-auto object-contain grayscale">
   </div>
 
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const propKindSelect = document.getElementById('prop_kind');
+      if (propKindSelect) {
+        propKindSelect.addEventListener('change', (e) => {
+          document.getElementById('prop_res_container').classList.add('hidden');
+          document.getElementById('prop_com_container').classList.add('hidden');
+          document.getElementById('prop_est_container').classList.add('hidden');
+          
+          if(e.target.value === 'Residential') {
+            document.getElementById('prop_res_container').classList.remove('hidden');
+          } else if (e.target.value === 'Commercial') {
+            document.getElementById('prop_com_container').classList.remove('hidden');
+          } else if (e.target.value === 'Estate') {
+            document.getElementById('prop_est_container').classList.remove('hidden');
+          }
+        });
+      }
+    });
+</script>
 </body>
