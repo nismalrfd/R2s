@@ -239,26 +239,52 @@
           </div>
 
           
-          <!-- Dynamic Builder Options -->
-          <div id="builderSubtypeContainer" class="hidden w-full mb-2">
-            <h3 class="text-sm font-bold text-slate-950 mb-3 animate-stagger-1">Are you an Owner or Staff?</h3>
-            <div class="grid grid-cols-2 gap-3 mb-4 animate-stagger-2">
+          <button type="button" onclick="goToStep(1, 2)" class="w-full bg-blue-600 text-white py-3 rounded-xl font-bold text-sm hover:bg-blue-700 hover:-translate-y-0.5 hover:scale-[1.02] hover:shadow-lg transition-all duration-300 flex items-center justify-center gap-2 group mt-4">
+            Continue <i data-lucide="arrow-right" class="w-4 h-4 transition-transform group-hover:translate-x-1" aria-hidden="true"></i>
+          </button>
+          
+          <p class="text-center text-sm text-gray-500 font-medium mt-6">
+            Already have an account? <a href="/login.html" class="text-slate-950 font-bold hover:text-blue-600 hover:underline transition-colors">Log In</a>
+          </p>
+        </div>
+
+        
+        <!-- STEP 1.5: Builder Subtype -->
+        <div id="step1.5" class="absolute inset-0 w-full step-container step-hidden-right flex flex-col justify-start pt-4 sm:pt-8 pb-12">
+          <div class="flex items-center gap-3 mb-6 animate-stagger-1">
+            <button type="button" onclick="goToStep(1.5, 1)" class="w-10 h-10 flex items-center justify-center bg-gray-50 rounded-full hover:bg-white hover:-translate-x-1 hover:shadow-md transition-all duration-300 shrink-0 border border-gray-100">
+              <i data-lucide="arrow-left" class="w-5 h-5 text-slate-950" aria-hidden="true"></i>
+            </button>
+            <div>
+              <h2 class="text-2xl font-bold text-slate-950 tracking-tight">Builder Type</h2>
+              <p class="text-xs text-gray-500 font-medium">Are you the Owner or Staff?</p>
+            </div>
+          </div>
+
+          <div class="w-full flex-1">
+            <div class="grid grid-cols-2 gap-4 mb-6 animate-stagger-2 h-32">
               <label class="radio-card cursor-pointer relative h-full group">
                 <input type="radio" name="builder_type" value="owner" class="absolute opacity-0 w-0 h-0" checked>
-                <div class="w-full h-full bg-white border border-gray-200 rounded-[12px] p-3 flex flex-col items-center justify-center text-center transition-all duration-300 hover:border-gray-300 shadow-sm">
-                  <h4 class="font-bold text-slate-950 text-xs">Owner</h4>
+                <div class="w-full h-full bg-white border border-gray-200 rounded-[16px] p-4 flex flex-col items-center justify-center text-center transition-all duration-300 hover:border-gray-300 hover:-translate-y-1 hover:shadow-md">
+                  <div class="w-12 h-12 mx-auto mb-2 rounded-full bg-blue-50 flex items-center justify-center text-blue-600 group-hover:scale-110 transition-transform">
+                    <i data-lucide="crown" class="w-6 h-6"></i>
+                  </div>
+                  <h4 class="font-bold text-slate-950 text-sm">Owner</h4>
                 </div>
               </label>
               <label class="radio-card cursor-pointer relative h-full group">
                 <input type="radio" name="builder_type" value="staff" class="absolute opacity-0 w-0 h-0">
-                <div class="w-full h-full bg-white border border-gray-200 rounded-[12px] p-3 flex flex-col items-center justify-center text-center transition-all duration-300 hover:border-gray-300 shadow-sm">
-                  <h4 class="font-bold text-slate-950 text-xs">Staff</h4>
+                <div class="w-full h-full bg-white border border-gray-200 rounded-[16px] p-4 flex flex-col items-center justify-center text-center transition-all duration-300 hover:border-gray-300 hover:-translate-y-1 hover:shadow-md">
+                  <div class="w-12 h-12 mx-auto mb-2 rounded-full bg-blue-50 flex items-center justify-center text-blue-600 group-hover:scale-110 transition-transform">
+                    <i data-lucide="user-badge" class="w-6 h-6"></i>
+                  </div>
+                  <h4 class="font-bold text-slate-950 text-sm">Staff</h4>
                 </div>
               </label>
             </div>
             
             <!-- Staff Fields -->
-            <div id="staffFields" class="hidden flex-col gap-3 mb-4 animate-stagger-3">
+            <div id="staffFields" class="hidden flex-col gap-3 animate-stagger-3 mb-6">
               <div class="flex flex-col gap-2 relative">
                 <label class="text-[10px] font-bold text-gray-500 uppercase tracking-wider">Staff Name *</label>
                 <input type="text" id="bl_staff_name" required class="w-full bg-gray-50 rounded-xl px-3 py-2.5 border border-gray-100 outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-500/20 focus:bg-white transition-all text-slate-950 font-bold text-sm" placeholder="Full Name">
@@ -268,15 +294,11 @@
                 <input type="text" id="bl_staff_desig" required class="w-full bg-gray-50 rounded-xl px-3 py-2.5 border border-gray-100 outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-500/20 focus:bg-white transition-all text-slate-950 font-bold text-sm" placeholder="e.g. Sales Manager">
               </div>
             </div>
-          </div>
 
-          <button type="button" onclick="goToStep(1, 2)" class="w-full bg-blue-600 text-white py-3 rounded-xl font-bold text-sm hover:bg-blue-700 hover:-translate-y-0.5 hover:scale-[1.02] hover:shadow-lg transition-all duration-300 flex items-center justify-center gap-2 group mt-4">
-            Continue <i data-lucide="arrow-right" class="w-4 h-4 transition-transform group-hover:translate-x-1" aria-hidden="true"></i>
-          </button>
-          
-          <p class="text-center text-sm text-gray-500 font-medium mt-6">
-            Already have an account? <a href="/login.html" class="text-slate-950 font-bold hover:text-blue-600 hover:underline transition-colors">Log In</a>
-          </p>
+            <button type="button" onclick="goToStep(1.5, 2)" class="w-full bg-blue-600 text-white py-3 rounded-xl font-bold text-sm hover:bg-blue-700 hover:-translate-y-0.5 hover:scale-[1.02] hover:shadow-lg transition-all duration-300 flex items-center justify-center gap-2 group mt-auto">
+              Continue <i data-lucide="arrow-right" class="w-4 h-4 transition-transform group-hover:translate-x-1" aria-hidden="true"></i>
+            </button>
+          </div>
         </div>
 
         <!-- STEP 2: Personal Details -->
@@ -563,9 +585,20 @@
     };
 
     function goToStep(current, next) {
+      // Intercept navigation for builder subtype (1.5)
+      const role = document.querySelector('input[name="role"]:checked')?.value;
+      if (current === 1 && next === 2 && role === 'builder') {
+        next = 1.5;
+      }
+      if (current === 2 && next === 1 && role === 'builder') {
+        next = 1.5;
+      }
+
       const stepCurrent = document.getElementById('step' + current);
       const stepNext = document.getElementById('step' + next);
       const stepText = document.getElementById('stepText');
+
+      if (!stepCurrent || !stepNext) return;
 
       // Validation checkpoint moving forward
       if (next > current) {
@@ -573,14 +606,12 @@
       }
 
       // Config dynamic fields for Step 3
-      if (current === 1 || next === 3) {
+      if (current === 1 || next === 3 || current === 1.5) {
         configureRoleFields();
       }
 
       // Special case: If role is Owner or Agent, they don't have dynamic fields.
-      // So if going 2 -> 3, skip to 4. If going 4 -> 3, skip to 2.
       if (next === 3) {
-        const role = document.querySelector('input[name="role"]:checked').value;
         if (role === 'owner' || role === 'agent') {
            if (current === 2) {
              goToStep(current, 4);
@@ -595,8 +626,7 @@
 
       // Config T&Cs
       if (next === 5) {
-        const selectedRole = document.querySelector('input[name="role"]:checked').value;
-        document.getElementById('dynamicTermsText').innerHTML = roleTerms[selectedRole] || "Terms and Conditions apply.";
+        document.getElementById('dynamicTermsText').innerHTML = roleTerms[role] || "Terms and Conditions apply.";
         document.getElementById('agreeTerms').checked = false;
         toggleSubmitButton();
       }
@@ -607,7 +637,7 @@
         if(i <= next) dot.className = "w-2 h-2 rounded-full bg-slate-950 transition-colors duration-500";
         else dot.className = "w-2 h-2 rounded-full bg-gray-200 transition-colors duration-500";
       }
-      stepText.innerText = "Step " + next + " of 5";
+      stepText.innerText = "Step " + Math.floor(next) + " of 5";
 
       // Slide animations
       if (next > current) {
@@ -923,20 +953,9 @@
   <script>
     document.addEventListener('DOMContentLoaded', () => {
       const roleRadios = document.querySelectorAll('input[name="role"]');
-      const subtypeContainer = document.getElementById('builderSubtypeContainer');
       const staffFields = document.getElementById('staffFields');
       const typeRadios = document.querySelectorAll('input[name="builder_type"]');
       
-      roleRadios.forEach(radio => {
-        radio.addEventListener('change', (e) => {
-          if(e.target.value === 'builder') {
-            subtypeContainer.classList.remove('hidden');
-          } else {
-            subtypeContainer.classList.add('hidden');
-          }
-        });
-      });
-
       typeRadios.forEach(radio => {
         radio.addEventListener('change', (e) => {
           if(e.target.value === 'staff') {
