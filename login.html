@@ -141,17 +141,19 @@
     </div>
   </div>
 
+  
   <!-- ==================== RIGHT SIDE: AUTHENTICATION FLOW ==================== -->
   <div class="w-full md:w-1/2 min-h-screen flex flex-col items-center p-6 sm:p-12 relative bg-white overflow-hidden" style="view-transition-name: auth-right;">
     
     <div class="mb-auto w-full"></div>
+    
     <!-- Mobile Logo (Visible only on mobile) -->
     <div class="md:hidden flex items-center justify-center w-16 h-16 mb-8 relative z-20">
       <img src="/LOGO.png" alt="R2s Realtors" class="w-full h-full object-contain p-1">
     </div>
 
     <!-- Container for sliding panels -->
-    <div class="w-full max-w-[400px] relative min-h-[480px]">
+    <div class="w-full max-w-[400px] relative h-[480px]">
       
       <!-- ==================== STEP 1: LOGIN FORM ==================== -->
       <div id="step-login" class="absolute inset-0 w-full transition-all duration-500 transform translate-x-0 opacity-100 flex flex-col">
@@ -167,14 +169,16 @@
           <button type="button" id="tabEmail" onclick="switchTab('email')" class="flex-1 py-2.5 text-sm font-bold rounded-lg text-gray-500 hover:text-slate-950 transition-all">Email Address</button>
         </div>
 
-        <form id="loginForm" class="w-full flex flex-col gap-6" onsubmit="handleLogin(event)" novalidate>
+        <form id="loginForm" class="w-full flex flex-col gap-5" onsubmit="handleLogin(event)">
           
-          <!-- Mobile Number Input -->
-          <div id="mobileInputGroup" class="flex flex-col gap-2 relative transition-all duration-300">
-            <label class="text-[10px] font-bold text-gray-500 uppercase tracking-wider">Mobile Number</label>
-            <div id="mobileInputWrapper" class="flex bg-white rounded-xl border border-gray-200 focus-within:border-blue-500 focus-within:ring-4 focus-within:ring-slate-950/5 transition-all overflow-hidden shadow-sm hover:border-gray-300">
-              <span class="px-4 py-3.5 border-r border-gray-100 font-bold text-gray-500 bg-gray-50 text-sm flex items-center gap-1.5">IN +91</span>
-              <input type="tel" id="phoneInput" oninput="hideFieldError('mobile')" class="flex-1 px-4 py-3.5 bg-transparent outline-none font-bold text-slate-950 text-base" placeholder="98765 43210" maxlength="10" required>
+          <!-- Mobile Input Group -->
+          <div id="mobileInputGroup" class="flex flex-col gap-1.5 relative">
+            <label class="text-[11px] font-bold text-gray-500 uppercase tracking-wider ml-1">Mobile Number</label>
+            <div class="flex">
+              <div class="flex items-center justify-center px-4 bg-gray-50 border border-r-0 border-gray-200 rounded-l-2xl text-slate-950 font-bold text-sm shrink-0">
+                IN +91
+              </div>
+              <input type="tel" id="phoneInput" class="w-full bg-white rounded-r-2xl px-5 py-4 border border-gray-200 outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-500/20 transition-all text-slate-950 font-bold text-lg tracking-wide" placeholder="98765 43210" required>
             </div>
             <!-- Custom Mobile Error -->
             <div id="mobileError" class="hidden opacity-0 translate-y-1 transition-all duration-300 flex items-center gap-2 text-blue-600 bg-blue-50 p-2.5 rounded-lg border border-red-100 text-xs font-bold">
@@ -182,15 +186,13 @@
               <span id="mobileErrorText">Please enter a valid 10-digit number.</span>
             </div>
           </div>
-
-          <!-- Email Input (Hidden by default) -->
-          <div id="emailInputGroup" class="hidden flex flex-col gap-2 relative transition-all duration-300">
-            <label class="text-[10px] font-bold text-gray-500 uppercase tracking-wider">Email Address</label>
-            <div id="emailInputWrapper" class="flex bg-white rounded-xl border border-gray-200 focus-within:border-blue-500 focus-within:ring-4 focus-within:ring-slate-950/5 transition-all overflow-hidden shadow-sm hover:border-gray-300">
-              <span class="px-4 py-3.5 border-r border-gray-100 bg-gray-50 flex items-center justify-center">
-                <i data-lucide="mail" class="w-4 h-4 text-gray-400"></i>
-              </span>
-              <input type="email" id="emailInput" oninput="hideFieldError('email')" class="flex-1 px-4 py-3.5 bg-transparent outline-none font-bold text-slate-950 text-base" placeholder="you@example.com">
+          
+          <!-- Email Input Group (Hidden by default) -->
+          <div id="emailInputGroup" class="hidden flex flex-col gap-1.5 relative">
+            <label class="text-[11px] font-bold text-gray-500 uppercase tracking-wider ml-1">Email Address</label>
+            <div class="relative">
+              <i data-lucide="mail" class="w-5 h-5 absolute left-5 top-1/2 -translate-y-1/2 text-gray-400"></i>
+              <input type="email" id="emailInput" class="w-full bg-white rounded-2xl pl-12 pr-5 py-4 border border-gray-200 outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-500/20 transition-all text-slate-950 font-bold text-base" placeholder="you@example.com">
             </div>
             <!-- Custom Email Error -->
             <div id="emailError" class="hidden opacity-0 translate-y-1 transition-all duration-300 flex items-center gap-2 text-blue-600 bg-blue-50 p-2.5 rounded-lg border border-red-100 text-xs font-bold">
@@ -249,16 +251,16 @@
         <div class="mt-8 text-center text-sm font-medium">
           <span class="text-gray-500">Didn't receive the code?</span>
           <button type="button" class="text-slate-950 ml-1 font-bold hover:underline transition-all active:scale-95">Resend in 00:59</button>
-      </div>
-    </div> <!-- Close max-w-[400px] container here, before the watermark -->
+        </div>
+      </div> <!-- End of step-otp -->
+    </div> <!-- End of max-w-400px container -->
 
-    <!-- Watermark moved outside the sliding container to stick to bottom of viewport -->
-    <div class="mt-auto pt-4 pb-4 flex items-center justify-center w-full z-[40] flex flex-col items-center pointer-events-none opacity-75">
+    <div class="mt-auto pt-4 pb-4 flex items-center justify-center w-full z-[40] flex flex-col items-center opacity-75">
       <span class="text-[7px] md:text-[8px] font-bold text-gray-400 tracking-widest uppercase -mb-3 md:-mb-4">Powered by</span>
       <img src="/watermark.png" alt="RHenova Tech" class="w-[80px] md:w-[110px] h-auto object-contain grayscale">
     </div>
-  </div> <!-- Close the right-side split screen container -->
-  <script>
+  </div>
+<script>
     if (typeof lucide !== 'undefined') lucide.createIcons();
     
     // ==================== TABS LOGIC ====================
