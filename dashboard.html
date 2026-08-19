@@ -208,7 +208,7 @@
 
 
     <!-- Main Content -->
-    <div class="mt-[80px] md:mt-[90px] px-4 sm:px-6 md:pr-8 md:pl-8 py-8 pb-32 md:pb-12 md:h-[calc(100vh-90px)] md:overflow-y-auto hide-scrollbar custom-scrollbar w-full md:w-[calc(100%-280px)] relative z-0">
+    <div id="propertiesMainView" class="mt-[80px] md:mt-[90px] px-4 sm:px-6 md:pr-8 md:pl-8 py-8 pb-32 md:pb-12 md:h-[calc(100vh-90px)] md:overflow-y-auto hide-scrollbar custom-scrollbar w-full md:w-[calc(100%-280px)] relative z-0">
       
       <!-- Page Header -->
       <div class="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-8">
@@ -227,6 +227,18 @@
           </button>
         </div>
       </div>
+
+
+      <!-- Dashboard Main Tabs -->
+      <div class="flex bg-gray-100/80 p-1.5 rounded-2xl w-full max-w-sm mb-8 border border-gray-200/50 backdrop-blur-sm">
+        <button onclick="switchMainTab('properties')" id="tabMainProperties" class="flex-1 py-2.5 text-sm font-bold rounded-xl bg-white shadow-sm text-slate-950 transition-all flex items-center justify-center gap-2">
+          <i data-lucide="building-2" class="w-4 h-4"></i> Properties
+        </button>
+        <button onclick="switchMainTab('network')" id="tabMainNetwork" class="flex-1 py-2.5 text-sm font-bold rounded-xl text-gray-500 hover:text-slate-950 transition-all flex items-center justify-center gap-2">
+          <i data-lucide="users" class="w-4 h-4"></i> Network Leads
+        </button>
+      </div>
+
 
 
 
@@ -469,6 +481,100 @@
       <!-- Footer -->
       <div class="py-8 text-center bg-white border-t border-gray-100 mt-8">
         
+      </div>
+    </div>
+  </div>
+
+
+  
+  <!-- ==================== NETWORK & LEADS VIEW ==================== -->
+  <div id="networkMainView" class="hidden mt-[80px] md:mt-[90px] px-4 sm:px-6 md:pr-8 md:pl-8 py-8 pb-32 md:pb-12 md:h-[calc(100vh-90px)] md:overflow-y-auto hide-scrollbar custom-scrollbar w-full md:w-[calc(100%-280px)] relative z-0">
+    <div class="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-8">
+      <div>
+        <p class="text-sm text-gray-500 font-medium mb-1">My Network</p>
+        <h1 class="text-3xl font-extrabold text-slate-950 mb-2">Realtor & Partner Leads</h1>
+        <p class="text-sm font-medium text-gray-500">Manage buyer contacts and sharing permissions.</p>
+      </div>
+      <button onclick="toggleAddBuyerModal()" class="bg-blue-600 hover:-translate-y-0.5 hover:shadow-lg hover:bg-blue-700 text-white px-6 py-2.5 rounded-full text-sm font-bold shadow-[0_4px_15px_rgba(37,99,235,0.3)] transition-colors flex items-center gap-2">
+        <i data-lucide="user-plus" class="w-4 h-4" aria-hidden="true"></i> Add Buyer
+      </button>
+    </div>
+
+    <!-- Dashboard Main Tabs -->
+    <div class="flex bg-gray-100/80 p-1.5 rounded-2xl w-full max-w-sm mb-8 border border-gray-200/50 backdrop-blur-sm">
+      <button onclick="switchMainTab('properties')" id="tabNetProperties" class="flex-1 py-2.5 text-sm font-bold rounded-xl text-gray-500 hover:text-slate-950 transition-all flex items-center justify-center gap-2">
+        <i data-lucide="building-2" class="w-4 h-4"></i> Properties
+      </button>
+      <button onclick="switchMainTab('network')" id="tabNetNetwork" class="flex-1 py-2.5 text-sm font-bold rounded-xl bg-white shadow-sm text-slate-950 transition-all flex items-center justify-center gap-2">
+        <i data-lucide="users" class="w-4 h-4"></i> Network Leads
+      </button>
+    </div>
+
+    <!-- Saved Leads List -->
+    <div class="bg-white rounded-[24px] p-6 shadow-[0_4px_20px_rgb(0,0,0,0.03)] border border-gray-100 min-h-[400px]">
+      <div id="buyersListContainer" class="grid grid-cols-1 xl:grid-cols-2 gap-4">
+        <!-- Populated by JS -->
+      </div>
+    </div>
+  </div>
+
+  <!-- Add Buyer Modal -->
+  <div id="addBuyerModal" class="fixed inset-0 z-[3000] flex items-center justify-center p-4 sm:p-6 opacity-0 pointer-events-none transition-opacity duration-300">
+    <div class="absolute inset-0 bg-slate-950/60 backdrop-blur-sm" onclick="toggleAddBuyerModal()"></div>
+    <div class="relative bg-white w-full max-w-lg rounded-[32px] shadow-2xl flex flex-col transform scale-95 transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)]" id="addBuyerContent">
+      <div class="p-6 md:p-8 border-b border-gray-100 flex items-center justify-between shrink-0">
+        <h3 class="text-2xl font-black text-slate-950 tracking-tight">Add Buyer Lead</h3>
+        <button onclick="toggleAddBuyerModal()" class="w-10 h-10 rounded-full bg-gray-50 flex items-center justify-center hover:bg-red-50 hover:text-red-500 transition-colors">
+          <i data-lucide="x" class="w-5 h-5"></i>
+        </button>
+      </div>
+      <div class="p-6 md:p-8 overflow-y-auto custom-scrollbar">
+        <form id="addLeadForm" onsubmit="handleSaveLead(event)" class="flex flex-col gap-6">
+          
+          <div>
+            <label class="text-xs font-bold text-gray-500 uppercase tracking-wider mb-2 block">Buyer Name *</label>
+            <div class="relative group">
+              <i data-lucide="user" class="w-5 h-5 absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 group-focus-within:text-blue-500 transition-colors"></i>
+              <input type="text" id="leadName" required class="w-full bg-gray-50 rounded-2xl pl-12 pr-4 py-3.5 border border-gray-200 outline-none focus:border-blue-500 focus:bg-white focus:ring-4 focus:ring-blue-500/20 transition-all font-bold text-slate-950 text-base placeholder:text-gray-400 placeholder:font-medium" placeholder="e.g. John Doe">
+            </div>
+          </div>
+          
+          <div>
+            <label class="text-xs font-bold text-gray-500 uppercase tracking-wider mb-2 block">Contact Number *</label>
+            <div class="relative group">
+              <i data-lucide="phone" class="w-5 h-5 absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 group-focus-within:text-blue-500 transition-colors"></i>
+              <input type="tel" id="leadContact" required class="w-full bg-gray-50 rounded-2xl pl-12 pr-4 py-3.5 border border-gray-200 outline-none focus:border-blue-500 focus:bg-white focus:ring-4 focus:ring-blue-500/20 transition-all font-bold text-slate-950 text-base placeholder:text-gray-400 placeholder:font-medium" placeholder="+91 98765 43210">
+            </div>
+          </div>
+
+          <div>
+            <label class="text-xs font-bold text-gray-500 uppercase tracking-wider mb-2 block">Location</label>
+            <div class="relative group">
+              <i data-lucide="map-pin" class="w-5 h-5 absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 group-focus-within:text-blue-500 transition-colors"></i>
+              <input type="text" id="leadLocation" class="w-full bg-gray-50 rounded-2xl pl-12 pr-4 py-3.5 border border-gray-200 outline-none focus:border-blue-500 focus:bg-white focus:ring-4 focus:ring-blue-500/20 transition-all font-bold text-slate-950 text-base placeholder:text-gray-400 placeholder:font-medium" placeholder="e.g. Mumbai, Maharashtra">
+            </div>
+          </div>
+
+          <div>
+            <label class="text-xs font-bold text-gray-500 uppercase tracking-wider mb-2 block">Note / Requirements</label>
+            <textarea id="leadNote" rows="3" class="w-full bg-gray-50 rounded-2xl p-4 border border-gray-200 outline-none focus:border-blue-500 focus:bg-white focus:ring-4 focus:ring-blue-500/20 transition-all font-medium text-slate-950 text-base resize-none placeholder:text-gray-400" placeholder="Looking for a 3BHK..."></textarea>
+          </div>
+          
+          <label class="flex items-start gap-4 cursor-pointer group bg-blue-50/50 p-5 rounded-2xl border border-blue-100 mt-2 hover:bg-blue-50 transition-colors">
+            <div class="relative flex items-center justify-center mt-0.5 shrink-0">
+              <input type="checkbox" id="leadPermission" required class="peer appearance-none w-6 h-6 border-2 border-blue-300 rounded-md focus:ring-2 focus:ring-blue-500/20 checked:bg-blue-600 checked:border-blue-600 transition-colors cursor-pointer">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" class="w-4 h-4 text-white absolute pointer-events-none opacity-0 peer-checked:opacity-100 transition-opacity"><polyline points="20 6 9 17 4 12"></polyline></svg>
+            </div>
+            <span class="text-sm font-bold text-slate-800 transition-colors leading-relaxed">I confirm that I have explicit permission to share this Buyer Name and Contact Number.</span>
+          </label>
+
+        </form>
+      </div>
+      <div class="p-6 md:p-8 border-t border-gray-100 bg-gray-50 flex justify-end gap-4 rounded-b-[32px] shrink-0">
+        <button onclick="toggleAddBuyerModal()" class="px-6 py-3.5 rounded-xl font-bold text-gray-500 hover:bg-gray-200 transition-colors">Cancel</button>
+        <button type="submit" form="addLeadForm" class="bg-blue-600 text-white px-8 py-3.5 rounded-xl font-bold hover:bg-blue-700 shadow-[0_4px_15px_rgba(37,99,235,0.3)] transition-colors flex items-center gap-2">
+          Save Buyer <i data-lucide="save" class="w-4 h-4"></i>
+        </button>
       </div>
     </div>
   </div>
