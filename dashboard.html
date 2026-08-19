@@ -512,7 +512,7 @@
         </button>
       </div>
       <div class="p-6 md:p-8 overflow-y-auto custom-scrollbar">
-        <form id="addLeadForm" onsubmit="handleSaveLead(event)" class="flex flex-col gap-6">
+        <form id="addLeadForm" onsubmit="handleSaveLead(event)" class="flex flex-col gap-6" novalidate>
           
           <div>
             <label class="text-xs font-bold text-gray-500 uppercase tracking-wider mb-2 block">Buyer Name *</label>
@@ -2127,10 +2127,24 @@
 
   function handleSaveLead(e) {
     e.preventDefault();
-    const name = document.getElementById('leadName').value;
-    const contact = document.getElementById('leadContact').value;
-    const location = document.getElementById('leadLocation').value;
-    const note = document.getElementById('leadNote').value;
+    const name = document.getElementById('leadName').value.trim();
+    const contact = document.getElementById('leadContact').value.trim();
+    const location = document.getElementById('leadLocation').value.trim();
+    const note = document.getElementById('leadNote').value.trim();
+    const permission = document.getElementById('leadPermission');
+
+    if (!name) {
+      showPremiumAlert('Please enter the Buyer Name.', 'error');
+      return;
+    }
+    if (!contact) {
+      showPremiumAlert('Please enter the Contact Number.', 'error');
+      return;
+    }
+    if (!permission.checked) {
+      showPremiumAlert('You must confirm permission to share this lead.', 'error');
+      return;
+    }
     
     const leads = JSON.parse(localStorage.getItem('r2s_buyer_leads') || '[]');
     
