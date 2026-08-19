@@ -2168,13 +2168,19 @@
     const container = document.getElementById('buyersListContainer');
     let leads = JSON.parse(localStorage.getItem('r2s_buyer_leads') || '[]');
     
-    // Inject Dummy Data if empty or less than 4 for testing
-    if (leads.length < 4) {
+    // Inject Dummy Data if empty or less than 10 for testing
+    if (leads.length < 10) {
       leads = [
-        { id: '1', name: 'John Doe', contact: '+91 9876543210', location: 'Dubai Marina', note: 'Looking for a luxury 3BHK', date: '21 Aug 2026' },
-        { id: '2', name: 'Sarah Smith', contact: '+971 501234567', location: 'Downtown Dubai', note: 'Investment property under 2M AED', date: '20 Aug 2026' },
-        { id: '3', name: 'Ahmed Al-Farsi', contact: '+971 568392014', location: 'Palm Jumeirah', note: 'Interested in beachfront villas only. Fast closing preferred.', date: '19 Aug 2026' },
-        { id: '4', name: 'Elena Rodriguez', contact: '+1 305 444 8920', location: 'Business Bay', note: 'Looking for commercial office space, minimum 2000 sq ft.', date: '18 Aug 2026' }
+        { id: '1', name: 'John Doe', contact: '+91 98765 43210', location: 'Dubai Marina', note: 'Looking for a luxury 3BHK', date: '21 Aug 2026' },
+        { id: '2', name: 'Sarah Smith', contact: '+971 50 1234567', location: 'Downtown Dubai', note: 'Investment property under 2M AED', date: '20 Aug 2026' },
+        { id: '3', name: 'Ahmed Al-Farsi', contact: '+971 56 8392014', location: 'Palm Jumeirah', note: 'Interested in beachfront villas only. Fast closing preferred.', date: '19 Aug 2026' },
+        { id: '4', name: 'Elena Rodriguez', contact: '+1 305 444 8920', location: 'Business Bay', note: 'Looking for commercial office space, minimum 2000 sq ft.', date: '18 Aug 2026' },
+        { id: '5', name: 'Michael Chang', contact: '+65 9123 4567', location: 'Jumeirah Village Circle', note: 'Seeking 1BHK for short-term rental investment.', date: '17 Aug 2026' },
+        { id: '6', name: 'Priya Sharma', contact: '+91 99887 76655', location: 'Dubai Hills Estate', note: 'Family of 4, need a townhouse near good schools.', date: '16 Aug 2026' },
+        { id: '7', name: 'David Beckham', contact: '+44 7700 900077', location: 'Emirates Hills', note: 'Exclusive mansion required. Privacy is priority.', date: '15 Aug 2026' },
+        { id: '8', name: 'Fatima Zahra', contact: '+971 55 1122334', location: 'Dubai Creek Harbour', note: 'Looking for an apartment with Burj Khalifa views.', date: '14 Aug 2026' },
+        { id: '9', name: 'Liam O\'Connor', contact: '+353 87 123 4567', location: 'Jumeirah Beach Residence', note: 'Ready to move in, furnished 2BHK.', date: '13 Aug 2026' },
+        { id: '10', name: 'Yuki Tanaka', contact: '+81 90 1234 5678', location: 'DIFC', note: 'Penthouse apartment, budget up to 10M AED.', date: '12 Aug 2026' }
       ];
       localStorage.setItem('r2s_buyer_leads', JSON.stringify(leads));
     }
