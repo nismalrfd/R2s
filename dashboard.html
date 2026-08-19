@@ -183,12 +183,6 @@
         </button>
         
         
-        <button onclick="toggleNetworkView()" class="filter-btn flex items-center gap-4 px-3 py-2.5 sm:px-4 sm:py-3 rounded-2xl hover:bg-gray-50 text-sm font-bold text-slate-700 hover:text-slate-950 transition-colors w-full text-left" id="btnNetworkView">
-          <div class="w-10 h-10 rounded-full bg-white border border-gray-200 flex items-center justify-center shadow-sm shrink-0">
-            <i data-lucide="users" class="w-5 h-5 text-blue-500" aria-hidden="true"></i>
-          </div>
-          Realtor, Channel Partner, and Associate
-        </button>
         <div class="h-px bg-gray-100 my-2 mx-4"></div>
         
         <button onclick="toggleTCModal()" class="flex items-center gap-4 px-3 py-2.5 sm:px-4 sm:py-3 rounded-2xl hover:bg-gray-50 text-sm font-bold text-slate-700 hover:text-slate-950 transition-colors w-full text-left">
@@ -2114,6 +2108,19 @@
     }
     if(typeof lucide !== 'undefined') lucide.createIcons();
   }
+  
+  function switchMainTab(tab) {
+    if (tab === 'properties') {
+      document.getElementById('propertiesMainView').classList.remove('hidden');
+      document.getElementById('networkMainView').classList.add('hidden');
+      if (typeof lucide !== 'undefined') lucide.createIcons();
+    } else {
+      document.getElementById('propertiesMainView').classList.add('hidden');
+      document.getElementById('networkMainView').classList.remove('hidden');
+      renderBuyerLeads();
+    }
+  }
+
   // --- End Network Leads Logic ---
 </script>
 </body>
