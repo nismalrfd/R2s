@@ -183,6 +183,12 @@
         </button>
         
         
+        <button onclick="toggleNetworkView()" class="filter-btn flex items-center gap-4 px-3 py-2.5 sm:px-4 sm:py-3 rounded-2xl hover:bg-gray-50 text-sm font-bold text-slate-700 hover:text-slate-950 transition-colors w-full text-left" id="btnNetworkView">
+          <div class="w-10 h-10 rounded-full bg-white border border-gray-200 flex items-center justify-center shadow-sm shrink-0">
+            <i data-lucide="users" class="w-5 h-5 text-blue-500" aria-hidden="true"></i>
+          </div>
+          Realtor, Channel Partner, and Associate
+        </button>
         <div class="h-px bg-gray-100 my-2 mx-4"></div>
         
         <button onclick="toggleTCModal()" class="flex items-center gap-4 px-3 py-2.5 sm:px-4 sm:py-3 rounded-2xl hover:bg-gray-50 text-sm font-bold text-slate-700 hover:text-slate-950 transition-colors w-full text-left">
@@ -1928,8 +1934,14 @@
   }
 
   // Hook into generic submission in dashboard/add-property
-  window.submitPropertyForm = function(e) {
+    window.submitPropertyForm = function(e) {
     e.preventDefault();
+    const agreeCheck = document.getElementById('agree_advertisement');
+    if (agreeCheck && !agreeCheck.checked) {
+      showPremiumAlert('You must agree to post this property for advertisement purposes.', 'error');
+      return;
+    }
+
     const propName = document.getElementById('wiz_prop_name') || document.getElementById('prop_name');
     const propPrice = document.getElementById('wiz_price') || document.getElementById('prop_price');
     const propKind = document.getElementById('wiz_kind') || document.getElementById('prop_kind');
@@ -1970,4 +1982,111 @@
   document.addEventListener('DOMContentLoaded', renderProperties);
 </script>
 
+<script>
+  // --- Network Leads Logic ---
+  function toggleNetworkView() {
+    document.getElementById('propertiesMainView').classList.add('hidden');
+    document.getElementById('networkMainView').classList.remove('hidden');
+    document.getElementById('btnNetworkView').classList.add('bg-blue-50', 'text-blue-600');
+    document.getElementById('btnNetworkView').classList.remove('text-slate-700');
+    
+    // Deactivate property filter buttons
+    document.querySelectorAll('.filter-btn:not(#btnNetworkView)').forEach(btn => {
+      btn.classList.remove('bg-blue-50', 'text-blue-600');
+      btn.classList.add('text-slate-700', 'hover:bg-gray-50');
+      const iconContainer = btn.querySelector('div.bg-white');
+      if (iconContainer) iconContainer.className = "w-10 h-10 rounded-full bg-white border border-gray-200 flex items-center justify-center shadow-sm shrink-0";
+    });
+    
+    switchNetworkTab('add');
+    renderBuyerLeads();
+    
+    if (window.innerWidth < 768) {
+      toggleRightSidebar(); // close sidebar on mobile
+    }
+  }
+  
+  function overrideFilterProperties() {
+    const orig = filterProperties;
+    window.filterProperties = function(status, btnElement) {
+      document.getElementById('propertiesMainView').classList.remove('hidden');
+      document.getElementById('networkMainView').classList.add('hidden');
+      document.getElementById('btnNetworkView').classList.remove('bg-blue-50', 'text-blue-600');
+      document.getElementById('btnNetworkView').classList.add('text-slate-700', 'hover:bg-gray-50');
+      orig(status, btnElement);
+    };
+  }
+  setTimeout(overrideFilterProperties, 100);
+
+  function switchNetworkTab(tab) {
+    const btnAdd = document.getElementById('tabAddLead');
+    const btnList = document.getElementById('tabListLeads');
+    const viewAdd = document.getElementById('networkAddLead');
+    const viewList = document.getElementById('networkListLeads');
+    
+    if (tab === 'add') {
+      btnAdd.className = "flex-1 py-3 text-sm font-bold rounded-xl bg-white shadow-sm text-slate-950 transition-all";
+      btnList.className = "flex-1 py-3 text-sm font-bold rounded-xl text-gray-500 hover:text-slate-950 transition-all";
+      viewAdd.classList.remove('hidden');
+      viewList.classList.add('hidden');
+    } else {
+      btnList.className = "flex-1 py-3 text-sm font-bold rounded-xl bg-white shadow-sm text-slate-950 transition-all";
+      btnAdd.className = "flex-1 py-3 text-sm font-bold rounded-xl text-gray-500 hover:text-slate-950 transition-all";
+      viewList.classList.remove('hidden');
+      viewAdd.classList.add('hidden');
+    }
+  }
+
+  function handleSaveLead(e) {
+    e.preventDefault();
+    const name = document.getElementById('leadName').value;
+    const contact = document.getElementById('leadContact').value;
+    const leads = JSON.parse(localStorage.getItem('r2s_buyer_leads') || '[]');
+    
+    leads.push({
+      id: Date.now().toString(),
+      name,
+      contact,
+      date: new Date().toLocaleDateString('en-IN', { year: 'numeric', month: 'short', day: 'numeric' })
+    });
+    
+    localStorage.setItem('r2s_buyer_leads', JSON.stringify(leads));
+    document.getElementById('addLeadForm').reset();
+    showPremiumAlert('Buyer lead saved successfully!', 'success');
+    renderBuyerLeads();
+  }
+
+  function renderBuyerLeads() {
+    const container = document.getElementById('buyersListContainer');
+    const leads = JSON.parse(localStorage.getItem('r2s_buyer_leads') || '[]');
+    
+    if (leads.length === 0) {
+      container.innerHTML = `<div class="text-center py-10">
+        <div class="w-16 h-16 bg-gray-50 rounded-full flex items-center justify-center mx-auto mb-4">
+          <i data-lucide="users" class="w-8 h-8 text-gray-300"></i>
+        </div>
+        <h4 class="text-gray-500 font-medium">No saved buyers yet.</h4>
+      </div>`;
+    } else {
+      container.innerHTML = leads.map(lead => `
+        <div class="flex items-center justify-between p-4 border border-gray-100 rounded-2xl hover:border-gray-200 hover:shadow-sm transition-all group">
+          <div class="flex items-center gap-4">
+            <div class="w-12 h-12 bg-blue-50 rounded-full flex items-center justify-center shrink-0">
+              <span class="text-blue-600 font-bold">${lead.name.charAt(0).toUpperCase()}</span>
+            </div>
+            <div>
+              <h4 class="font-bold text-slate-950">${lead.name}</h4>
+              <p class="text-sm font-medium text-gray-500">${lead.contact}</p>
+            </div>
+          </div>
+          <div class="text-right">
+            <span class="text-xs font-bold text-gray-400 bg-gray-50 px-2.5 py-1 rounded-full">${lead.date}</span>
+          </div>
+        </div>
+      `).reverse().join('');
+    }
+    if(typeof lucide !== 'undefined') lucide.createIcons();
+  }
+  // --- End Network Leads Logic ---
+</script>
 </body>
