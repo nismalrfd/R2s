@@ -504,7 +504,7 @@
   <!-- Add Buyer Modal -->
   <div id="addBuyerModal" class="fixed inset-0 z-[3000] flex items-center justify-center p-4 sm:p-6 opacity-0 pointer-events-none transition-opacity duration-300">
     <div class="absolute inset-0 bg-slate-950/60 backdrop-blur-sm" onclick="toggleAddBuyerModal()"></div>
-    <div class="relative bg-white w-full max-w-lg rounded-[32px] shadow-2xl flex flex-col transform scale-95 transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)]" id="addBuyerContent">
+    <div class="relative bg-white w-full max-w-lg max-h-[90vh] rounded-[32px] shadow-2xl flex flex-col transform scale-95 transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)]" id="addBuyerContent">
       <div class="p-6 md:p-8 border-b border-gray-100 flex items-center justify-between shrink-0">
         <h3 class="text-2xl font-black text-slate-950 tracking-tight">Add Buyer Lead</h3>
         <button onclick="toggleAddBuyerModal()" class="w-10 h-10 rounded-full bg-gray-50 flex items-center justify-center hover:bg-red-50 hover:text-red-500 transition-colors">
@@ -2154,11 +2154,13 @@
     const container = document.getElementById('buyersListContainer');
     let leads = JSON.parse(localStorage.getItem('r2s_buyer_leads') || '[]');
     
-    // Inject Dummy Data if empty
-    if (leads.length === 0) {
+    // Inject Dummy Data if empty or less than 4 for testing
+    if (leads.length < 4) {
       leads = [
         { id: '1', name: 'John Doe', contact: '+91 9876543210', location: 'Dubai Marina', note: 'Looking for a luxury 3BHK', date: '21 Aug 2026' },
-        { id: '2', name: 'Sarah Smith', contact: '+971 501234567', location: 'Downtown Dubai', note: 'Investment property under 2M AED', date: '20 Aug 2026' }
+        { id: '2', name: 'Sarah Smith', contact: '+971 501234567', location: 'Downtown Dubai', note: 'Investment property under 2M AED', date: '20 Aug 2026' },
+        { id: '3', name: 'Ahmed Al-Farsi', contact: '+971 568392014', location: 'Palm Jumeirah', note: 'Interested in beachfront villas only. Fast closing preferred.', date: '19 Aug 2026' },
+        { id: '4', name: 'Elena Rodriguez', contact: '+1 305 444 8920', location: 'Business Bay', note: 'Looking for commercial office space, minimum 2000 sq ft.', date: '18 Aug 2026' }
       ];
       localStorage.setItem('r2s_buyer_leads', JSON.stringify(leads));
     }
