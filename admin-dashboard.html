@@ -309,10 +309,10 @@
 
       <!-- Order / Requests Status Table (Reports) -->
       <div class="lg:col-span-2 bg-white rounded-3xl p-6 md:p-8 shadow-sm border border-gray-100 h-[500px] flex flex-col print-area">
-        <div class="flex flex-col md:flex-row justify-between md:items-end mb-6 gap-4">
+        <div class="flex flex-col md:flex-row justify-between md:items-end mb-4 gap-4">
           <div>
-            <h2 class="text-lg font-extrabold text-gray-900">Lead Status Report</h2>
-            <p class="text-sm text-gray-500 font-medium">Overview of Latest Incoming Leads</p>
+            <h2 class="text-lg font-extrabold text-gray-900" id="reportTitle">Incoming Leads</h2>
+            <p class="text-sm text-gray-500 font-medium">Dashboard Report</p>
           </div>
           
           <div class="flex flex-wrap gap-3 items-center no-print">
@@ -321,8 +321,8 @@
               <select id="statusFilter" class="bg-gray-50 border border-gray-200 text-gray-700 text-xs font-bold rounded-lg pl-3 pr-8 py-2.5 outline-none focus:border-pink-500 appearance-none cursor-pointer">
                 <option value="All">All Status</option>
                 <option value="Process">Processing</option>
-                <option value="Open">Open</option>
-                <option value="On Hold">On Hold</option>
+                <option value="Open">Open / Active</option>
+                <option value="On Hold">On Hold / Pending</option>
               </select>
               <i data-lucide="chevron-down" class="w-4 h-4 absolute right-2.5 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none"></i>
             </div>
@@ -347,6 +347,13 @@
             </button>
           </div>
         </div>
+
+        <!-- Table Tabs -->
+        <div class="flex items-center text-xs font-bold text-gray-400 gap-4 md:gap-6 border-b border-gray-100 mb-4 overflow-x-auto hide-scrollbar no-print w-full">
+          <button onclick="renderTable('leads', this)" class="report-tab text-pink-500 border-b-2 border-pink-500 pb-2 transition-colors shrink-0">INCOMING LEADS</button>
+          <button onclick="renderTable('properties', this)" class="report-tab hover:text-gray-900 transition-colors pb-2 border-b-2 border-transparent shrink-0">PROPERTIES DIRECTORY</button>
+          <button onclick="renderTable('network', this)" class="report-tab hover:text-gray-900 transition-colors pb-2 border-b-2 border-transparent shrink-0">NETWORK SUBMISSIONS</button>
+        </div>
         
         <div class="flex justify-between items-center mb-4 gap-4 no-print">
            <div class="relative w-full max-w-xs">
@@ -357,51 +364,9 @@
 
         <div class="overflow-x-auto flex-1 custom-scrollbar pb-2">
           <table class="w-full text-left border-collapse min-w-[700px]" id="dataTable">
-            <thead>
-              <tr class="bg-[#1f2937] text-white text-[11px] uppercase tracking-widest font-bold">
-                <th class="p-4 rounded-l-xl">LEAD ID</th>
-                <th class="p-4">CLIENT NAME</th>
-                <th class="p-4">LOCATION</th>
-                <th class="p-4">BUDGET</th>
-                <th class="p-4 rounded-r-xl text-center">STATUS</th>
-              </tr>
+            <thead id="tableHead" class="bg-[#1f2937] text-white text-[11px] uppercase tracking-widest font-bold">
             </thead>
             <tbody class="text-sm font-medium text-gray-700" id="tableBody">
-              <tr class="border-b border-gray-100 hover:bg-gray-50 transition-colors">
-                <td class="p-4 font-bold text-gray-900">#L-12386</td>
-                <td class="p-4">Rajesh Kumar</td>
-                <td class="p-4">Kakkanad, Kochi</td>
-                <td class="p-4 font-bold">₹1.5 Cr</td>
-                <td class="p-4 text-center"><span class="bg-pink-100 text-pink-600 px-4 py-1.5 rounded-lg text-xs font-bold w-24 inline-block">Process</span></td>
-              </tr>
-              <tr class="border-b border-gray-100 hover:bg-gray-50 transition-colors">
-                <td class="p-4 font-bold text-gray-900">#L-12385</td>
-                <td class="p-4">Priyanka Menon</td>
-                <td class="p-4">Edappally, Kochi</td>
-                <td class="p-4 font-bold">₹75 Lakhs</td>
-                <td class="p-4 text-center"><span class="bg-emerald-100 text-emerald-600 px-4 py-1.5 rounded-lg text-xs font-bold w-24 inline-block">Open</span></td>
-              </tr>
-              <tr class="border-b border-gray-100 hover:bg-gray-50 transition-colors">
-                <td class="p-4 font-bold text-gray-900">#L-12384</td>
-                <td class="p-4">Anil Das</td>
-                <td class="p-4">Kozhikode</td>
-                <td class="p-4 font-bold">₹2.2 Cr</td>
-                <td class="p-4 text-center"><span class="bg-blue-100 text-blue-600 px-4 py-1.5 rounded-lg text-xs font-bold w-24 inline-block">On Hold</span></td>
-              </tr>
-              <tr class="border-b border-gray-100 hover:bg-gray-50 transition-colors">
-                <td class="p-4 font-bold text-gray-900">#L-12383</td>
-                <td class="p-4">Sneha Varghese</td>
-                <td class="p-4">Wayanad</td>
-                <td class="p-4 font-bold">₹45 Lakhs</td>
-                <td class="p-4 text-center"><span class="bg-pink-100 text-pink-600 px-4 py-1.5 rounded-lg text-xs font-bold w-24 inline-block">Process</span></td>
-              </tr>
-              <tr class="hover:bg-gray-50 transition-colors">
-                <td class="p-4 font-bold text-gray-900">#L-12382</td>
-                <td class="p-4">Mohan Lal</td>
-                <td class="p-4">Trivandrum</td>
-                <td class="p-4 font-bold">₹3.5 Cr</td>
-                <td class="p-4 text-center"><span class="bg-emerald-100 text-emerald-600 px-4 py-1.5 rounded-lg text-xs font-bold w-24 inline-block">Open</span></td>
-              </tr>
             </tbody>
           </table>
         </div>
@@ -579,6 +544,89 @@
         }
       }
     });
+
+    // Dynamic Report Tables Logic
+    const reportData = {
+      leads: {
+        title: 'Incoming Leads',
+        headers: ['LEAD ID', 'CLIENT NAME', 'LOCATION', 'BUDGET', 'STATUS'],
+        rows: [
+          ['#L-12386', 'Rajesh Kumar', 'Kakkanad, Kochi', '₹1.5 Cr', '<span class="bg-pink-100 text-pink-600 px-4 py-1.5 rounded-lg text-xs font-bold w-24 inline-block text-center">Process</span>'],
+          ['#L-12385', 'Priyanka Menon', 'Edappally, Kochi', '₹75 Lakhs', '<span class="bg-emerald-100 text-emerald-600 px-4 py-1.5 rounded-lg text-xs font-bold w-24 inline-block text-center">Open</span>'],
+          ['#L-12384', 'Anil Das', 'Kozhikode', '₹2.2 Cr', '<span class="bg-blue-100 text-blue-600 px-4 py-1.5 rounded-lg text-xs font-bold w-24 inline-block text-center">On Hold</span>'],
+          ['#L-12383', 'Sneha Varghese', 'Wayanad', '₹45 Lakhs', '<span class="bg-pink-100 text-pink-600 px-4 py-1.5 rounded-lg text-xs font-bold w-24 inline-block text-center">Process</span>'],
+          ['#L-12382', 'Mohan Lal', 'Trivandrum', '₹3.5 Cr', '<span class="bg-emerald-100 text-emerald-600 px-4 py-1.5 rounded-lg text-xs font-bold w-24 inline-block text-center">Open</span>']
+        ]
+      },
+      properties: {
+        title: 'Properties Directory',
+        headers: ['PROP ID', 'TITLE', 'LOCATION', 'TYPE', 'PRICE'],
+        rows: [
+          ['#P-991', 'Luxury Villa', 'Kakkanad', '<span class="font-bold text-gray-900">Sale</span>', '₹1.5 Cr'],
+          ['#P-992', '3BHK Apartment', 'Edappally', '<span class="font-bold text-gray-900">Rent</span>', '₹35,000/mo'],
+          ['#P-993', 'Commercial Space', 'MG Road', '<span class="font-bold text-gray-900">Rent</span>', '₹1.2 Lakhs/mo'],
+          ['#P-994', 'Seaside Plot', 'Vypin', '<span class="font-bold text-gray-900">Sale</span>', '₹2 Cr'],
+          ['#P-995', 'Office Floor', 'Infopark', '<span class="font-bold text-gray-900">Sale</span>', '₹4 Cr']
+        ]
+      },
+      network: {
+        title: 'Network Submissions',
+        headers: ['SUB ID', 'SUBMITTED BY', 'ROLE', 'TYPE', 'DATE'],
+        rows: [
+          ['#N-101', '<span class="font-bold text-gray-900">Skyline Builders</span>', 'Builder', 'Property', 'Today, 10:30 AM'],
+          ['#N-102', '<span class="font-bold text-gray-900">Anil Das</span>', 'Realtor', 'Buyer Lead', 'Yesterday, 04:15 PM'],
+          ['#N-103', '<span class="font-bold text-gray-900">Priyanka Menon</span>', 'Channel Partner', 'Property', '02 Sep 2026'],
+          ['#N-104', '<span class="font-bold text-gray-900">Rajesh Kumar</span>', 'Associate', 'Buyer Lead', '01 Sep 2026'],
+          ['#N-105', '<span class="font-bold text-gray-900">Sneha Varghese</span>', 'Realtor', 'Video Promo', '01 Sep 2026']
+        ]
+      }
+    };
+
+    function renderTable(tab, btnElement) {
+      const data = reportData[tab];
+      document.getElementById('reportTitle').innerText = data.title;
+      
+      // Render Headers
+      const thead = document.getElementById('tableHead');
+      let thHTML = '<tr class="bg-[#1f2937] text-white text-[11px] uppercase tracking-widest font-bold">';
+      data.headers.forEach((h, index) => {
+        let rounded = index === 0 ? 'rounded-l-xl' : (index === data.headers.length - 1 ? 'rounded-r-xl' : '');
+        let align = index === data.headers.length - 1 && tab === 'leads' ? 'text-center' : '';
+        thHTML += `<th class="p-4 ${rounded} ${align}">${h}</th>`;
+      });
+      thHTML += '</tr>';
+      thead.innerHTML = thHTML;
+      
+      // Render Rows
+      const tbody = document.getElementById('tableBody');
+      let trHTML = '';
+      data.rows.forEach(row => {
+        trHTML += '<tr class="border-b border-gray-100 hover:bg-gray-50 transition-colors">';
+        row.forEach((cell, index) => {
+           let fontStyle = index === 0 ? 'font-bold text-gray-900' : (index === data.headers.length - 2 && tab !== 'network' ? 'font-bold' : '');
+           let align = index === data.headers.length - 1 && tab === 'leads' ? 'text-center' : '';
+           trHTML += `<td class="p-4 ${fontStyle} ${align}">${cell}</td>`;
+        });
+        trHTML += '</tr>';
+      });
+      tbody.innerHTML = trHTML;
+
+      document.getElementById('tableInfo').textContent = `Showing 1 to ${data.rows.length} of ${data.rows.length} entries`;
+
+      // Update active tab styles
+      if (btnElement) {
+        document.querySelectorAll('.report-tab').forEach(el => {
+          el.className = 'report-tab hover:text-gray-900 transition-colors pb-2 border-b-2 border-transparent shrink-0';
+        });
+        btnElement.className = 'report-tab text-pink-500 border-b-2 border-pink-500 pb-2 transition-colors shrink-0';
+      }
+      
+      // Re-apply filter if active
+      if (typeof filterTable === 'function') filterTable();
+    }
+    
+    // Initialize the default tab
+    renderTable('leads');
 
     // Data Export CSV Logic
     function exportTableToCSV(filename) {
