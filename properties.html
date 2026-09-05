@@ -1,0 +1,582 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>R2s Realtors</title>
+  <link rel="stylesheet" href="/src/style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <!-- PWA Meta Tags -->
+  <link rel="manifest" href="/manifest.json" />
+  <link rel="icon" href="/LOGO.png" type="image/png" />
+  <link rel="apple-touch-icon" href="/LOGO.png" />
+  <meta name="theme-color" content="#ffffff" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="apple-mobile-web-app-title" content="R2s Realtors" />
+  
+  <!-- Premium Mobile App CSS Physics -->
+  <style>
+    /* Prevent text selection to feel like native app */
+    body, h1, h2, h3, h4, p, span, div, button, a, i {
+      -webkit-user-select: none;
+      user-select: none;
+    }
+    /* Allow text selection in inputs */
+    input, textarea {
+      -webkit-user-select: text;
+      user-select: text;
+    }
+    /* Remove blue tap highlight */
+    * {
+      -webkit-tap-highlight-color: transparent;
+    }
+    /* Prevent bounce on scroll for rigid native feel */
+    body {
+      overscroll-behavior-y: none;
+    }
+  </style>
+
+
+  <style>
+    /* Premium Visual Animations & Patterns */
+    @keyframes float {
+      0%, 100% { transform: translateY(0) rotate(0deg); }
+      50% { transform: translateY(-20px) rotate(5deg); }
+    }
+    @keyframes float-reverse {
+      0%, 100% { transform: translateY(0) rotate(0deg); }
+      50% { transform: translateY(20px) rotate(-5deg); }
+    }
+    .animate-float-slow {
+      animation: float 20s ease-in-out infinite;
+    }
+    .animate-float-reverse-slow {
+      animation: float-reverse 25s ease-in-out infinite;
+    }
+    .bg-dotted-pattern {
+      background-image: radial-gradient(circle, #e5e7eb 1px, transparent 1px);
+      background-size: 24px 24px;
+    }
+    .top-accent-blue {
+      border-top: 4px solid #2563EB !important;
+    }
+    .top-accent-red {
+      border-top: 4px solid #EF4444 !important;
+    }
+  </style>
+
+  <script src="https://unpkg.com/@tailwindcss/browser@4"></script>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body class="overflow-x-hidden bg-white min-h-screen m-0 flex text-slate-950 md:h-screen md:overflow-hidden">
+
+  <!-- Premium Mesh Background -->
+
+  <!-- Advanced Geometric Accent Layer -->
+  <div class="fixed inset-0 z-[-1] pointer-events-none overflow-hidden opacity-40">
+    <!-- Floating Outline Ring -->
+    <svg class="absolute top-[15%] left-[5%] w-20 h-20 text-blue-600 animate-[spin_30s_linear_infinite]" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="0.5"><circle cx="12" cy="12" r="10"/></svg>
+    <!-- Floating Diamond -->
+    <svg class="absolute top-[65%] right-[8%] w-14 h-14 text-red-500 animate-[spin_25s_linear_infinite_reverse]" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="0.5"><rect x="4" y="4" width="16" height="16" rx="2" transform="rotate(45 12 12)"/></svg>
+    <!-- Floating Plus -->
+    <svg class="absolute top-[10%] right-[35%] w-10 h-10 text-blue-400 animate-float-slow" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4"/></svg>
+    <!-- Floating Concentric Circles -->
+    <svg class="absolute bottom-[15%] left-[20%] w-32 h-32 text-blue-300 opacity-20 animate-float-reverse-slow" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="0.5"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg>
+    <!-- Floating Triangle -->
+    <svg class="absolute top-[40%] left-[40%] w-12 h-12 text-blue-500 opacity-30 animate-[spin_40s_linear_infinite]" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="0.5"><polygon points="12,2 22,20 2,20" stroke-linejoin="round"/></svg>
+  </div>
+
+  <div class="fixed inset-0 z-[-1] overflow-hidden bg-[#FAFBFF]">
+    <div class="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-blue-400/20 rounded-full blur-[100px] animate-float-slow"></div>
+    <div class="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] bg-red-400/10 rounded-full blur-[100px] animate-float-reverse-slow"></div>
+  </div>
+  <div class="fixed inset-0 z-[-2] bg-dotted-pattern opacity-40 pointer-events-none"></div>
+
+
+  <!-- Global Desktop Header -->
+  
+  <!-- Global Navigation Bar -->
+  <header class="fixed top-0 left-0 w-full bg-white/90 backdrop-blur-md border-b border-gray-100 z-[900] transition-all duration-300">
+    <div class="max-w-[1600px] mx-auto px-4 md:px-8 h-[70px] md:h-[80px] flex items-center justify-between">
+      
+      <!-- Left: Logo & Brand -->
+      <a href="/dashboard.html" class="flex items-center gap-3 group z-[910]">
+        <div class="h-12 md:h-14 flex items-center justify-center shrink-0">
+          <img src="/LOGO.png" alt="R2s" class="h-full w-auto object-contain" loading="lazy">
+        </div>
+        <span class="text-lg md:text-xl font-extrabold tracking-tight text-slate-950 hidden sm:block">R2s Realtors</span>
+      </a>
+
+      <!-- Center: Location Pin (Hidden on small mobile) -->
+      <div class="hidden md:flex items-center gap-2 px-4 py-2 bg-gray-50 rounded-full border border-gray-100 cursor-pointer hover:bg-white hover:shadow-sm transition-all group z-[910]">
+        <i data-lucide="map-pin" class="w-4 h-4 text-blue-600 group-hover:animate-bounce"></i>
+        <span class="text-sm font-semibold text-slate-700">Kozhikode, Kerala</span>
+      </div>
+
+      <!-- Center-Right: Navigation Links (Desktop) -->
+      <nav class="hidden lg:flex items-center gap-8 ml-8 z-[910]">
+        <a href="/dashboard.html" class="text-sm font-bold text-slate-950 hover:text-blue-600 transition-colors">Find Property</a>
+        <div class="relative group cursor-pointer flex items-center gap-1">
+          <span class="text-sm font-bold text-slate-500 group-hover:text-blue-600 transition-colors">My Properties</span>
+          <i data-lucide="chevron-down" class="w-4 h-4 text-slate-400 group-hover:text-blue-600 transition-transform group-hover:rotate-180"></i>
+        </div>
+        <a href="/properties.html" class="text-sm font-bold text-slate-500 hover:text-blue-600 transition-colors">Agents</a>
+      </nav>
+
+      <!-- Right: Actions & Profile -->
+      <div class="flex items-center gap-3 md:gap-4 ml-auto z-[910]">
+        <button class="hidden md:flex w-10 h-10 rounded-full bg-gray-50 items-center justify-center text-slate-600 hover:bg-gray-100 hover:text-slate-950 transition-colors relative group border border-transparent hover:border-gray-200">
+          <i data-lucide="settings" class="w-5 h-5 group-hover:rotate-45 transition-transform duration-300"></i>
+        </button>
+        <button class="w-10 h-10 rounded-full bg-gray-50 flex items-center justify-center text-slate-600 hover:bg-gray-100 hover:text-slate-950 transition-colors relative border border-transparent hover:border-gray-200">
+          <i data-lucide="bell" class="w-5 h-5"></i>
+          <span class="absolute top-2 right-2.5 w-2 h-2 bg-blue-600 hover:-translate-y-0.5 hover:shadow-lg rounded-full border-2 border-white"></span>
+        </button>
+        
+        <!-- Profile Dropdown Container -->
+        <div class="relative ml-1 md:ml-2">
+          <button onclick="toggleProfileDropdown()" class="w-10 h-10 rounded-full overflow-hidden border-2 border-transparent hover:border-blue-500 transition-all focus:outline-none focus:border-blue-500 shadow-sm relative z-[950]">
+            <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80" alt="User" class="w-full h-full object-cover">
+          </button>
+
+          <!-- Dropdown Menu (Becomes Bottom Sheet on Mobile) -->
+          <div id="profileDropdown" class="absolute right-0 top-[calc(100%+15px)] w-72 bg-white rounded-2xl shadow-[0_10px_40px_rgba(0,0,0,0.1)] border border-gray-100 opacity-0 translate-y-4 pointer-events-none transition-all duration-300 z-[940] transform origin-top-right">
+            <!-- User Info Header -->
+            <div class="p-4 border-b border-gray-100 bg-gray-50/50 rounded-t-2xl mobile-rounded-top">
+              <h4 class="font-bold text-slate-950">Rajesh Kumar</h4>
+              <p class="text-xs font-medium text-gray-500 mt-0.5">rajesh@example.com</p>
+              <div class="mt-2 inline-flex items-center gap-1.5 bg-red-100 px-2 py-1 rounded-md">
+                <i data-lucide="building-2" class="w-3 h-3 text-blue-600"></i>
+                <span class="text-[10px] font-bold text-red-700 uppercase tracking-wider">Builder</span>
+              </div>
+            </div>
+            
+            <!-- Actions -->
+            <div class="p-2 flex flex-col gap-1">
+              <a href="/edit-profile.html" class="flex items-center gap-3 px-3 py-2.5 rounded-xl hover:bg-gray-50 text-sm font-bold text-slate-700 hover:text-slate-950 transition-colors">
+                <div class="w-8 h-8 rounded-full bg-white border border-gray-200 flex items-center justify-center shadow-sm">
+                  <i data-lucide="user-cog" class="w-4 h-4 text-slate-500"></i>
+                </div>
+                Update Profile
+              </a>
+              <button class="flex items-center gap-3 px-3 py-2.5 rounded-xl hover:bg-gray-50 text-sm font-bold text-slate-700 hover:text-slate-950 transition-colors w-full text-left">
+                <div class="w-8 h-8 rounded-full bg-white border border-gray-200 flex items-center justify-center shadow-sm">
+                  <i data-lucide="arrow-left-right" class="w-4 h-4 text-slate-500"></i>
+                </div>
+                Change Role
+              </button>
+            </div>
+            
+            <!-- Logout -->
+            <div class="p-2 border-t border-gray-100">
+              <a href="/login.html" class="flex items-center gap-3 px-3 py-2.5 rounded-xl hover:bg-blue-50 text-sm font-bold text-blue-600 transition-colors group pb-4 md:pb-2.5">
+                <div class="w-8 h-8 rounded-full bg-white border border-red-100 flex items-center justify-center shadow-sm group-hover:bg-blue-600 hover:-translate-y-0.5 hover:shadow-lg transition-colors">
+                  <i data-lucide="log-out" class="w-4 h-4 text-red-500 group-hover:text-white transition-colors"></i>
+                </div>
+                Log Out
+              </a>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Mobile Overlay for Dropdown -->
+    <div id="mobileOverlay" class="fixed inset-0 bg-slate-950/40 backdrop-blur-sm z-[930] opacity-0 pointer-events-none transition-opacity duration-300"></div>
+
+    <script>
+      function toggleProfileDropdown() {
+        const dropdown = document.getElementById('profileDropdown');
+        const overlay = document.getElementById('mobileOverlay');
+        const isOpen = !dropdown.classList.contains('pointer-events-none');
+
+        if (isOpen) {
+          // Close
+          dropdown.classList.add('opacity-0', 'pointer-events-none');
+          dropdown.classList.remove('opacity-100');
+          
+          if (window.innerWidth < 768) {
+            dropdown.classList.add('translate-y-[200%]');
+            dropdown.classList.remove('translate-y-0');
+          } else {
+            dropdown.classList.add('translate-y-4');
+            dropdown.classList.remove('translate-y-0');
+          }
+        } else {
+          // Open
+          dropdown.classList.remove('opacity-0', 'pointer-events-none', 'translate-y-4', 'translate-y-[200%]');
+          dropdown.classList.add('opacity-100', 'translate-y-0');
+          overlay.classList.remove('opacity-0', 'pointer-events-none');
+          overlay.classList.add('opacity-100');
+          
+          // Apply mobile bottom-sheet styling dynamically if on small screen
+          if (window.innerWidth < 768) {
+             dropdown.classList.add('!fixed', '!bottom-0', '!top-auto', '!left-0', '!w-full', '!rounded-b-none', '!rounded-t-[32px]');
+             dropdown.querySelector('.mobile-rounded-top').classList.add('!rounded-t-[32px]');
+          }
+        }
+      }
+
+      // Close on overlay click
+      document.getElementById('mobileOverlay')?.addEventListener('click', toggleProfileDropdown);
+    </script>
+  </header>
+
+
+  
+  <!-- Desktop Sidebar -->
+  <aside class="hidden md:flex flex-col w-64 bg-white border-r border-gray-200 fixed h-full z-40">
+    <div class="p-6 flex items-center gap-3 border-b border-gray-100">
+      <div class="w-10 h-10 bg-[#736DB3]/10 rounded-xl flex items-center justify-center">
+        <i data-lucide="building-2" class="w-5 h-5 text-[#736DB3]"></i>
+      </div>
+      <span class="font-bold text-xl tracking-tight">Nestora</span>
+    </div>
+    <nav class="flex-1 px-4 py-6 flex flex-col gap-2">
+      <a href="/dashboard.html" class="flex items-center gap-3 px-3 py-2.5 sm:px-4 sm:py-3 text-gray-500 hover:text-slate-950 hover:bg-gray-50 rounded-xl font-medium transition-colors">
+        <i data-lucide="layout-dashboard" class="w-5 h-5"></i> Dashboard
+      </a>
+      <a href="/properties.html" class="flex items-center gap-3 px-3 py-2.5 sm:px-4 sm:py-3 bg-[#736DB3] text-white rounded-xl font-medium shadow-sm">
+        <i data-lucide="home" class="w-5 h-5"></i> Properties
+      </a>
+      <a href="/edit-profile.html" class="flex items-center gap-3 px-3 py-2.5 sm:px-4 sm:py-3 text-gray-500 hover:text-slate-950 hover:bg-gray-50 rounded-xl font-medium transition-colors">
+        <i data-lucide="bar-chart-3" class="w-5 h-5"></i> Analytics
+      </a>
+      <a href="/edit-profile.html" class="flex items-center gap-3 px-3 py-2.5 sm:px-4 sm:py-3 text-gray-500 hover:text-slate-950 hover:bg-gray-50 rounded-xl font-medium transition-colors">
+        <i data-lucide="user" class="w-5 h-5"></i> Profile
+      </a>
+    </nav>
+  </aside>
+
+  <!-- Mobile Bottom Nav -->
+  <div class="md:hidden fixed bottom-0 left-0 right-0 glass border-t border-gray-200 pb-safe z-50">
+    <nav class="flex items-center justify-around h-16 px-4">
+      <a href="/dashboard.html" class="flex flex-col items-center justify-center w-16 h-full text-gray-400 hover:text-gray-600">
+        <i data-lucide="layout-dashboard" class="w-5 h-5 mb-1"></i><span class="text-[10px] font-bold">Home</span>
+      </a>
+      <a href="/properties.html" class="flex flex-col items-center justify-center w-16 h-full text-[#736DB3]">
+        <i data-lucide="home" class="w-5 h-5 mb-1"></i><span class="text-[10px] font-bold">Listings</span>
+      </a>
+      <a href="/add-property.html" class="relative -top-5 flex items-center justify-center w-14 h-14 bg-[#736DB3] text-white rounded-full shadow-[0_4px_12px_rgba(115,109,179,0.4)] border-4 border-[#F6F6F8]">
+        <i data-lucide="plus" class="w-6 h-6"></i>
+      </a>
+      <a href="/edit-profile.html" class="flex flex-col items-center justify-center w-16 h-full text-gray-400 hover:text-gray-600">
+        <i data-lucide="bar-chart-3" class="w-5 h-5 mb-1"></i><span class="text-[10px] font-bold">Stats</span>
+      </a>
+      <a href="/edit-profile.html" class="flex flex-col items-center justify-center w-16 h-full text-gray-400 hover:text-gray-600">
+        <i data-lucide="user" class="w-5 h-5 mb-1"></i><span class="text-[10px] font-bold">Profile</span>
+      </a>
+    </nav>
+  </div>
+
+  <main class="flex-1 md:ml-64 p-6 md:p-10 pb-24 md:pb-10 page-transition">
+    
+    <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-6">
+      <div>
+        <h1 class="text-2xl font-bold tracking-tight">Properties</h1>
+        <p class="text-sm text-gray-500">Manage and track your property listings</p>
+      </div>
+      <a href="/add-property.html" class="hidden md:flex bg-[#736DB3] hover:bg-[#5b5597] text-white py-2.5 px-5 rounded-xl font-semibold items-center gap-2 transition-all shadow-[0_4px_12px_rgba(115,109,179,0.3)]">
+        <i data-lucide="plus" class="w-5 h-5"></i> Add Property
+      </a>
+    </div>
+
+    <div class="flex flex-col sm:flex-row gap-3 mb-8">
+      <div class="relative flex-1">
+        <div class="absolute inset-y-0 left-4 flex items-center pointer-events-none">
+          <i data-lucide="search" class="w-5 h-5 text-gray-400"></i>
+        </div>
+        <input type="text" placeholder="Search properties by name or location..." class="w-full pl-12 pr-4 py-3.5 bg-white border border-gray-200 rounded-xl shadow-sm focus:outline-none focus:ring-2 focus:ring-[#736DB3] focus:border-transparent transition-all font-medium">
+      </div>
+      <button class="flex items-center justify-center gap-2 px-5 py-3.5 bg-white border border-gray-200 rounded-xl shadow-sm hover:bg-gray-50 transition-colors font-medium text-gray-700">
+        <i data-lucide="filter" class="w-5 h-5"></i>
+        <span class="hidden sm:inline">Filters</span>
+      </button>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <!-- Property Card 1 -->
+      <div class="bg-white rounded-3xl overflow-hidden border border-gray-200 shadow-sm hover:shadow-lg transition-all group">
+        <div class="relative h-56 overflow-hidden">
+          <img src="https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="House" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+          <div class="absolute top-4 left-4 bg-green-100 text-green-700 px-3 py-1.5 rounded-lg text-xs font-bold border border-green-200 glass">Available</div>
+          <div class="absolute top-4 right-4 bg-white/90 px-3 py-1.5 rounded-lg text-xs font-bold shadow-sm glass">House</div>
+        </div>
+        <div class="p-5 flex flex-col gap-4">
+          <div>
+            <div class="flex justify-between items-start mb-2">
+              <h3 class="font-bold text-xl text-slate-950 group-hover:text-[#736DB3] transition-colors line-clamp-1">Redwood Villas</h3>
+              <span class="font-bold text-lg text-[#736DB3] ml-2">₹785,000</span>
+            </div>
+            <div class="flex items-center gap-1.5 text-gray-500 text-sm">
+              <i data-lucide="map-pin" class="w-4 h-4"></i> Mississauga, ON
+            </div>
+          </div>
+          <div class="flex items-center justify-between py-3 border-y border-gray-100">
+            <div class="flex items-center gap-1.5"><i data-lucide="bed-double" class="w-4 h-4 text-[#736DB3]"></i><span class="text-sm font-medium">3</span></div>
+            <div class="flex items-center gap-1.5"><i data-lucide="bath" class="w-4 h-4 text-[#736DB3]"></i><span class="text-sm font-medium">2</span></div>
+            <div class="flex items-center gap-1.5"><i data-lucide="square" class="w-4 h-4 text-[#736DB3]"></i><span class="text-sm font-medium">1,200</span></div>
+          </div>
+          <div class="flex gap-2 mt-2">
+            <a href="/property-detail.html" class="flex-1 py-2.5 bg-[#736DB3]/10 hover:bg-[#736DB3]/20 text-[#736DB3] rounded-xl text-sm font-semibold flex items-center justify-center transition-colors">View</a>
+            <button class="w-10 flex items-center justify-center bg-gray-100 hover:bg-gray-200 text-gray-700 rounded-xl transition-colors"><i data-lucide="edit-2" class="w-4 h-4"></i></button>
+            <button class="w-10 flex items-center justify-center bg-blue-50 hover:bg-red-100 text-red-500 rounded-xl transition-colors"><i data-lucide="trash-2" class="w-4 h-4"></i></button>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Property Card 2 -->
+      <div class="bg-white rounded-3xl overflow-hidden border border-gray-200 shadow-sm hover:shadow-lg transition-all group">
+        <div class="relative h-56 overflow-hidden">
+          <img src="https://images.unsplash.com/photo-1512917774080-9991f1c4c750?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="House" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+          <div class="absolute top-4 left-4 bg-orange-100 text-orange-700 px-3 py-1.5 rounded-lg text-xs font-bold border border-orange-200 glass">Pending</div>
+          <div class="absolute top-4 right-4 bg-white/90 px-3 py-1.5 rounded-lg text-xs font-bold shadow-sm glass">Apartment</div>
+        </div>
+        <div class="p-5 flex flex-col gap-4">
+          <div>
+            <div class="flex justify-between items-start mb-2">
+              <h3 class="font-bold text-xl text-slate-950 group-hover:text-[#736DB3] transition-colors line-clamp-1">Skyline Apartment</h3>
+              <span class="font-bold text-lg text-[#736DB3] ml-2">₹550,000</span>
+            </div>
+            <div class="flex items-center gap-1.5 text-gray-500 text-sm">
+              <i data-lucide="map-pin" class="w-4 h-4"></i> Downtown Toronto
+            </div>
+          </div>
+          <div class="flex items-center justify-between py-3 border-y border-gray-100">
+            <div class="flex items-center gap-1.5"><i data-lucide="bed-double" class="w-4 h-4 text-[#736DB3]"></i><span class="text-sm font-medium">2</span></div>
+            <div class="flex items-center gap-1.5"><i data-lucide="bath" class="w-4 h-4 text-[#736DB3]"></i><span class="text-sm font-medium">1</span></div>
+            <div class="flex items-center gap-1.5"><i data-lucide="square" class="w-4 h-4 text-[#736DB3]"></i><span class="text-sm font-medium">850</span></div>
+          </div>
+          <div class="flex gap-2 mt-2">
+            <a href="/property-detail.html" class="flex-1 py-2.5 bg-[#736DB3]/10 hover:bg-[#736DB3]/20 text-[#736DB3] rounded-xl text-sm font-semibold flex items-center justify-center transition-colors">View</a>
+            <button class="w-10 flex items-center justify-center bg-gray-100 hover:bg-gray-200 text-gray-700 rounded-xl transition-colors"><i data-lucide="edit-2" class="w-4 h-4"></i></button>
+            <button class="w-10 flex items-center justify-center bg-blue-50 hover:bg-red-100 text-red-500 rounded-xl transition-colors"><i data-lucide="trash-2" class="w-4 h-4"></i></button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  
+
+  <!-- PWA Service Worker Registration -->
+  <script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('/sw.js', { updateViaCache: 'none' }).then(registration => {
+          console.log('SW registered: ', registration.scope);
+          
+          // Force an immediate update check
+          registration.update();
+          
+          // Listen for the new Service Worker taking control
+          let refreshing = false;
+          navigator.serviceWorker.addEventListener('controllerchange', () => {
+            if (!refreshing) {
+              refreshing = true;
+              window.location.reload();
+            }
+          });
+        }).catch(err => {
+          console.log('SW registration failed: ', err);
+        });
+      });
+    }
+  </script>
+
+  <script src="main.js"></script>
+
+  
+  
+
+  
+
+  <!-- PWA Install Banner -->
+  <div id="pwaInstallBanner" class="fixed bottom-0 left-0 w-full bg-white border-t border-gray-100 shadow-[0_-10px_40px_rgba(0,0,0,0.1)] p-4 md:p-6 z-[1000] transform translate-y-[200%] transition-transform duration-700 flex items-center justify-between gap-4 rounded-t-3xl md:rounded-none md:max-w-md md:left-1/2 md:-translate-x-1/2 md:bottom-6 md:border md:shadow-2xl md:rounded-2xl">
+    <div class="flex items-center gap-3 md:gap-4">
+      <div class="w-12 h-12 md:w-14 md:h-14 bg-gray-50 rounded-xl flex items-center justify-center p-1.5 border border-gray-100 shrink-0">
+        <img src="/LOGO.png" alt="R2s App" class="w-full h-full object-contain">
+      </div>
+      <div>
+        <h4 class="text-slate-950 font-extrabold text-sm md:text-base">R2s Realtors App</h4>
+        <p class="text-[10px] md:text-xs text-gray-500 font-semibold mt-0.5 leading-tight">Install the app to your home screen for quick access.</p>
+      </div>
+    </div>
+    <div class="flex items-center gap-2 shrink-0">
+      <button onclick="dismissPwaBanner()" class="w-8 h-8 flex items-center justify-center bg-gray-50 rounded-full text-gray-400 hover:text-slate-950 hover:bg-gray-100 transition-colors"><i data-lucide="x" class="w-4 h-4"></i></button>
+      <button onclick="installPwa()" class="bg-white hover:bg-gray-50 text-slate-950 flex items-center gap-1.5 px-4 md:px-5 py-2 md:py-2.5 rounded-full text-xs md:text-sm font-bold shadow-lg shadow-slate-900/20 transition-all hover:-translate-y-0.5 whitespace-nowrap">
+        <i data-lucide="download" class="w-4 h-4"></i> Install App
+      </button>
+    </div>
+  </div>
+
+  
+  <!-- iOS Manual Install Banner -->
+  <div id="iosInstallBanner" class="hidden fixed bottom-0 left-0 w-full bg-white text-slate-950 p-6 z-[1000] flex flex-col items-center justify-center text-center rounded-t-3xl shadow-[0_-20px_60px_rgba(0,0,0,0.15)] md:max-w-sm md:left-1/2 md:-translate-x-1/2 md:bottom-6 md:rounded-3xl pb-10 transition-all duration-300 border border-gray-100 cursor-pointer" onclick="document.getElementById('iosInstallBanner').classList.add('hidden')">
+    <div class="w-12 h-1.5 bg-gray-200 rounded-full mb-6"></div>
+    <div class="w-16 h-16 bg-gray-50 border border-gray-50 rounded-2xl mb-4 flex items-center justify-center p-2 shadow-sm">
+        <img src="/LOGO.png" class="w-full h-full object-contain">
+    </div>
+    <h4 class="font-extrabold text-xl mb-2">Install App</h4>
+    <p class="text-sm text-gray-500 mb-2 px-4 font-medium leading-relaxed">To install on your iPhone:<br><br>1. Tap the <span class="inline-flex items-center justify-center bg-gray-50 px-2 py-1 rounded-md mx-1 border border-gray-200 text-slate-950 font-bold"><i data-lucide="share" class="w-3.5 h-3.5 mr-1"></i> Share</span> button.<br>2. Select <span class="font-bold text-slate-950 bg-gray-50 px-2 py-1 rounded-md border border-gray-200 inline-flex items-center mt-2">Add to Home Screen <i data-lucide="plus-square" class="w-3.5 h-3.5 ml-1"></i></span></p>
+  </div>
+
+  <script>
+    let deferredPrompt;
+    const pwaBanner = document.getElementById('pwaInstallBanner');
+
+    window.addEventListener('beforeinstallprompt', (e) => {
+      e.preventDefault();
+      deferredPrompt = e;
+      if (!localStorage.getItem('pwaBannerDismissed')) {
+        setTimeout(() => {
+          if(pwaBanner) pwaBanner.classList.remove('translate-y-[200%]');
+        }, 1500);
+      }
+    });
+
+    function dismissPwaBanner() {
+      if(pwaBanner) pwaBanner.classList.add('translate-y-[200%]');
+      localStorage.setItem('pwaBannerDismissed', 'true');
+    }
+
+    async function installPwa() {
+      if (deferredPrompt) {
+        deferredPrompt.prompt();
+        const { outcome } = await deferredPrompt.userChoice;
+        if (outcome === 'accepted') {
+          console.log('User accepted the install prompt');
+        } else {
+          console.log('User dismissed the install prompt');
+        }
+        deferredPrompt = null;
+        dismissPwaBanner();
+      } else {
+        // Fallback for iOS/unsupported devices
+        const iosBanner = document.getElementById('iosInstallBanner');
+        if(iosBanner) iosBanner.classList.remove('hidden');
+        dismissPwaBanner();
+      }
+    }
+    
+    window.addEventListener('appinstalled', () => {
+      dismissPwaBanner();
+    });
+  </script>
+
+
+  
+  
+  
+
+
+
+
+  <!-- Powered By Watermark -->
+  <div class="fixed bottom-6 left-1/2 -translate-x-1/2 md:bottom-8 z-[40] flex flex-col items-center pointer-events-none opacity-75">
+    <span class="text-[7px] md:text-[8px] font-bold text-gray-400 tracking-widest uppercase -mb-3 md:-mb-4">Powered by</span>
+    <img src="/watermark.png" alt="RHenova Tech" class="w-[80px] md:w-[110px] h-auto object-contain grayscale">
+  </div>
+
+
+<script>
+  function renderProperties() {
+    const props = window.getProperties ? window.getProperties() : [];
+    const container = document.getElementById('dynamicPropertiesContainer');
+    const emptyState = document.getElementById('emptyStateContainer');
+    
+    if(!container || !emptyState) return;
+
+    if (props.length === 0) {
+      container.classList.add('hidden');
+      emptyState.classList.remove('hidden');
+    } else {
+      emptyState.classList.add('hidden');
+      container.classList.remove('hidden');
+      
+      container.innerHTML = props.map(p => `
+        <div class="property-card bg-white rounded-[24px] overflow-hidden border-b-0 relative p-3 md:p-4 border border-gray-100 shadow-[0_4px_20px_rgb(0,0,0,0.03)] hover:shadow-[0_8px_30px_rgb(0,0,0,0.08)] hover:-translate-y-1 transition-all duration-300 flex flex-col xl:flex-row gap-6 items-start xl:items-center relative cursor-pointer group" onclick="window.location.href='property-detail.html'">
+          <div class="absolute bottom-0 left-0 w-full h-1 bg-gradient-to-r from-blue-500 via-purple-500 to-red-500"></div>
+          <button class="absolute top-4 right-4 text-gray-400 hover:text-slate-950 z-10"><i data-lucide="more-vertical" class="w-5 h-5" aria-hidden="true"></i></button>
+
+          <div class="relative w-full xl:w-[320px] h-[200px] shrink-0 rounded-2xl overflow-hidden">
+            <img src="${p.image || 'https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" loading="lazy">
+            <div class="absolute top-3 left-3 bg-[#1e293b]/90 backdrop-blur-md text-white px-3 py-1 rounded text-[10px] font-bold uppercase tracking-wider">${p.kind || 'Property'}</div>
+          </div>
+          
+          <div class="flex flex-col flex-1 py-1 w-full">
+            <h3 class="text-xl font-extrabold text-slate-950 mb-1">${p.name || 'Untitled Property'} – ID:${p.id.slice(-6)}</h3>
+            <p class="text-sm font-semibold text-gray-500 mb-6 flex items-center gap-1.5"><i data-lucide="map-pin" class="w-3.5 h-3.5" aria-hidden="true"></i> ${p.location || 'Location Not Set'}</p>
+            
+            <div class="flex flex-wrap items-center gap-6 md:gap-8 mb-6">
+              ${p.kind !== 'Land' ? `<div class="flex items-center gap-2"><i data-lucide="bed-double" class="w-5 h-5 text-red-600" aria-hidden="true"></i><div><p class="text-sm font-bold text-slate-950 leading-tight">3</p><p class="text-[10px] font-bold text-gray-400 uppercase">Bedrooms</p></div></div>
+              <div class="flex items-center gap-2"><i data-lucide="bath" class="w-5 h-5 text-red-600" aria-hidden="true"></i><div><p class="text-sm font-bold text-slate-950 leading-tight">2</p><p class="text-[10px] font-bold text-gray-400 uppercase">Bathrooms</p></div></div>` : ''}
+              <div class="flex items-center gap-2"><i data-lucide="ruler" class="w-5 h-5 text-red-600" aria-hidden="true"></i><div><p class="text-sm font-bold text-slate-950 leading-tight">${p.unit || '1200'}</p><p class="text-[10px] font-bold text-gray-400 uppercase">Sq Ft</p></div></div>
+            </div>
+            
+            <div class="flex items-center gap-6 md:gap-8 text-xs font-semibold text-gray-500 pt-4 border-t border-gray-100 w-full">
+              <p>Listed on ${p.date}</p>
+              <p>ID: ${p.id.slice(-6)}</p>
+              <p class="flex items-center gap-1.5 ml-auto text-blue-600 bg-blue-50 px-3 py-1.5 rounded-lg border border-blue-100 shadow-sm font-bold"><i data-lucide="eye" class="w-3.5 h-3.5"></i> 0 Visitors</p>
+            </div>
+          </div>
+
+          <div class="price-section xl:w-[220px] shrink-0 flex flex-col xl:items-end justify-center py-2 xl:pr-6 border-t xl:border-t-0 xl:border-l border-gray-100 pt-4 xl:pt-0 w-full text-left xl:text-right">
+            <div class="bg-green-50 text-green-600 px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider mb-4 xl:mb-8 inline-block w-fit xl:ml-auto">${p.status || 'For Sale'}</div>
+            <h2 class="text-2xl font-black text-slate-950 mb-1">₹${p.price || '0'}</h2>
+            <p class="text-[10px] font-bold text-gray-400 uppercase tracking-wide">Inclusive of all charges</p>
+          </div>
+        </div>
+      `).join('');
+      if(typeof lucide !== 'undefined') lucide.createIcons();
+    }
+  }
+
+  // Hook into generic submission in dashboard/add-property
+  window.submitPropertyForm = function(e) {
+    e.preventDefault();
+    const propName = document.getElementById('wiz_prop_name') || document.getElementById('prop_name');
+    const propPrice = document.getElementById('wiz_price') || document.getElementById('prop_price');
+    const propKind = document.getElementById('wiz_kind') || document.getElementById('prop_kind');
+    const propStatus = document.getElementById('wiz_status') || document.getElementById('prop_status');
+    const propUnit = document.getElementById('wiz_unit') || document.getElementById('prop_unit');
+    const propLocation = document.getElementById('wiz_location') || document.getElementById('prop_loc'); // assuming ID
+    
+    if(!propName || !propName.value) return showPremiumAlert('error');
+
+    const property = {
+      name: propName.value,
+      price: propPrice ? propPrice.value : '',
+      kind: propKind ? propKind.value : '',
+      status: propStatus ? propStatus.value : '',
+      unit: propUnit ? propUnit.value : '',
+      location: propLocation ? propLocation.value : 'Kochi, Kerala'
+    };
+    
+    if (window.saveProperty) {
+      window.saveProperty(property);
+    }
+    
+    // Show success
+    showPremiumAlert('success');
+
+    // Redirect or update UI
+    setTimeout(() => {
+      if(window.location.pathname.includes('add-property.html')) {
+        window.location.href = 'dashboard.html';
+      } else {
+        if(typeof toggleAddProperty !== 'undefined') toggleAddProperty();
+        renderProperties();
+        if(typeof updateDashboardStats !== 'undefined') updateDashboardStats();
+      }
+    }, 1000);
+  };
+
+  document.addEventListener('DOMContentLoaded', renderProperties);
+</script>
+
+</body>

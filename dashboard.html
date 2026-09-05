@@ -1,0 +1,2474 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>R2s Realtors</title>
+  <link rel="stylesheet" href="/src/style.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <!-- PWA Meta Tags -->
+  <link rel="manifest" href="/manifest.json" />
+  <link rel="icon" href="/LOGO.png" type="image/png" />
+  <link rel="apple-touch-icon" href="/LOGO.png" />
+  <meta name="theme-color" content="#ffffff" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="apple-mobile-web-app-title" content="R2s Realtors" />
+  
+  <!-- Premium Mobile App CSS Physics -->
+  <style>
+    /* Prevent text selection to feel like native app */
+    body, h1, h2, h3, h4, p, span, div, button, a, i {
+      -webkit-user-select: none;
+      user-select: none;
+    }
+    /* Allow text selection in inputs */
+    input, textarea {
+      -webkit-user-select: text;
+      user-select: text;
+    }
+    /* Remove blue tap highlight */
+    * {
+      -webkit-tap-highlight-color: transparent;
+    }
+    /* Prevent bounce on scroll for rigid native feel */
+    body {
+      overscroll-behavior-y: none;
+    }
+  </style>
+
+
+  <style>
+    /* Premium Visual Animations & Patterns */
+    @keyframes float {
+      0%, 100% { transform: translateY(0) rotate(0deg); }
+      50% { transform: translateY(-20px) rotate(5deg); }
+    }
+    @keyframes float-reverse {
+      0%, 100% { transform: translateY(0) rotate(0deg); }
+      50% { transform: translateY(20px) rotate(-5deg); }
+    }
+    .animate-float-slow {
+      animation: float 20s ease-in-out infinite;
+    }
+    .animate-float-reverse-slow {
+      animation: float-reverse 25s ease-in-out infinite;
+    }
+    .bg-dotted-pattern {
+      background-image: radial-gradient(circle, #e5e7eb 1px, transparent 1px);
+      background-size: 24px 24px;
+    }
+    .overflow-hidden border-b-0 relative {
+      border-top: 4px solid #2563EB !important;
+    }
+    .top-accent-red {
+      border-top: 4px solid #EF4444 !important;
+    }
+  </style>
+
+  <script src="https://unpkg.com/@tailwindcss/browser@4"></script>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body class="overflow-x-hidden bg-white m-0 p-0 w-full min-h-screen md:h-screen md:overflow-hidden">
+
+  <!-- Global Desktop Header -->
+  
+  <!-- Global Navigation Bar -->
+  <header class="fixed top-0 left-0 w-full bg-white/90 backdrop-blur-md border-b border-gray-100 z-[900] transition-all duration-300">
+    <div class="max-w-[1600px] mx-auto px-4 md:px-8 h-[70px] md:h-[80px] flex items-center justify-between">
+      
+      <!-- Left: Logo & Brand -->
+      <a href="/dashboard.html" class="flex items-center gap-3 group z-[910]">
+        <div class="h-12 md:h-14 flex items-center justify-center shrink-0">
+          <img src="/LOGO.png" alt="R2s" class="h-full w-auto object-contain" loading="lazy">
+        </div>
+        <span class="text-lg md:text-xl font-extrabold tracking-tight text-slate-950 hidden sm:block">R2s Realtors</span>
+      </a>
+
+
+
+      <!-- Right: Actions & Profile -->
+      <div class="flex items-center gap-3 md:gap-4 ml-auto z-[910]">
+        
+        
+        <!-- Install App Button (Always visible for all devices, handles iOS gracefully) -->
+        <button onclick="installPwa()" class="hidden md:flex items-center gap-2 bg-black-50 hover:bg-black-100 text-blue-600 px-4 py-2 rounded-full text-sm font-bold transition-colors z-[950]">
+          <i data-lucide="download" class="w-4 h-4"></i>
+          
+        </button>
+        <button onclick="installPwa()" class="md:hidden flex w-10 h-10 rounded-full bg-black-50 items-center justify-center text-black-600 hover:bg-black-100 transition-colors relative focus:outline-none z-[950] shadow-sm">
+          <i data-lucide="download" class="w-5 h-5" aria-hidden="true"></i>
+        </button>
+
+        <button onclick="toggleNotifications()" class="w-10 h-10 rounded-full bg-gray-50 flex items-center justify-center text-slate-600 hover:bg-gray-100 hover:text-slate-950 transition-colors relative border border-transparent hover:border-gray-200 focus:outline-none z-[950]">
+          <i data-lucide="bell" class="w-5 h-5" aria-hidden="true"></i>
+          <span class="absolute top-2 right-2.5 w-2 h-2 bg-red-600 rounded-full border-2 border-white"></span>
+        </button>
+        
+        
+        <!-- Mobile Menu Toggle -->
+        <button onclick="toggleRightSidebar()" class="w-10 h-10 rounded-lg bg-gray-50 flex md:hidden items-center justify-center text-slate-600 hover:bg-gray-100 transition-colors ml-2 relative z-[950]">
+          <i data-lucide="menu" class="w-5 h-5" aria-hidden="true"></i>
+        </button>
+      </div>
+    </div>
+  </header><!-- Main Content Area with Left Sidebar Layout -->
+  <div class="flex relative bg-[#f8fafc] min-h-screen">
+    
+    
+    <!-- Right Sidebar (Profile Menu) -->
+    <aside id="rightSidebar" class="flex flex-col fixed top-[80px] md:top-[90px] right-0 w-[260px] md:w-[280px] h-[calc(100vh-80px)] md:h-[calc(100vh-90px)] bg-white border-l border-gray-100 shadow-2xl md:shadow-[-10px_0_30px_rgba(0,0,0,0.02)] z-[100] transform translate-x-full md:translate-x-0 transition-transform duration-300">
+      
+      <!-- User Info Header -->
+      <div class="relative pt-12 pb-6 px-6 border-b border-gray-50 bg-white flex flex-col items-center text-center overflow-hidden">
+        <!-- SVG Wave Background -->
+        <div class="absolute top-0 left-0 w-full h-[120px] z-0">
+          <svg viewBox="0 0 400 150" preserveAspectRatio="none" class="w-full h-full opacity-30">
+            <path d="M0,0 L400,0 L400,100 C300,150 100,50 0,100 Z" fill="#2563EB"></path>
+            <path d="M0,0 L400,0 L400,60 C250,120 150,20 0,80 Z" fill="#3B82F6"></path>
+          </svg>
+        </div>
+        
+        <!-- Avatar -->
+        <div class="relative z-10 w-20 h-20 bg-white rounded-full flex items-center justify-center shadow-lg border-4 border-white mb-4">
+          <span class="text-3xl font-light text-blue-500">R</span>
+          <!-- Online indicator -->
+          <div class="absolute bottom-0 right-1 w-4 h-4 bg-green-500 rounded-full border-2 border-white"></div>
+        </div>
+        
+        <!-- Details -->
+        <h4 id="profileDropdownName" class="relative z-10 font-bold text-slate-950 text-lg">Test User</h4>
+        <p id="profileDropdownEmail" class="relative z-10 text-xs font-medium text-gray-500 mt-1 mb-3">tester@example.com</p>
+        <div class="relative z-10 inline-flex items-center gap-1.5 bg-red-50 border border-red-100 px-3 py-1 rounded-full">
+          <i data-lucide="building-2" class="w-3 h-3 text-red-500" aria-hidden="true"></i>
+          <span id="profileDropdownRole" class="text-[10px] font-bold text-red-600 uppercase tracking-wider">Builder</span>
+        </div>
+      </div>
+      
+      <!-- Actions -->
+      <div class="p-4 flex flex-col gap-2 flex-1 overflow-y-auto custom-scrollbar">
+        <button onclick="toggleEditProfile()" class="flex items-center gap-4 px-3 py-2.5 sm:px-4 sm:py-3 rounded-2xl hover:bg-gray-50 text-sm font-bold text-slate-700 hover:text-slate-950 transition-colors w-full text-left">
+          <div class="w-10 h-10 rounded-full bg-white border border-gray-200 flex items-center justify-center shadow-sm shrink-0">
+            <i data-lucide="user-cog" class="w-5 h-5 text-slate-500" aria-hidden="true"></i>
+          </div>
+          Update Profile
+        </button>
+        <button onclick="openDocumentModal()" class="flex items-center gap-4 px-3 py-2.5 sm:px-4 sm:py-3 rounded-2xl hover:bg-gray-50 text-sm font-bold text-slate-700 hover:text-slate-950 transition-colors w-full text-left">
+          <div class="w-10 h-10 rounded-full bg-white border border-gray-200 flex items-center justify-center shadow-sm shrink-0">
+            <i data-lucide="file-check-2" class="w-5 h-5 text-slate-500" aria-hidden="true"></i>
+          </div>
+          Company Documents
+        </button>
+        <button onclick="filterProperties('all', this)" class="filter-btn flex items-center gap-4 px-3 py-2.5 sm:px-4 sm:py-3 rounded-2xl bg-blue-50 text-blue-600 text-sm font-bold transition-colors w-full text-left">
+          <div class="w-10 h-10 rounded-full bg-white border-red-200 flex items-center justify-center shadow-sm shrink-0">
+            <i data-lucide="list" class="w-5 h-5 text-red-500" aria-hidden="true"></i>
+          </div>
+          All Properties
+        </button>
+        <button onclick="filterProperties('approved', this)" class="filter-btn flex items-center gap-4 px-3 py-2.5 sm:px-4 sm:py-3 rounded-2xl hover:bg-gray-50 text-sm font-bold text-slate-700 hover:text-slate-950 transition-colors w-full text-left">
+          <div class="w-10 h-10 rounded-full bg-white border border-gray-200 flex items-center justify-center shadow-sm shrink-0">
+            <i data-lucide="check-circle" class="w-5 h-5 text-green-500" aria-hidden="true"></i>
+          </div>
+          Approved Property
+        </button>
+        <button onclick="filterProperties('unapproved', this)" class="filter-btn flex items-center gap-4 px-3 py-2.5 sm:px-4 sm:py-3 rounded-2xl hover:bg-gray-50 text-sm font-bold text-slate-700 hover:text-slate-950 transition-colors w-full text-left">
+          <div class="w-10 h-10 rounded-full bg-white border border-gray-200 flex items-center justify-center shadow-sm shrink-0">
+            <i data-lucide="x-circle" class="w-5 h-5 text-amber-500" aria-hidden="true"></i>
+          </div>
+          Unapproved Property
+        </button>
+        
+        
+        <div class="h-px bg-gray-100 my-2 mx-4"></div>
+        
+        <button onclick="toggleTCModal()" class="flex items-center gap-4 px-3 py-2.5 sm:px-4 sm:py-3 rounded-2xl hover:bg-gray-50 text-sm font-bold text-slate-700 hover:text-slate-950 transition-colors w-full text-left">
+          <div class="w-10 h-10 rounded-full bg-white border border-gray-200 flex items-center justify-center shadow-sm shrink-0">
+            <i data-lucide="file-text" class="w-5 h-5 text-slate-500" aria-hidden="true"></i>
+          </div>
+          Terms & Conditions
+        </button>
+        
+        <a href="/login.html" class="flex items-center gap-4 px-3 py-2.5 sm:px-4 sm:py-3 rounded-2xl hover:bg-red-50 text-sm font-bold text-red-600 transition-colors w-full text-left">
+          <div class="w-10 h-10 rounded-full bg-white border border-red-100 flex items-center justify-center shadow-sm shrink-0">
+            <i data-lucide="log-out" class="w-5 h-5 text-red-500" aria-hidden="true"></i>
+          </div>
+          Log Out
+        </a>
+      
+        
+      </div>
+    </aside>
+
+    <!-- Mobile Overlay for Sidebar -->
+    <div id="mobileSidebarOverlay" onclick="toggleRightSidebar()" class="fixed inset-0 bg-slate-950/40 backdrop-blur-sm z-[90] opacity-0 pointer-events-none transition-opacity duration-300 md:hidden"></div>
+
+
+    <!-- Main Content -->
+    <div class="mt-[80px] md:mt-[90px] px-4 sm:px-6 md:pr-8 md:pl-8 py-8 pb-32 md:pb-12 md:h-[calc(100vh-90px)] md:overflow-y-auto hide-scrollbar custom-scrollbar w-full md:w-[calc(100%-280px)] relative z-0">
+      
+      <!-- Page Header -->
+      <div class="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-8">
+        <div>
+          <p class="text-sm text-gray-500 font-medium mb-1">Welcome back,</p>
+          <h1 id="pageHeaderName" class="text-3xl font-extrabold text-slate-950 mb-2">Test User</h1>
+          <p class="text-sm font-medium text-gray-500">Manage and view all your listed properties</p>
+        </div>
+        <div class="flex items-center gap-4">
+          <div class="hidden md:flex items-center bg-white border border-gray-200 rounded-xl p-1 shadow-sm">
+            <button onclick="setGridView()" id="btnGrid" class="p-2 rounded-lg text-gray-400 hover:text-slate-950 transition-colors"><i data-lucide="layout-grid" class="w-4 h-4" aria-hidden="true"></i></button>
+            <button onclick="setListView()" id="btnList" class="p-2 rounded-lg bg-gray-100 text-slate-950 transition-colors"><i data-lucide="list" class="w-4 h-4" aria-hidden="true"></i></button>
+          </div>
+          <a href="/buyer-leads.html" id="buyerLeadsNavBtn" class="hidden bg-white border border-gray-200 hover:border-slate-950 text-slate-950 px-6 py-2.5 rounded-full text-sm font-bold shadow-sm transition-colors items-center gap-2">
+            <i data-lucide="user-plus" class="w-4 h-4" aria-hidden="true"></i> Buyer Leads
+          </a>
+          <button id="dashboardPrimaryAction" onclick="toggleAddProperty()" class="bg-red-600 hover:-translate-y-0.5 hover:shadow-lg hover:bg-red-700 text-white px-6 py-2.5 rounded-full text-sm font-bold shadow-[0_4px_15px_rgba(220,38,38,0.3)] transition-colors flex items-center gap-2">
+            <i id="dashboardPrimaryActionIcon" data-lucide="plus" class="w-4 h-4" aria-hidden="true"></i> <span id="dashboardPrimaryActionText">Add Property</span>
+          </button>
+        </div>
+      </div>
+
+
+
+
+
+      <!-- Dashboard Tabs -->
+      <div class="flex items-center bg-gray-100 rounded-xl p-1 mb-8 w-fit">
+        <button id="propertiesTab" onclick="switchDashboardTab('properties')" class="dashboard-tab bg-white text-slate-950 px-5 py-2.5 rounded-lg text-sm font-bold shadow-sm transition-colors">
+          Properties
+        </button>
+        <button id="networkLeadsTab" onclick="switchDashboardTab('network')" class="dashboard-tab bg-transparent text-slate-500 px-5 py-2.5 rounded-lg text-sm font-bold transition-colors">
+          Network Leads
+        </button>
+      </div>
+
+      <!-- Network Leads: buyer leads are displayed here and saved to Zoho CRM. -->
+      <div id="networkLeadsPanel" class="hidden">
+        <div class="flex items-center justify-between gap-4 mb-6">
+          <div>
+            <h2 class="text-xl font-extrabold text-slate-950">Network Leads</h2>
+            <p class="text-sm text-gray-500 font-medium mt-1">Buyer details captured through R2s Realtors.</p>
+          </div>
+        </div>
+        <div id="networkBuyerError" class="hidden bg-red-50 border border-red-100 text-red-600 text-sm font-semibold px-5 py-4 rounded-2xl mb-6"></div>
+        <div id="networkBuyerList" class="flex flex-col gap-4"></div>
+        <div id="networkBuyerEmpty" class="hidden text-center py-20">
+          <i data-lucide="users" class="w-10 h-10 text-gray-300 mx-auto mb-3"></i>
+          <p class="text-gray-400 font-semibold">No network leads yet.</p>
+        </div>
+        <div id="networkBuyerUnauthorized" class="hidden bg-amber-50 border border-amber-100 text-amber-700 text-sm font-semibold px-5 py-4 rounded-2xl">
+          Adding Buyer Leads is available only to Realtors, Channel Partners, and Associates.
+        </div>
+      </div>
+
+      <!-- Horizontal List View -->
+      <div id="propertyListContainer" class="flex flex-col gap-4 transition-all duration-500">
+
+        <!-- Real properties render here via renderProperties() in the script below -->
+        <div id="dynamicPropertiesContainer" class="flex flex-col gap-4"></div>
+
+        <!-- Shown when the logged-in user has no properties yet -->
+        <div id="emptyStateContainer" class="hidden flex-col items-center justify-center py-20 text-center">
+          <i data-lucide="home" class="w-12 h-12 text-gray-300 mb-4" aria-hidden="true"></i>
+          <h3 class="text-lg font-bold text-slate-950 mb-1">No properties yet</h3>
+          <p class="text-sm text-gray-500">Properties you add will show up here.</p>
+        </div>
+
+      </div>
+
+      
+      <!-- Infinite Scroll Loader (decorative leftover from the original template — hidden, not used with real data) -->
+      <div id="infiniteScrollLoader" class="hidden flex-col items-center justify-center py-10 my-4">
+        <div class="relative w-10 h-10 mb-3">
+           <div class="absolute inset-0 border-4 border-gray-100 border-t-[#736DB3] rounded-full animate-spin"></div>
+        </div>
+        <p class="text-sm font-bold text-gray-400 tracking-wide">Loading more properties...</p>
+      </div>
+    
+
+
+    </div>
+
+  </div>
+
+
+  <!-- FULL SCREEN PROPERTY DETAIL MODAL -->
+  <div id="fullscreenModal" class="fixed inset-0 z-[2000] bg-white transform translate-y-[200%] transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] flex flex-col h-screen overflow-hidden">
+    
+    <!-- Modal Header -->
+    <div class="h-[80px] border-b border-gray-100 bg-white shrink-0 flex items-center px-4 md:px-8">
+      <button onclick="closeFullscreenModal()" class="flex items-center gap-2 text-slate-950 font-bold hover:text-red-600 transition-colors">
+        <i data-lucide="chevron-left" class="w-5 h-5" aria-hidden="true"></i> Back to My Properties
+      </button>
+    </div>
+
+    <!-- Modal Scrollable Content -->
+    <div class="flex-1 overflow-y-auto custom-scrollbar bg-[#f8fafc]">
+      <div class="max-w-[1400px] mx-auto px-4 md:px-8 py-8 flex flex-col lg:flex-row gap-8">
+        
+        <!-- Left Column (Gallery + Details) -->
+        <div class="flex-1 flex flex-col gap-8">
+          
+          <!-- Image Gallery (Desktop 3, Mobile 1) -->
+          <div class="w-full h-[300px] md:h-[500px] rounded-3xl overflow-hidden relative">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-2 w-full h-full">
+              <!-- Main Image -->
+              <div class="col-span-1 md:col-span-2 h-full relative group cursor-pointer">
+                <img src="https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80" class="w-full h-full object-cover" loading="lazy">
+                <div class="absolute top-4 left-4 bg-[#1e293b]/90 backdrop-blur-md text-white px-4 py-2 rounded-lg text-xs font-bold uppercase tracking-wider">Residential</div>
+                <div class="absolute bottom-4 left-4 bg-[#1e293b]/90 backdrop-blur-md text-white px-4 py-2 rounded-lg text-xs font-bold uppercase tracking-wider">Apartment</div>
+              </div>
+              <!-- Right Side Images -->
+              <div class="hidden md:grid grid-rows-2 gap-2 h-full">
+                <div class="relative overflow-hidden cursor-pointer group">
+                  <img src="https://images.unsplash.com/photo-1512917774080-9991f1c4c750?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" class="w-full h-full object-cover" loading="lazy">
+                </div>
+                <div class="relative overflow-hidden cursor-pointer group">
+                  <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" class="w-full h-full object-cover" loading="lazy">
+                  <!-- Overlay -->
+                  <div class="absolute inset-0 bg-black/40 flex items-center justify-center backdrop-blur-[2px]">
+                    <span class="text-white font-bold text-sm bg-black/50 px-4 py-2 rounded-xl flex items-center gap-2"><i data-lucide="image" class="w-4 h-4" aria-hidden="true"></i> +12 Photos</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Title & Location -->
+          <div class="flex flex-col gap-2 bg-white p-4 sm:p-6 md:p-8 rounded-3xl shadow-sm border border-gray-100">
+            <div class="flex items-center justify-between">
+              <h1 class="text-3xl font-black text-slate-950">Marina One – R2S00000177</h1>
+              <div class="flex items-center gap-2 bg-green-50 px-3 py-1.5 rounded-full border border-green-100"><div class="w-2 h-2 rounded-full bg-green-500"></div><span class="text-[10px] font-bold text-green-600 uppercase tracking-wider">Active</span></div>
+            </div>
+            <p class="text-sm font-semibold text-gray-500 flex items-center gap-1.5 mb-6"><i data-lucide="map-pin" class="w-4 h-4" aria-hidden="true"></i> Marine Drive, Menaka, Kochi, Kerala</p>
+            
+            <!-- 4 Specs Boxes -->
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+              <div class="bg-gray-50 border border-gray-100 rounded-2xl p-4 flex items-center justify-center gap-3">
+                <i data-lucide="bed-double" class="w-6 h-6 text-[#1e293b]" aria-hidden="true"></i>
+                <div class="flex flex-col items-start leading-tight"><span class="font-bold text-slate-950 text-lg">3</span><span class="text-[10px] uppercase font-bold text-gray-400">Bedrooms</span></div>
+              </div>
+              <div class="bg-gray-50 border border-gray-100 rounded-2xl p-4 flex items-center justify-center gap-3">
+                <i data-lucide="bath" class="w-6 h-6 text-[#1e293b]" aria-hidden="true"></i>
+                <div class="flex flex-col items-start leading-tight"><span class="font-bold text-slate-950 text-lg">4</span><span class="text-[10px] uppercase font-bold text-gray-400">Bathrooms</span></div>
+              </div>
+              <div class="bg-gray-50 border border-gray-100 rounded-2xl p-4 flex items-center justify-center gap-3">
+                <i data-lucide="ruler" class="w-6 h-6 text-[#1e293b]" aria-hidden="true"></i>
+                <div class="flex flex-col items-start leading-tight"><span class="font-bold text-slate-950 text-lg">2550</span><span class="text-[10px] uppercase font-bold text-gray-400">Sq Ft</span></div>
+              </div>
+              <div class="bg-gray-50 border border-gray-100 rounded-2xl p-4 flex items-center justify-center gap-3">
+                <i data-lucide="tag" class="w-6 h-6 text-[#1e293b]" aria-hidden="true"></i>
+                <div class="flex flex-col items-start leading-tight"><span class="font-bold text-slate-950 text-xs">R2S00000177</span><span class="text-[10px] uppercase font-bold text-gray-400 mt-0.5">Property Code</span></div>
+              </div>
+            </div>
+            
+            <!-- About -->
+            <h3 class="text-xl font-bold text-slate-950 mt-8 mb-3">About this property</h3>
+            <p class="text-sm font-medium text-gray-600 leading-relaxed max-w-3xl">A premium residential apartment located in the heart of Kochi, offering modern amenities, spectacular sea views, and excellent connectivity. Designed for luxury living, this property features spacious interiors and high-end finishes.</p>
+
+            <!-- Amenities -->
+            <div class="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 gap-6 mt-8">
+              <div class="flex flex-col items-center gap-2"><div class="w-12 h-12 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center"><i data-lucide="waves" class="w-6 h-6" aria-hidden="true"></i></div><span class="text-xs font-bold text-slate-700">Sea View</span></div>
+              <div class="flex flex-col items-center gap-2"><div class="w-12 h-12 rounded-xl bg-gray-50 text-slate-600 flex items-center justify-center"><i data-lucide="layout" class="w-6 h-6" aria-hidden="true"></i></div><span class="text-xs font-bold text-slate-700">Balcony</span></div>
+              <div class="flex flex-col items-center gap-2"><div class="w-12 h-12 rounded-xl bg-gray-50 text-slate-600 flex items-center justify-center"><i data-lucide="car" class="w-6 h-6" aria-hidden="true"></i></div><span class="text-xs font-bold text-slate-700">Parking</span></div>
+              <div class="flex flex-col items-center gap-2"><div class="w-12 h-12 rounded-xl bg-gray-50 text-slate-600 flex items-center justify-center"><i data-lucide="shield-check" class="w-6 h-6" aria-hidden="true"></i></div><span class="text-xs font-bold text-slate-700">Security</span></div>
+              <div class="flex flex-col items-center gap-2"><div class="w-12 h-12 rounded-xl bg-cyan-50 text-cyan-600 flex items-center justify-center"><i data-lucide="droplets" class="w-6 h-6" aria-hidden="true"></i></div><span class="text-xs font-bold text-slate-700">Swimming Pool</span></div>
+              <div class="flex flex-col items-center gap-2"><div class="w-12 h-12 rounded-xl bg-amber-50 text-amber-600 flex items-center justify-center"><i data-lucide="zap" class="w-6 h-6" aria-hidden="true"></i></div><span class="text-xs font-bold text-slate-700">Power Backup</span></div>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- Right Column (Sticky Panel) -->
+        <div class="w-full lg:w-[350px] xl:w-[400px] shrink-0">
+          <div class="sticky top-8 flex flex-col gap-6">
+            
+            <!-- Price Card -->
+            <div class="bg-white rounded-3xl p-6 shadow-sm border border-gray-100 flex flex-col overflow-hidden border-b-0 relative">
+              <p class="text-xs font-bold text-gray-500 uppercase tracking-wider mb-1">Price</p>
+              <h2 class="text-3xl font-black text-slate-950 mb-1">₹4,65,00,000</h2>
+              <p class="text-xs font-semibold text-gray-400">Inclusive of all charges</p>
+            </div>
+
+            <!-- Status Card -->
+            <div class="bg-white rounded-3xl p-6 shadow-sm border border-gray-100 flex flex-col overflow-hidden border-b-0 relative">
+              <h3 class="text-lg font-bold text-slate-950 mb-4">Property Status</h3>
+              <div class="relative">
+                <select onchange="showStatusToast()" class="w-full bg-gray-50 border border-gray-100 rounded-xl px-3 py-2.5 sm:px-4 sm:py-3 font-bold text-sm text-slate-700 outline-none focus:ring-4 focus:ring-blue-500/20 appearance-none cursor-pointer">
+                  <option value="available" selected>Available (For Sale)</option>
+                  <option value="sold">Sold</option>
+                  <option value="hidden">Hidden / Unlisted</option>
+                </select>
+                <div class="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none">
+                  <i data-lucide="chevron-down" class="w-4 h-4 text-gray-400" aria-hidden="true"></i>
+                </div>
+              </div>
+            </div>
+
+
+
+            <!-- Details Card -->
+            <div class="bg-white rounded-3xl p-6 shadow-sm border border-gray-100 flex flex-col overflow-hidden border-b-0 relative">
+              <h3 class="text-lg font-bold text-slate-950 mb-4">Property Details</h3>
+              <div class="flex flex-col gap-4">
+                <div class="flex items-center justify-between border-b border-gray-50 pb-3"><span class="text-sm font-medium text-gray-500">Property Type</span><span class="text-sm font-bold text-slate-950">Apartment</span></div>
+                <div class="flex items-center justify-between border-b border-gray-50 pb-3"><span class="text-sm font-medium text-gray-500">Property Status</span><span class="text-sm font-bold text-green-600">For Sale</span></div>
+                <div class="flex items-center justify-between border-b border-gray-50 pb-3"><span class="text-sm font-medium text-gray-500">Listed On</span><span class="text-sm font-bold text-slate-950">05 Aug 2026</span></div>
+                <div class="flex items-center justify-between"><span class="text-sm font-medium text-gray-500">Possession</span><span class="text-sm font-bold text-slate-950">Immediate</span></div>
+              </div>
+            </div>
+
+
+
+          </div>
+        </div>
+
+      </div>
+      
+      <!-- Footer -->
+      <div class="py-8 text-center bg-white border-t border-gray-100 mt-8">
+        
+      </div>
+    </div>
+  </div>
+
+
+  <!-- OTHER SPA MODALS (T&C, Edit Profile, Notifs - hidden but present) -->
+
+  
+  <!-- Notifications Slide-Over -->
+  <div id="notificationsPanel" class="fixed top-0 right-0 h-full w-full sm:w-[380px] bg-white shadow-2xl z-[4000] transform translate-x-full transition-transform duration-300 flex flex-col border-l border-gray-100">
+    <div class="p-6 border-b border-gray-100 flex items-center justify-between shrink-0 bg-white">
+      <h2 class="text-xl font-extrabold text-slate-950 flex items-center gap-2"><i data-lucide="bell" class="w-5 h-5 text-red-600" aria-hidden="true"></i> Notifications</h2>
+      <button onclick="toggleNotifications()" class="w-8 h-8 rounded-full bg-gray-50 flex items-center justify-center hover:bg-red-50 hover:text-red-600 transition-colors">
+        <i data-lucide="x" class="w-4 h-4" aria-hidden="true"></i>
+      </button>
+    </div>
+    <div class="flex-1 overflow-y-auto p-4 flex flex-col gap-3 custom-scrollbar bg-[#f8fafc]">
+      <!-- Notification Item -->
+      <div class="bg-white p-4 rounded-2xl shadow-sm border border-gray-100 cursor-pointer hover:shadow-md transition-shadow">
+        <div class="flex items-start gap-3">
+          <div class="w-8 h-8 rounded-full bg-green-50 flex items-center justify-center shrink-0 mt-1">
+            <i data-lucide="check-circle" class="w-4 h-4 text-green-600" aria-hidden="true"></i>
+          </div>
+          <div>
+            <h4 class="text-sm font-bold text-slate-950">Property Approved</h4>
+            <p class="text-xs font-medium text-gray-500 mt-0.5 leading-relaxed">Your property "Marina One" has been verified and approved by the admin.</p>
+            <span class="text-[10px] font-bold text-gray-400 mt-2 block">2 hours ago</span>
+          </div>
+        </div>
+      </div>
+      <!-- Notification Item -->
+      <div class="bg-white p-4 rounded-2xl shadow-sm border border-gray-100 cursor-pointer hover:shadow-md transition-shadow">
+        <div class="flex items-start gap-3">
+          <div class="w-8 h-8 rounded-full bg-blue-50 flex items-center justify-center shrink-0 mt-1">
+            <i data-lucide="message-square" class="w-4 h-4 text-blue-600" aria-hidden="true"></i>
+          </div>
+          <div>
+            <h4 class="text-sm font-bold text-slate-950">New Inquiry Received</h4>
+            <p class="text-xs font-medium text-gray-500 mt-0.5 leading-relaxed">You have a new message regarding "Ocean View Villa". Check your messages.</p>
+            <span class="text-[10px] font-bold text-gray-400 mt-2 block">5 hours ago</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div id="notificationsOverlay" onclick="toggleNotifications()" class="fixed inset-0 bg-slate-950/40 backdrop-blur-sm z-[3900] opacity-0 pointer-events-none transition-opacity duration-300"></div>
+
+  
+  
+  <!-- Add Buyer Modal -->
+  <div id="networkAddBuyerModal" class="fixed inset-0 z-[900] hidden items-center justify-center p-4">
+    <div class="absolute inset-0 bg-slate-950/60 backdrop-blur-sm" onclick="toggleNetworkBuyerModal()"></div>
+    <div class="relative bg-white rounded-[2rem] w-full max-w-lg max-h-[90vh] overflow-y-auto shadow-2xl p-6 sm:p-8">
+      <div class="flex items-center justify-between mb-6">
+        <div>
+          <h2 class="text-xl font-extrabold text-slate-950">Add Buyer</h2>
+          <p class="text-sm text-gray-500 font-medium mt-1">Add a buyer to your network leads.</p>
+        </div>
+        <button onclick="toggleNetworkBuyerModal()" class="w-9 h-9 rounded-full bg-gray-50 flex items-center justify-center hover:bg-red-50 hover:text-red-600 transition-colors">
+          <i data-lucide="x" class="w-4 h-4"></i>
+        </button>
+      </div>
+
+      <form id="networkAddBuyerForm" onsubmit="submitNetworkBuyerLead(event)" class="flex flex-col gap-5">
+        <div class="flex flex-col gap-2">
+          <label class="text-[10px] font-bold text-gray-500 uppercase tracking-wider">Buyer Name *</label>
+          <input type="text" id="network_buyer_name" required class="w-full bg-gray-50 rounded-2xl px-5 py-3.5 border border-gray-200 outline-none focus:border-blue-500 focus:bg-white transition-colors text-slate-950 font-semibold">
+        </div>
+        <div class="flex flex-col gap-2">
+          <label class="text-[10px] font-bold text-gray-500 uppercase tracking-wider">Contact Number *</label>
+          <input type="tel" id="network_buyer_contact" required pattern="[0-9]{10}" maxlength="10" placeholder="10-digit mobile number" class="w-full bg-gray-50 rounded-2xl px-5 py-3.5 border border-gray-200 outline-none focus:border-blue-500 focus:bg-white transition-colors text-slate-950 font-semibold">
+        </div>
+        <div class="flex flex-col gap-2">
+          <label class="text-[10px] font-bold text-gray-500 uppercase tracking-wider">Preferred Location *</label>
+          <input type="text" id="network_buyer_preferred_location" required placeholder="e.g. Kochi, Kerala" class="w-full bg-gray-50 rounded-2xl px-5 py-3.5 border border-gray-200 outline-none focus:border-blue-500 focus:bg-white transition-colors text-slate-950 font-semibold">
+        </div>
+        <div class="flex items-start gap-3 pt-2 border-t border-gray-100 mt-1">
+          <input type="checkbox" id="network_buyer_consent" required class="mt-1 w-5 h-5 rounded border-gray-300 text-red-600 focus:ring-red-500 cursor-pointer">
+          <label for="network_buyer_consent" class="text-sm font-semibold text-slate-950 cursor-pointer">I have obtained the buyer's permission to share their name and contact number with R2s Realtors.</label>
+        </div>
+        <button type="submit" class="w-full bg-red-600 hover:bg-red-700 text-white px-6 py-4 rounded-2xl font-bold shadow-lg transition-colors flex items-center justify-center gap-2 mt-2">
+          Add Buyer <i data-lucide="check-circle" class="w-5 h-5"></i>
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Add Property Modal (Wizard) -->
+  <div id="addPropertyModal" class="fixed inset-0 z-[3000] flex items-center justify-center p-4 sm:p-6 opacity-0 pointer-events-none transition-opacity duration-300">
+    <div class="absolute inset-0 bg-slate-950/60 backdrop-blur-sm" onclick="toggleAddProperty()"></div>
+    <div class="relative bg-white w-full max-w-4xl rounded-[32px] shadow-2xl flex flex-col h-[90vh] md:h-[90vh] transform scale-95 transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)]" id="addPropertyContent">
+      
+      <!-- Wizard Header & Stepper -->
+      <div class="p-4 sm:p-6 md:p-8 border-b border-gray-100 flex flex-col gap-6 shrink-0 bg-white rounded-t-[32px]">
+        <div class="flex items-center justify-between">
+          <div>
+            <h2 class="text-2xl font-extrabold text-slate-950 flex items-center gap-3"><i data-lucide="home" class="w-6 h-6 text-red-600" aria-hidden="true"></i> Add New Property</h2>
+            <p class="text-xs font-bold text-gray-500 mt-1 uppercase tracking-wider">Follow the steps to list your property</p>
+          </div>
+          <button onclick="toggleAddProperty()" class="w-10 h-10 rounded-full bg-gray-50 flex items-center justify-center hover:bg-red-50 hover:text-red-600 transition-colors">
+            <i data-lucide="x" class="w-5 h-5" aria-hidden="true"></i>
+          </button>
+        </div>
+        
+        <!-- Progress Stepper -->
+        <div class="flex items-center justify-between relative px-2">
+          <div class="absolute left-0 top-1/2 -translate-y-1/2 w-full h-1 bg-gray-100 rounded-full -z-10"></div>
+          <div id="progressLine" class="absolute left-0 top-1/2 -translate-y-1/2 h-1 bg-red-600 rounded-full -z-10 transition-all duration-500 w-[0%]"></div>
+          
+          <div class="flex flex-col items-center gap-2 cursor-pointer group" onclick="goToStep(1)">
+            <div id="stepDot1" class="w-8 h-8 rounded-full bg-blue-600 text-white hover:-translate-y-0.5 hover:shadow-lg font-bold text-sm flex items-center justify-center shadow-md transition-colors group-hover:scale-110">1</div>
+            <span id="stepText1" class="text-[10px] font-bold text-red-600 uppercase tracking-wider transition-colors">Basic Info</span>
+          </div>
+          <div class="flex flex-col items-center gap-2 cursor-pointer group" onclick="goToStep(2)">
+            <div id="stepDot2" class="w-8 h-8 rounded-full bg-white border-2 border-gray-200 text-gray-400 font-bold text-sm flex items-center justify-center transition-colors group-hover:scale-110">2</div>
+            <span id="stepText2" class="text-[10px] font-bold text-gray-400 uppercase tracking-wider transition-colors">Details</span>
+          </div>
+          <div class="flex flex-col items-center gap-2 cursor-pointer group" onclick="goToStep(3)">
+            <div id="stepDot3" class="w-8 h-8 rounded-full bg-white border-2 border-gray-200 text-gray-400 font-bold text-sm flex items-center justify-center transition-colors group-hover:scale-110">3</div>
+            <span id="stepText3" class="text-[10px] font-bold text-gray-400 uppercase tracking-wider transition-colors">Media</span>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Wizard Body -->
+      <div class="flex-1 relative overflow-hidden bg-[#f8fafc] w-full">
+        
+        <!-- STEP 1: Basic Information -->
+        <div id="wizardStep1" class="absolute inset-0 p-4 sm:p-6 md:p-8 transition-all duration-500 transform translate-x-0 opacity-100 overflow-y-auto custom-scrollbar">
+          <div class="bg-white rounded-3xl p-4 sm:p-6 md:p-8 border border-gray-100 shadow-sm max-w-3xl mx-auto">
+            <h3 class="text-lg font-bold text-slate-950 mb-6 flex items-center gap-2"><i data-lucide="info" class="w-5 h-5 text-red-500" aria-hidden="true"></i> Basic Information</h3>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div class="flex flex-col gap-2 relative md:col-span-2">
+                <label class="text-[10px] font-bold text-gray-500 uppercase tracking-wider flex items-center justify-between">Property Name <span class="text-red-500">*</span></label>
+                <input type="text" id="wiz_prop_name" placeholder="Enter property name" required class="w-full bg-gray-50 rounded-xl px-3 py-2.5 sm:px-4 sm:py-3 border border-gray-100 outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-500/20 focus:bg-white transition-all text-slate-950 font-bold text-sm">
+              </div>
+              
+              <div class="flex flex-col gap-2 relative">
+                <label class="text-[10px] font-bold text-gray-500 uppercase tracking-wider">Service Type</label>
+                <select id="wiz_service_type" class="w-full bg-gray-50 rounded-xl px-3 py-2.5 sm:px-4 sm:py-3 border border-gray-100 outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-500/20 focus:bg-white transition-all text-slate-950 font-bold text-sm cursor-pointer appearance-none">
+                  <option value="">Select</option>
+                  <option>Sale</option>
+                  <option>Rent</option>
+                  <option>Lease</option>
+                </select>
+              </div>
+              
+              <div class="flex flex-col gap-2 relative">
+                <label class="text-[10px] font-bold text-gray-500 uppercase tracking-wider">Expecting Price</label>
+                <input type="number" id="wiz_price" placeholder="Enter Price" required class="w-full bg-gray-50 rounded-xl px-3 py-2.5 sm:px-4 sm:py-3 border border-gray-100 outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-500/20 focus:bg-white transition-all text-slate-950 font-bold text-sm">
+              </div>
+
+              <div class="flex flex-col gap-2 relative">
+                <label class="text-[10px] font-bold text-gray-500 uppercase tracking-wider">Unit</label>
+                <input type="text" id="wiz_unit" placeholder="Sq Ft / Cent / Acre" class="w-full bg-gray-50 rounded-xl px-3 py-2.5 sm:px-4 sm:py-3 border border-gray-100 outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-500/20 focus:bg-white transition-all text-slate-950 font-bold text-sm">
+              </div>
+
+              <div class="flex flex-col gap-2 relative">
+                <label class="text-[10px] font-bold text-gray-500 uppercase tracking-wider">Total Floors</label>
+                <input type="number" id="wiz_floors" placeholder="Total Floors" class="w-full bg-gray-50 rounded-xl px-3 py-2.5 sm:px-4 sm:py-3 border border-gray-100 outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-500/20 focus:bg-white transition-all text-slate-950 font-bold text-sm">
+              </div>
+
+              <div class="flex flex-col gap-2 relative md:col-span-2">
+                <label class="text-[10px] font-bold text-gray-500 uppercase tracking-wider">Location</label>
+                <select id="wiz_location" class="w-full bg-gray-50 rounded-xl px-3 py-2.5 sm:px-4 sm:py-3 border border-gray-100 outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-500/20 focus:bg-white transition-all text-slate-950 font-bold text-sm cursor-pointer appearance-none">
+                  <option value="">Select a location</option>
+                </select>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- STEP 2: Categorization -->
+        <div id="wizardStep2" class="absolute inset-0 p-4 sm:p-6 md:p-8 transition-all duration-500 transform translate-x-full opacity-0 pointer-events-none overflow-y-auto custom-scrollbar">
+          <div class="bg-white rounded-3xl p-4 sm:p-6 md:p-8 border border-gray-100 shadow-sm max-w-3xl mx-auto">
+            <h3 class="text-lg font-bold text-slate-950 mb-6 flex items-center gap-2"><i data-lucide="layers" class="w-5 h-5 text-red-500" aria-hidden="true"></i> Property Categorization</h3>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div class="flex flex-col gap-2 relative">
+                <label class="text-[10px] font-bold text-gray-500 uppercase tracking-wider">Property Kind</label>
+                <select id="wiz_kind" class="w-full bg-gray-50 rounded-xl px-3 py-2.5 sm:px-4 sm:py-3 border border-gray-100 outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-500/20 focus:bg-white transition-all text-slate-950 font-bold text-sm cursor-pointer appearance-none">
+                  <option value="">Select</option>
+                  <option>Residential</option>
+                  <option>Commercial</option>
+                  <option>Estate</option>
+                </select>
+              </div>
+
+              <div id="wiz_res_container" class="flex flex-col gap-2 relative hidden">
+                <label class="text-[10px] font-bold text-gray-500 uppercase tracking-wider">Residential Type</label>
+                <select id="wiz_res_type" class="w-full bg-gray-50 rounded-xl px-3 py-2.5 sm:px-4 sm:py-3 border border-gray-100 outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-500/20 focus:bg-white transition-all text-slate-950 font-bold text-sm cursor-pointer appearance-none">
+                  <option value="">-None-</option>
+                  <option>Apartment</option>
+                  <option>Villa</option>
+                  <option>Plot</option>
+                  <option>Farmhouse</option>
+                  <option>Sky Villa</option>
+                </select>
+              </div>
+
+              <div id="wiz_com_container" class="flex flex-col gap-2 relative hidden">
+                <label class="text-[10px] font-bold text-gray-500 uppercase tracking-wider">Commercial Type</label>
+                <select id="wiz_com_type" class="w-full bg-gray-50 rounded-xl px-3 py-2.5 sm:px-4 sm:py-3 border border-gray-100 outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-500/20 focus:bg-white transition-all text-slate-950 font-bold text-sm cursor-pointer appearance-none">
+                  <option value="">-None-</option>
+                  <option>Godown</option>
+                  <option>Office Space</option>
+                  <option>Land</option>
+                  <option>Building</option>
+                  <option>Co-Working Space</option>
+                </select>
+              </div>
+
+              <div id="wiz_est_container" class="flex flex-col gap-2 relative hidden">
+                <label class="text-[10px] font-bold text-gray-500 uppercase tracking-wider">Estate Type</label>
+                <select id="wiz_est_type" class="w-full bg-gray-50 rounded-xl px-3 py-2.5 sm:px-4 sm:py-3 border border-gray-100 outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-500/20 focus:bg-white transition-all text-slate-950 font-bold text-sm cursor-pointer appearance-none">
+                  <option value="">-None-</option>
+                  <option>Agriculture land</option>
+                  <option>Resort</option>
+                  <option>Homestay</option>
+                  <option>Others</option>
+                </select>
+              </div>
+
+              
+              <!-- Internal Note -->
+              <div class="flex flex-col gap-2 relative md:col-span-2">
+                <label class="text-[10px] font-bold text-gray-500 uppercase tracking-wider">Internal Notes (Optional)</label>
+                <textarea id="wiz_notes" class="w-full bg-gray-50 rounded-xl px-3 py-2.5 sm:px-4 sm:py-3 border border-gray-100 outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-500/20 focus:bg-white transition-all text-slate-950 font-medium text-sm min-h-[80px]" placeholder="Add private notes, client details, or copy-paste dates here..."></textarea>
+              </div>
+  
+              <div class="flex flex-col gap-2 relative">
+                <label class="text-[10px] font-bold text-gray-500 uppercase tracking-wider">Property Status</label>
+                <select id="wiz_status" class="w-full bg-gray-50 rounded-xl px-3 py-2.5 sm:px-4 sm:py-3 border border-gray-100 outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-500/20 focus:bg-white transition-all text-slate-950 font-bold text-sm cursor-pointer appearance-none">
+                  <option value="">Select</option>
+                  <option>Ready to Move</option>
+                  <option>Under Construction</option>
+                  <option>New Launch</option>
+                  <option>Resale</option>
+                </select>
+              </div>
+
+              <div class="flex flex-col gap-2 relative">
+                <label class="text-[10px] font-bold text-gray-500 uppercase tracking-wider">Date of Completion</label>
+                <input type="date" id="wiz_date" class="w-full bg-gray-50 rounded-xl px-3 py-2.5 sm:px-4 sm:py-3 border border-gray-100 outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-500/20 focus:bg-white transition-all text-slate-950 font-bold text-sm cursor-text">
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- STEP 3: Media Uploads -->
+        <div id="wizardStep3" class="absolute inset-0 p-4 sm:p-6 md:p-8 transition-all duration-500 transform translate-x-full opacity-0 pointer-events-none overflow-y-auto custom-scrollbar">
+          <div class="bg-white rounded-3xl p-4 sm:p-6 md:p-8 border border-gray-100 shadow-sm max-w-4xl mx-auto">
+            <h3 class="text-lg font-bold text-slate-950 mb-6 flex items-center gap-2"><i data-lucide="image" class="w-5 h-5 text-red-500" aria-hidden="true"></i> Media Uploads</h3>
+            
+            <div class="flex flex-col md:flex-row gap-6 md:gap-8">
+              <!-- Featured Image Zone -->
+              <div class="w-full md:w-1/3 shrink-0">
+                <label class="text-[10px] font-bold text-gray-500 uppercase tracking-wider mb-3 block text-red-500">Featured Cover Image</label>
+                <label class="w-full border-2 border-dashed border-red-200 rounded-3xl bg-red-50/50 hover:bg-red-50 hover:border-red-400 transition-all cursor-pointer group flex flex-col items-center justify-center p-2 text-center h-[240px] relative overflow-hidden" id="featuredZone">
+                  <div id="featuredPlaceholder" class="flex flex-col items-center pointer-events-none p-4">
+                    <div class="w-14 h-14 rounded-full bg-white shadow-sm flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+                      <i data-lucide="image" class="w-6 h-6 text-red-500" aria-hidden="true"></i>
+                    </div>
+                    <h4 class="font-bold text-slate-950 text-sm mb-1">Upload Featured Image</h4>
+                    <p class="text-[10px] font-medium text-gray-500">1 Image Only (JPG, PNG)</p>
+                  </div>
+                  <img id="featuredPreview" class="absolute inset-0 w-full h-full object-cover hidden rounded-[22px]" src="" alt="Preview" loading="lazy">
+                  
+                  <div id="featuredRemove" class="absolute top-3 right-3 w-8 h-8 bg-white/90 backdrop-blur-md rounded-full flex items-center justify-center shadow-lg cursor-pointer hover:bg-red-50 hover:text-red-600 hidden z-10 transition-colors" onclick="removeFeatured(event)">
+                    <i data-lucide="x" class="w-4 h-4" aria-hidden="true"></i>
+                  </div>
+                  <input type="file" id="featuredInput" accept="image/*" class="hidden" onchange="handleFeatured(this)">
+                </label>
+              </div>
+
+              <!-- Property Gallery Zone -->
+              <div class="flex-1 flex flex-col">
+                <label class="text-[10px] font-bold text-gray-500 uppercase tracking-wider mb-3 block">Property Gallery</label>
+                <label class="w-full border-2 border-dashed border-gray-200 rounded-3xl bg-gray-50 hover:bg-gray-100 transition-all cursor-pointer group flex flex-col p-4 text-center min-h-[240px]" id="galleryZone">
+                  <div id="galleryPlaceholder" class="flex flex-col items-center justify-center h-full pointer-events-none p-4 mt-8">
+                    <div class="w-14 h-14 rounded-full bg-white shadow-sm flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+                      <i data-lucide="images" class="w-6 h-6 text-gray-500" aria-hidden="true"></i>
+                    </div>
+                    <h4 class="font-bold text-slate-950 text-sm mb-1">Upload Gallery Images</h4>
+                    <p class="text-[10px] font-medium text-gray-500">Multiple Images Allowed</p>
+                  </div>
+                  
+                  <!-- Grid for thumbnails -->
+                  <div id="galleryPreviewContainer" class="w-full grid grid-cols-3 sm:grid-cols-4 gap-3 hidden items-start content-start"></div>
+                  
+                  <input type="file" id="galleryInput" multiple accept="image/*" class="hidden" onchange="handleGallery(this)">
+                </label>
+              </div>
+            </div>
+          </div>
+
+          <!-- Advertising & Promotion -->
+          <div class="bg-white rounded-3xl p-4 sm:p-6 md:p-8 border border-gray-100 shadow-sm max-w-4xl mx-auto mt-6">
+            <h3 class="text-lg font-bold text-slate-950 mb-6 flex items-center gap-2"><i data-lucide="megaphone" class="w-5 h-5 text-red-500" aria-hidden="true"></i> Advertising & Promotion</h3>
+
+            <!-- Advertising Consent -->
+            <div class="flex items-start gap-3 mb-2">
+              <input type="checkbox" id="wiz_advertising_consent" class="mt-1 w-5 h-5 rounded border-gray-300 text-red-600 focus:ring-red-500 cursor-pointer" onchange="toggleAdPlatforms(this)">
+              <label for="wiz_advertising_consent" class="text-sm font-semibold text-slate-950 cursor-pointer">I agree to post this property for advertising purposes.</label>
+            </div>
+            <p class="text-[11px] text-gray-400 font-medium pl-8 mb-4">By checking this box, your consent (with date/time) is recorded against this property.</p>
+
+            <div id="adPlatformsContainer" class="hidden pl-8 mb-6 flex flex-col gap-3">
+              <p class="text-[10px] font-bold text-gray-500 uppercase tracking-wider">Advertising Platforms</p>
+              <label class="flex items-center gap-2 text-sm font-medium text-slate-800 cursor-pointer">
+                <input type="checkbox" id="wiz_ad_platform_social" value="Social Media" class="w-4 h-4 rounded border-gray-300 text-red-600 focus:ring-red-500"> Social Media
+              </label>
+              <label class="flex items-center gap-2 text-sm font-medium text-slate-800 cursor-pointer">
+                <input type="checkbox" id="wiz_ad_platform_r2s" value="R2S Website" class="w-4 h-4 rounded border-gray-300 text-red-600 focus:ring-red-500"> R2S Website
+              </label>
+              <label class="flex items-center gap-2 text-sm font-medium text-slate-800 cursor-pointer">
+                <input type="checkbox" id="wiz_ad_platform_other" value="Other" class="w-4 h-4 rounded border-gray-300 text-red-600 focus:ring-red-500" onchange="document.getElementById('wiz_ad_platform_other_name').classList.toggle('hidden', !this.checked)"> Other
+              </label>
+              <input type="text" id="wiz_ad_platform_other_name" placeholder="Enter platform name" class="hidden w-full bg-gray-50 rounded-xl px-4 py-3 border border-gray-100 outline-none focus:border-red-500 text-sm font-medium">
+            </div>
+
+            <!-- Paid Video Promotion -->
+            <div class="flex items-start gap-3 pt-4 border-t border-gray-100">
+              <input type="checkbox" id="wiz_video_promotion" class="mt-1 w-5 h-5 rounded border-gray-300 text-red-600 focus:ring-red-500 cursor-pointer">
+              <label for="wiz_video_promotion" class="text-sm font-semibold text-slate-950 cursor-pointer">I need video promotion for this property <span class="text-red-600 font-bold uppercase text-[11px] align-middle bg-red-50 px-2 py-0.5 rounded-full ml-1">Paid</span></label>
+            </div>
+          </div>
+        </div>
+
+      </div>
+      
+      <!-- Wizard Footer -->
+      <div class="p-4 md:p-6 md:px-8 border-t border-gray-100 bg-white shrink-0 rounded-b-[32px] flex items-center justify-between">
+        <button id="btnPrevStep" onclick="prevStep()" class="px-5 py-3 md:px-6 md:py-3 sm:py-3.5 rounded-xl font-bold text-gray-500 hover:bg-gray-50 transition-colors opacity-0 pointer-events-none flex items-center gap-2">
+          <i data-lucide="arrow-left" class="w-4 h-4" aria-hidden="true"></i> Back
+        </button>
+        <div class="flex gap-3 md:gap-4">
+          <button onclick="toggleAddProperty()" class="px-5 py-3 md:px-6 md:py-3 sm:py-3.5 rounded-xl font-bold text-gray-500 hover:bg-gray-50 transition-colors hidden sm:block">Cancel</button>
+          
+          <button id="btnNextStep" onclick="nextStep()" class="px-6 py-3 md:px-8 md:py-3.5 bg-slate-950 text-white rounded-xl font-bold hover:bg-slate-800 transition-colors shadow-lg flex items-center gap-2">
+            Next Step <i data-lucide="arrow-right" class="w-4 h-4" aria-hidden="true"></i>
+          </button>
+          
+          <button id="btnSubmitProperty" onclick="submitPropertyForm(event)" class="px-6 py-3 md:px-8 md:py-3.5 bg-[#dc2626] text-white rounded-xl font-bold hover:bg-blue-700 transition-colors shadow-lg hidden items-center gap-2">
+            <i data-lucide="check" class="w-4 h-4" aria-hidden="true"></i> Create
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  
+  <!-- Edit Profile Modal -->
+  <div id="editProfileModal" class="fixed inset-0 z-[3000] flex items-center justify-center p-4 sm:p-6 opacity-0 pointer-events-none transition-opacity duration-300">
+    <div class="absolute inset-0 bg-slate-950/60 backdrop-blur-sm" onclick="toggleEditProfile()"></div>
+    <div class="relative bg-white w-full max-w-4xl rounded-[32px] shadow-2xl flex flex-col h-[90vh] md:h-[90vh] transform scale-95 transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)]" id="editProfileContent">
+      
+      <!-- Header -->
+      <div class="p-4 sm:p-6 md:p-8 border-b border-gray-100 flex items-center justify-between shrink-0 bg-white rounded-t-[32px]">
+        <div>
+          <h2 class="text-2xl font-extrabold text-slate-950 flex items-center gap-3"><i data-lucide="user-cog" class="w-6 h-6 text-red-600" aria-hidden="true"></i> Update Profile</h2>
+          <p class="text-xs font-bold text-gray-500 mt-1 uppercase tracking-wider">Manage your personal and professional details</p>
+        </div>
+        <button onclick="toggleEditProfile()" class="w-10 h-10 rounded-full bg-gray-50 flex items-center justify-center hover:bg-red-50 hover:text-red-600 transition-colors">
+          <i data-lucide="x" class="w-5 h-5" aria-hidden="true"></i>
+        </button>
+      </div>
+      
+      <!-- Body -->
+      <div class="flex-1 overflow-y-auto custom-scrollbar bg-[#f8fafc] p-4 sm:p-6 md:p-8 flex flex-col gap-8 w-full">
+        
+        <!-- Contact Information -->
+        <div class="bg-white rounded-3xl p-4 sm:p-6 md:p-8 border border-gray-100 shadow-sm">
+          <div class="flex items-center gap-3 mb-6 pb-6 border-b border-gray-100">
+            <div class="w-12 h-12 rounded-full bg-red-50 flex items-center justify-center"><i data-lucide="user" class="w-6 h-6 text-red-500" aria-hidden="true"></i></div>
+            <div>
+              <h3 class="text-lg font-bold text-slate-950">Personal Details</h3>
+              <p class="text-[11px] font-bold text-gray-400 uppercase tracking-wider">Your name and contact numbers</p>
+            </div>
+          </div>
+          
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div class="flex flex-col gap-2 relative md:col-span-2">
+              <label class="text-[10px] font-bold text-gray-500 uppercase tracking-wider flex items-center justify-between">Full Name <span class="text-red-500">*</span></label>
+              <input type="text" id="profileEditName" value="Test User" class="w-full bg-gray-50 rounded-xl px-3 py-2.5 sm:px-4 sm:py-3 border border-gray-100 outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-500/20 focus:bg-white transition-all text-slate-950 font-bold text-sm">
+            </div>
+            
+            <div class="flex flex-col gap-2 relative">
+              <label class="text-[10px] font-bold text-gray-500 uppercase tracking-wider flex items-center justify-between">Phone Number <span class="text-red-500">*</span></label>
+              <div class="flex">
+                <div class="bg-gray-100 border border-gray-100 border-r-0 rounded-l-xl px-3 py-2.5 sm:px-4 sm:py-3 flex items-center gap-2 text-sm font-bold text-gray-500">
+                  🇮🇳 <span>+91</span>
+                </div>
+                <input type="tel" id="profileEditPhone" value="98765 43210" class="w-full bg-gray-50 rounded-r-xl px-3 py-2.5 sm:px-4 sm:py-3 border border-gray-100 outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-500/20 focus:bg-white transition-all text-slate-950 font-bold text-sm">
+              </div>
+            </div>
+
+            <div class="flex flex-col gap-2 relative">
+              <label class="text-[10px] font-bold text-gray-500 uppercase tracking-wider">WhatsApp</label>
+              <div class="flex">
+                <div class="bg-gray-100 border border-gray-100 border-r-0 rounded-l-xl px-3 py-2.5 sm:px-4 sm:py-3 flex items-center gap-2 text-sm font-bold text-gray-500">
+                  🇮🇳 <span>+91</span>
+                </div>
+                <input type="tel" placeholder="Same as phone?" class="w-full bg-gray-50 rounded-r-xl px-3 py-2.5 sm:px-4 sm:py-3 border border-gray-100 outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-500/20 focus:bg-white transition-all text-slate-950 font-bold text-sm">
+              </div>
+            </div>
+
+            <div class="flex flex-col gap-2 relative md:col-span-2">
+              <label class="text-[10px] font-bold text-gray-500 uppercase tracking-wider flex items-center justify-between">Email Address <span class="text-red-500">*</span></label>
+              <input type="email" id="profileEditEmail" value="tester@example.com" readonly class="w-full bg-gray-100 rounded-xl px-3 py-2.5 sm:px-4 sm:py-3 border border-gray-100 outline-none cursor-not-allowed text-gray-500 font-bold text-sm">
+            </div>
+          </div>
+        </div>
+
+        <!-- Professional Website -->
+        <div class="bg-white rounded-3xl p-4 sm:p-6 md:p-8 border border-gray-100 shadow-sm">
+          <div class="flex items-center gap-3 mb-6 pb-6 border-b border-gray-100">
+            <div class="w-12 h-12 rounded-full bg-indigo-50 flex items-center justify-center"><i data-lucide="globe" class="w-6 h-6 text-indigo-500" aria-hidden="true"></i></div>
+            <div>
+              <h3 class="text-lg font-bold text-slate-950">Professional Details</h3>
+              <p class="text-[11px] font-bold text-gray-400 uppercase tracking-wider">Website and affiliations</p>
+            </div>
+          </div>
+          
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div class="flex flex-col gap-2 relative">
+              <label class="text-[10px] font-bold text-gray-500 uppercase tracking-wider">Website / Profile URL</label>
+              <input type="url" placeholder="https://www.yoursite.com" class="w-full bg-gray-50 rounded-xl px-3 py-2.5 sm:px-4 sm:py-3 border border-gray-100 outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-500/20 focus:bg-white transition-all text-slate-950 font-bold text-sm">
+            </div>
+            <div class="flex flex-col gap-2 relative">
+              <label class="text-[10px] font-bold text-gray-500 uppercase tracking-wider">NAR Member ID</label>
+              <input type="text" placeholder="NAR-XXXXXXXX" class="w-full bg-gray-50 rounded-xl px-3 py-2.5 sm:px-4 sm:py-3 border border-gray-100 outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-500/20 focus:bg-white transition-all text-slate-950 font-bold text-sm">
+            </div>
+          </div>
+        </div>
+
+        <!-- Channel Partner / Builder Details -->
+        <div class="bg-white rounded-3xl p-4 sm:p-6 md:p-8 border border-gray-100 shadow-sm">
+          <div class="flex items-center gap-3 mb-6 pb-6 border-b border-gray-100">
+            <div class="w-12 h-12 rounded-full bg-amber-50 flex items-center justify-center"><i data-lucide="briefcase" class="w-6 h-6 text-amber-500" aria-hidden="true"></i></div>
+            <div>
+              <h3 class="text-lg font-bold text-slate-950">Business Credentials</h3>
+              <p class="text-[11px] font-bold text-gray-400 uppercase tracking-wider">RERA and Builder Info</p>
+            </div>
+          </div>
+          
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div class="flex flex-col gap-2 relative">
+              <label class="text-[10px] font-bold text-gray-500 uppercase tracking-wider">RERA Registered</label>
+              <select class="w-full bg-gray-50 rounded-xl px-3 py-2.5 sm:px-4 sm:py-3 border border-gray-100 outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-500/20 focus:bg-white transition-all text-slate-950 font-bold text-sm cursor-pointer appearance-none">
+                <option value="">— Select —</option>
+                <option>Yes</option>
+                <option>No</option>
+              </select>
+            </div>
+            <div class="flex flex-col gap-2 relative">
+              <label class="text-[10px] font-bold text-gray-500 uppercase tracking-wider">RERA Register Number</label>
+              <input type="text" placeholder="KRERA-XXXX-00000" class="w-full bg-gray-50 rounded-xl px-3 py-2.5 sm:px-4 sm:py-3 border border-gray-100 outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-500/20 focus:bg-white transition-all text-slate-950 font-bold text-sm">
+            </div>
+            <div class="flex flex-col gap-2 relative">
+              <label class="text-[10px] font-bold text-gray-500 uppercase tracking-wider">Builder Name</label>
+              <input type="text" value="Rajesh Builders" class="w-full bg-gray-50 rounded-xl px-3 py-2.5 sm:px-4 sm:py-3 border border-gray-100 outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-500/20 focus:bg-white transition-all text-slate-950 font-bold text-sm">
+            </div>
+            <div class="flex flex-col gap-2 relative">
+              <label class="text-[10px] font-bold text-gray-500 uppercase tracking-wider">Available Number of Flats</label>
+              <input type="number" placeholder="e.g. 48" class="w-full bg-gray-50 rounded-xl px-3 py-2.5 sm:px-4 sm:py-3 border border-gray-100 outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-500/20 focus:bg-white transition-all text-slate-950 font-bold text-sm">
+            </div>
+            <div class="flex flex-col gap-2 relative md:col-span-2">
+              <label class="text-[10px] font-bold text-gray-500 uppercase tracking-wider">Project Name</label>
+              <textarea placeholder="List your current / upcoming project names..." class="w-full bg-gray-50 rounded-xl px-3 py-2.5 sm:px-4 sm:py-3 border border-gray-100 outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-500/20 focus:bg-white transition-all text-slate-950 font-bold text-sm min-h-[80px] custom-scrollbar"></textarea>
+            </div>
+          </div>
+        </div>
+
+        <!-- Location Details -->
+        <div class="bg-white rounded-3xl p-4 sm:p-6 md:p-8 border border-gray-100 shadow-sm">
+          <div class="flex items-center gap-3 mb-6 pb-6 border-b border-gray-100">
+            <div class="w-12 h-12 rounded-full bg-emerald-50 flex items-center justify-center"><i data-lucide="map-pin" class="w-6 h-6 text-emerald-500" aria-hidden="true"></i></div>
+            <div>
+              <h3 class="text-lg font-bold text-slate-950">Location Details</h3>
+              <p class="text-[11px] font-bold text-gray-400 uppercase tracking-wider">Address and operating area</p>
+            </div>
+          </div>
+          
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div class="flex flex-col gap-2 relative md:col-span-2">
+              <label class="text-[10px] font-bold text-gray-500 uppercase tracking-wider">Full Address</label>
+              <textarea placeholder="House / Flat No, Street, Area..." class="w-full bg-gray-50 rounded-xl px-3 py-2.5 sm:px-4 sm:py-3 border border-gray-100 outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-500/20 focus:bg-white transition-all text-slate-950 font-bold text-sm min-h-[80px] custom-scrollbar"></textarea>
+            </div>
+            <div class="flex flex-col gap-2 relative">
+              <label class="text-[10px] font-bold text-gray-500 uppercase tracking-wider">City</label>
+              <input type="text" placeholder="e.g. Kozhikode" class="w-full bg-gray-50 rounded-xl px-3 py-2.5 sm:px-4 sm:py-3 border border-gray-100 outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-500/20 focus:bg-white transition-all text-slate-950 font-bold text-sm">
+            </div>
+            <div class="flex flex-col gap-2 relative">
+              <label class="text-[10px] font-bold text-gray-500 uppercase tracking-wider">State</label>
+              <select class="w-full bg-gray-50 rounded-xl px-3 py-2.5 sm:px-4 sm:py-3 border border-gray-100 outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-500/20 focus:bg-white transition-all text-slate-950 font-bold text-sm cursor-pointer appearance-none">
+                <option value="">Select State</option>
+                <option>Kerala</option>
+                <option>Tamil Nadu</option>
+                <option>Karnataka</option>
+                <option>Maharashtra</option>
+                <option>Other</option>
+              </select>
+            </div>
+            <div class="flex flex-col gap-2 relative">
+              <label class="text-[10px] font-bold text-gray-500 uppercase tracking-wider">PIN Code</label>
+              <input type="text" placeholder="673001" maxlength="6" class="w-full bg-gray-50 rounded-xl px-3 py-2.5 sm:px-4 sm:py-3 border border-gray-100 outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-500/20 focus:bg-white transition-all text-slate-950 font-bold text-sm">
+            </div>
+            <div class="flex flex-col gap-2 relative">
+              <label class="text-[10px] font-bold text-gray-500 uppercase tracking-wider">Area of Operation</label>
+              <input type="text" placeholder="e.g. North Kerala" class="w-full bg-gray-50 rounded-xl px-3 py-2.5 sm:px-4 sm:py-3 border border-gray-100 outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-500/20 focus:bg-white transition-all text-slate-950 font-bold text-sm">
+            </div>
+          </div>
+        </div>
+
+      </div>
+      
+      <!-- Footer -->
+      <div class="p-4 sm:p-6 md:p-8 border-t border-gray-100 bg-white shrink-0 rounded-b-[32px] flex items-center justify-between">
+        <button onclick="toggleEditProfile()" class="px-6 py-3 sm:py-3.5 rounded-xl font-bold text-gray-500 hover:bg-gray-50 transition-colors">Cancel</button>
+        <button id="btnSaveProfile" onclick="saveProfile()" class="px-8 py-3.5 bg-slate-950 text-white rounded-xl font-bold hover:bg-slate-800 transition-colors shadow-lg flex items-center gap-2">
+          <i data-lucide="save" class="w-4 h-4" aria-hidden="true"></i> Save Changes
+        </button>
+      </div>
+    </div>
+  </div>
+  <!-- Terms & Conditions Popup Modal -->
+  <div id="tcModal" class="fixed inset-0 z-[3000] flex items-center justify-center p-4 sm:p-6 opacity-0 pointer-events-none transition-opacity duration-300">
+    <div class="absolute inset-0 bg-slate-950/60 backdrop-blur-sm" onclick="toggleTCModal()"></div>
+    <div class="relative bg-white w-full max-w-2xl rounded-[32px] shadow-2xl flex flex-col overflow-hidden transform scale-95 transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)]" id="tcModalContent">
+      <div class="p-6 border-b border-gray-100 flex items-center justify-between shrink-0 bg-white">
+        <h2 class="text-2xl font-extrabold text-slate-950 flex items-center gap-3"><i data-lucide="file-text" class="w-6 h-6 text-red-600" aria-hidden="true"></i> Terms & Conditions</h2>
+        <button onclick="toggleTCModal()" class="w-10 h-10 rounded-full bg-gray-50 flex items-center justify-center hover:bg-red-50 hover:text-red-600 transition-colors">
+          <i data-lucide="x" class="w-5 h-5" aria-hidden="true"></i>
+        </button>
+      </div>
+      <div class="p-6 overflow-y-auto max-h-[60vh] custom-scrollbar text-sm font-medium text-slate-700 leading-relaxed space-y-4">
+        <p>Welcome to R2s Realtors Network. By accessing our platform, you agree to comply with our professional guidelines.</p>
+        <h4 class="font-bold text-slate-950 text-lg mt-4 mb-2">1. Global Marketing & Representation</h4>
+        <ul class="list-disc pl-5 space-y-2">
+          <li><strong>Global Visibility:</strong> Your properties will be promoted worldwide through our extensive channel network.</li>
+          <li><strong>Lead Handling:</strong> All inquiries generated through R2s platforms must be routed exclusively through our system.</li>
+        </ul>
+      </div>
+      <div class="p-6 border-t border-gray-100 bg-white shrink-0">
+        <button onclick="toggleTCModal()" class="w-full bg-[#dc2626] text-white py-3 sm:py-3.5 rounded-xl font-bold hover:bg-blue-700 transition-colors shadow-lg">I Understand</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    
+    function toggleNotifications() {
+      const panel = document.getElementById('notificationsPanel');
+      const overlay = document.getElementById('notificationsOverlay');
+      
+      if (panel.classList.contains('translate-x-full')) {
+        panel.classList.remove('translate-x-full');
+        panel.classList.add('translate-x-0');
+        overlay.classList.remove('opacity-0', 'pointer-events-none');
+        overlay.classList.add('opacity-100');
+      } else {
+        panel.classList.add('translate-x-full');
+        panel.classList.remove('translate-x-0');
+        overlay.classList.add('opacity-0', 'pointer-events-none');
+        overlay.classList.remove('opacity-100');
+      }
+    }
+
+    
+    function toggleEditProfile() {
+      const modal = document.getElementById('editProfileModal');
+      const content = document.getElementById('editProfileContent');
+      if (modal.classList.contains('opacity-0')) {
+        modal.classList.remove('opacity-0', 'pointer-events-none');
+        setTimeout(() => content.classList.remove('scale-95'), 10);
+      } else {
+        content.classList.add('scale-95');
+        setTimeout(() => modal.classList.add('opacity-0', 'pointer-events-none'), 300);
+      }
+    }
+
+    
+    function toggleTCModal() {
+      const modal = document.getElementById('tcModal');
+      const content = document.getElementById('tcModalContent');
+      if (modal.classList.contains('opacity-0')) {
+        modal.classList.remove('opacity-0', 'pointer-events-none');
+        setTimeout(() => content.classList.remove('scale-95'), 10);
+      } else {
+        content.classList.add('scale-95');
+        setTimeout(() => modal.classList.add('opacity-0', 'pointer-events-none'), 300);
+      }
+    }
+
+    function openFullscreenModal() {
+      const modal = document.getElementById('fullscreenModal');
+      modal.classList.remove('translate-y-[200%]');
+    }
+
+    function closeFullscreenModal() {
+      const modal = document.getElementById('fullscreenModal');
+      modal.classList.add('translate-y-[200%]');
+    }
+
+    
+    function toggleRightSidebar() {
+      const sidebar = document.getElementById('rightSidebar');
+      const overlay = document.getElementById('mobileSidebarOverlay');
+      
+      if (sidebar.classList.contains('translate-x-full')) {
+        sidebar.classList.remove('translate-x-full');
+        sidebar.classList.add('translate-x-0');
+        overlay.classList.remove('opacity-0', 'pointer-events-none');
+        overlay.classList.add('opacity-100');
+      } else {
+        sidebar.classList.add('translate-x-full');
+        sidebar.classList.remove('translate-x-0');
+        overlay.classList.add('opacity-0', 'pointer-events-none');
+        overlay.classList.remove('opacity-100');
+      }
+    }
+
+
+    
+    
+    // Cache the CRM location list on the window so opening the modal never
+    // has to wait on a fresh /api/get-locations round trip — we kick this
+    // off as soon as the dashboard loads (see DOMContentLoaded below) and
+    // just reuse whatever came back by the time the user opens the form.
+    let locationsLoadPromise = null;
+    function loadLocationsDropdown() {
+      if (!locationsLoadPromise) {
+        locationsLoadPromise = fetch('/api/get-locations')
+          .then((res) => res.json())
+          .then((result) => (result.success ? result.locations : []))
+          .catch((err) => {
+            console.error('Failed to load locations from CRM:', err);
+            return [];
+          });
+      }
+      locationsLoadPromise.then((locations) => {
+        const select = document.getElementById('wiz_location');
+        if (!select || select.dataset.populated) return;
+        for (const loc of locations) {
+          const option = document.createElement('option');
+          option.value = loc.id;
+          option.textContent = loc.district ? `${loc.name}, ${loc.district}` : loc.name;
+          select.appendChild(option);
+        }
+        select.dataset.populated = 'true';
+      });
+    }
+
+    function toggleAddProperty() {
+      const modal = document.getElementById('addPropertyModal');
+      const content = document.getElementById('addPropertyContent');
+      if (modal.classList.contains('opacity-0')) {
+        // Open
+        if (typeof goToStep === 'function') goToStep(1); // Reset to step 1
+        loadLocationsDropdown();
+        modal.classList.remove('opacity-0', 'pointer-events-none');
+        setTimeout(() => content.classList.remove('scale-95'), 10);
+      } else {
+        // Close
+        content.classList.add('scale-95');
+        setTimeout(() => modal.classList.add('opacity-0', 'pointer-events-none'), 300);
+      }
+    }
+
+    
+    let currentStep = 1;
+    
+    function updateStepperUI() {
+      const pLine = document.getElementById('progressLine');
+      
+      // Update Line Width
+      if(currentStep === 1) pLine.style.width = '0%';
+      if(currentStep === 2) pLine.style.width = '50%';
+      if(currentStep === 3) pLine.style.width = '100%';
+
+      for(let i=1; i<=3; i++) {
+        const dot = document.getElementById('stepDot'+i);
+        const text = document.getElementById('stepText'+i);
+        
+        if (i < currentStep) {
+          // Completed
+          dot.className = "w-8 h-8 rounded-full bg-blue-600 text-white hover:-translate-y-0.5 hover:shadow-lg font-bold text-sm flex items-center justify-center shadow-md transition-colors group-hover:scale-110";
+          dot.innerHTML = '<i data-lucide="check" class="w-4 h-4" aria-hidden="true"></i>';
+          text.className = "text-[10px] font-bold text-red-600 uppercase tracking-wider transition-colors";
+        } else if (i === currentStep) {
+          // Current
+          dot.className = "w-8 h-8 rounded-full bg-blue-600 text-white hover:-translate-y-0.5 hover:shadow-lg font-bold text-sm flex items-center justify-center shadow-md transition-colors group-hover:scale-110";
+          dot.innerHTML = i;
+          text.className = "text-[10px] font-bold text-red-600 uppercase tracking-wider transition-colors";
+        } else {
+          // Future
+          dot.className = "w-8 h-8 rounded-full bg-white border-2 border-gray-200 text-gray-400 font-bold text-sm flex items-center justify-center transition-colors group-hover:scale-110";
+          dot.innerHTML = i;
+          text.className = "text-[10px] font-bold text-gray-400 uppercase tracking-wider transition-colors";
+        }
+      }
+      
+      if(window.lucide) lucide.createIcons();
+    }
+
+    function goToStep(step) {
+      if(step < 1 || step > 3) return;
+      
+      const currentEl = document.getElementById('wizardStep' + currentStep);
+      const targetEl = document.getElementById('wizardStep' + step);
+      
+      // Determine direction for animation
+      const movingForward = step > currentStep;
+      
+      // Hide current
+      currentEl.classList.remove('translate-x-0', 'opacity-100');
+      currentEl.classList.add(movingForward ? '-translate-x-full' : 'translate-x-full', 'opacity-0', 'pointer-events-none');
+      
+      // Show target
+      targetEl.classList.remove('translate-x-full', '-translate-x-full', 'opacity-0', 'pointer-events-none');
+      targetEl.classList.add('translate-x-0', 'opacity-100');
+      
+      currentStep = step;
+      updateStepperUI();
+      
+      // Update Footer Buttons
+      const btnPrev = document.getElementById('btnPrevStep');
+      const btnNext = document.getElementById('btnNextStep');
+      const btnSubmit = document.getElementById('btnSubmitProperty');
+      
+      if (currentStep === 1) {
+        btnPrev.classList.add('opacity-0', 'pointer-events-none');
+        btnNext.classList.remove('hidden');
+        btnNext.classList.add('flex');
+        btnSubmit.classList.add('hidden');
+        btnSubmit.classList.remove('flex');
+      } else if (currentStep === 2) {
+        btnPrev.classList.remove('opacity-0', 'pointer-events-none');
+        btnNext.classList.remove('hidden');
+        btnNext.classList.add('flex');
+        btnSubmit.classList.add('hidden');
+        btnSubmit.classList.remove('flex');
+      } else if (currentStep === 3) {
+        btnPrev.classList.remove('opacity-0', 'pointer-events-none');
+        btnNext.classList.add('hidden');
+        btnNext.classList.remove('flex');
+        btnSubmit.classList.remove('hidden');
+        btnSubmit.classList.add('flex');
+      }
+    }
+    
+    function nextStep() {
+      if (currentStep < 3) goToStep(currentStep + 1);
+    }
+    
+    function prevStep() {
+      if (currentStep > 1) goToStep(currentStep - 1);
+    }
+
+    // --- Image Upload Handlers ---
+    function handleFeatured(input) {
+      if (input.files && input.files[0]) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+          const preview = document.getElementById('featuredPreview');
+          const placeholder = document.getElementById('featuredPlaceholder');
+          const removeBtn = document.getElementById('featuredRemove');
+          const zone = document.getElementById('featuredZone');
+          
+          preview.src = e.target.result;
+          preview.classList.remove('hidden');
+          placeholder.classList.add('hidden');
+          removeBtn.classList.remove('hidden');
+          zone.classList.remove('border-dashed', 'border-red-200');
+          zone.classList.add('border-solid', 'border-red-600', 'p-1');
+        }
+        reader.readAsDataURL(input.files[0]);
+      }
+    }
+
+    function removeFeatured(e) {
+      e.stopPropagation();
+      e.preventDefault();
+      document.getElementById('featuredInput').value = '';
+      document.getElementById('featuredPreview').classList.add('hidden');
+      document.getElementById('featuredPreview').src = '';
+      document.getElementById('featuredPlaceholder').classList.remove('hidden');
+      document.getElementById('featuredRemove').classList.add('hidden');
+      const zone = document.getElementById('featuredZone');
+      zone.classList.add('border-dashed', 'border-red-200');
+      zone.classList.remove('border-solid', 'border-red-600', 'p-1');
+    }
+
+    function handleGallery(input) {
+      const container = document.getElementById('galleryPreviewContainer');
+      const placeholder = document.getElementById('galleryPlaceholder');
+      const zone = document.getElementById('galleryZone');
+      
+      if (input.files && input.files.length > 0) {
+        placeholder.classList.add('hidden');
+        container.classList.remove('hidden');
+        zone.classList.remove('justify-center');
+        
+        // Loop through all selected files
+        Array.from(input.files).forEach(file => {
+          if (!file.type.match('image.*')) return;
+          
+          const reader = new FileReader();
+          reader.onload = function(e) {
+            const div = document.createElement('div');
+            div.className = "w-full aspect-square rounded-xl overflow-hidden relative shadow-sm border border-gray-200 group";
+            div.innerHTML = `
+              <img src="${e.target.result}" class="w-full h-full object-cover" loading="lazy">
+              <div class="absolute inset-0 bg-slate-950/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                <i data-lucide="trash-2" class="w-5 h-5 text-white" aria-hidden="true"></i>
+              </div>
+            `;
+            
+            // Add click-to-remove logic to the thumb
+            div.onclick = (ev) => {
+              ev.preventDefault();
+              ev.stopPropagation();
+              div.remove();
+              if(container.children.length === 0) {
+                placeholder.classList.remove('hidden');
+                container.classList.add('hidden');
+                zone.classList.add('justify-center');
+                input.value = '';
+              }
+            };
+            
+            container.appendChild(div);
+            if(window.lucide) lucide.createIcons();
+          }
+          reader.readAsDataURL(file);
+        });
+      }
+    }
+
+    
+    function submitProperty() {
+      if(!validateForm('wizardStep1')) {
+        showPremiumAlert('error');
+        return;
+      }
+      // Close the Add Property Modal
+      toggleAddProperty();
+      
+      // Show the Success Modal after a slight delay
+      setTimeout(() => {
+        const modal = document.getElementById('successModal');
+        const content = document.getElementById('successContent');
+        modal.classList.remove('opacity-0', 'pointer-events-none');
+        setTimeout(() => content.classList.remove('scale-95'), 10);
+      }, 300); 
+    }
+
+    function closeSuccessModal() {
+      const modal = document.getElementById('successModal');
+      const content = document.getElementById('successContent');
+      content.classList.add('scale-95');
+      setTimeout(() => modal.classList.add('opacity-0', 'pointer-events-none'), 300);
+    }
+
+    
+    function filterProperties(status, btnElement) {
+      // 1. Update active state of sidebar buttons
+      const buttons = document.querySelectorAll('.filter-btn');
+      buttons.forEach(btn => {
+        // Reset classes
+        btn.classList.remove('bg-red-50', 'text-red-600');
+        btn.classList.add('hover:bg-gray-50', 'text-slate-700');
+        
+        // Find inner icon container and reset
+        const iconDiv = btn.querySelector('div');
+        iconDiv.classList.remove('border-red-200');
+        iconDiv.classList.add('border-gray-200');
+        
+        const icon = btn.querySelector('i');
+        if(icon.getAttribute('data-lucide') === 'list') {
+            icon.classList.remove('text-red-500');
+            icon.classList.add('text-slate-500');
+        }
+      });
+      
+      // Set active classes on clicked button
+      btnElement.classList.remove('hover:bg-gray-50', 'text-slate-700');
+      btnElement.classList.add('bg-red-50', 'text-red-600');
+      
+      const activeIconDiv = btnElement.querySelector('div');
+      activeIconDiv.classList.remove('border-gray-200');
+      activeIconDiv.classList.add('border-red-200');
+      
+      const activeIcon = btnElement.querySelector('i');
+      if(activeIcon.getAttribute('data-lucide') === 'list') {
+          activeIcon.classList.remove('text-slate-500');
+          activeIcon.classList.add('text-red-500');
+      }
+
+      // 2. Filter the properties
+      const properties = document.querySelectorAll('div[data-prop-card="true"]');
+      properties.forEach(prop => {
+        if (status === 'all') {
+          prop.style.display = 'flex';
+        } else {
+          if (prop.getAttribute('data-status') === status) {
+            prop.style.display = 'flex';
+          } else {
+            prop.style.display = 'none';
+          }
+        }
+      });
+    }
+
+    function saveProfile() {
+      const btn = document.getElementById('btnSaveProfile');
+      const originalHtml = btn.innerHTML;
+      
+      // Loading state
+      btn.innerHTML = '<i data-lucide="loader-2" class="w-4 h-4 animate-spin" aria-hidden="true"></i> Saving...';
+      if(window.lucide) lucide.createIcons();
+      
+      // Simulate save
+      setTimeout(() => {
+        btn.classList.remove('bg-slate-950', 'hover:bg-slate-800');
+        btn.classList.add('bg-green-500', 'hover:bg-green-600');
+        btn.innerHTML = '<i data-lucide="check" class="w-4 h-4" aria-hidden="true"></i> Saved!';
+        if(window.lucide) lucide.createIcons();
+        
+        // Close modal and reset button after delay
+        setTimeout(() => {
+          toggleEditProfile();
+          setTimeout(() => {
+            btn.classList.remove('bg-green-500', 'hover:bg-green-600');
+            btn.classList.add('bg-slate-950', 'hover:bg-slate-800');
+            btn.innerHTML = originalHtml;
+            if(window.lucide) lucide.createIcons();
+          }, 500);
+        }, 1500);
+      }, 1000);
+    }
+
+    
+    function editPropertyAction() {
+      // 1. Close the fullscreen modal
+      closeFullscreenModal();
+      
+      // 2. Populate the wizard fields with mock "current saved details"
+      document.getElementById('wiz_prop_name').value = 'Marina One';
+      document.getElementById('wiz_service_type').value = 'Sale';
+      document.getElementById('wiz_price').value = '46500000';
+      document.getElementById('wiz_unit').value = '2550 Sq Ft';
+      document.getElementById('wiz_floors').value = '14';
+      
+      document.getElementById('wiz_kind').value = 'Residential';
+      document.getElementById('wiz_res_type').value = 'Apartment';
+      document.getElementById('wiz_status').value = 'Ready to Move';
+      document.getElementById('wiz_date').value = '2025-12-01';
+      
+      // Update header text to reflect editing mode
+      const headerTitle = document.querySelector('#addPropertyContent h2');
+      if (headerTitle) {
+         headerTitle.innerHTML = '<i data-lucide="edit" class="w-6 h-6 text-red-600" aria-hidden="true"></i> Edit Property';
+         if(window.lucide) lucide.createIcons();
+      }
+
+      // 3. Open the Add/Edit Property wizard after a slight delay for the closing animation
+      setTimeout(() => {
+        toggleAddProperty();
+      }, 300);
+    }
+
+    
+    let toastTimeout;
+    function showStatusToast() {
+      const toast = document.getElementById('simpleToast');
+      toast.classList.remove('-translate-y-8', 'opacity-0', 'pointer-events-none');
+      toast.classList.add('translate-y-0', 'opacity-100');
+      
+      clearTimeout(toastTimeout);
+      toastTimeout = setTimeout(() => {
+        toast.classList.remove('translate-y-0', 'opacity-100');
+        toast.classList.add('-translate-y-8', 'opacity-0', 'pointer-events-none');
+      }, 3000);
+    }
+
+    function requestDeleteProperty() {
+      const modal = document.getElementById('deleteModal');
+      const content = document.getElementById('deleteContent');
+      modal.classList.remove('opacity-0', 'pointer-events-none');
+      setTimeout(() => content.classList.remove('scale-95'), 10);
+    }
+
+    function cancelDelete() {
+      const modal = document.getElementById('deleteModal');
+      const content = document.getElementById('deleteContent');
+      content.classList.add('scale-95');
+      setTimeout(() => modal.classList.add('opacity-0', 'pointer-events-none'), 300);
+    }
+
+    function confirmDelete() {
+      const btn = document.getElementById('btnConfirmDelete');
+      btn.innerHTML = '<i data-lucide="loader-2" class="w-4 h-4 animate-spin" aria-hidden="true"></i>';
+      if(window.lucide) lucide.createIcons();
+      
+      setTimeout(() => {
+        cancelDelete();
+        setTimeout(() => {
+            closeFullscreenModal();
+            // Reset button for next time
+            btn.innerHTML = 'Delete';
+            
+            // Show toast
+            setTimeout(() => {
+                document.getElementById('toastMsg').innerText = 'Property Deleted';
+                showStatusToast();
+                setTimeout(() => {
+                   document.getElementById('toastMsg').innerText = 'Status Updated';
+                }, 3000);
+            }, 300);
+        }, 300);
+      }, 1000);
+    }
+
+    
+    // Form Validation logic
+    function validateForm(containerId) {
+        const container = document.getElementById(containerId);
+        if(!container) return true;
+        
+        let isValid = true;
+        const requiredInputs = container.querySelectorAll('input[required], select[required]');
+        
+        requiredInputs.forEach(input => {
+            if (!input.value.trim()) {
+                input.classList.add('border-red-500', 'bg-red-50');
+                isValid = false;
+            } else {
+                input.classList.remove('border-red-500', 'bg-red-50');
+            }
+        });
+        
+        return isValid;
+    }
+
+    // Global ESC key listener for Modals
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') {
+            const openModals = [
+                document.getElementById('addPropertyModal'),
+                document.getElementById('editProfileModal'),
+                document.getElementById('tcModal'),
+                document.getElementById('deleteModal'),
+                document.getElementById('fullscreenModal')
+            ];
+            
+            openModals.forEach(modal => {
+                if (modal && !modal.classList.contains('opacity-0') && !modal.classList.contains('translate-y-[200%]')) {
+                    // Trigger the respective close functions based on ID
+                    if(modal.id === 'addPropertyModal') toggleAddProperty();
+                    else if(modal.id === 'editProfileModal') toggleEditProfile();
+                    else if(modal.id === 'tcModal') toggleTCModal();
+                    else if(modal.id === 'deleteModal') cancelDelete();
+                    else if(modal.id === 'fullscreenModal') closeFullscreenModal();
+                }
+            });
+        }
+    });
+
+    if (typeof lucide !== 'undefined') {
+       lucide.createIcons();
+    }
+  </script>
+
+  <style>
+    /* Grid View Overrides */
+    .grid-view {
+      display: grid !important;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 1.5rem;
+    }
+    
+    .grid-view .property-card {
+      flex-direction: column !important;
+    }
+    
+    .grid-view .property-card > .rounded-2xl.overflow-hidden {
+      width: 100% !important;
+      height: 250px !important;
+    }
+    
+    .grid-view .property-card .price-section {
+      width: 100% !important;
+      border-left: none !important;
+      border-top: 1px solid #f3f4f6 !important;
+      align-items: flex-start !important;
+      text-align: left !important;
+      padding-top: 1rem !important;
+      padding-right: 0 !important;
+    }
+    
+    .grid-view .property-card .price-section > div {
+      margin-left: 0 !important;
+      margin-bottom: 0.5rem !important;
+    }
+    
+    @media (max-width: 1279px) {
+      .grid-view {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+
+  <script>
+    function setGridView() {
+      const container = document.getElementById('propertyListContainer');
+      const btnGrid = document.getElementById('btnGrid');
+      const btnList = document.getElementById('btnList');
+      
+      container.classList.add('grid-view');
+      container.classList.remove('flex', 'flex-col');
+      
+      btnGrid.classList.add('bg-gray-100', 'text-slate-950');
+      btnGrid.classList.remove('text-gray-400');
+      
+      btnList.classList.remove('bg-gray-100', 'text-slate-950');
+      btnList.classList.add('text-gray-400');
+    }
+
+    function setListView() {
+      const container = document.getElementById('propertyListContainer');
+      const btnGrid = document.getElementById('btnGrid');
+      const btnList = document.getElementById('btnList');
+      
+      container.classList.remove('grid-view');
+      container.classList.add('flex', 'flex-col');
+      
+      btnList.classList.add('bg-gray-100', 'text-slate-950');
+      btnList.classList.remove('text-gray-400');
+      
+      btnGrid.classList.remove('bg-gray-100', 'text-slate-950');
+      btnGrid.classList.add('text-gray-400');
+    }
+  </script>
+
+
+  <!-- Success Modal -->
+  <div id="successModal" class="fixed inset-0 z-[4000] flex items-center justify-center p-4 opacity-0 pointer-events-none transition-opacity duration-300">
+    <div class="absolute inset-0 bg-slate-950/40 backdrop-blur-sm" onclick="closeSuccessModal()"></div>
+    <div class="relative bg-white p-8 md:p-10 rounded-[32px] shadow-2xl flex flex-col items-center text-center max-w-sm w-full transform scale-95 transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)]" id="successContent">
+      <div class="w-20 h-20 bg-green-50 rounded-full flex items-center justify-center mb-6 relative">
+        <div class="absolute inset-0 bg-green-400 rounded-full animate-ping opacity-20"></div>
+        <i data-lucide="check-circle-2" class="w-10 h-10 text-green-500 relative z-10" aria-hidden="true"></i>
+      </div>
+      <h3 class="text-2xl font-extrabold text-slate-950 mb-2">Success!</h3>
+      <p class="text-sm font-medium text-gray-500 mb-8">Your property has been successfully created and listed on the network.</p>
+      <button onclick="closeSuccessModal()" class="w-full py-3.5 bg-slate-950 text-white rounded-xl font-bold hover:bg-slate-800 transition-colors shadow-lg">
+        Done
+      </button>
+    </div>
+  </div>
+
+
+  <!-- Simple Toast Notification -->
+  <div id="simpleToast" class="fixed top-8 left-1/2 -translate-x-1/2 z-[6000] bg-slate-950 text-white px-6 py-3 rounded-full font-bold text-sm shadow-2xl flex items-center gap-2 transform -translate-y-8 opacity-0 pointer-events-none transition-all duration-300">
+    <i data-lucide="check-circle" class="w-4 h-4 text-emerald-400" aria-hidden="true"></i> <span id="toastMsg">Status Updated</span>
+  </div>
+
+  <!-- Delete Confirmation Modal -->
+  <div id="deleteModal" class="fixed inset-0 z-[5000] flex items-center justify-center p-4 opacity-0 pointer-events-none transition-opacity duration-300">
+    <div class="absolute inset-0 bg-slate-950/60 backdrop-blur-sm" onclick="cancelDelete()"></div>
+    <div class="relative bg-white p-8 rounded-[32px] shadow-2xl flex flex-col items-center text-center max-w-sm w-full transform scale-95 transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)]" id="deleteContent">
+      <div class="w-20 h-20 bg-red-50 rounded-full flex items-center justify-center mb-6">
+        <i data-lucide="alert-triangle" class="w-10 h-10 text-red-500" aria-hidden="true"></i>
+      </div>
+      <h3 class="text-2xl font-extrabold text-slate-950 mb-2">Delete Property?</h3>
+      <p class="text-sm font-medium text-gray-500 mb-8">Are you sure you want to delete this property? This action cannot be undone.</p>
+      
+      <div class="flex gap-4 w-full">
+        <button onclick="cancelDelete()" class="flex-1 py-3.5 bg-gray-100 text-slate-700 rounded-xl font-bold hover:bg-gray-200 transition-colors">
+          Cancel
+        </button>
+        <button onclick="confirmDelete()" id="btnConfirmDelete" class="flex-1 py-3.5 bg-blue-600 text-white hover:-translate-y-0.5 hover:shadow-lg rounded-xl font-bold hover:bg-blue-700 transition-colors shadow-lg flex items-center justify-center">
+          Delete
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <script src="main.js"></script>
+
+  <!-- PWA Service Worker Registration -->
+  <script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('/sw.js', { updateViaCache: 'none' }).then(registration => {
+          console.log('SW registered: ', registration.scope);
+          
+          // Force an immediate update check
+          registration.update();
+          
+          // Listen for the new Service Worker taking control
+          let refreshing = false;
+          navigator.serviceWorker.addEventListener('controllerchange', () => {
+            if (!refreshing) {
+              refreshing = true;
+              window.location.reload();
+            }
+          });
+        }).catch(err => {
+          console.log('SW registration failed: ', err);
+        });
+      });
+    }
+  </script>
+
+
+<!-- PWA Install Banner -->
+<div id="pwaInstallBanner" class="fixed bottom-0 left-0 w-full bg-blue-600 border-t border-blue-500/30 shadow-[0_-10px_40px_rgba(37,99,235,0.25)] p-4 md:p-6 z-[1000] transform translate-y-[200%] transition-transform duration-700 flex items-center justify-between gap-4 rounded-t-3xl md:rounded-none md:max-w-md md:left-1/2 md:-translate-x-1/2 md:bottom-6 md:border md:shadow-2xl md:rounded-2xl">
+
+    <div class="flex items-center gap-3 md:gap-4">
+      <div class="w-12 h-12 md:w-14 md:h-14 bg-white/95 rounded-xl flex items-center justify-center p-1.5 border border-white/20 shrink-0 shadow-sm">
+        <img src="/LOGO.png" alt="R2s App" class="w-full h-full object-contain">
+      </div>
+
+      <div>
+        <h4 class="text-white font-extrabold text-sm md:text-base">R2s Realtors App</h4>
+        <p class="text-blue-100 text-[10px] md:text-xs font-semibold mt-0.5 leading-tight">
+          Install the app to your home screen for quick access.
+        </p>
+      </div>
+    </div>
+
+    <div class="flex items-center gap-2 shrink-0">
+      <button onclick="dismissPwaBanner()" class="w-8 h-8 flex items-center justify-center bg-white/10 rounded-full text-blue-100 hover:text-white hover:bg-white/20 transition-colors">
+        <i data-lucide="x" class="w-4 h-4"></i>
+      </button>
+
+      <button onclick="installPwa()" class="bg-white hover:bg-blue-50 text-blue-600 flex items-center gap-1.5 px-4 md:px-5 py-2 md:py-2.5 rounded-full text-xs md:text-sm font-bold shadow-lg shadow-blue-900/20 transition-all hover:-translate-y-0.5 whitespace-nowrap">
+        <i data-lucide="download" class="w-4 h-4"></i> Install App
+      </button>
+    </div>
+</div>
+
+
+<!-- iOS Manual Install Banner -->
+<div id="iosInstallBanner" class="hidden fixed bottom-0 left-0 w-full bg-blue-600 text-white p-6 z-[1000] flex flex-col items-center justify-center text-center rounded-t-3xl shadow-[0_-20px_60px_rgba(37,99,235,0.3)] md:max-w-sm md:left-1/2 md:-translate-x-1/2 md:bottom-6 md:rounded-3xl pb-10 transition-all duration-300 border border-blue-500/30 cursor-pointer" onclick="document.getElementById('iosInstallBanner').classList.add('hidden')">
+
+    <div class="w-12 h-1.5 bg-white/30 rounded-full mb-6"></div>
+
+    <div class="w-16 h-16 bg-white border border-white/20 rounded-2xl mb-4 flex items-center justify-center p-2 shadow-sm">
+        <img src="/LOGO.png" class="w-full h-full object-contain">
+    </div>
+
+    <h4 class="font-extrabold text-xl mb-2 text-white">Install App</h4>
+
+    <p class="text-sm text-blue-100 mb-2 px-4 font-medium leading-relaxed">
+      To install on your iPhone:<br><br>
+      1. Tap the
+      <span class="inline-flex items-center justify-center bg-white/10 px-2 py-1 rounded-md mx-1 border border-white/20 text-white font-bold">
+        <i data-lucide="share" class="w-3.5 h-3.5 mr-1"></i> Share
+      </span>
+      button.<br>
+      2. Select
+      <span class="font-bold text-white bg-white/10 px-2 py-1 rounded-md border border-white/20 inline-flex items-center mt-2">
+        Add to Home Screen
+        <i data-lucide="plus-square" class="w-3.5 h-3.5 ml-1"></i>
+      </span>
+    </p>
+</div>
+
+
+
+  <script>
+    let deferredPrompt;
+    const pwaBanner = document.getElementById('pwaInstallBanner');
+
+    window.addEventListener('beforeinstallprompt', (e) => {
+      e.preventDefault();
+      deferredPrompt = e;
+      if (!localStorage.getItem('pwaBannerDismissed')) {
+        setTimeout(() => {
+          if(pwaBanner) pwaBanner.classList.remove('translate-y-[200%]');
+        }, 1500);
+      }
+    });
+
+    function dismissPwaBanner() {
+      if(pwaBanner) pwaBanner.classList.add('translate-y-[200%]');
+      localStorage.setItem('pwaBannerDismissed', 'true');
+    }
+
+    async function installPwa() {
+      if (deferredPrompt) {
+        deferredPrompt.prompt();
+        const { outcome } = await deferredPrompt.userChoice;
+        if (outcome === 'accepted') {
+          console.log('User accepted the install prompt');
+        } else {
+          console.log('User dismissed the install prompt');
+        }
+        deferredPrompt = null;
+        dismissPwaBanner();
+      } else {
+        // Fallback for iOS/unsupported devices
+        const iosBanner = document.getElementById('iosInstallBanner');
+        if(iosBanner) iosBanner.classList.remove('hidden');
+        dismissPwaBanner();
+      }
+    }
+    
+    window.addEventListener('appinstalled', () => {
+      dismissPwaBanner();
+    });
+  </script>
+
+
+  
+  
+  
+
+
+
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const propertyCards = document.querySelectorAll('#propertyListContainer .property-card');
+      const loader = document.getElementById('infiniteScrollLoader');
+      
+      if(propertyCards.length > 0 && loader) {
+        // Hide all except first 2
+        propertyCards.forEach((card, index) => {
+          if(index >= 2) {
+            card.style.display = 'none';
+            card.classList.add('opacity-0', 'translate-y-8');
+          }
+        });
+        
+        let currentIndex = 2;
+        
+        if(propertyCards.length <= 2) {
+          loader.style.display = 'none';
+          return;
+        }
+
+        const observer = new IntersectionObserver((entries) => {
+          if(entries[0].isIntersecting) {
+            if(currentIndex < propertyCards.length) {
+              // Simulate network load time for effect
+              setTimeout(() => {
+                const end = Math.min(currentIndex + 2, propertyCards.length);
+                for(let i = currentIndex; i < end; i++) {
+                  const card = propertyCards[i];
+                  // Restore flex/block display
+                  card.style.display = ''; 
+                  
+                  // Trigger reflow for animation
+                  void card.offsetWidth;
+                  
+                  card.classList.remove('opacity-0', 'translate-y-8');
+                }
+                currentIndex = end;
+                
+                if(currentIndex >= propertyCards.length) {
+                  loader.style.display = 'none';
+                }
+              }, 1200); // 1.2s fake load time to show off the spinner
+            }
+          }
+        }, { threshold: 0.1 });
+        
+        observer.observe(loader);
+      }
+    });
+  </script>
+
+  
+
+
+  <!-- Company Documents Modal -->
+  <div id="documentModal" class="fixed inset-0 z-[9999] hidden">
+    <!-- Backdrop -->
+    <div class="absolute inset-0 bg-slate-900/40 backdrop-blur-sm transition-opacity opacity-0 duration-300" id="docModalBackdrop" onclick="closeDocumentModal()"></div>
+    
+    <!-- Modal Content -->
+    <div class="absolute inset-0 flex items-center justify-center p-4 pointer-events-none">
+      <div id="docModalContent" class="bg-white w-full max-w-md rounded-[32px] shadow-2xl p-4 sm:p-6 md:p-8 pointer-events-auto transform scale-95 opacity-0 transition-all duration-300 relative">
+        
+        <!-- Header -->
+        <div class="flex items-center justify-between mb-6">
+          <div class="flex items-center gap-3">
+            <div class="w-12 h-12 rounded-2xl bg-blue-50 border border-blue-100 flex items-center justify-center shadow-inner">
+              <i data-lucide="file-check-2" class="w-6 h-6 text-blue-600"></i>
+            </div>
+            <div>
+              <h3 class="font-extrabold text-slate-950 text-lg">Documents</h3>
+              <p class="text-[10px] font-bold text-gray-500 uppercase tracking-wider">Company Verification</p>
+            </div>
+          </div>
+          <button onclick="closeDocumentModal()" class="w-8 h-8 flex items-center justify-center bg-gray-50 border border-gray-100 rounded-full text-gray-400 hover:text-slate-950 hover:bg-gray-100 transition-colors absolute top-6 right-6">
+            <i data-lucide="x" class="w-4 h-4"></i>
+          </button>
+        </div>
+
+        <div class="w-full h-px bg-gray-100 mb-6"></div>
+
+        <!-- Body -->
+        <p class="text-xs text-gray-500 mb-4 font-medium text-center">Upload up to 3 files. Supported formats: PDF, JPG, PNG.<br>Max size: 2MB each.</p>
+        
+        <div class="grid grid-cols-1 gap-3 mb-8">
+          <!-- File 1 -->
+          <div class="relative group">
+            <input type="file" accept=".pdf, .jpg, .jpeg, .png" class="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10" onchange="updateDashFileName(this)">
+            <div class="w-full bg-white rounded-2xl border-2 border-dashed border-gray-200 p-4 flex flex-col items-center justify-center gap-2 transition-all group-hover:border-blue-500 group-hover:bg-blue-50/30">
+              <i data-lucide="upload-cloud" class="w-6 h-6 text-gray-400 group-hover:text-blue-500 transition-colors"></i>
+              <span class="text-xs font-bold text-slate-700 truncate max-w-[250px]">Upload Document 1</span>
+            </div>
+          </div>
+          <!-- File 2 -->
+          <div class="relative group">
+            <input type="file" accept=".pdf, .jpg, .jpeg, .png" class="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10" onchange="updateDashFileName(this)">
+            <div class="w-full bg-white rounded-2xl border-2 border-dashed border-gray-200 p-4 flex flex-col items-center justify-center gap-2 transition-all group-hover:border-blue-500 group-hover:bg-blue-50/30">
+              <i data-lucide="upload-cloud" class="w-6 h-6 text-gray-400 group-hover:text-blue-500 transition-colors"></i>
+              <span class="text-xs font-bold text-slate-700 truncate max-w-[250px]">Upload Document 2</span>
+            </div>
+          </div>
+          <!-- File 3 -->
+          <div class="relative group">
+            <input type="file" accept=".pdf, .jpg, .jpeg, .png" class="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10" onchange="updateDashFileName(this)">
+            <div class="w-full bg-white rounded-2xl border-2 border-dashed border-gray-200 p-4 flex flex-col items-center justify-center gap-2 transition-all group-hover:border-blue-500 group-hover:bg-blue-50/30">
+              <i data-lucide="upload-cloud" class="w-6 h-6 text-gray-400 group-hover:text-blue-500 transition-colors"></i>
+              <span class="text-xs font-bold text-slate-700 truncate max-w-[250px]">Upload Document 3</span>
+            </div>
+          </div>
+        </div>
+
+        <button onclick="closeDocumentModal()" class="w-full bg-blue-600 text-white py-3 sm:py-4 rounded-xl font-bold text-sm hover:bg-blue-700 hover:-translate-y-0.5 hover:shadow-lg hover:shadow-blue-600/20 transition-all duration-300 flex items-center justify-center gap-2 group">
+          Save Documents <i data-lucide="check" class="w-4 h-4"></i>
+        </button>
+
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function openDocumentModal() {
+      const modal = document.getElementById('documentModal');
+      const backdrop = document.getElementById('docModalBackdrop');
+      const content = document.getElementById('docModalContent');
+      
+      modal.classList.remove('hidden');
+      
+      // Trigger reflow
+      void modal.offsetWidth;
+      
+      backdrop.classList.remove('opacity-0');
+      content.classList.remove('scale-95', 'opacity-0');
+      
+      // Close sidebar if on mobile
+      const sideNav = document.getElementById('sideNav');
+      if(sideNav && !sideNav.classList.contains('-translate-x-full') && window.innerWidth < 768) {
+        toggleNav();
+      }
+    }
+
+    function closeDocumentModal() {
+      const modal = document.getElementById('documentModal');
+      const backdrop = document.getElementById('docModalBackdrop');
+      const content = document.getElementById('docModalContent');
+      
+      backdrop.classList.add('opacity-0');
+      content.classList.add('scale-95', 'opacity-0');
+      
+      setTimeout(() => {
+        modal.classList.add('hidden');
+      }, 300);
+    }
+
+    function updateDashFileName(input) {
+      if(input.files && input.files.length > 0) {
+        const fileName = input.files[0].name;
+        const span = input.nextElementSibling.querySelector('span');
+        const icon = input.nextElementSibling.querySelector('i');
+        span.textContent = fileName;
+        span.classList.add('text-blue-600');
+        icon.setAttribute('data-lucide', 'file-check');
+        if(typeof lucide !== 'undefined') lucide.createIcons();
+      }
+    }
+  </script>
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const kindSelect = document.getElementById('wiz_kind');
+      if (kindSelect) {
+        kindSelect.addEventListener('change', (e) => {
+          document.getElementById('wiz_res_container').classList.add('hidden');
+          document.getElementById('wiz_com_container').classList.add('hidden');
+          document.getElementById('wiz_est_container').classList.add('hidden');
+          
+          if(e.target.value === 'Residential') {
+            document.getElementById('wiz_res_container').classList.remove('hidden');
+          } else if (e.target.value === 'Commercial') {
+            document.getElementById('wiz_com_container').classList.remove('hidden');
+          } else if (e.target.value === 'Estate') {
+            document.getElementById('wiz_est_container').classList.remove('hidden');
+          }
+        });
+      }
+    });
+</script>
+
+<script>
+  // Zoho's search API can take a few seconds to index a record that was
+  // just created, so fetching the list again immediately after a submit
+  // can miss the property that was just added (the "lag" the property
+  // list can otherwise show). To keep things feeling instant we build a
+  // lightweight local copy of the new property right after a successful
+  // submit and merge it in here — either passed in directly (same-page
+  // modal submit) or stashed in sessionStorage across the add-property.html
+  // -> dashboard.html redirect.
+  async function renderProperties(pendingProperty) {
+    const container = document.getElementById('dynamicPropertiesContainer');
+    const emptyState = document.getElementById('emptyStateContainer');
+    if(!container || !emptyState) return;
+
+    let props = [];
+
+    if (!pendingProperty) {
+      try {
+        const stashedRaw = sessionStorage.getItem('r2s_pending_property');
+        if (stashedRaw) pendingProperty = JSON.parse(stashedRaw);
+      } catch (e) {
+        // Ignore malformed stash — just skip the optimistic merge.
+      }
+    }
+
+    // Prefer fetching the real, current list straight from CRM so the
+    // dashboard reflects properties added anywhere (website or directly
+    // in CRM) — not just what happens to be in this browser's storage.
+    const identity = localStorage.getItem('r2s_current_user');
+    const profileRaw = identity ? localStorage.getItem('r2s_profile_' + identity) : null;
+    const profile = profileRaw ? JSON.parse(profileRaw) : null;
+
+    if (profile?.role && profile?.crmRecordId) {
+      try {
+        const res = await fetch(`/api/get-properties?role=${encodeURIComponent(profile.role)}&recordId=${encodeURIComponent(profile.crmRecordId)}`);
+        const result = await res.json();
+        if (result.success) {
+          props = result.properties;
+        } else {
+          console.error('Failed to fetch properties from CRM:', result.error);
+        }
+      } catch (err) {
+        console.error('Network error fetching properties from CRM:', err);
+      }
+    } else {
+      // No CRM identity known yet (e.g. logged in without signing up
+      // this session) — fall back to whatever's saved locally.
+      props = window.getMyProperties ? window.getMyProperties() : [];
+    }
+
+    // If CRM search has already caught up and returned the just-created
+    // record, don't show a duplicate — otherwise, show the optimistic
+    // version up front until the next natural refresh replaces it.
+    if (pendingProperty && !props.some((p) => p.id === pendingProperty.id)) {
+      props = [pendingProperty, ...props];
+    }
+    sessionStorage.removeItem('r2s_pending_property');
+
+    if (props.length === 0) {
+      container.classList.add('hidden');
+      emptyState.classList.remove('hidden');
+    } else {
+      emptyState.classList.add('hidden');
+      container.classList.remove('hidden');
+      
+      container.innerHTML = props.map(p => `
+        <div class="property-card bg-white rounded-[24px] overflow-hidden border-b-0 relative p-3 md:p-4 border border-gray-100 shadow-[0_4px_20px_rgb(0,0,0,0.03)] hover:shadow-[0_8px_30px_rgb(0,0,0,0.08)] hover:-translate-y-1 transition-all duration-300 flex flex-col xl:flex-row gap-6 items-start xl:items-center relative cursor-pointer group" onclick="window.location.href='property-detail.html?id=${p.id}'">
+          <div class="absolute bottom-0 left-0 w-full h-1 bg-gradient-to-r from-blue-500 via-purple-500 to-red-500"></div>
+          <button class="absolute top-4 right-4 text-gray-400 hover:text-slate-950 z-10"><i data-lucide="more-vertical" class="w-5 h-5" aria-hidden="true"></i></button>
+
+          <div class="relative w-full xl:w-[320px] h-[200px] shrink-0 rounded-2xl overflow-hidden">
+            <img src="${p.image || 'https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" loading="lazy">
+            <div class="absolute top-3 left-3 bg-[#1e293b]/90 backdrop-blur-md text-white px-3 py-1 rounded text-[10px] font-bold uppercase tracking-wider">${p.kind || 'Property'}</div>
+          </div>
+          
+          <div class="flex flex-col flex-1 py-1 w-full">
+            <h3 class="text-xl font-extrabold text-slate-950 mb-1">${p.name || 'Untitled Property'} – ID:${p.id.slice(-6)}</h3>
+            <p class="text-sm font-semibold text-gray-500 mb-6 flex items-center gap-1.5"><i data-lucide="map-pin" class="w-3.5 h-3.5" aria-hidden="true"></i> ${p.location || 'Location Not Set'}</p>
+            
+            <div class="flex flex-wrap items-center gap-6 md:gap-8 mb-6">
+              <div class="flex items-center gap-2"><i data-lucide="ruler" class="w-5 h-5 text-red-600" aria-hidden="true"></i><div><p class="text-sm font-bold text-slate-950 leading-tight">${p.unit || 'Not set'}</p><p class="text-[10px] font-bold text-gray-400 uppercase">Area</p></div></div>
+              ${p.floors ? `<div class="flex items-center gap-2"><i data-lucide="layers" class="w-5 h-5 text-red-600" aria-hidden="true"></i><div><p class="text-sm font-bold text-slate-950 leading-tight">${p.floors}</p><p class="text-[10px] font-bold text-gray-400 uppercase">Floors</p></div></div>` : ''}
+            </div>
+            
+            <div class="flex items-center gap-6 md:gap-8 text-xs font-semibold text-gray-500 pt-4 border-t border-gray-100 w-full">
+              <p>Listed on ${p.date}</p>
+              <p>ID: ${p.id.slice(-6)}</p>
+              <p class="flex items-center gap-1.5 ml-auto text-blue-600 bg-blue-50 px-3 py-1.5 rounded-lg border border-blue-100 shadow-sm font-bold"><i data-lucide="eye" class="w-3.5 h-3.5"></i> 0 Visitors</p>
+            </div>
+          </div>
+
+          <div class="price-section xl:w-[220px] shrink-0 flex flex-col xl:items-end justify-center py-2 xl:pr-6 border-t xl:border-t-0 xl:border-l border-gray-100 pt-4 xl:pt-0 w-full text-left xl:text-right">
+            <div class="bg-green-50 text-green-600 px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider mb-4 xl:mb-8 inline-block w-fit xl:ml-auto">${p.status || 'For Sale'}</div>
+            <h2 class="text-2xl font-black text-slate-950 mb-1">${p.price ? '₹' + p.price : 'Not set'}</h2>
+            <p class="text-[10px] font-bold text-gray-400 uppercase tracking-wide">Inclusive of all charges</p>
+          </div>
+        </div>
+      `).join('');
+      if(typeof lucide !== 'undefined') lucide.createIcons();
+    }
+  }
+
+  // Converts a File object into a plain base64 string (no "data:" prefix),
+  // so it can be sent as JSON to /api/upload-attachment.
+  function fileToBase64(file) {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.onload = () => {
+        const result = reader.result; // "data:image/png;base64,AAAA..."
+        const base64 = result.split(',')[1];
+        resolve(base64);
+      };
+      reader.onerror = reject;
+      reader.readAsDataURL(file);
+    });
+  }
+
+  // Show/hide the advertising-platform checkboxes based on the consent box
+  window.toggleAdPlatforms = function(checkbox) {
+    const container = document.getElementById('adPlatformsContainer');
+    if (!container) return;
+    container.classList.toggle('hidden', !checkbox.checked);
+    if (!checkbox.checked) {
+      // Clear any previously ticked platforms so a withdrawn consent
+      // doesn't silently leave stale selections behind.
+      ['wiz_ad_platform_social', 'wiz_ad_platform_r2s', 'wiz_ad_platform_other'].forEach(id => {
+        const el = document.getElementById(id);
+        if (el) el.checked = false;
+      });
+      const otherName = document.getElementById('wiz_ad_platform_other_name');
+      if (otherName) { otherName.value = ''; otherName.classList.add('hidden'); }
+    }
+  };
+
+  // Hook into generic submission in dashboard/add-property
+  window.submitPropertyForm = async function(e) {
+    e.preventDefault();
+    const propName = document.getElementById('wiz_prop_name') || document.getElementById('prop_name');
+    const propPrice = document.getElementById('wiz_price') || document.getElementById('prop_price');
+    const propKind = document.getElementById('wiz_kind') || document.getElementById('prop_kind');
+    const propStatus = document.getElementById('wiz_status') || document.getElementById('prop_status');
+    const propUnit = document.getElementById('wiz_unit') || document.getElementById('prop_unit');
+    const propServiceType = document.getElementById('wiz_service_type');
+    const propFloors = document.getElementById('wiz_floors');
+    const propResType = document.getElementById('wiz_res_type');
+    const propComType = document.getElementById('wiz_com_type');
+    const propEstType = document.getElementById('wiz_est_type');
+    const propNotes = document.getElementById('wiz_notes');
+    const propDate = document.getElementById('wiz_date');
+    const propLocation = document.getElementById('wiz_location') || document.getElementById('prop_loc');
+    // The <select> value is the Zoho record id (what Zoho needs for the
+    // Lookup field); its visible text is what we show on the property
+    // card right away, before the CRM search index has caught up.
+    const propLocationName = propLocation && propLocation.selectedIndex > 0
+      ? propLocation.options[propLocation.selectedIndex].textContent
+      : '';
+    
+    if(!propName || !propName.value) return showPremiumAlert('error');
+
+    // Look up who's currently logged in, so this property gets linked
+    // back to their own Owner/Agent/Partner/Builder/NAR CRM record.
+    const identity = localStorage.getItem('r2s_current_user');
+    const profileRaw = identity ? localStorage.getItem('r2s_profile_' + identity) : null;
+    const profile = profileRaw ? JSON.parse(profileRaw) : null;
+
+    // --- Advertising consent (requirement: capture status + who + when) ---
+    const adConsentBox = document.getElementById('wiz_advertising_consent');
+    const advertisingConsent = !!(adConsentBox && adConsentBox.checked);
+    const adPlatforms = [];
+    if (advertisingConsent) {
+      if (document.getElementById('wiz_ad_platform_social')?.checked) adPlatforms.push('Social Media');
+      if (document.getElementById('wiz_ad_platform_r2s')?.checked) adPlatforms.push('R2S Website');
+      if (document.getElementById('wiz_ad_platform_other')?.checked) {
+        const otherName = document.getElementById('wiz_ad_platform_other_name')?.value.trim();
+        adPlatforms.push(otherName ? `Other: ${otherName}` : 'Other');
+      }
+    }
+    const videoPromotion = !!document.getElementById('wiz_video_promotion')?.checked;
+
+    const property = {
+      name: propName.value,
+      price: propPrice ? propPrice.value : '',
+      kind: propKind ? propKind.value : '',
+      status: propStatus ? propStatus.value : '',
+      unit: propUnit ? propUnit.value : '',
+      serviceType: propServiceType ? propServiceType.value : '',
+      floors: propFloors ? propFloors.value : '',
+      resType: propResType ? propResType.value : '',
+      comType: propComType ? propComType.value : '',
+      estType: propEstType ? propEstType.value : '',
+      notes: propNotes ? propNotes.value : '',
+      date: propDate ? propDate.value : '',
+      location: propLocation ? propLocation.value : '',
+      // Advertising Agreement (Req. 4)
+      advertisingConsent: advertisingConsent ? 'Yes' : 'No',
+      advertisingConsentAt: advertisingConsent ? new Date().toISOString() : '',
+      advertisingConsentBy: advertisingConsent ? (identity || 'unknown') : '',
+      advertisingPlatforms: adPlatforms.join(', '),
+      // Paid Video Promotion (Req. 5)
+      videoPromotionRequested: videoPromotion ? 'Yes' : 'No',
+    };
+
+    // Send the ticket data to Zoho CRM
+    let zohoOk = false;
+    let zohoResultRecordId = null;
+    let zohoErrorMessage = 'Something went wrong. Please try again.';
+    try {
+      const res = await fetch('/api/submit-to-zoho', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          formType: 'property',
+          ...property,
+          linkRole: profile?.role,
+          linkId: profile?.crmRecordId,
+        }),
+      });
+      const result = await res.json();
+      zohoOk = !!result.success;
+      zohoResultRecordId = result.zohoRecordId;
+      if (!zohoOk) {
+        console.error('Zoho submission failed:', result.error);
+        // Duplicate property name is the common, user-fixable case —
+        // give a specific instruction instead of a generic failure.
+        zohoErrorMessage = result.code === 'DUPLICATE_DATA'
+          ? 'A property with this name already exists. Please choose a different name.'
+          : (result.error || zohoErrorMessage);
+      }
+    } catch (err) {
+      console.error('Network error submitting to Zoho:', err);
+      zohoErrorMessage = 'Network error — please check your connection and try again.';
+    }
+
+    if (!zohoOk) {
+      showPremiumAlert('error', zohoErrorMessage);
+      return; // don't fake success if CRM insert failed
+    }
+
+    // Upload any selected images (Featured + Gallery) as CRM Attachments,
+    // now that we have a real record ID to attach them to. These go out
+    // in parallel rather than one-at-a-time — with several photos the old
+    // sequential loop was most of the lag between hitting submit and
+    // seeing the dashboard update.
+    const recordId = zohoResultRecordId;
+    if (recordId) {
+      const filesToUpload = [];
+      const featuredInput = document.getElementById('featuredInput');
+      const galleryInput = document.getElementById('galleryInput');
+      if (featuredInput && featuredInput.files.length) {
+        filesToUpload.push(...featuredInput.files);
+      }
+      if (galleryInput && galleryInput.files.length) {
+        filesToUpload.push(...galleryInput.files);
+      }
+
+      await Promise.all(filesToUpload.map(async (file) => {
+        try {
+          const base64 = await fileToBase64(file);
+          const uploadRes = await fetch('/api/upload-attachment', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              module: 'Products',
+              recordId: recordId,
+              fileName: file.name,
+              fileBase64: base64,
+            }),
+          });
+          const uploadResult = await uploadRes.json();
+          if (!uploadResult.success) {
+            console.error('Attachment upload failed for', file.name, ':', uploadResult.error);
+          }
+        } catch (err) {
+          console.error('Error uploading', file.name, err);
+        }
+      }));
+    }
+    
+    if (window.saveProperty) {
+      window.saveProperty(property);
+    }
+
+    // Zoho's search index (what /api/get-properties queries) can take a
+    // moment to pick up a record that was just created, so build a local
+    // stand-in for it now and merge it straight into the list — that's
+    // what makes the property show up immediately instead of only after
+    // CRM catches up.
+    const optimisticProperty = {
+      id: recordId,
+      name: property.name,
+      kind: property.kind,
+      status: property.status,
+      price: property.price,
+      unit: property.unit,
+      floors: property.floors,
+      date: new Date().toISOString().split('T')[0],
+      image: null,
+      location: propLocationName || null,
+    };
+    
+    // Show success
+    showPremiumAlert('success');
+
+    // Redirect or update UI
+    setTimeout(() => {
+      if(window.location.pathname.includes('add-property.html')) {
+        // Stash the optimistic property so dashboard.html can show it the
+        // instant it loads, instead of waiting on CRM's search index.
+        if (recordId) {
+          try {
+            sessionStorage.setItem('r2s_pending_property', JSON.stringify(optimisticProperty));
+          } catch (e) {
+            // sessionStorage unavailable (private browsing, etc) — fine,
+            // dashboard will just show it once CRM indexes it normally.
+          }
+        }
+        window.location.href = 'dashboard.html';
+      } else {
+        if(typeof toggleAddProperty !== 'undefined') toggleAddProperty();
+        renderProperties(recordId ? optimisticProperty : undefined);
+        if(typeof updateDashboardStats !== 'undefined') updateDashboardStats();
+      }
+    }, 1000);
+  };
+
+  document.addEventListener('DOMContentLoaded', () => renderProperties());
+  // Prefetch the location list in the background as soon as the dashboard
+  // loads, so it's already cached and instant by the time the Add Property
+  // modal is opened, instead of the dropdown lagging while it fetches.
+  document.addEventListener('DOMContentLoaded', () => {
+    if (typeof loadLocationsDropdown === 'function') loadLocationsDropdown();
+  });
+
+  // --- Populate real logged-in user info (replaces "Test User" placeholders) ---
+  document.addEventListener('DOMContentLoaded', function() {
+    const identity = localStorage.getItem('r2s_current_user');
+    if (!identity) return; // no one logged in this session — leave placeholders as-is
+
+    const profileRaw = localStorage.getItem('r2s_profile_' + identity);
+    const profile = profileRaw ? JSON.parse(profileRaw) : null;
+
+    const displayName = profile?.fullName || identity;
+    const displayEmail = profile?.email || '';
+    const displayRole = profile?.role
+      ? profile.role.charAt(0).toUpperCase() + profile.role.slice(1)
+      : '';
+
+    const nameEl = document.getElementById('profileDropdownName');
+    const emailEl = document.getElementById('profileDropdownEmail');
+    const roleEl = document.getElementById('profileDropdownRole');
+    const headerNameEl = document.getElementById('pageHeaderName');
+    const editNameEl = document.getElementById('profileEditName');
+    const editPhoneEl = document.getElementById('profileEditPhone');
+    const editEmailEl = document.getElementById('profileEditEmail');
+
+    if (nameEl) nameEl.textContent = displayName;
+    if (emailEl && displayEmail) emailEl.textContent = displayEmail;
+    if (roleEl && displayRole) roleEl.textContent = displayRole;
+    if (headerNameEl) headerNameEl.textContent = displayName;
+    if (editNameEl) editNameEl.value = displayName;
+    if (editPhoneEl && profile?.phone) editPhoneEl.value = profile.phone;
+    if (editEmailEl && displayEmail) editEmailEl.value = displayEmail;
+  });
+</script>
+
+
+<script>
+  // Network Leads uses the existing Buyer Lead -> Zoho CRM workflow.
+  const NETWORK_BUYER_ALLOWED_ROLES = ['nar', 'partner', 'agent'];
+
+  function getNetworkBuyerProfile() {
+    const identity = localStorage.getItem('r2s_current_user');
+    const raw = identity ? localStorage.getItem('r2s_profile_' + identity) : null;
+    return raw ? JSON.parse(raw) : null;
+  }
+
+  function switchDashboardTab(tab) {
+    const propertyContainer = document.getElementById('propertyListContainer');
+    const loader = document.getElementById('infiniteScrollLoader');
+    const networkPanel = document.getElementById('networkLeadsPanel');
+    const primaryAction = document.getElementById('dashboardPrimaryAction');
+    const primaryText = document.getElementById('dashboardPrimaryActionText');
+    const primaryIcon = document.getElementById('dashboardPrimaryActionIcon');
+    const propertiesTab = document.getElementById('propertiesTab');
+    const networkTab = document.getElementById('networkLeadsTab');
+
+    [propertiesTab, networkTab].forEach(btn => {
+      if (!btn) return;
+      btn.classList.remove('bg-white', 'text-slate-950', 'shadow-sm');
+      btn.classList.add('bg-transparent', 'text-slate-500');
+    });
+
+    if (tab === 'network') {
+      networkTab?.classList.remove('bg-transparent', 'text-slate-500');
+      networkTab?.classList.add('bg-white', 'text-slate-950', 'shadow-sm');
+      propertyContainer?.classList.add('hidden');
+      loader?.classList.add('hidden');
+      networkPanel?.classList.remove('hidden');
+
+      if (primaryAction) primaryAction.setAttribute('onclick', 'toggleNetworkBuyerModal()');
+      if (primaryText) primaryText.textContent = 'Add Buyer';
+      if (primaryIcon) {
+        primaryIcon.setAttribute('data-lucide', 'user-plus');
+        if (typeof lucide !== 'undefined') lucide.createIcons();
+      }
+      loadNetworkBuyerLeads();
+    } else {
+      propertiesTab?.classList.remove('bg-transparent', 'text-slate-500');
+      propertiesTab?.classList.add('bg-white', 'text-slate-950', 'shadow-sm');
+      networkPanel?.classList.add('hidden');
+      propertyContainer?.classList.remove('hidden');
+      loader?.classList.remove('hidden');
+
+      if (primaryAction) primaryAction.setAttribute('onclick', 'toggleAddProperty()');
+      if (primaryText) primaryText.textContent = 'Add Property';
+      if (primaryIcon) {
+        primaryIcon.setAttribute('data-lucide', 'plus');
+        if (typeof lucide !== 'undefined') lucide.createIcons();
+      }
+    }
+  }
+
+  function toggleNetworkBuyerModal() {
+    const modal = document.getElementById('networkAddBuyerModal');
+    if (!modal) return;
+    modal.classList.toggle('hidden');
+    modal.classList.toggle('flex');
+  }
+
+  function renderNetworkBuyerLeads(leads) {
+    const list = document.getElementById('networkBuyerList');
+    const empty = document.getElementById('networkBuyerEmpty');
+    if (!list || !empty) return;
+
+    if (!leads || leads.length === 0) {
+      list.innerHTML = '';
+      empty.classList.remove('hidden');
+      return;
+    }
+
+    empty.classList.add('hidden');
+    list.innerHTML = leads.map(l => `
+      <div class="bg-white rounded-2xl p-5 border border-gray-100 shadow-[0_4px_20px_rgb(0,0,0,0.03)] flex items-center justify-between gap-4">
+        <div>
+          <h3 class="font-bold text-slate-950">${l.buyerName || 'Unnamed Buyer'}</h3>
+          <p class="text-sm text-gray-500 font-semibold mt-0.5">${l.buyerContactMasked || 'XXXXXXXXXX'}</p>
+          <p class="text-xs text-gray-400 font-medium mt-1 flex items-center gap-1"><i data-lucide="map-pin" class="w-3 h-3"></i> ${l.preferredLocation || 'Not specified'}</p>
+        </div>
+        <span class="text-[10px] font-bold text-gray-400 uppercase tracking-wider">${l.createdAt ? new Date(l.createdAt).toLocaleDateString() : ''}</span>
+      </div>
+    `).join('');
+
+    if (typeof lucide !== 'undefined') lucide.createIcons();
+  }
+
+  async function loadNetworkBuyerLeads() {
+    const profile = getNetworkBuyerProfile();
+    const list = document.getElementById('networkBuyerList');
+    const empty = document.getElementById('networkBuyerEmpty');
+    const errorBox = document.getElementById('networkBuyerError');
+    const unauthorized = document.getElementById('networkBuyerUnauthorized');
+
+    if (!profile || !NETWORK_BUYER_ALLOWED_ROLES.includes(profile.role)) {
+      unauthorized?.classList.remove('hidden');
+      list.innerHTML = '';
+      empty.classList.add('hidden');
+      return;
+    }
+
+    unauthorized?.classList.add('hidden');
+    errorBox?.classList.add('hidden');
+
+    try {
+      const res = await fetch(`/api/get-buyer-leads?role=${encodeURIComponent(profile.role)}&recordId=${encodeURIComponent(profile.crmRecordId)}`);
+      const result = await res.json();
+      if (!result.success) throw new Error(result.error || 'Failed to load network leads');
+      renderNetworkBuyerLeads(result.leads);
+    } catch (err) {
+      console.error('Could not load network leads:', err);
+      if (errorBox) {
+        errorBox.textContent = 'Could not load network leads: ' + err.message;
+        errorBox.classList.remove('hidden');
+      }
+    }
+  }
+
+  async function submitNetworkBuyerLead(e) {
+    e.preventDefault();
+    const profile = getNetworkBuyerProfile();
+    if (!profile || !NETWORK_BUYER_ALLOWED_ROLES.includes(profile.role)) {
+      showPremiumAlert('error');
+      return;
+    }
+
+    const payload = {
+      formType: 'buyerlead',
+      buyerName: document.getElementById('network_buyer_name').value,
+      buyerContact: document.getElementById('network_buyer_contact').value,
+      preferredLocation: document.getElementById('network_buyer_preferred_location').value,
+      consentGiven: 'Yes',
+      consentAt: new Date().toISOString(),
+      linkRole: profile.role,
+      linkId: profile.crmRecordId,
+    };
+
+    try {
+      const res = await fetch('/api/submit-to-zoho', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload),
+      });
+      const result = await res.json();
+      if (!result.success) throw new Error(result.error || 'Zoho rejected the record');
+
+      showPremiumAlert('success');
+      document.getElementById('networkAddBuyerForm').reset();
+      toggleNetworkBuyerModal();
+      setTimeout(() => loadNetworkBuyerLeads(), 500);
+    } catch (err) {
+      console.error('Network buyer lead submission failed:', err);
+      showPremiumAlert('error');
+    }
+  }
+
+  document.addEventListener('DOMContentLoaded', () => {
+    switchDashboardTab('properties');
+  });
+</script>
+
+</body>

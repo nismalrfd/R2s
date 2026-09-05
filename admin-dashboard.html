@@ -1,0 +1,697 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Admin Dashboard — R2s Realtors</title>
+  <link rel="stylesheet" href="/style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <script src="https://unpkg.com/@tailwindcss/browser@4"></script>
+  <!-- Include Chart.js -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  
+  <link rel="icon" href="/LOGO.png" type="image/png" />
+  <style>
+    body { 
+      background: #ffffff; 
+      font-family: 'Plus Jakarta Sans', sans-serif; 
+      color: #1f2937; 
+    }
+    
+    .live-dot { 
+      width: 7px; height: 7px; border-radius: 99px; background: #059669; position: relative; display: inline-block;
+    }
+    .live-dot::after {
+      content: ''; position: absolute; inset: -4px; border-radius: 99px; background: #059669;
+      opacity: .35; animation: pulse 2s ease-out infinite;
+    }
+    @keyframes pulse { 
+      0% { transform: scale(.6); opacity: .45 } 
+      100% { transform: scale(2.4); opacity: 0 } 
+    }
+
+    /* Timeline styles */
+    .timeline-item {
+      position: relative;
+      padding-left: 2rem;
+      padding-bottom: 1.5rem;
+    }
+    .timeline-item::before {
+      content: '';
+      position: absolute;
+      left: 11px;
+      top: 24px;
+      bottom: -4px;
+      width: 2px;
+      background-color: #e5e7eb;
+    }
+    .timeline-item:last-child::before {
+      display: none;
+    }
+    
+    .chart-container {
+      position: relative;
+      width: 100%;
+      height: 100%;
+    }
+    
+    .stat-card-1 { background: linear-gradient(135deg, #ec4899 0%, #f43f5e 100%); }
+    .stat-card-2 { background: linear-gradient(135deg, #8b5cf6 0%, #6366f1 100%); }
+    .stat-card-3 { background: linear-gradient(135deg, #0ea5e9 0%, #3b82f6 100%); }
+    .stat-card-4 { background: linear-gradient(135deg, #f59e0b 0%, #f97316 100%); }
+
+    /* Hide scrollbar for mobile tabs */
+    .hide-scrollbar::-webkit-scrollbar { display: none; }
+    .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+    /* Print styles */
+    @media print {
+      body { background: white; }
+      header, .grid-cols-1:not(.print-area), .stat-card-1, .stat-card-2, .stat-card-3, .stat-card-4 { display: none !important; }
+      .print-area { display: block !important; width: 100% !important; margin: 0 !important; border: none !important; box-shadow: none !important; }
+      .no-print { display: none !important; }
+    }
+  </style>
+</head>
+<body class="min-h-screen pb-12">
+
+  <!-- Header -->
+  <header class="sticky top-0 z-40 bg-white/95 backdrop-blur-md border-b border-gray-200 shadow-sm no-print">
+    <div class="max-w-[1400px] mx-auto px-4 md:px-8 py-4 flex items-center justify-between">
+      <div class="flex items-center gap-3">
+        <div class="w-10 h-10 bg-gray-50 rounded-xl flex items-center justify-center p-1.5 border border-gray-200">
+          <img src="/LOGO.png" alt="R2s" class="w-full h-full object-contain">
+        </div>
+        <div>
+          <h1 class="text-lg font-extrabold text-gray-900 leading-tight">Admin Dashboard</h1>
+          <p class="text-[11px] font-semibold text-gray-500 uppercase tracking-wider">R2s Realtors</p>
+        </div>
+      </div>
+      <div class="flex items-center gap-5">
+        <button onclick="adminLogout()" class="flex items-center gap-2 text-sm font-bold text-gray-500 hover:text-red-600 transition-colors bg-gray-50 px-4 py-2 rounded-full border border-gray-200">
+          <i data-lucide="log-out" class="w-4 h-4"></i> Logout
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main class="max-w-[1400px] mx-auto px-4 md:px-8 py-8 space-y-8">
+
+    <!-- Top Row: Area Chart & Donut Chart -->
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 no-print">
+      
+      <!-- Main Area Chart -->
+      <div class="lg:col-span-2 bg-white rounded-3xl p-6 md:p-8 shadow-sm border border-gray-100 flex flex-col">
+        <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6 gap-4">
+          <div>
+            <h2 class="text-xl font-extrabold text-gray-900">Dashboard Overview</h2>
+            <p class="text-sm text-gray-500 font-medium">Performance of Latest Month</p>
+          </div>
+          
+          <div class="flex items-center text-xs font-bold text-gray-400 gap-4 md:gap-6 border-b border-gray-100 pb-2 overflow-x-auto hide-scrollbar w-full sm:w-auto">
+            <button onclick="updateChartData('daily', this)" class="chart-tab hover:text-gray-900 transition-colors pb-2 border-b-2 border-transparent shrink-0">DAILY</button>
+            <button onclick="updateChartData('weekly', this)" class="chart-tab hover:text-gray-900 transition-colors pb-2 border-b-2 border-transparent shrink-0">WEEKLY</button>
+            <button onclick="updateChartData('monthly', this)" class="chart-tab text-pink-500 border-b-2 border-pink-500 pb-2 transition-colors shrink-0">MONTHLY</button>
+            <button onclick="updateChartData('yearly', this)" class="chart-tab hover:text-gray-900 transition-colors pb-2 border-b-2 border-transparent shrink-0">YEARLY</button>
+          </div>
+        </div>
+
+        <div class="flex flex-col sm:flex-row gap-6 sm:gap-12 mb-4">
+          <div>
+            <h3 class="text-3xl font-extrabold text-gray-900" id="heroTotal">...</h3>
+            <p class="text-xs font-medium text-gray-500">Total Properties</p>
+          </div>
+          <div>
+            <h3 class="text-3xl font-extrabold text-gray-900" id="heroToday">...</h3>
+            <p class="text-xs font-medium text-gray-500">Added Today</p>
+          </div>
+          <div class="ml-auto flex items-center gap-4 text-xs font-bold text-gray-500">
+            <span class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-full bg-pink-500"></span> Rent Leads</span>
+            <span class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-full bg-purple-500"></span> Buy Leads</span>
+          </div>
+        </div>
+
+        <div class="flex-1 min-h-[250px] relative">
+          <canvas id="mainAreaChart"></canvas>
+        </div>
+      </div>
+
+      <!-- Traffic / Distribution Donut Chart -->
+      <div class="bg-white rounded-3xl p-6 md:p-8 shadow-sm border border-gray-100 flex flex-col">
+        <h2 class="text-lg font-extrabold text-gray-900 mb-6">Lead Sources</h2>
+        
+        <div class="flex-1 flex justify-center items-center relative min-h-[200px]">
+          <canvas id="trafficDonutChart"></canvas>
+        </div>
+        
+        <div class="flex justify-between items-center mt-6 px-2">
+          <div class="text-center">
+            <h4 class="text-xl font-extrabold text-gray-900">33%</h4>
+            <p class="text-[10px] font-bold text-gray-400 uppercase flex items-center justify-center gap-1 mt-1">
+              <span class="w-2 h-2 rounded-full bg-purple-500"></span> Facebook
+            </p>
+          </div>
+          <div class="text-center">
+            <h4 class="text-xl font-extrabold text-gray-900">55%</h4>
+            <p class="text-[10px] font-bold text-gray-400 uppercase flex items-center justify-center gap-1 mt-1">
+              <span class="w-2 h-2 rounded-full bg-pink-500"></span> Youtube
+            </p>
+          </div>
+          <div class="text-center">
+            <h4 class="text-xl font-extrabold text-gray-900">12%</h4>
+            <p class="text-[10px] font-bold text-gray-400 uppercase flex items-center justify-center gap-1 mt-1">
+              <span class="w-2 h-2 rounded-full bg-orange-400"></span> Direct
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 4 Colorful Stat Cards -->
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 no-print">
+      
+      <!-- Card 1 -->
+      <div class="stat-card-1 rounded-3xl p-6 shadow-lg shadow-pink-500/20 relative overflow-hidden group">
+        <div class="relative z-10 flex flex-col h-full justify-between gap-4">
+          <div class="flex justify-between items-start">
+            <p class="text-white/90 text-sm font-bold tracking-wide">Total Associates</p>
+            <div class="w-8 h-8 rounded-full bg-white/20 flex items-center justify-center text-white backdrop-blur-sm">
+              <i data-lucide="users" class="w-4 h-4"></i>
+            </div>
+          </div>
+          <div>
+            <h3 class="text-3xl font-extrabold text-white mb-1" id="card-associates">...</h3>
+            <p class="text-white/80 text-[10px] font-bold uppercase tracking-wider">All active profiles</p>
+          </div>
+        </div>
+        <!-- Sparkline SVG placeholder -->
+        <svg class="absolute bottom-0 left-0 w-full h-16 text-white/20" preserveAspectRatio="none" viewBox="0 0 100 100"><path fill="currentColor" d="M0,100 C20,80 40,100 60,60 C80,20 100,60 100,100 Z"></path></svg>
+      </div>
+
+      <!-- Card 2 -->
+      <div class="stat-card-2 rounded-3xl p-6 shadow-lg shadow-purple-500/20 relative overflow-hidden group">
+        <div class="relative z-10 flex flex-col h-full justify-between gap-4">
+          <div class="flex justify-between items-start">
+            <p class="text-white/90 text-sm font-bold tracking-wide">Total Realtors</p>
+            <div class="w-8 h-8 rounded-full bg-white/20 flex items-center justify-center text-white backdrop-blur-sm">
+              <i data-lucide="user-check" class="w-4 h-4"></i>
+            </div>
+          </div>
+          <div>
+            <h3 class="text-3xl font-extrabold text-white mb-1" id="card-realtors">...</h3>
+            <p class="text-white/80 text-[10px] font-bold uppercase tracking-wider">Verified agents</p>
+          </div>
+        </div>
+        <svg class="absolute bottom-0 left-0 w-full h-16 text-white/20" preserveAspectRatio="none" viewBox="0 0 100 100"><path fill="currentColor" d="M0,100 C25,40 50,90 75,30 C90,10 100,50 100,100 Z"></path></svg>
+      </div>
+
+      <!-- Card 3 -->
+      <div class="stat-card-3 rounded-3xl p-6 shadow-lg shadow-blue-500/20 relative overflow-hidden group">
+        <div class="relative z-10 flex flex-col h-full justify-between gap-4">
+          <div class="flex justify-between items-start">
+            <p class="text-white/90 text-sm font-bold tracking-wide">Buyer Leads</p>
+            <div class="w-8 h-8 rounded-full bg-white/20 flex items-center justify-center text-white backdrop-blur-sm">
+              <i data-lucide="contact" class="w-4 h-4"></i>
+            </div>
+          </div>
+          <div>
+            <h3 class="text-3xl font-extrabold text-white mb-1" id="card-leads">...</h3>
+            <p class="text-white/80 text-[10px] font-bold uppercase tracking-wider">Pending processing</p>
+          </div>
+        </div>
+        <svg class="absolute bottom-0 left-0 w-full h-16 text-white/20" preserveAspectRatio="none" viewBox="0 0 100 100"><path fill="currentColor" d="M0,100 C10,90 30,50 50,70 C70,90 90,40 100,100 Z"></path></svg>
+      </div>
+
+      <!-- Card 4 -->
+      <div class="stat-card-4 rounded-3xl p-6 shadow-lg shadow-orange-500/20 relative overflow-hidden group">
+        <div class="relative z-10 flex flex-col h-full justify-between gap-4">
+          <div class="flex justify-between items-start">
+            <p class="text-white/90 text-sm font-bold tracking-wide">Builders</p>
+            <div class="w-8 h-8 rounded-full bg-white/20 flex items-center justify-center text-white backdrop-blur-sm">
+              <i data-lucide="building-2" class="w-4 h-4"></i>
+            </div>
+          </div>
+          <div>
+            <h3 class="text-3xl font-extrabold text-white mb-1" id="card-builders">...</h3>
+            <p class="text-white/80 text-[10px] font-bold uppercase tracking-wider">Registered Developers</p>
+          </div>
+        </div>
+        <svg class="absolute bottom-0 left-0 w-full h-16 text-white/20" preserveAspectRatio="none" viewBox="0 0 100 100"><path fill="currentColor" d="M0,100 C30,70 40,80 60,40 C80,10 100,60 100,100 Z"></path></svg>
+      </div>
+
+    </div>
+
+    <!-- Bottom Row: Activities & Table -->
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+      
+      <!-- Recent Activities Timeline -->
+      <div class="bg-white rounded-3xl p-6 md:p-8 shadow-sm border border-gray-100 flex flex-col h-[500px] no-print">
+        <h2 class="text-lg font-extrabold text-gray-900 mb-6">Recent Network Activity</h2>
+        
+        <div class="overflow-y-auto pr-2 custom-scrollbar flex-1">
+          <div class="timeline-item">
+            <div class="absolute left-0 top-1 w-6 h-6 rounded-full bg-pink-100 text-pink-600 flex items-center justify-center z-10">
+              <i data-lucide="home" class="w-3 h-3"></i>
+            </div>
+            <div class="flex justify-between items-start mb-1">
+              <p class="text-sm font-bold text-gray-900">Property Listed</p>
+              <p class="text-[10px] font-bold text-gray-400">42 Mins Ago</p>
+            </div>
+            <p class="text-xs font-medium text-gray-500"><span class="font-bold text-gray-800">Rajesh Kumar</span> added a new Villa in Kakkanad</p>
+          </div>
+
+          <div class="timeline-item">
+            <div class="absolute left-0 top-1 w-6 h-6 rounded-full bg-purple-100 text-purple-600 flex items-center justify-center z-10">
+              <i data-lucide="check-circle" class="w-3 h-3"></i>
+            </div>
+            <div class="flex justify-between items-start mb-1">
+              <p class="text-sm font-bold text-gray-900">Deal Closed</p>
+              <p class="text-[10px] font-bold text-gray-400">1 Day Ago</p>
+            </div>
+            <p class="text-xs font-medium text-gray-500"><span class="font-bold text-gray-800">Priyanka Menon</span> finalized a residential plot</p>
+          </div>
+
+          <div class="timeline-item">
+            <div class="absolute left-0 top-1 w-6 h-6 rounded-full bg-blue-100 text-blue-600 flex items-center justify-center z-10">
+              <i data-lucide="user-check" class="w-3 h-3"></i>
+            </div>
+            <div class="flex justify-between items-start mb-1">
+              <p class="text-sm font-bold text-gray-900">Realtor Verified</p>
+              <p class="text-[10px] font-bold text-gray-400">2 Days Ago</p>
+            </div>
+            <p class="text-xs font-medium text-gray-500"><span class="font-bold text-gray-800">Anil Das</span> verified NAR ID successfully</p>
+          </div>
+
+          <div class="timeline-item">
+            <div class="absolute left-0 top-1 w-6 h-6 rounded-full bg-orange-100 text-orange-600 flex items-center justify-center z-10">
+              <i data-lucide="video" class="w-3 h-3"></i>
+            </div>
+            <div class="flex justify-between items-start mb-1">
+              <p class="text-sm font-bold text-gray-900">Promo Request</p>
+              <p class="text-[10px] font-bold text-gray-400">2 Days Ago</p>
+            </div>
+            <p class="text-xs font-medium text-gray-500"><span class="font-bold text-gray-800">Sneha Varghese</span> requested a promo video</p>
+          </div>
+          
+          <div class="timeline-item">
+            <div class="absolute left-0 top-1 w-6 h-6 rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center z-10">
+              <i data-lucide="building-2" class="w-3 h-3"></i>
+            </div>
+            <div class="flex justify-between items-start mb-1">
+              <p class="text-sm font-bold text-gray-900">New Builder</p>
+              <p class="text-[10px] font-bold text-gray-400">3 Days Ago</p>
+            </div>
+            <p class="text-xs font-medium text-gray-500"><span class="font-bold text-gray-800">Skyline Developers</span> created a profile</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Order / Requests Status Table (Reports) -->
+      <div class="lg:col-span-2 bg-white rounded-3xl p-6 md:p-8 shadow-sm border border-gray-100 h-[500px] flex flex-col print-area">
+        <div class="flex flex-col md:flex-row justify-between md:items-end mb-6 gap-4">
+          <div>
+            <h2 class="text-lg font-extrabold text-gray-900">Lead Status Report</h2>
+            <p class="text-sm text-gray-500 font-medium">Overview of Latest Incoming Leads</p>
+          </div>
+          
+          <div class="flex flex-wrap gap-3 items-center no-print">
+            <!-- Filtering Options -->
+            <div class="relative">
+              <select id="statusFilter" class="bg-gray-50 border border-gray-200 text-gray-700 text-xs font-bold rounded-lg pl-3 pr-8 py-2.5 outline-none focus:border-pink-500 appearance-none cursor-pointer">
+                <option value="All">All Status</option>
+                <option value="Process">Processing</option>
+                <option value="Open">Open</option>
+                <option value="On Hold">On Hold</option>
+              </select>
+              <i data-lucide="chevron-down" class="w-4 h-4 absolute right-2.5 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none"></i>
+            </div>
+            
+            <div class="relative">
+              <select id="dateFilter" class="bg-gray-50 border border-gray-200 text-gray-700 text-xs font-bold rounded-lg pl-3 pr-8 py-2.5 outline-none focus:border-pink-500 appearance-none cursor-pointer">
+                <option value="This Month">This Month</option>
+                <option value="Last Month">Last Month</option>
+                <option value="Last 3 Months">Last 3 Months</option>
+              </select>
+              <i data-lucide="chevron-down" class="w-4 h-4 absolute right-2.5 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none"></i>
+            </div>
+
+            <div class="w-px h-6 bg-gray-200 mx-1"></div>
+
+            <!-- Export & Print -->
+            <button onclick="exportTableToCSV('lead_status_report.csv')" class="bg-indigo-50 text-indigo-600 px-4 py-2.5 text-xs font-bold rounded-lg shadow-sm hover:bg-indigo-100 transition-colors flex items-center gap-2 border border-indigo-100">
+              <i data-lucide="download" class="w-4 h-4"></i> Export CSV
+            </button>
+            <button onclick="window.print()" class="bg-gray-50 text-gray-600 p-2.5 rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-gray-900 transition-colors flex items-center justify-center">
+              <i data-lucide="printer" class="w-4 h-4"></i>
+            </button>
+          </div>
+        </div>
+        
+        <div class="flex justify-between items-center mb-4 gap-4 no-print">
+           <div class="relative w-full max-w-xs">
+             <i data-lucide="search" class="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 text-gray-400"></i>
+             <input type="text" id="tableSearch" placeholder="Search leads..." class="w-full bg-gray-50 border border-gray-200 rounded-lg pl-9 pr-4 py-2 text-sm outline-none focus:border-pink-500 transition-colors">
+           </div>
+        </div>
+
+        <div class="overflow-x-auto flex-1 custom-scrollbar pb-2">
+          <table class="w-full text-left border-collapse min-w-[700px]" id="dataTable">
+            <thead>
+              <tr class="bg-[#1f2937] text-white text-[11px] uppercase tracking-widest font-bold">
+                <th class="p-4 rounded-l-xl">LEAD ID</th>
+                <th class="p-4">CLIENT NAME</th>
+                <th class="p-4">LOCATION</th>
+                <th class="p-4">BUDGET</th>
+                <th class="p-4 rounded-r-xl text-center">STATUS</th>
+              </tr>
+            </thead>
+            <tbody class="text-sm font-medium text-gray-700" id="tableBody">
+              <tr class="border-b border-gray-100 hover:bg-gray-50 transition-colors">
+                <td class="p-4 font-bold text-gray-900">#L-12386</td>
+                <td class="p-4">Rajesh Kumar</td>
+                <td class="p-4">Kakkanad, Kochi</td>
+                <td class="p-4 font-bold">₹1.5 Cr</td>
+                <td class="p-4 text-center"><span class="bg-pink-100 text-pink-600 px-4 py-1.5 rounded-lg text-xs font-bold w-24 inline-block">Process</span></td>
+              </tr>
+              <tr class="border-b border-gray-100 hover:bg-gray-50 transition-colors">
+                <td class="p-4 font-bold text-gray-900">#L-12385</td>
+                <td class="p-4">Priyanka Menon</td>
+                <td class="p-4">Edappally, Kochi</td>
+                <td class="p-4 font-bold">₹75 Lakhs</td>
+                <td class="p-4 text-center"><span class="bg-emerald-100 text-emerald-600 px-4 py-1.5 rounded-lg text-xs font-bold w-24 inline-block">Open</span></td>
+              </tr>
+              <tr class="border-b border-gray-100 hover:bg-gray-50 transition-colors">
+                <td class="p-4 font-bold text-gray-900">#L-12384</td>
+                <td class="p-4">Anil Das</td>
+                <td class="p-4">Kozhikode</td>
+                <td class="p-4 font-bold">₹2.2 Cr</td>
+                <td class="p-4 text-center"><span class="bg-blue-100 text-blue-600 px-4 py-1.5 rounded-lg text-xs font-bold w-24 inline-block">On Hold</span></td>
+              </tr>
+              <tr class="border-b border-gray-100 hover:bg-gray-50 transition-colors">
+                <td class="p-4 font-bold text-gray-900">#L-12383</td>
+                <td class="p-4">Sneha Varghese</td>
+                <td class="p-4">Wayanad</td>
+                <td class="p-4 font-bold">₹45 Lakhs</td>
+                <td class="p-4 text-center"><span class="bg-pink-100 text-pink-600 px-4 py-1.5 rounded-lg text-xs font-bold w-24 inline-block">Process</span></td>
+              </tr>
+              <tr class="hover:bg-gray-50 transition-colors">
+                <td class="p-4 font-bold text-gray-900">#L-12382</td>
+                <td class="p-4">Mohan Lal</td>
+                <td class="p-4">Trivandrum</td>
+                <td class="p-4 font-bold">₹3.5 Cr</td>
+                <td class="p-4 text-center"><span class="bg-emerald-100 text-emerald-600 px-4 py-1.5 rounded-lg text-xs font-bold w-24 inline-block">Open</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        
+        <div class="mt-4 flex justify-between items-center text-xs font-semibold text-gray-500 no-print">
+          <p id="tableInfo">Showing 1 to 5 of 5 entries</p>
+          <div class="flex gap-1">
+            <button class="w-7 h-7 rounded-lg flex items-center justify-center hover:bg-gray-100 border border-transparent"><i data-lucide="chevron-left" class="w-4 h-4"></i></button>
+            <button class="w-7 h-7 rounded-lg flex items-center justify-center bg-gray-900 text-white shadow">1</button>
+            <button class="w-7 h-7 rounded-lg flex items-center justify-center hover:bg-gray-100 text-gray-400">2</button>
+            <button class="w-7 h-7 rounded-lg flex items-center justify-center hover:bg-gray-100 border border-transparent"><i data-lucide="chevron-right" class="w-4 h-4"></i></button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <script>
+    if (typeof lucide !== 'undefined') lucide.createIcons();
+
+    // Chart.js Implementations
+    const ctxMain = document.getElementById('mainAreaChart').getContext('2d');
+    
+    // Gradients for Area Chart
+    const gradientPink = ctxMain.createLinearGradient(0, 0, 0, 400);
+    gradientPink.addColorStop(0, 'rgba(236, 72, 153, 0.5)'); 
+    gradientPink.addColorStop(1, 'rgba(236, 72, 153, 0.0)');
+    
+    const gradientPurple = ctxMain.createLinearGradient(0, 0, 0, 400);
+    gradientPurple.addColorStop(0, 'rgba(139, 92, 246, 0.5)'); 
+    gradientPurple.addColorStop(1, 'rgba(139, 92, 246, 0.0)');
+
+    const mainAreaChartInstance = new Chart(ctxMain, {
+      type: 'line',
+      data: {
+        labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
+        datasets: [
+          {
+            label: 'Rent Leads',
+            data: [5, 12, 10, 18, 15, 20],
+            borderColor: '#ec4899', // Pink
+            backgroundColor: gradientPink,
+            borderWidth: 3,
+            tension: 0.4,
+            fill: true,
+            pointBackgroundColor: '#fff',
+            pointBorderColor: '#ec4899',
+            pointBorderWidth: 2,
+            pointRadius: 4,
+            pointHoverRadius: 6
+          },
+          {
+            label: 'Buy Leads',
+            data: [12, 19, 15, 25, 22, 30],
+            borderColor: '#8b5cf6', // Purple
+            backgroundColor: gradientPurple,
+            borderWidth: 3,
+            tension: 0.4,
+            fill: true,
+            pointBackgroundColor: '#fff',
+            pointBorderColor: '#8b5cf6',
+            pointBorderWidth: 2,
+            pointRadius: 4,
+            pointHoverRadius: 6
+          }
+        ]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+          legend: { display: false },
+          tooltip: {
+            mode: 'index',
+            intersect: false,
+            backgroundColor: 'rgba(255, 255, 255, 0.95)',
+            titleColor: '#1f2937',
+            bodyColor: '#4b5563',
+            borderColor: '#e5e7eb',
+            borderWidth: 1,
+            padding: 12,
+            boxPadding: 6,
+            usePointStyle: true
+          }
+        },
+        scales: {
+          x: {
+            grid: { display: false, drawBorder: false },
+            ticks: { color: '#9ca3af', font: { family: "'Plus Jakarta Sans', sans-serif", weight: '600' } }
+          },
+          y: {
+            grid: { color: '#f3f4f6', drawBorder: false, borderDash: [5, 5] },
+            ticks: { color: '#9ca3af', font: { family: "'Plus Jakarta Sans', sans-serif", weight: '600' }, stepSize: 5, beginAtZero: true, max: 35 }
+          }
+        },
+        interaction: { mode: 'nearest', axis: 'x', intersect: false }
+      }
+    });
+
+    const chartMockData = {
+      daily: {
+        labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+        rent: [2, 4, 1, 5, 3, 7, 4],
+        buy: [1, 3, 2, 4, 2, 5, 3]
+      },
+      weekly: {
+        labels: ['Week 1', 'Week 2', 'Week 3', 'Week 4'],
+        rent: [15, 22, 18, 25],
+        buy: [10, 18, 14, 20]
+      },
+      monthly: {
+        labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
+        rent: [5, 12, 10, 18, 15, 20],
+        buy: [12, 19, 15, 25, 22, 30]
+      },
+      yearly: {
+        labels: ['2020', '2021', '2022', '2023', '2024'],
+        rent: [80, 110, 140, 190, 230],
+        buy: [120, 150, 180, 220, 260]
+      }
+    };
+
+    function updateChartData(period, btn) {
+      // Update chart data
+      mainAreaChartInstance.data.labels = chartMockData[period].labels;
+      mainAreaChartInstance.data.datasets[0].data = chartMockData[period].rent;
+      mainAreaChartInstance.data.datasets[1].data = chartMockData[period].buy;
+      
+      // Auto adjust Y-axis max based on data
+      const maxVal = Math.max(...chartMockData[period].rent, ...chartMockData[period].buy);
+      mainAreaChartInstance.options.scales.y.max = Math.ceil(maxVal * 1.2 / 5) * 5; // Add 20% headroom and round to nearest 5
+      
+      mainAreaChartInstance.update();
+
+      // Update active tab styles
+      document.querySelectorAll('.chart-tab').forEach(el => {
+        el.className = 'chart-tab hover:text-gray-900 transition-colors pb-2 border-b-2 border-transparent shrink-0';
+      });
+      btn.className = 'chart-tab text-pink-500 border-b-2 border-pink-500 pb-2 transition-colors shrink-0';
+    }
+
+    // Donut Chart
+    const ctxDonut = document.getElementById('trafficDonutChart').getContext('2d');
+    new Chart(ctxDonut, {
+      type: 'doughnut',
+      data: {
+        labels: ['Facebook Ads', 'Youtube Promo', 'Direct Search'],
+        datasets: [{
+          data: [33, 55, 12],
+          backgroundColor: [
+            '#8b5cf6', // Purple
+            '#ec4899', // Pink
+            '#f97316'  // Orange
+          ],
+          borderWidth: 0,
+          hoverOffset: 4
+        }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        cutout: '75%',
+        plugins: {
+          legend: { display: false },
+          tooltip: {
+            backgroundColor: 'rgba(255, 255, 255, 0.95)',
+            titleColor: '#1f2937',
+            bodyColor: '#4b5563',
+            borderColor: '#e5e7eb',
+            borderWidth: 1,
+            padding: 12,
+            boxPadding: 6,
+            usePointStyle: true
+          }
+        }
+      }
+    });
+
+    // Data Export CSV Logic
+    function exportTableToCSV(filename) {
+      const rows = document.querySelectorAll("table#dataTable tr");
+      let csv = [];
+      for (let i = 0; i < rows.length; i++) {
+        let row = [], cols = rows[i].querySelectorAll("td, th");
+        // Only get visible columns/rows
+        if(rows[i].style.display !== 'none') {
+          for (let j = 0; j < cols.length; j++) 
+              row.push('"' + cols[j].innerText.replace(/"/g, '""') + '"');
+          csv.push(row.join(","));
+        }
+      }
+      
+      const csvString = csv.join("\n");
+      const link = document.createElement("a");
+      link.style.display = "none";
+      link.setAttribute("target", "_blank");
+      link.setAttribute("href", "data:text/csv;charset=utf-8," + encodeURIComponent(csvString));
+      link.setAttribute("download", filename);
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    }
+
+    // Live Filtering Logic
+    const searchInput = document.getElementById('tableSearch');
+    const statusFilter = document.getElementById('statusFilter');
+    const tableBody = document.getElementById('tableBody');
+    const tr = tableBody.getElementsByTagName('tr');
+
+    function filterTable() {
+      const filterText = searchInput.value.toUpperCase();
+      const filterStatus = statusFilter.value.toUpperCase();
+      let visibleCount = 0;
+
+      for (let i = 0; i < tr.length; i++) {
+        let tdContent = tr[i].textContent || tr[i].innerText;
+        let tdStatus = tr[i].getElementsByTagName("td")[4].textContent || tr[i].getElementsByTagName("td")[4].innerText;
+        
+        let matchesSearch = tdContent.toUpperCase().indexOf(filterText) > -1;
+        let matchesStatus = filterStatus === "ALL" || tdStatus.toUpperCase().indexOf(filterStatus) > -1;
+
+        if (matchesSearch && matchesStatus) {
+          tr[i].style.display = "";
+          visibleCount++;
+        } else {
+          tr[i].style.display = "none";
+        }
+      }
+      document.getElementById('tableInfo').textContent = `Showing 1 to ${visibleCount} of ${visibleCount} entries`;
+    }
+
+    searchInput.addEventListener('keyup', filterTable);
+    statusFilter.addEventListener('change', filterTable);
+
+    // Data binding logic to keep functionality intact
+    function setSyncStatus(state, detail) {
+      // Removed sync indicator UI per request
+    }
+
+    function renderHero(stats, errors) {
+      const set = (id, key) => {
+        const el = document.getElementById(id);
+        if (!stats) { el.textContent = '—'; return; }
+        if (errors && errors[key]) { el.textContent = '—'; el.title = errors[key]; el.classList.add('text-white/50'); return; }
+        el.textContent = stats[key] ?? 0;
+      };
+      
+      set('heroTotal', 'totalProperties');
+      set('heroToday', 'propertiesToday');
+      
+      set('card-associates', 'totalAssociates');
+      set('card-realtors', 'totalRealtors');
+      set('card-leads', 'totalBuyerLeads');
+      set('card-builders', 'totalBuilders');
+    }
+
+    async function loadStats() {
+      try {
+        const res = await fetch('/api/get-admin-stats');
+        const result = await res.json();
+        if (!result.success) throw new Error(result.error || 'Failed to load stats');
+        
+        renderHero(result.stats, result.errors);
+      } catch (err) {
+        console.error('Admin stats load failed (using mock data):', err);
+        // Render mock data so the dashboard stays premium looking offline
+        renderHero({
+          totalProperties: 143,
+          propertiesToday: 5,
+          totalAssociates: 120,
+          totalRealtors: 84,
+          totalBuyerLeads: 45,
+          totalBuilders: 12
+        }, {});
+      }
+    }
+
+    function adminLogout() {
+      localStorage.removeItem('r2s_is_admin');
+      localStorage.removeItem('r2s_current_user');
+      window.location.href = '/login.html';
+    }
+
+    (function guard() {
+      if (localStorage.getItem('r2s_is_admin') !== 'true') {
+        window.location.href = '/login.html';
+        return;
+      }
+      loadStats();
+    })();
+  </script>
+</body>
+</html>

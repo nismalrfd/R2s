@@ -1,0 +1,8 @@
+{
+     "name": "r2s-static",
+     "version": "1.0.0",
+     "description": "Pure static HTML deployment for Vercel",
+     "scripts": {
+       "build": "echo No build needed"
+     }
+   }
