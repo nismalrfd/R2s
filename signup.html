@@ -258,7 +258,7 @@
               </div>
             </label>
 
-            <!-- 6. NRI Channel -->
+            <!-- 6. NRI Client -->
             <label class="radio-card cursor-pointer relative h-full group">
               <input type="radio" name="role" value="nri_channel" class="absolute opacity-0 w-0 h-0">
               <div class="w-full h-full bg-white border border-gray-200 rounded-[16px] p-2 sm:p-3 flex flex-col items-center justify-center text-center transition-all duration-300 hover:border-gray-300 hover:-translate-y-1 hover:shadow-md">
@@ -268,8 +268,8 @@
                   <i data-lucide="globe" class="w-5 h-5 sm:w-6 sm:h-6 text-red-600" stroke-width="2.5" aria-hidden="true"></i>
                 </div>
                   <div class="text-center">
-                    <h3 class="font-bold text-slate-950 text-sm mb-0.5">NRI Channel</h3>
-                    <p class="text-[10px] font-medium text-gray-400">Intl referrals</p>
+                    <h3 class="font-bold text-slate-950 text-sm mb-0.5 whitespace-nowrap">NRI Client</h3>
+                    <p class="text-[10px] font-medium text-gray-400">Global clients</p>
                   </div>
                 </div>
               </div>
@@ -471,6 +471,41 @@
               </div>
             </div>
 
+            <!-- Dynamic Block: NRI Client -->
+            <div id="cond_nri" class="w-full animate-stagger-2 hidden">
+              <h3 class="text-sm font-bold text-slate-950 flex items-center gap-2 mb-4"><i data-lucide="globe" class="w-4 h-4 text-purple-600" aria-hidden="true"></i> NRI Client Details</h3>
+              <div class="flex flex-col gap-3">
+                <div class="flex flex-col gap-2 relative">
+                  <label class="text-[10px] font-bold text-gray-500 uppercase tracking-wider">Referral Name (Optional)</label>
+                  <input type="text" id="nri_referral" class="w-full bg-gray-50 rounded-xl px-3 py-2 sm:py-2.5 border border-gray-100 outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-500/20 focus:bg-white transition-all text-slate-950 font-bold text-sm" placeholder="e.g. John Doe">
+                </div>
+                <div class="flex flex-col gap-2 relative">
+                  <label class="text-[10px] font-bold text-gray-500 uppercase tracking-wider">Company Name *</label>
+                  <input type="text" id="nri_company" class="w-full bg-gray-50 rounded-xl px-3 py-2 sm:py-2.5 border border-gray-100 outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-500/20 focus:bg-white transition-all text-slate-950 font-bold text-sm" placeholder="Your Company Name">
+                </div>
+                <div class="flex flex-col gap-2 relative">
+                  <label class="text-[10px] font-bold text-gray-500 uppercase tracking-wider">Designation</label>
+                  <input type="text" id="nri_designation" class="w-full bg-gray-50 rounded-xl px-3 py-2 sm:py-2.5 border border-gray-100 outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-500/20 focus:bg-white transition-all text-slate-950 font-bold text-sm" placeholder="e.g. Sales Director">
+                </div>
+                <div class="flex flex-col gap-2 relative">
+                  <label class="text-[10px] font-bold text-gray-500 uppercase tracking-wider">Current Country *</label>
+                  <div class="relative">
+                    <select id="nri_country" class="w-full bg-gray-50 rounded-xl px-3 py-2 sm:py-2.5 border border-gray-100 outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-500/20 focus:bg-white transition-all text-slate-950 font-bold text-sm appearance-none cursor-pointer">
+                      <option value="">— Select Country —</option>
+                      <option value="US">United States</option>
+                      <option value="UK">United Kingdom</option>
+                      <option value="UAE">United Arab Emirates</option>
+                      <option value="AU">Australia</option>
+                      <option value="SG">Singapore</option>
+                      <option value="SA">Saudi Arabia</option>
+                      <option value="Other">Other</option>
+                    </select>
+                    <i data-lucide="chevron-down" class="w-4 h-4 absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none" aria-hidden="true"></i>
+                  </div>
+                </div>
+              </div>
+            </div>
+
             <!-- Dynamic Block: Builder -->
             <div id="cond_builder" class="w-full animate-stagger-2 hidden">
               <h3 class="text-sm font-bold text-slate-950 flex items-center gap-2 mb-4"><i data-lucide="building-2" class="w-4 h-4 text-emerald-600" aria-hidden="true"></i> Builder Details</h3>
@@ -657,9 +692,9 @@
         configureRoleFields();
       }
 
-      // Special case: If role is Owner or Agent or NRI Channel, they don't have dynamic fields.
+      // Special case: If role is Owner or Agent, they don't have dynamic fields.
       if (next === 3) {
-        if (role === 'owner' || role === 'agent' || role === 'nri_channel') {
+        if (role === 'owner' || role === 'agent') {
            if (current === 2) {
              goToStep(current, 4);
              return;
@@ -702,9 +737,10 @@
       document.getElementById('cond_nar').classList.add('hidden');
       document.getElementById('cond_cp').classList.add('hidden');
       document.getElementById('cond_builder').classList.add('hidden');
+      document.getElementById('cond_nri').classList.add('hidden');
       document.getElementById('cond_none').classList.add('hidden');
       
-      const dynamicFields = document.querySelectorAll('#cond_nar input, #cond_cp select, #cond_builder input');
+      const dynamicFields = document.querySelectorAll('#cond_nar input, #cond_cp select, #cond_builder input, #cond_nri select, #cond_nri input, #cond_cp input');
       dynamicFields.forEach(f => {
         if(f.hasAttribute('data-req')) f.removeAttribute('required');
       });
@@ -719,6 +755,12 @@
         document.getElementById('cond_builder').classList.remove('hidden');
         document.getElementById('bl_name').setAttribute('required', 'true');
         document.getElementById('bl_name').setAttribute('data-req', 'true');
+      } else if (role === 'nri_channel') {
+        document.getElementById('cond_nri').classList.remove('hidden');
+        document.getElementById('nri_country').setAttribute('required', 'true');
+        document.getElementById('nri_country').setAttribute('data-req', 'true');
+        document.getElementById('nri_company').setAttribute('required', 'true');
+        document.getElementById('nri_company').setAttribute('data-req', 'true');
       } else {
         document.getElementById('cond_none').classList.remove('hidden');
       }
@@ -895,6 +937,11 @@
         cpDesignation: document.getElementById('cp_designation')?.value || '',
         reraRegistered: document.getElementById('cp_rera_reg')?.value || '',
         reraNumber: document.getElementById('cp_rera_no')?.value || '',
+        // NRI Client extra fields
+        nriReferral: document.getElementById('nri_referral')?.value || '',
+        nriCompany: document.getElementById('nri_company')?.value || '',
+        nriDesignation: document.getElementById('nri_designation')?.value || '',
+        nriCountry: document.getElementById('nri_country')?.value || '',
         // Builder extra fields
         builderCompany: document.getElementById('bl_company')?.value || '',
         builderDesignation: document.getElementById('bl_designation')?.value || '',
