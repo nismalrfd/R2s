@@ -1,0 +1,11 @@
+{
+  "buildCommand": null,
+  "outputDirectory": ".",
+  "redirects": [
+    {
+      "source": "/",
+      "destination": "/login.html",
+      "permanent": false
+    }
+  ]
+}

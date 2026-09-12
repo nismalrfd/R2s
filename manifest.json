@@ -1,0 +1,21 @@
+{
+  "name": "R2s Realtors",
+  "short_name": "R2s",
+  "start_url": "/login.html",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#2563EB",
+  "description": "Premium real estate networking and property management platform.",
+  "icons": [
+    {
+      "src": "/LOGO.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/LOGO.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
