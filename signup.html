@@ -355,11 +355,35 @@
           <div class="flex flex-col gap-3 w-full animate-stagger-2">
             <h3 class="text-sm font-bold text-slate-950 flex items-center gap-2 mb-2"><i data-lucide="user" class="w-4 h-4 text-blue-600" aria-hidden="true"></i> Personal Details</h3>
             
+            <!-- NRI Referral Field -->
+            <div id="nri_referral_group" class="hidden flex-col gap-2 relative">
+              <label class="text-[10px] font-bold text-gray-500 uppercase tracking-wider">Referral Name (Optional)</label>
+              <input type="text" id="nri_referral" class="w-full bg-gray-50 rounded-xl px-3 py-2 sm:py-2.5 border border-gray-100 outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-500/20 focus:bg-white transition-all text-slate-950 font-bold text-sm" placeholder="e.g. John Doe">
+            </div>
+
             <div class="flex flex-col gap-2 relative">
               <label class="text-[10px] font-bold text-gray-500 uppercase tracking-wider">Full Name *</label>
               <input type="text" id="f_name" class="w-full bg-gray-50 rounded-xl px-3 py-2 sm:py-2.5 border border-gray-100 outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-500/20 focus:bg-white transition-all text-slate-950 font-bold text-sm" placeholder="e.g. Rajesh Kumar" required>
             </div>
             
+            <!-- NRI Country Field -->
+            <div id="nri_country_group" class="hidden flex-col gap-2 relative">
+              <label class="text-[10px] font-bold text-gray-500 uppercase tracking-wider">Current Country *</label>
+              <div class="relative">
+                <select id="nri_country" onchange="syncCountryToPhone()" class="w-full bg-gray-50 rounded-xl px-3 py-2 sm:py-2.5 border border-gray-100 outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-500/20 focus:bg-white transition-all text-slate-950 font-bold text-sm appearance-none cursor-pointer">
+                  <option value="">— Select Country —</option>
+                  <option value="in">India</option>
+                  <option value="us">United States</option>
+                  <option value="gb">United Kingdom</option>
+                  <option value="ae">United Arab Emirates</option>
+                  <option value="au">Australia</option>
+                  <option value="sg">Singapore</option>
+                  <option value="sa">Saudi Arabia</option>
+                </select>
+                <i data-lucide="chevron-down" class="w-4 h-4 absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none" aria-hidden="true"></i>
+              </div>
+            </div>
+
             <div class="flex flex-col gap-2 relative">
               <label class="text-[10px] font-bold text-gray-500 uppercase tracking-wider">Phone Number *</label>
               <div class="w-full relative">
@@ -471,40 +495,7 @@
               </div>
             </div>
 
-            <!-- Dynamic Block: NRI Client -->
-            <div id="cond_nri" class="w-full animate-stagger-2 hidden">
-              <h3 class="text-sm font-bold text-slate-950 flex items-center gap-2 mb-4"><i data-lucide="globe" class="w-4 h-4 text-purple-600" aria-hidden="true"></i> NRI Client Details</h3>
-              <div class="flex flex-col gap-3">
-                <div class="flex flex-col gap-2 relative">
-                  <label class="text-[10px] font-bold text-gray-500 uppercase tracking-wider">Referral Name (Optional)</label>
-                  <input type="text" id="nri_referral" class="w-full bg-gray-50 rounded-xl px-3 py-2 sm:py-2.5 border border-gray-100 outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-500/20 focus:bg-white transition-all text-slate-950 font-bold text-sm" placeholder="e.g. John Doe">
-                </div>
-                <div class="flex flex-col gap-2 relative">
-                  <label class="text-[10px] font-bold text-gray-500 uppercase tracking-wider">Company Name *</label>
-                  <input type="text" id="nri_company" class="w-full bg-gray-50 rounded-xl px-3 py-2 sm:py-2.5 border border-gray-100 outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-500/20 focus:bg-white transition-all text-slate-950 font-bold text-sm" placeholder="Your Company Name">
-                </div>
-                <div class="flex flex-col gap-2 relative">
-                  <label class="text-[10px] font-bold text-gray-500 uppercase tracking-wider">Designation</label>
-                  <input type="text" id="nri_designation" class="w-full bg-gray-50 rounded-xl px-3 py-2 sm:py-2.5 border border-gray-100 outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-500/20 focus:bg-white transition-all text-slate-950 font-bold text-sm" placeholder="e.g. Sales Director">
-                </div>
-                <div class="flex flex-col gap-2 relative">
-                  <label class="text-[10px] font-bold text-gray-500 uppercase tracking-wider">Current Country *</label>
-                  <div class="relative">
-                    <select id="nri_country" class="w-full bg-gray-50 rounded-xl px-3 py-2 sm:py-2.5 border border-gray-100 outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-500/20 focus:bg-white transition-all text-slate-950 font-bold text-sm appearance-none cursor-pointer">
-                      <option value="">— Select Country —</option>
-                      <option value="US">United States</option>
-                      <option value="UK">United Kingdom</option>
-                      <option value="UAE">United Arab Emirates</option>
-                      <option value="AU">Australia</option>
-                      <option value="SG">Singapore</option>
-                      <option value="SA">Saudi Arabia</option>
-                      <option value="Other">Other</option>
-                    </select>
-                    <i data-lucide="chevron-down" class="w-4 h-4 absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none" aria-hidden="true"></i>
-                  </div>
-                </div>
-              </div>
-            </div>
+
 
             <!-- Dynamic Block: Builder -->
             <div id="cond_builder" class="w-full animate-stagger-2 hidden">
@@ -692,9 +683,32 @@
         configureRoleFields();
       }
 
-      // Special case: If role is Owner or Agent, they don't have dynamic fields.
+      // Step 2 dynamic fields based on role
+      if (next === 2) {
+        const referralGroup = document.getElementById('nri_referral_group');
+        const countryGroup = document.getElementById('nri_country_group');
+        const countryInput = document.getElementById('nri_country');
+        
+        if (role === 'nri_channel') {
+          referralGroup.classList.remove('hidden');
+          referralGroup.classList.add('flex');
+          countryGroup.classList.remove('hidden');
+          countryGroup.classList.add('flex');
+          countryInput.setAttribute('required', 'true');
+          countryInput.setAttribute('data-req', 'true');
+        } else {
+          referralGroup.classList.add('hidden');
+          referralGroup.classList.remove('flex');
+          countryGroup.classList.add('hidden');
+          countryGroup.classList.remove('flex');
+          countryInput.removeAttribute('required');
+          countryInput.removeAttribute('data-req');
+        }
+      }
+
+      // Special case: If role is Owner or Agent or NRI Client, they don't have dynamic fields.
       if (next === 3) {
-        if (role === 'owner' || role === 'agent') {
+        if (role === 'owner' || role === 'agent' || role === 'nri_channel') {
            if (current === 2) {
              goToStep(current, 4);
              return;
@@ -737,10 +751,9 @@
       document.getElementById('cond_nar').classList.add('hidden');
       document.getElementById('cond_cp').classList.add('hidden');
       document.getElementById('cond_builder').classList.add('hidden');
-      document.getElementById('cond_nri').classList.add('hidden');
       document.getElementById('cond_none').classList.add('hidden');
       
-      const dynamicFields = document.querySelectorAll('#cond_nar input, #cond_cp select, #cond_builder input, #cond_nri select, #cond_nri input, #cond_cp input');
+      const dynamicFields = document.querySelectorAll('#cond_nar input, #cond_cp select, #cond_builder input, #cond_cp input');
       dynamicFields.forEach(f => {
         if(f.hasAttribute('data-req')) f.removeAttribute('required');
       });
@@ -755,12 +768,6 @@
         document.getElementById('cond_builder').classList.remove('hidden');
         document.getElementById('bl_name').setAttribute('required', 'true');
         document.getElementById('bl_name').setAttribute('data-req', 'true');
-      } else if (role === 'nri_channel') {
-        document.getElementById('cond_nri').classList.remove('hidden');
-        document.getElementById('nri_country').setAttribute('required', 'true');
-        document.getElementById('nri_country').setAttribute('data-req', 'true');
-        document.getElementById('nri_company').setAttribute('required', 'true');
-        document.getElementById('nri_company').setAttribute('data-req', 'true');
       } else {
         document.getElementById('cond_none').classList.remove('hidden');
       }
@@ -782,6 +789,16 @@
         waPhone.value = '';
         waPhone.readOnly = false;
         waPhone.classList.remove('text-gray-400');
+      }
+    }
+    
+    function syncCountryToPhone() {
+      const countryCode = document.getElementById('nri_country').value;
+      if (countryCode && typeof phoneIti !== 'undefined') {
+        phoneIti.setCountry(countryCode);
+        if (document.getElementById('sameAsPhone').checked && typeof waIti !== 'undefined') {
+          waIti.setCountry(countryCode);
+        }
       }
     }
 
@@ -939,8 +956,6 @@
         reraNumber: document.getElementById('cp_rera_no')?.value || '',
         // NRI Client extra fields
         nriReferral: document.getElementById('nri_referral')?.value || '',
-        nriCompany: document.getElementById('nri_company')?.value || '',
-        nriDesignation: document.getElementById('nri_designation')?.value || '',
         nriCountry: document.getElementById('nri_country')?.value || '',
         // Builder extra fields
         builderCompany: document.getElementById('bl_company')?.value || '',
