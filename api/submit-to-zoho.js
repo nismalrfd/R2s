@@ -8,8 +8,8 @@ const ROLE_LOOKUP_FIELD = {
   partner: "Channel_Partners",
   builder: "Builder_Modules",
   agent: "Agent_Modules",
+  nri_channel: "NRI_Clients",
 };
-
 
 // Which Lookup field on the Leads module links the Buyer Lead
 // back to the user who captured it.
@@ -17,6 +17,7 @@ const BUYERLEAD_LOOKUP_FIELD = {
   nar: "NAR_Realtor",
   partner: "Channel_Partner",
   agent: "Agent",
+  nri_channel: "NRI_Client",
 };
 
 const ROLE_CONFIG = {
@@ -71,6 +72,18 @@ const ROLE_CONFIG = {
       phone: "Phone",
       whatsapp: "WhatsApp_Number",
       email: "Email",
+    },
+  },
+
+  nri_channel: {
+    module_api_name: "NRI_Clients",
+    fieldMap: {
+      fullName: "Name",
+      phone: "Phone",
+      whatsapp: "WhatsApp_Number",
+      email: "Email",
+      nriReferral: "Referral_Name",
+      nriCountry: "Current_Country",
     },
   },
 
