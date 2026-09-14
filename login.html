@@ -553,20 +553,9 @@
           // exposed to or trusted from the browser.
           setTimeout(async () => {
             let isAdmin = false;
-            try {
-              const res = await fetch('/api/check-admin', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ mobile: window.loginPhoneRaw || '' }),
-              });
-              if (!res.ok) throw new Error('API response not OK');
-              const result = await res.json();
-              isAdmin = !!result.isAdmin;
-            } catch (err) {
-              console.error('Admin check failed, checking local fallback:', err);
-              if (window.loginPhoneRaw === '8111918852') {
-                isAdmin = true;
-              }
+            // Removed backend integration for testing as requested
+            if (window.loginPhoneRaw === '8111918852') {
+              isAdmin = true;
             }
             localStorage.setItem('r2s_is_admin', isAdmin ? 'true' : 'false');
             window.location.href = isAdmin ? '/admin-dashboard.html' : '/dashboard.html';

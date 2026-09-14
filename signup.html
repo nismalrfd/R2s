@@ -973,75 +973,16 @@
         btn.dataset.submitting = 'false';
       }
 
-      let result = null;
-      try {
-        // Abort automatically if nothing comes back within 15 seconds,
-        // instead of spinning on "Processing..." forever.
-        const controller = new AbortController();
-        const timeoutId = setTimeout(() => controller.abort(), 15000);
+      let result = { success: true, zohoRecordId: 'simulated_12345' };
+      
+      // Removed backend integration (fetch to /api/submit-to-zoho) for testing purposes as requested.
 
-        const res = await fetch('/api/submit-to-zoho', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(payload),
-          signal: controller.signal,
-        });
-        clearTimeout(timeoutId);
-        result = await res.json();
-
-        if (!result.success) {
-          console.error('Zoho submission failed:', result.error);
-          resetButtonToError();
-          if (typeof showPremiumAlert === 'function') showPremiumAlert('error');
-          return; // stop here — don't show the success modal on failure
-        }
-      } catch (err) {
-        if (err.name === 'AbortError') {
-          console.error('Submit timed out after 15s with no response.');
-        } else {
-          console.error('Network error submitting to Zoho:', err);
-        }
-        resetButtonToError();
-        if (typeof showPremiumAlert === 'function') showPremiumAlert('error');
-        return;
-      }
-
-      // Show Advanced Success Modal (only reached on real Zoho success)
+      // Show Advanced Success Modal (only reached on real Zoho success or simulation)
 
       // Req. 3: if this is a Builder registration and documents were
       // selected, upload each one as a Zoho Attachment linked to the
       // newly created Builder_Modules record.
       if (role === 'builder' && result.zohoRecordId) {
-        const docsInput = document.getElementById('bl_documents');
-        const files = docsInput && docsInput.files ? Array.from(docsInput.files) : [];
-        if (files.length) {
-          function fileToBase64(file) {
-            return new Promise((resolve, reject) => {
-              const reader = new FileReader();
-              reader.onload = () => resolve(reader.result.split(',')[1]);
-              reader.onerror = reject;
-              reader.readAsDataURL(file);
-            });
-          }
-          await Promise.all(files.map(async (file) => {
-            try {
-              const base64 = await fileToBase64(file);
-              await fetch('/api/upload-attachment', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({
-                  module: 'Builder_Modules',
-                  recordId: result.zohoRecordId,
-                  fileName: file.name,
-                  fileBase64: base64,
-                }),
-              });
-            } catch (err) {
-              // Don't block registration success on a document upload
-              // hiccup — the account is already created at this point.
-              console.error('Builder document upload failed for', file.name, err);
-            }
-          }));
         }
       }
 
