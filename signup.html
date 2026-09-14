@@ -942,8 +942,8 @@
         formType: 'registration',
         role: role,
         fullName: document.getElementById('f_name')?.value || '',
-        phone: document.getElementById('f_phone')?.value ? phoneIti.getNumber() : '',
-        whatsapp: document.getElementById('f_wa')?.value ? waIti.getNumber() : '',
+        phone: document.getElementById('f_phone')?.value ? phoneIti?.getNumber() : '',
+        whatsapp: document.getElementById('f_wa')?.value ? waIti?.getNumber() : '',
         email: document.getElementById('f_email')?.value || '',
         // NAR Realtor extra fields
         website: document.getElementById('f_website')?.value || '',
@@ -983,7 +983,7 @@
       // selected, upload each one as a Zoho Attachment linked to the
       // newly created Builder_Modules record.
       if (role === 'builder' && result.zohoRecordId) {
-        }
+        // simulation
       }
 
       // Save identity + profile locally so the dashboard can greet them
@@ -1008,7 +1008,7 @@
       setTimeout(() => {
           modalContent.classList.remove('scale-95');
           setTimeout(() => {
-              progress.style.width = '100%';
+              if (progress) progress.style.width = '100%';
           }, 50);
       }, 10);
       
