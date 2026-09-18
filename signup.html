@@ -579,48 +579,112 @@
 
               <div class="flex flex-col gap-2 relative">
                 <label class="text-[10px] font-bold text-gray-500 uppercase tracking-wider">State</label>
-                <div class="relative">
-                  <select id="f_state" class="w-full bg-gray-50 rounded-xl px-3 py-2 sm:py-2.5 border border-gray-100 outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-500/20 focus:bg-white transition-all text-slate-950 font-bold text-sm appearance-none cursor-pointer">
-                    <option value="">Select State</option>
-                    <option value="Andhra Pradesh">Andhra Pradesh</option>
-                    <option value="Arunachal Pradesh">Arunachal Pradesh</option>
-                    <option value="Assam">Assam</option>
-                    <option value="Bihar">Bihar</option>
-                    <option value="Chhattisgarh">Chhattisgarh</option>
-                    <option value="Goa">Goa</option>
-                    <option value="Gujarat">Gujarat</option>
-                    <option value="Haryana">Haryana</option>
-                    <option value="Himachal Pradesh">Himachal Pradesh</option>
-                    <option value="Jharkhand">Jharkhand</option>
-                    <option value="Karnataka">Karnataka</option>
-                    <option value="Kerala">Kerala</option>
-                    <option value="Madhya Pradesh">Madhya Pradesh</option>
-                    <option value="Maharashtra">Maharashtra</option>
-                    <option value="Manipur">Manipur</option>
-                    <option value="Meghalaya">Meghalaya</option>
-                    <option value="Mizoram">Mizoram</option>
-                    <option value="Nagaland">Nagaland</option>
-                    <option value="Odisha">Odisha</option>
-                    <option value="Punjab">Punjab</option>
-                    <option value="Rajasthan">Rajasthan</option>
-                    <option value="Sikkim">Sikkim</option>
-                    <option value="Tamil Nadu">Tamil Nadu</option>
-                    <option value="Telangana">Telangana</option>
-                    <option value="Tripura">Tripura</option>
-                    <option value="Uttar Pradesh">Uttar Pradesh</option>
-                    <option value="Uttarakhand">Uttarakhand</option>
-                    <option value="West Bengal">West Bengal</option>
-                    <option value="Andaman and Nicobar Islands">Andaman and Nicobar Islands</option>
-                    <option value="Chandigarh">Chandigarh</option>
-                    <option value="Dadra and Nagar Haveli and Daman and Diu">Dadra and Nagar Haveli and Daman and Diu</option>
-                    <option value="Delhi">Delhi</option>
-                    <option value="Jammu and Kashmir">Jammu and Kashmir</option>
-                    <option value="Ladakh">Ladakh</option>
-                    <option value="Lakshadweep">Lakshadweep</option>
-                    <option value="Puducherry">Puducherry</option>
-                  </select>
-                  <i data-lucide="chevron-down" class="w-4 h-4 absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none" aria-hidden="true"></i>
+                <div class="relative" id="stateSelectContainer">
+                  <input type="hidden" id="f_state" name="f_state" value="">
+                  <button type="button" onclick="toggleStateDropdown()" class="w-full bg-gray-50 rounded-xl px-3 py-2 sm:py-2.5 border border-gray-100 flex justify-between items-center outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-500/20 transition-all text-sm font-bold">
+                    <span id="f_state_text" class="text-gray-400 font-medium">Select State</span>
+                    <i data-lucide="chevron-down" id="f_state_icon" class="w-4 h-4 text-gray-400 transition-transform duration-300"></i>
+                  </button>
+                  <div id="stateDropdown" class="absolute top-full left-0 w-full mt-2 bg-white/95 backdrop-blur-xl border border-gray-100 shadow-2xl rounded-xl z-50 hidden flex-col overflow-hidden origin-top opacity-0 scale-95 transition-all duration-200">
+                    <div class="p-2 border-b border-gray-50 bg-white/50">
+                      <div class="relative">
+                        <i data-lucide="search" class="absolute left-2.5 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-gray-400"></i>
+                        <input type="text" id="stateSearch" onkeyup="filterStates()" placeholder="Search state..." class="w-full bg-gray-50 rounded-lg pl-8 pr-3 py-1.5 text-xs font-medium text-slate-950 border border-gray-100 outline-none focus:border-blue-500 transition-colors">
+                      </div>
+                    </div>
+                    <div class="max-h-[220px] overflow-y-auto p-1.5 flex flex-col gap-0.5 custom-scrollbar-hide" id="stateList">
+                      <!-- All 36 Indian States and UTs -->
+                      <div onclick="selectState('Andaman and Nicobar Islands')" class="px-3 py-2 text-sm font-bold text-slate-700 hover:bg-blue-50 hover:text-blue-600 rounded-lg cursor-pointer transition-colors">Andaman and Nicobar Islands</div>
+                      <div onclick="selectState('Andhra Pradesh')" class="px-3 py-2 text-sm font-bold text-slate-700 hover:bg-blue-50 hover:text-blue-600 rounded-lg cursor-pointer transition-colors">Andhra Pradesh</div>
+                      <div onclick="selectState('Arunachal Pradesh')" class="px-3 py-2 text-sm font-bold text-slate-700 hover:bg-blue-50 hover:text-blue-600 rounded-lg cursor-pointer transition-colors">Arunachal Pradesh</div>
+                      <div onclick="selectState('Assam')" class="px-3 py-2 text-sm font-bold text-slate-700 hover:bg-blue-50 hover:text-blue-600 rounded-lg cursor-pointer transition-colors">Assam</div>
+                      <div onclick="selectState('Bihar')" class="px-3 py-2 text-sm font-bold text-slate-700 hover:bg-blue-50 hover:text-blue-600 rounded-lg cursor-pointer transition-colors">Bihar</div>
+                      <div onclick="selectState('Chandigarh')" class="px-3 py-2 text-sm font-bold text-slate-700 hover:bg-blue-50 hover:text-blue-600 rounded-lg cursor-pointer transition-colors">Chandigarh</div>
+                      <div onclick="selectState('Chhattisgarh')" class="px-3 py-2 text-sm font-bold text-slate-700 hover:bg-blue-50 hover:text-blue-600 rounded-lg cursor-pointer transition-colors">Chhattisgarh</div>
+                      <div onclick="selectState('Dadra and Nagar Haveli and Daman and Diu')" class="px-3 py-2 text-sm font-bold text-slate-700 hover:bg-blue-50 hover:text-blue-600 rounded-lg cursor-pointer transition-colors">Dadra and Nagar Haveli and Daman and Diu</div>
+                      <div onclick="selectState('Delhi')" class="px-3 py-2 text-sm font-bold text-slate-700 hover:bg-blue-50 hover:text-blue-600 rounded-lg cursor-pointer transition-colors">Delhi</div>
+                      <div onclick="selectState('Goa')" class="px-3 py-2 text-sm font-bold text-slate-700 hover:bg-blue-50 hover:text-blue-600 rounded-lg cursor-pointer transition-colors">Goa</div>
+                      <div onclick="selectState('Gujarat')" class="px-3 py-2 text-sm font-bold text-slate-700 hover:bg-blue-50 hover:text-blue-600 rounded-lg cursor-pointer transition-colors">Gujarat</div>
+                      <div onclick="selectState('Haryana')" class="px-3 py-2 text-sm font-bold text-slate-700 hover:bg-blue-50 hover:text-blue-600 rounded-lg cursor-pointer transition-colors">Haryana</div>
+                      <div onclick="selectState('Himachal Pradesh')" class="px-3 py-2 text-sm font-bold text-slate-700 hover:bg-blue-50 hover:text-blue-600 rounded-lg cursor-pointer transition-colors">Himachal Pradesh</div>
+                      <div onclick="selectState('Jammu and Kashmir')" class="px-3 py-2 text-sm font-bold text-slate-700 hover:bg-blue-50 hover:text-blue-600 rounded-lg cursor-pointer transition-colors">Jammu and Kashmir</div>
+                      <div onclick="selectState('Jharkhand')" class="px-3 py-2 text-sm font-bold text-slate-700 hover:bg-blue-50 hover:text-blue-600 rounded-lg cursor-pointer transition-colors">Jharkhand</div>
+                      <div onclick="selectState('Karnataka')" class="px-3 py-2 text-sm font-bold text-slate-700 hover:bg-blue-50 hover:text-blue-600 rounded-lg cursor-pointer transition-colors">Karnataka</div>
+                      <div onclick="selectState('Kerala')" class="px-3 py-2 text-sm font-bold text-slate-700 hover:bg-blue-50 hover:text-blue-600 rounded-lg cursor-pointer transition-colors">Kerala</div>
+                      <div onclick="selectState('Ladakh')" class="px-3 py-2 text-sm font-bold text-slate-700 hover:bg-blue-50 hover:text-blue-600 rounded-lg cursor-pointer transition-colors">Ladakh</div>
+                      <div onclick="selectState('Lakshadweep')" class="px-3 py-2 text-sm font-bold text-slate-700 hover:bg-blue-50 hover:text-blue-600 rounded-lg cursor-pointer transition-colors">Lakshadweep</div>
+                      <div onclick="selectState('Madhya Pradesh')" class="px-3 py-2 text-sm font-bold text-slate-700 hover:bg-blue-50 hover:text-blue-600 rounded-lg cursor-pointer transition-colors">Madhya Pradesh</div>
+                      <div onclick="selectState('Maharashtra')" class="px-3 py-2 text-sm font-bold text-slate-700 hover:bg-blue-50 hover:text-blue-600 rounded-lg cursor-pointer transition-colors">Maharashtra</div>
+                      <div onclick="selectState('Manipur')" class="px-3 py-2 text-sm font-bold text-slate-700 hover:bg-blue-50 hover:text-blue-600 rounded-lg cursor-pointer transition-colors">Manipur</div>
+                      <div onclick="selectState('Meghalaya')" class="px-3 py-2 text-sm font-bold text-slate-700 hover:bg-blue-50 hover:text-blue-600 rounded-lg cursor-pointer transition-colors">Meghalaya</div>
+                      <div onclick="selectState('Mizoram')" class="px-3 py-2 text-sm font-bold text-slate-700 hover:bg-blue-50 hover:text-blue-600 rounded-lg cursor-pointer transition-colors">Mizoram</div>
+                      <div onclick="selectState('Nagaland')" class="px-3 py-2 text-sm font-bold text-slate-700 hover:bg-blue-50 hover:text-blue-600 rounded-lg cursor-pointer transition-colors">Nagaland</div>
+                      <div onclick="selectState('Odisha')" class="px-3 py-2 text-sm font-bold text-slate-700 hover:bg-blue-50 hover:text-blue-600 rounded-lg cursor-pointer transition-colors">Odisha</div>
+                      <div onclick="selectState('Puducherry')" class="px-3 py-2 text-sm font-bold text-slate-700 hover:bg-blue-50 hover:text-blue-600 rounded-lg cursor-pointer transition-colors">Puducherry</div>
+                      <div onclick="selectState('Punjab')" class="px-3 py-2 text-sm font-bold text-slate-700 hover:bg-blue-50 hover:text-blue-600 rounded-lg cursor-pointer transition-colors">Punjab</div>
+                      <div onclick="selectState('Rajasthan')" class="px-3 py-2 text-sm font-bold text-slate-700 hover:bg-blue-50 hover:text-blue-600 rounded-lg cursor-pointer transition-colors">Rajasthan</div>
+                      <div onclick="selectState('Sikkim')" class="px-3 py-2 text-sm font-bold text-slate-700 hover:bg-blue-50 hover:text-blue-600 rounded-lg cursor-pointer transition-colors">Sikkim</div>
+                      <div onclick="selectState('Tamil Nadu')" class="px-3 py-2 text-sm font-bold text-slate-700 hover:bg-blue-50 hover:text-blue-600 rounded-lg cursor-pointer transition-colors">Tamil Nadu</div>
+                      <div onclick="selectState('Telangana')" class="px-3 py-2 text-sm font-bold text-slate-700 hover:bg-blue-50 hover:text-blue-600 rounded-lg cursor-pointer transition-colors">Telangana</div>
+                      <div onclick="selectState('Tripura')" class="px-3 py-2 text-sm font-bold text-slate-700 hover:bg-blue-50 hover:text-blue-600 rounded-lg cursor-pointer transition-colors">Tripura</div>
+                      <div onclick="selectState('Uttar Pradesh')" class="px-3 py-2 text-sm font-bold text-slate-700 hover:bg-blue-50 hover:text-blue-600 rounded-lg cursor-pointer transition-colors">Uttar Pradesh</div>
+                      <div onclick="selectState('Uttarakhand')" class="px-3 py-2 text-sm font-bold text-slate-700 hover:bg-blue-50 hover:text-blue-600 rounded-lg cursor-pointer transition-colors">Uttarakhand</div>
+                      <div onclick="selectState('West Bengal')" class="px-3 py-2 text-sm font-bold text-slate-700 hover:bg-blue-50 hover:text-blue-600 rounded-lg cursor-pointer transition-colors">West Bengal</div>
+                    </div>
+                  </div>
                 </div>
+                <style>
+                  .custom-scrollbar-hide::-webkit-scrollbar { display: none; }
+                  .custom-scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; }
+                </style>
+                <script>
+                  function toggleStateDropdown() {
+                    const dropdown = document.getElementById('stateDropdown');
+                    const icon = document.getElementById('f_state_icon');
+                    if (dropdown.classList.contains('hidden')) {
+                      dropdown.classList.remove('hidden');
+                      setTimeout(() => {
+                        dropdown.classList.remove('opacity-0', 'scale-95');
+                        icon.classList.add('rotate-180');
+                        document.getElementById('stateSearch').focus();
+                      }, 10);
+                    } else {
+                      dropdown.classList.add('opacity-0', 'scale-95');
+                      icon.classList.remove('rotate-180');
+                      setTimeout(() => dropdown.classList.add('hidden'), 200);
+                    }
+                  }
+                  function selectState(val) {
+                    document.getElementById('f_state').value = val;
+                    document.getElementById('f_state_text').textContent = val;
+                    document.getElementById('f_state_text').classList.replace('text-gray-400', 'text-slate-950');
+                    document.getElementById('f_state_text').classList.replace('font-medium', 'font-bold');
+                    toggleStateDropdown();
+                  }
+                  function filterStates() {
+                    const input = document.getElementById('stateSearch').value.toLowerCase();
+                    const items = document.getElementById('stateList').children;
+                    for (let i = 0; i < items.length; i++) {
+                      if (items[i].textContent.toLowerCase().includes(input)) {
+                        items[i].style.display = "";
+                      } else {
+                        items[i].style.display = "none";
+                      }
+                    }
+                  }
+                  document.addEventListener('click', function(e) {
+                    const container = document.getElementById('stateSelectContainer');
+                    if (container && !container.contains(e.target)) {
+                      const dropdown = document.getElementById('stateDropdown');
+                      const icon = document.getElementById('f_state_icon');
+                      if (dropdown && !dropdown.classList.contains('hidden')) {
+                        dropdown.classList.add('opacity-0', 'scale-95');
+                        if(icon) icon.classList.remove('rotate-180');
+                        setTimeout(() => dropdown.classList.add('hidden'), 200);
+                      }
+                    }
+                  });
+                </script>
               </div>
 
               <div class="flex flex-col gap-2 relative">

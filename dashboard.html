@@ -142,8 +142,17 @@
         
         <!-- Details -->
         <h4 id="profileDropdownName" class="relative z-10 font-bold text-slate-950 text-lg">Test User</h4>
-        <p id="profileDropdownEmail" class="relative z-10 text-xs font-medium text-gray-500 mt-1">tester@example.com</p>
-        <p id="profileDropdownCode" class="relative z-10 text-[10px] font-bold text-blue-600 bg-blue-50 border border-blue-100 px-2 py-0.5 rounded-full mt-1.5 mb-3 hidden"></p>
+        <p id="profileDropdownEmail" class="relative z-10 text-xs font-medium text-gray-500 mt-1 mb-3">tester@example.com</p>
+        
+        <div id="profileDropdownCodeContainer" class="relative z-10 flex items-center gap-2 bg-gradient-to-r from-blue-50/80 to-indigo-50/80 backdrop-blur-sm border border-blue-100/50 px-3 py-1.5 rounded-xl shadow-sm mb-3 hidden hover:shadow hover:border-blue-200 transition-all cursor-default group">
+          <div class="flex items-center justify-center w-5 h-5 rounded-full bg-blue-100/80 text-blue-600 group-hover:scale-110 transition-transform">
+            <i data-lucide="shield-check" class="w-3 h-3" aria-hidden="true"></i>
+          </div>
+          <div class="flex items-center gap-1.5">
+            <span class="text-[10.5px] font-semibold text-slate-500 uppercase tracking-wide">User Code:</span>
+            <span id="profileDropdownCode" class="text-xs font-mono font-extrabold text-slate-800 tracking-wider select-all"></span>
+          </div>
+        </div>
         <div class="relative z-10 inline-flex items-center gap-1.5 bg-red-50 border border-red-100 px-3 py-1 rounded-full">
           <i data-lucide="building-2" class="w-3 h-3 text-red-500" aria-hidden="true"></i>
           <span id="profileDropdownRole" class="text-[10px] font-bold text-red-600 uppercase tracking-wider">Builder</span>
@@ -633,6 +642,7 @@
                   <label class="flex items-center gap-2 cursor-pointer"><input type="checkbox" value="Land" class="w-4 h-4 text-blue-600 border-gray-300 rounded"> <span class="text-sm font-bold text-slate-950">Land</span></label>
                   <label class="flex items-center gap-2 cursor-pointer"><input type="checkbox" value="Building" class="w-4 h-4 text-blue-600 border-gray-300 rounded"> <span class="text-sm font-bold text-slate-950">Building</span></label>
                   <label class="flex items-center gap-2 cursor-pointer"><input type="checkbox" value="Co-Working Space" class="w-4 h-4 text-blue-600 border-gray-300 rounded"> <span class="text-sm font-bold text-slate-950">Co-Working Space</span></label>
+                  <label class="flex items-center gap-2 cursor-pointer"><input type="checkbox" value="Other" class="w-4 h-4 text-blue-600 border-gray-300 rounded"> <span class="text-sm font-bold text-slate-950">Other</span></label>
                 </div>
               </div>
 
@@ -642,7 +652,7 @@
                   <label class="flex items-center gap-2 cursor-pointer"><input type="checkbox" value="Agriculture land" class="w-4 h-4 text-blue-600 border-gray-300 rounded"> <span class="text-sm font-bold text-slate-950">Agriculture land</span></label>
                   <label class="flex items-center gap-2 cursor-pointer"><input type="checkbox" value="Resort" class="w-4 h-4 text-blue-600 border-gray-300 rounded"> <span class="text-sm font-bold text-slate-950">Resort</span></label>
                   <label class="flex items-center gap-2 cursor-pointer"><input type="checkbox" value="Homestay" class="w-4 h-4 text-blue-600 border-gray-300 rounded"> <span class="text-sm font-bold text-slate-950">Homestay</span></label>
-                  <label class="flex items-center gap-2 cursor-pointer"><input type="checkbox" value="Others" class="w-4 h-4 text-blue-600 border-gray-300 rounded"> <span class="text-sm font-bold text-slate-950">Others</span></label>
+                  <label class="flex items-center gap-2 cursor-pointer"><input type="checkbox" value="Other" class="w-4 h-4 text-blue-600 border-gray-300 rounded"> <span class="text-sm font-bold text-slate-950">Other</span></label>
                 </div>
               </div>
 
@@ -2367,9 +2377,11 @@
     if (nameEl) nameEl.textContent = displayName;
     if (emailEl && displayEmail) emailEl.textContent = displayEmail;
     if (roleEl && displayRole) roleEl.textContent = displayRole;
+    const codeContainerEl = document.getElementById('profileDropdownCodeContainer');
     if (codeEl && profile?.userCode) {
-      codeEl.textContent = 'Code: ' + profile.userCode;
-      codeEl.classList.remove('hidden');
+      codeEl.textContent = profile.userCode;
+      if (codeContainerEl) codeContainerEl.classList.remove('hidden');
+      else codeEl.classList.remove('hidden');
     }
     if (headerNameEl) headerNameEl.textContent = displayName;
     if (editNameEl) editNameEl.value = displayName;
