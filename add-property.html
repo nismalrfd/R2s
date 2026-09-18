@@ -241,6 +241,22 @@
       
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-6 gap-y-6">
         
+        <!-- Owner Name -->
+        <div class="flex flex-col gap-2 relative lg:col-span-1">
+          <label class="text-sm font-bold text-gray-700">Owner Name *</label>
+          <input type="text" id="prop_owner_name" class="w-full bg-gray-50 rounded-2xl px-5 py-4 border border-gray-200 outline-none focus:border-blue-500 focus:bg-white transition-colors text-slate-950 font-semibold" placeholder="e.g. John Doe" required>
+        </div>
+
+        <!-- Owner Phone Number -->
+        <div class="flex flex-col gap-2 relative lg:col-span-1">
+          <label class="text-sm font-bold text-gray-700">Owner Phone Number *</label>
+          <input type="tel" id="prop_owner_phone" class="w-full bg-gray-50 rounded-2xl px-5 py-4 border border-gray-200 outline-none focus:border-blue-500 focus:bg-white transition-colors text-slate-950 font-semibold" placeholder="Last 4 digits (e.g. 1234)" pattern="[0-9]{4}" maxlength="4" required>
+          <div class="flex items-start gap-2 mt-1">
+            <input type="checkbox" id="prop_owner_phone_check" class="mt-0.5 w-4 h-4 rounded border-gray-300 text-blue-600 focus:ring-blue-500 cursor-pointer" onchange="toggleOwnerPhoneInput(this)">
+            <label for="prop_owner_phone_check" class="text-xs font-medium text-gray-500 cursor-pointer">Enter Full Number</label>
+          </div>
+        </div>
+
         <!-- Property Name -->
         <div class="flex flex-col gap-2 relative lg:col-span-2">
           <label class="text-sm font-bold text-gray-700">Property Name *</label>
@@ -284,6 +300,7 @@
             <label class="flex items-center gap-2 cursor-pointer"><input type="checkbox" value="Plot" class="w-5 h-5 text-blue-600 border-gray-300 rounded"> <span class="text-sm font-bold text-slate-950">Plot</span></label>
             <label class="flex items-center gap-2 cursor-pointer"><input type="checkbox" value="Farmhouse" class="w-5 h-5 text-blue-600 border-gray-300 rounded"> <span class="text-sm font-bold text-slate-950">Farmhouse</span></label>
             <label class="flex items-center gap-2 cursor-pointer"><input type="checkbox" value="Sky Villa" class="w-5 h-5 text-blue-600 border-gray-300 rounded"> <span class="text-sm font-bold text-slate-950">Sky Villa</span></label>
+            <label class="flex items-center gap-2 cursor-pointer"><input type="checkbox" value="Other" class="w-5 h-5 text-blue-600 border-gray-300 rounded"> <span class="text-sm font-bold text-slate-950">Other</span></label>
           </div>
         </div>
 
@@ -720,6 +737,20 @@
         });
       }
     });
+
+    function toggleOwnerPhoneInput(checkbox) {
+      const input = document.getElementById('prop_owner_phone');
+      if (checkbox.checked) {
+        input.pattern = "[0-9]{10}";
+        input.maxLength = 10;
+        input.placeholder = "10-digit mobile number";
+      } else {
+        input.pattern = "[0-9]{4}";
+        input.maxLength = 4;
+        input.placeholder = "Last 4 digits (e.g. 1234)";
+      }
+      input.value = "";
+    }
 </script>
 
 <script>
@@ -815,6 +846,9 @@
     const propAdvertising = document.getElementById('wiz_advertising_consent') || document.getElementById('prop_advertising_consent');
     const propVideoPromotion = document.getElementById('wiz_video_promotion') || document.getElementById('prop_video_promotion');
 
+    const propOwnerName = document.getElementById('wiz_owner_name') || document.getElementById('prop_owner_name');
+    const propOwnerPhone = document.getElementById('wiz_owner_phone') || document.getElementById('prop_owner_phone');
+
     if (!propName || !propName.value) return showPremiumAlert('error', 'Please enter a property name.');
 
     // Look up who's currently logged in, so this property gets linked
@@ -829,6 +863,8 @@
 
     const property = {
       name: propName.value,
+      ownerName: propOwnerName ? propOwnerName.value : '',
+      ownerPhone: propOwnerPhone ? propOwnerPhone.value : '',
       price: propPrice ? propPrice.value : '',
       kind: propKind ? propKind.value : '',
       status: propStatus ? propStatus.value : '',
