@@ -7,6 +7,7 @@ import {
   isZohoId,
 } from "./_zohoConfig.js";
 import { normalizePhone, isValidPhone } from "./_smsOtp.js";
+import { safeReadJson, getAccessToken as getCachedAccessToken } from "./_zohoAuth.js";
 
 // Which Lookup field on the Products (property) module links back to
 // each role's own module lives in _zohoConfig.js (shared with
@@ -192,12 +193,6 @@ const OPTIONAL_ZOHO_FIELDS = new Set([
   "Secondary_Contact_Number",
   "Document_Sharing",
 ]);
-
-import {
-  safeReadJson,
-  getAccessToken as getCachedAccessToken
-} from "./_zohoAuth.js";
-
 
 // Wraps the shared, cached token getter with the same debug logging this
 // file already had. The actual caching lives in _zohoAuth.js.
