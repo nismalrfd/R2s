@@ -2,10 +2,8 @@
   "name": "r2s-static",
   "version": "1.0.0",
   "description": "Pure static HTML deployment for Vercel",
+  "type": "module",
   "scripts": {
     "build": "echo No build needed"
-  },
-  "dependencies": {
-    "nodemailer": "^6.10.1"
   }
 }

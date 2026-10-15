@@ -19,7 +19,6 @@
 //   OTP_SECRET            -> long random string used to sign tokens
 
 import crypto from "crypto";
-import nodemailer from "nodemailer";
 
 export const OTP_LENGTH = 6;
 export const OTP_TTL_MS = 10 * 60 * 1000; // code is valid for 10 minutes
