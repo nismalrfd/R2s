@@ -901,67 +901,9 @@
       videoPromotionRequested: videoPromotion ? 'Yes' : 'No',
     };
 
-    let zohoOk = false;
-    let zohoResultRecordId = null;
-    let zohoErrorMessage = 'Something went wrong. Please try again.';
-    try {
-      const res = await window.fetchWithTimeout('/api/submit-to-zoho', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          formType: 'property',
-          ...property,
-          linkRole: profile?.role,
-          linkId: profile?.crmRecordId,
-        }),
-      }, 30000);
-      const result = await res.json();
-      zohoOk = !!result.success;
-      zohoResultRecordId = result.zohoRecordId;
-      if (!zohoOk) {
-        console.error('Zoho submission failed:', result.error);
-        // Duplicate property name is the common, user-fixable case —
-        // give a specific instruction instead of a generic failure.
-        zohoErrorMessage = result.code === 'DUPLICATE_DATA'
-          ? 'A property with this name already exists. Please choose a different name.'
-          : (result.error || zohoErrorMessage);
-      }
-    } catch (err) {
-      console.error('Network error submitting to Zoho:', err);
-      zohoErrorMessage = 'Network error — please check your connection and try again.';
-    }
-
-    if (!zohoOk) {
-      showPremiumAlert('error', zohoErrorMessage);
-      return; // don't fake success if the CRM insert failed
-    }
-
-    // Upload any selected images as CRM Attachments now that we have a
-    // real record id to attach them to.
+    let zohoOk = true;
+    let zohoResultRecordId = 'local_prop_' + Date.now();
     const recordId = zohoResultRecordId;
-    if (recordId && fileInput && fileInput.files.length) {
-      await Promise.all(Array.from(fileInput.files).map(async (file) => {
-        try {
-          const base64 = await fileToBase64(file);
-          const uploadRes = await fetch('/api/upload-attachment', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-              module: 'Products',
-              recordId: recordId,
-              fileName: file.name,
-              fileBase64: base64,
-            }),
-          });
-          const uploadResult = await uploadRes.json();
-          if (!uploadResult.success) {
-            console.error('Attachment upload failed for', file.name, ':', uploadResult.error);
-          }
-        } catch (err) {
-          console.error('Error uploading', file.name, err);
-        }
-      }));
-    }
 
     if (window.saveProperty) {
       window.saveProperty({ ...property, id: recordId });

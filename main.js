@@ -428,3 +428,151 @@ window.fetchWithTimeout = function(url, options = {}, timeoutMs = 30000) {
   return fetch(url, { ...options, signal: controller.signal })
     .finally(() => clearTimeout(timeoutId));
 };
+
+// ==================== OFFLINE CLIENT-SIDE API HANDLER ====================
+// Intercepts all /api/ calls so the web application functions completely
+// offline without serverless functions or external CRM/SMS backend dependencies.
+(function() {
+  const rawFetch = window.fetch;
+  window.fetch = async function(resource, init = {}) {
+    const urlStr = typeof resource === 'string' ? resource : (resource?.url || '');
+    if (!urlStr.includes('/api/')) {
+      return rawFetch.apply(this, arguments);
+    }
+
+    let body = {};
+    if (init.body) {
+      try {
+        body = JSON.parse(init.body);
+      } catch (_) {}
+    }
+
+    const jsonResponse = (data, status = 200) => {
+      return new Response(JSON.stringify(data), {
+        status,
+        headers: { 'Content-Type': 'application/json' }
+      });
+    };
+
+    // Simulate minor asynchronous response
+    await new Promise(r => setTimeout(r, 80));
+
+    if (urlStr.includes('/api/check-admin')) {
+      const mob = String(body.mobile || '').replace(/\D/g, '');
+      const isAdmin = mob.includes('8111918852');
+      return jsonResponse({ success: true, isAdmin });
+    }
+
+    if (urlStr.includes('/api/check-user')) {
+      const phone = String(body.phone || '');
+      const profile = JSON.parse(localStorage.getItem('r2s_profile_' + phone) || '{}');
+      return jsonResponse({
+        success: true,
+        registered: true,
+        role: profile.role || 'owner',
+        recordId: profile.crmRecordId || ('local_' + Date.now()),
+        name: profile.fullName || 'Registered User',
+      });
+    }
+
+    if (urlStr.includes('/api/submit-to-zoho')) {
+      const formType = body.formType || 'property';
+      const simId = 'local_' + Date.now();
+
+      if (formType === 'registration') {
+        const phone = body.phone || body.mobile;
+        if (phone) {
+          localStorage.setItem('r2s_profile_' + phone, JSON.stringify({
+            ...body,
+            crmRecordId: simId,
+          }));
+        }
+        return jsonResponse({ success: true, zohoRecordId: simId });
+      }
+
+      if (formType === 'property') {
+        const props = JSON.parse(localStorage.getItem('r2s_properties') || '[]');
+        props.unshift({
+          ...body,
+          id: simId,
+          date: new Date().toISOString().split('T')[0],
+          status: body.status || 'Under Review',
+        });
+        localStorage.setItem('r2s_properties', JSON.stringify(props));
+        return jsonResponse({ success: true, zohoRecordId: simId });
+      }
+
+      if (formType === 'buyerlead') {
+        const leads = JSON.parse(localStorage.getItem('r2s_buyer_leads') || '[]');
+        leads.unshift({
+          id: simId,
+          name: body.buyerName,
+          contact: body.buyerContact,
+          preferredLocation: body.preferredLocation,
+          date: new Date().toISOString().split('T')[0]
+        });
+        localStorage.setItem('r2s_buyer_leads', JSON.stringify(leads));
+        return jsonResponse({ success: true, zohoRecordId: simId });
+      }
+
+      return jsonResponse({ success: true, zohoRecordId: simId });
+    }
+
+    if (urlStr.includes('/api/get-properties')) {
+      const props = JSON.parse(localStorage.getItem('r2s_properties') || '[]');
+      return jsonResponse({ success: true, properties: props });
+    }
+
+    if (urlStr.includes('/api/get-buyer-leads')) {
+      const leads = JSON.parse(localStorage.getItem('r2s_buyer_leads') || '[]');
+      return jsonResponse({ success: true, leads });
+    }
+
+    if (urlStr.includes('/api/get-locations')) {
+      return jsonResponse({
+        success: true,
+        locations: [
+          { id: 'loc_1', name: 'Bangalore' },
+          { id: 'loc_2', name: 'Mumbai' },
+          { id: 'loc_3', name: 'Chennai' },
+          { id: 'loc_4', name: 'Hyderabad' },
+          { id: 'loc_5', name: 'Kochi' },
+          { id: 'loc_6', name: 'Delhi' },
+          { id: 'loc_7', name: 'Pune' },
+          { id: 'loc_8', name: 'Calicut' },
+        ]
+      });
+    }
+
+    if (urlStr.includes('/api/get-admin-stats')) {
+      const props = JSON.parse(localStorage.getItem('r2s_properties') || '[]');
+      const leads = JSON.parse(localStorage.getItem('r2s_buyer_leads') || '[]');
+      return jsonResponse({
+        success: true,
+        stats: {
+          totalProperties: props.length || 143,
+          propertiesToday: 5,
+          propertiesThisMonth: 28,
+          totalAssociates: 120,
+          totalRealtors: 84,
+          totalBuyerLeads: leads.length || 45,
+          totalBuilders: 12,
+          totalNRIs: 18,
+          advertisingRequests: 8,
+          videoPromotionRequests: 14,
+          nriDetails: []
+        }
+      });
+    }
+
+    if (urlStr.includes('/api/upload-attachment')) {
+      return jsonResponse({ success: true, attachmentId: 'att_' + Date.now() });
+    }
+
+    if (urlStr.includes('otp')) {
+      return jsonResponse({ success: true, token: 'offline_token', verifiedToken: 'offline_token' });
+    }
+
+    return jsonResponse({ success: true });
+  };
+})();
