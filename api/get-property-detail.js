@@ -6,6 +6,7 @@
 // Usage: /api/get-property-detail?id=XXXXXXXXX
 
 import { getAccessToken, safeReadJson } from "./_zohoAuth.js";
+import { isImageAttachment } from "./_zohoConfig.js";
 
 export default async function handler(req, res) {
   if (req.method !== "GET") {
@@ -40,7 +41,7 @@ export default async function handler(req, res) {
         { headers: { Authorization: `Zoho-oauthtoken ${accessToken}` } }
       );
       const { json: attachData } = await safeReadJson(attachRes);
-      images = (attachData?.data || []).map(
+      images = (attachData?.data || []).filter(isImageAttachment).map(
         (a) => `/api/property-image?module=Products&recordId=${id}&attachmentId=${a.id}`
       );
     } catch (e) {
@@ -63,6 +64,8 @@ export default async function handler(req, res) {
         serviceType: rec.Property_Service_Type,
         date: rec.Created_Time ? rec.Created_Time.split("T")[0] : "",
         images,
+        propertyLink: rec.Property_Link || null,
+        propertyCode: rec.Product_Code || null,
       },
     });
   } catch (err) {

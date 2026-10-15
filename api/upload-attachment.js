@@ -58,7 +58,10 @@ export default async function handler(req, res) {
 
     const result = zohoData?.data?.[0];
     if (result?.status === "success") {
-      return res.status(200).json({ success: true, attachmentId: result.details?.id });
+      return res.status(200).json({
+        success: true,
+        attachmentId: result.details?.id,
+      });
     }
 
     return res.status(400).json({

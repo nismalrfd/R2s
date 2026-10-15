@@ -18,6 +18,20 @@ function normalize(number) {
   return String(number || "").replace(/\D/g, "").slice(-10);
 }
 
+// The login page now sends the full international number (e.g. "+919876543210",
+// "+971501234567") because users can pick a country code. Admin numbers are
+// Indian 10-digit mobiles, so a non-+91 number must NEVER match an admin just
+// because its last 10 digits happen to be the same. A bare 10-digit value
+// (old clients) is still treated as an Indian number, exactly as before.
+function toIndianNational(mobile) {
+  const raw = String(mobile || "").trim();
+  const digits = raw.replace(/\D/g, "");
+  if (raw.startsWith("+")) {
+    return digits.startsWith("91") && digits.length === 12 ? digits.slice(2) : null;
+  }
+  return normalize(digits);
+}
+
 function getAdminNumbers() {
   const fromEnv = process.env.ADMIN_MOBILE_NUMBERS;
   if (!fromEnv) return DEFAULT_ADMIN_NUMBERS;
@@ -31,7 +45,12 @@ export default async function handler(req, res) {
 
   try {
     const { mobile } = req.body || {};
-    const normalized = normalize(mobile);
+    const normalized = toIndianNational(mobile);
+
+    // Valid international number that is not an Indian (+91) one: never an admin.
+    if (normalized === null) {
+      return res.status(200).json({ success: true, isAdmin: false });
+    }
 
     if (!normalized || normalized.length !== 10) {
       return res.status(400).json({ success: false, error: "Invalid mobile number" });

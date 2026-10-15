@@ -1,0 +1,4 @@
+# Never upload secrets with the site. Set these in Vercel > Project > Settings > Environment Variables instead.
+.env
+.env.*
+node_modules

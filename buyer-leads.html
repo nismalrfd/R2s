@@ -31,7 +31,7 @@
   <main class="max-w-5xl mx-auto px-4 md:px-8 py-8"> 
 
     <div id="notAuthorizedMsg" class="hidden bg-amber-50 border border-amber-100 text-amber-700 text-sm font-semibold px-5 py-4 rounded-2xl mb-6"> 
-      Adding Buyer Leads is available only to Realtors, Channel Partners, and Associates. 
+      Adding Buyer Leads is available only to Realtors, Channel Partners, Associates, and NRI Clients. 
     </div> 
 
     <div id="leadsError" class="hidden bg-red-50 border border-red-100 text-red-600 text-sm font-semibold px-5 py-4 rounded-2xl mb-6"></div> 
@@ -74,25 +74,30 @@
           > 
         </div> 
 
+        <!-- Contact Number — CHANGED: always collects the full 10-digit
+             number now (the old "tick to add full number" checkbox is
+             gone), but only the last 4 digits are shown on screen while
+             typing (e.g. XXXXXX7890). The eye button reveals the actual
+             digits typed so far, for verification, without re-typing. -->
         <div class="flex flex-col gap-2"> 
           <label class="text-[10px] font-bold text-gray-500 uppercase tracking-wider">
             Contact Number *
           </label> 
 
           <input 
-            type="tel" 
+            type="text" 
+            inputmode="numeric" 
+            autocomplete="off"
             id="buyer_contact" 
             required 
-            pattern="[0-9]{4}" 
-            maxlength="4" 
-            placeholder="Last 4 digits (e.g. 1234)" 
-            class="w-full bg-gray-50 rounded-2xl px-5 py-3.5 border border-gray-200 outline-none focus:border-blue-500 focus:bg-white transition-colors text-slate-950 font-semibold"
-          > 
-        </div>
+            placeholder="10-digit mobile number" 
+            class="w-full bg-gray-50 rounded-2xl px-5 py-3.5 border border-gray-200 outline-none focus:border-blue-500 focus:bg-white transition-colors text-slate-950 font-semibold tracking-wider"
+          >
 
-        <div class="flex items-start gap-3" id="buyer_contact_check_wrapper">
-          <input type="checkbox" id="buyer_contact_check" class="mt-0.5 w-4 h-4 rounded border-gray-300 text-red-600 focus:ring-red-500 cursor-pointer" onchange="toggleBuyerPhoneInput2(this)">
-          <label for="buyer_contact_check" class="text-[12px] font-semibold text-gray-600 cursor-pointer">If you need to add full number, kindly select checkbox</label>
+          <div class="flex items-start gap-3 mt-1">
+            <input type="checkbox" id="buyer_contact_check" class="mt-0.5 w-4 h-4 rounded border-gray-300 text-red-600 focus:ring-red-500 cursor-pointer" onchange="toggleBuyerContactReveal(this.checked)">
+            <label for="buyer_contact_check" class="text-[12px] font-semibold text-gray-600 cursor-pointer">Show full number</label>
+          </div>
         </div>
 
         <div class="flex flex-col gap-1 mt-2"> 
@@ -120,13 +125,13 @@
           > 
 
           <label for="buyer_consent" class="text-sm font-semibold text-slate-950 cursor-pointer">
-            I have obtained the buyer's permission to share their name and contact number with R2s Realtors.
+            I have obtained the lead owner's (buyer's) permission to add them to the network and share their name and contact number with R2s Realtors.
           </label> 
 
         </div> 
  
         <button 
-          type="submit" 
+          type="submit" id="saveBuyerLeadBtn"
           class="w-full bg-red-600 hover:bg-red-700 text-white px-6 py-4 rounded-2xl font-bold shadow-lg transition-colors flex items-center justify-center gap-2 mt-2"
         > 
           Save Buyer Lead 
@@ -146,49 +151,109 @@
     } 
 
     // Req. 7.1: only these three roles may add a Buyer Lead.
-    const ALLOWED_ROLES = ['nar', 'partner', 'agent', 'associate']; 
+    const ALLOWED_ROLES = ['nar', 'partner', 'agent', 'associate', 'nri']; 
 
-    function toggleBuyerPhoneInput2(checkbox) {
-      const input = document.getElementById('buyer_contact');
-      if (checkbox.checked) {
-        input.pattern = "[0-9]{10}";
-        input.maxLength = 10;
-        input.placeholder = "10-digit mobile number";
-      } else {
-        input.pattern = "[0-9]{4}";
-        input.maxLength = 4;
-        input.placeholder = "Last 4 digits (e.g. 1234)";
-      }
-      input.value = "";
+    // ==================== Contact Number masking ====================
+    // CHANGED: previously this field either collected only the last 4
+    // digits, or (if a checkbox was ticked) the full number in plain
+    // text — and toggling that checkbox wiped whatever was already
+    // typed. Now the field always collects the full 10-digit number;
+    // `buyerContactDigits` holds the real value, while the visible
+    // input only ever displays a masked version (or the real thing,
+    // while the eye toggle is active). beforeinput is used instead of
+    // reading the field's own value, since the field's value is masked
+    // text, not the real digits.
+    let buyerContactDigits = '';
+    let buyerContactRevealed = false;
+
+    function maskBuyerContact(digits) {
+      if (digits.length <= 4) return digits;
+      return 'X'.repeat(digits.length - 4) + digits.slice(-4);
     }
 
-    function toggleAddBuyerModal() { 
-      const profile = getProfile();
-      const checkboxWrapper = document.getElementById('buyer_contact_check_wrapper');
-      const checkbox = document.getElementById('buyer_contact_check');
+    function renderBuyerContactField() {
       const input = document.getElementById('buyer_contact');
+      if (!input) return;
+      input.value = buyerContactRevealed ? buyerContactDigits : maskBuyerContact(buyerContactDigits);
+    }
 
-      if (profile && profile.role === 'agent') {
-        if (checkboxWrapper) checkboxWrapper.classList.add('hidden');
-        if (checkbox) checkbox.checked = true;
-        if (input) {
-          input.pattern = "[0-9]{10}";
-          input.maxLength = 10;
-          input.placeholder = "10-digit mobile number";
+    function toggleBuyerContactReveal(isChecked) {
+      buyerContactRevealed = !!isChecked;
+      renderBuyerContactField();
+    }
+
+    function resetBuyerContactField() {
+      buyerContactDigits = '';
+      buyerContactRevealed = false;
+      const checkbox = document.getElementById('buyer_contact_check');
+      if (checkbox) checkbox.checked = false;
+      renderBuyerContactField();
+    }
+
+    function initBuyerContactMasking() {
+      const input = document.getElementById('buyer_contact');
+      if (!input || input.dataset.maskingBound) return;
+      input.dataset.maskingBound = 'true';
+
+      // beforeinput fires before the field's own value changes, and
+      // tells us exactly what the user did (typed a digit, pasted,
+      // backspaced) via e.inputType / e.data — so we can update the
+      // real digits and then fully control what's displayed.
+      input.addEventListener('beforeinput', (e) => {
+        e.preventDefault();
+
+        if (
+          e.inputType === 'insertText' ||
+          e.inputType === 'insertFromPaste' ||
+          e.inputType === 'insertFromDrop'
+        ) {
+          const incoming = (e.data || '').replace(/\D/g, '');
+          if (incoming) {
+            buyerContactDigits = (buyerContactDigits + incoming).slice(0, 10);
+          }
+        } else if (
+          e.inputType === 'deleteContentBackward' ||
+          e.inputType === 'deleteContentForward'
+        ) {
+          buyerContactDigits = buyerContactDigits.slice(0, -1);
+        } else if (
+          e.inputType === 'deleteByCut' ||
+          e.inputType === 'deleteContent'
+        ) {
+          buyerContactDigits = '';
         }
-      } else {
-        if (checkboxWrapper) checkboxWrapper.classList.remove('hidden');
-        if (checkbox) checkbox.checked = false;
-        if (input) {
-          input.pattern = "[0-9]{4}";
-          input.maxLength = 4;
-          input.placeholder = "Last 4 digits (e.g. 1234)";
+
+        renderBuyerContactField();
+      });
+
+      // Fallback for older browsers where a pasted value doesn't show
+      // up in beforeinput's e.data.
+      input.addEventListener('paste', (e) => {
+        if (buyerContactDigits) return; // beforeinput already handled it
+        const text = (e.clipboardData || window.clipboardData)?.getData('text') || '';
+        const digits = text.replace(/\D/g, '');
+        if (digits) {
+          buyerContactDigits = digits.slice(0, 10);
+          renderBuyerContactField();
         }
+      });
+    }
+    // ==================================================================
+
+    function toggleAddBuyerModal() { 
+      const modal = document.getElementById('addBuyerModal');
+      modal.classList.toggle('hidden'); 
+      modal.classList.toggle('flex'); 
+
+      if (!modal.classList.contains('hidden')) {
+        resetBuyerContactField();
       }
-
-      document.getElementById('addBuyerModal').classList.toggle('hidden'); 
-      document.getElementById('addBuyerModal').classList.toggle('flex'); 
     }  
+
+    // Last buyer list CRM returned, and a counter so a slow, older response
+    // can never overwrite a newer one.
+    let lastServerLeads = [];
+    let loadSeq = 0;
 
     function renderLeads(leads) { 
 
@@ -203,37 +268,16 @@
 
       empty.classList.add('hidden'); 
 
-      list.innerHTML = leads.map(l => ` 
-        <div class="bg-white rounded-2xl p-5 border border-gray-100 shadow-[0_4px_20px_rgb(0,0,0,0.03)] flex items-center justify-between gap-4"> 
+      // Masked number (last 4 digits) with an eye button to reveal the
+      // full number — see BuyerLeadUI in main.js.
+      BuyerLeadUI.bind(list);
+      BuyerLeadUI.render(list, leads);
 
-          <div> 
-
-            <h3 class="font-bold text-slate-950">
-              ${l.buyerName || 'Unnamed Buyer'}
-            </h3> 
-
-            <p class="text-sm text-gray-500 font-semibold mt-0.5">
-              ${l.buyerContactMasked || 'XXXXXXXXXX'}
-            </p> 
-
-            <p class="text-xs text-gray-400 font-medium mt-1 flex items-center gap-1">
-              <i data-lucide="map-pin" class="w-3 h-3"></i> 
-              ${l.preferredLocation || 'Not specified'}
-            </p> 
-
-          </div> 
-
-          <span class="text-[10px] font-bold text-gray-400 uppercase tracking-wider">
-            ${l.createdAt ? new Date(l.createdAt).toLocaleDateString() : ''}
-          </span> 
-
-        </div> 
-      `).join(''); 
-
-      if (typeof lucide !== 'undefined') lucide.createIcons(); 
     } 
 
     async function loadLeads(profile) { 
+
+      const seq = ++loadSeq;
 
       try { 
 
@@ -247,7 +291,7 @@
           throw new Error(result.error || 'Failed to load leads'); 
         }
 
-        renderLeads(result.leads); 
+        lastServerLeads = result.leads;
 
       } catch (err) { 
 
@@ -258,6 +302,12 @@
         errBox.classList.remove('hidden'); 
 
       } 
+
+      if (seq !== loadSeq) return; // a newer load is already in charge
+
+      // Buyers saved a moment ago may not be in CRM's search results yet —
+      // keep showing them until CRM returns them.
+      renderLeads(R2sPending.merge('buyerlead', lastServerLeads));
 
     } 
 
@@ -273,13 +323,34 @@
 
       if (!document.getElementById('buyer_consent').checked) return; 
 
+      // CHANGED: the real number now lives in buyerContactDigits (the
+      // visible field only ever shows masked or fully-revealed text,
+      // never something safe to read back with .value). Require a full
+      // 10-digit number before allowing submission.
+      if (buyerContactDigits.length !== 10) {
+        const input = document.getElementById('buyer_contact');
+        input.setCustomValidity('Enter the full 10-digit mobile number.');
+        input.reportValidity();
+        return;
+      }
+      document.getElementById('buyer_contact').setCustomValidity('');
+
+      const submitBtn = document.getElementById('saveBuyerLeadBtn');
+      if (submitBtn?.dataset.submitting === 'true') return;
+      if (submitBtn) {
+        submitBtn.dataset.submitting = 'true';
+        submitBtn.disabled = true;
+        submitBtn.innerHTML = '<i data-lucide="loader-2" class="w-5 h-5 animate-spin"></i> Saving...';
+        if (typeof lucide !== 'undefined') lucide.createIcons();
+      }
+
       const payload = { 
         formType: 'buyerlead', 
 
         // These names are kept exactly as the existing API expects.
         // Backend maps them to Zoho CRM Leads fields.
         buyerName: document.getElementById('buyer_name').value, 
-        buyerContact: document.getElementById('buyer_contact').value, 
+        buyerContact: buyerContactDigits, 
         preferredLocation: document.getElementById('buyer_preferred_location').value, 
 
         consentGiven: 'Yes', 
@@ -291,13 +362,13 @@
  
       try { 
 
-        const res = await fetch('/api/submit-to-zoho', { 
+        const res = await window.fetchWithTimeout('/api/submit-to-zoho', { 
           method: 'POST', 
           headers: { 
             'Content-Type': 'application/json' 
           }, 
           body: JSON.stringify(payload), 
-        }); 
+        }, 30000); 
 
         const result = await res.json(); 
 
@@ -308,10 +379,25 @@
         showPremiumAlert('success'); 
 
         document.getElementById('addBuyerForm').reset(); 
+        resetBuyerContactField();
 
         toggleAddBuyerModal(); 
 
-        loadLeads(profile); 
+        // Show the new buyer straight away instead of waiting for CRM's
+        // search index (which is why the list needed a manual refresh).
+        if (result.zohoRecordId) {
+          R2sPending.add('buyerlead', {
+            id: result.zohoRecordId,
+            buyerName: payload.buyerName,
+            buyerContact: payload.buyerContact,
+            buyerContactMasked: maskPhoneNumber(payload.buyerContact),
+            preferredLocation: payload.preferredLocation,
+            createdAt: new Date().toISOString(),
+          });
+        }
+        renderLeads(R2sPending.merge('buyerlead', lastServerLeads));
+
+        loadLeads(profile); // quiet background refresh from CRM
 
       } catch (err) { 
 
@@ -343,6 +429,8 @@
         document.getElementById('emptyState').classList.add('hidden'); 
 
       } 
+
+      initBuyerContactMasking();
 
       if (typeof lucide !== 'undefined') lucide.createIcons(); 
 

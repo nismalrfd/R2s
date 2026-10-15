@@ -4,7 +4,6 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>R2s Realtors</title>
-  <link rel="stylesheet" href="/src/style.css" />
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -15,6 +14,7 @@
   <link rel="icon" href="/LOGO.png" type="image/png" />
   <link rel="apple-touch-icon" href="/LOGO.png" />
   <meta name="theme-color" content="#ffffff" />
+  <meta name="mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
   <meta name="apple-mobile-web-app-title" content="R2s Realtors" />
@@ -142,17 +142,8 @@
         
         <!-- Details -->
         <h4 id="profileDropdownName" class="relative z-10 font-bold text-slate-950 text-lg">Test User</h4>
+        <p id="profileDropdownCode" class="hidden relative z-10 text-[11px] font-bold text-blue-600 tracking-wider mt-0.5"></p>
         <p id="profileDropdownEmail" class="relative z-10 text-xs font-medium text-gray-500 mt-1 mb-3">tester@example.com</p>
-        
-        <div id="profileDropdownCodeContainer" class="relative z-10 flex items-center gap-2 bg-gradient-to-r from-blue-50/80 to-indigo-50/80 backdrop-blur-sm border border-blue-100/50 px-3 py-1.5 rounded-xl shadow-sm mb-3 hidden hover:shadow hover:border-blue-200 transition-all cursor-default group">
-          <div class="flex items-center justify-center w-5 h-5 rounded-full bg-blue-100/80 text-blue-600 group-hover:scale-110 transition-transform">
-            <i data-lucide="shield-check" class="w-3 h-3" aria-hidden="true"></i>
-          </div>
-          <div class="flex items-center gap-1.5">
-            <span class="text-[10.5px] font-semibold text-slate-500 uppercase tracking-wide">User Code:</span>
-            <span id="profileDropdownCode" class="text-xs font-mono font-extrabold text-slate-800 tracking-wider select-all"></span>
-          </div>
-        </div>
         <div class="relative z-10 inline-flex items-center gap-1.5 bg-red-50 border border-red-100 px-3 py-1 rounded-full">
           <i data-lucide="building-2" class="w-3 h-3 text-red-500" aria-hidden="true"></i>
           <span id="profileDropdownRole" class="text-[10px] font-bold text-red-600 uppercase tracking-wider">Builder</span>
@@ -270,7 +261,7 @@
           <p class="text-gray-400 font-semibold">No network leads yet.</p>
         </div>
         <div id="networkBuyerUnauthorized" class="hidden bg-amber-50 border border-amber-100 text-amber-700 text-sm font-semibold px-5 py-4 rounded-2xl">
-          Adding Buyer Leads is available only to Realtors, Channel Partners, and Associates.
+          Adding Buyer Leads is available only to Realtors, Channel Partners, Associates, and NRI Clients.
         </div>
       </div>
 
@@ -512,12 +503,12 @@
 
         <div class="flex flex-col gap-2">
           <label class="text-[10px] font-bold text-gray-500 uppercase tracking-wider">Contact Number *</label>
-          <input type="tel" id="network_buyer_contact" required pattern="[0-9]{4}" maxlength="4" placeholder="Last 4 digits (e.g. 1234)" class="w-full bg-gray-50 rounded-2xl px-5 py-3.5 border border-gray-200 outline-none focus:border-blue-500 focus:bg-white transition-colors text-slate-950 font-semibold">
+          <input type="text" inputmode="numeric" autocomplete="off" id="network_buyer_contact" required placeholder="10-digit mobile number" class="w-full bg-gray-50 rounded-2xl px-5 py-3.5 border border-gray-200 outline-none focus:border-blue-500 focus:bg-white transition-colors text-slate-950 font-semibold tracking-wider">
         </div>
         
         <div class="flex items-start gap-3" id="network_buyer_contact_check_wrapper">
-          <input type="checkbox" id="network_buyer_contact_check" class="mt-0.5 w-4 h-4 rounded border-gray-300 text-red-600 focus:ring-red-500 cursor-pointer" onchange="toggleBuyerPhoneInput(this)">
-          <label for="network_buyer_contact_check" class="text-[12px] font-semibold text-gray-600 cursor-pointer">If you need to add full number, kindly select checkbox</label>
+          <input type="checkbox" id="network_buyer_contact_check" class="mt-0.5 w-4 h-4 rounded border-gray-300 text-red-600 focus:ring-red-500 cursor-pointer" onchange="toggleNetworkBuyerContactReveal(this.checked)">
+          <label for="network_buyer_contact_check" class="text-[12px] font-semibold text-gray-600 cursor-pointer">Show full number</label>
         </div>
 
         <div class="flex flex-col gap-1 mt-2">
@@ -527,7 +518,7 @@
         </div>
         <div class="flex items-start gap-3 pt-2 border-t border-gray-100 mt-1">
           <input type="checkbox" id="network_buyer_consent" required class="mt-1 w-5 h-5 rounded border-gray-300 text-red-600 focus:ring-red-500 cursor-pointer">
-          <label for="network_buyer_consent" class="text-sm font-semibold text-slate-950 cursor-pointer">I have obtained the buyer's permission to share their name and contact number with R2s Realtors.</label>
+          <label for="network_buyer_consent" class="text-sm font-semibold text-slate-950 cursor-pointer">I have obtained the lead owner's (buyer's) permission to add them to the network and share their name and contact number with R2s Realtors.</label>
         </div>
         <button type="submit" class="w-full bg-red-600 hover:bg-red-700 text-white px-6 py-4 rounded-2xl font-bold shadow-lg transition-colors flex items-center justify-center gap-2 mt-2">
           Add Buyer <i data-lucide="check-circle" class="w-5 h-5"></i>
@@ -547,6 +538,7 @@
           <div>
             <h2 class="text-2xl font-extrabold text-slate-950 flex items-center gap-3"><i data-lucide="home" class="w-6 h-6 text-red-600" aria-hidden="true"></i> Add New Property</h2>
             <p class="text-xs font-bold text-gray-500 mt-1 uppercase tracking-wider">Follow the steps to list your property</p>
+            <p id="propertyPrivacyNote" class="text-[11px] font-medium text-gray-400 mt-1.5 flex items-center gap-1.5"><i data-lucide="lock" class="w-3 h-3 shrink-0" aria-hidden="true"></i> We will not share your property data without your permission.</p>
           </div>
           <button onclick="toggleAddProperty()" class="w-10 h-10 rounded-full bg-gray-50 flex items-center justify-center hover:bg-red-50 hover:text-red-600 transition-colors">
             <i data-lucide="x" class="w-5 h-5" aria-hidden="true"></i>
@@ -581,18 +573,22 @@
           <div class="bg-white rounded-3xl p-4 sm:p-6 md:p-8 border border-gray-100 shadow-sm max-w-3xl mx-auto">
             <h3 class="text-lg font-bold text-slate-950 mb-6 flex items-center gap-2"><i data-lucide="info" class="w-5 h-5 text-red-500" aria-hidden="true"></i> Basic Information</h3>
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <div class="flex flex-col gap-2 relative md:col-span-1">
+              <!-- Owner Name -->
+              <div class="flex flex-col gap-2 relative">
                 <label class="text-[10px] font-bold text-gray-500 uppercase tracking-wider flex items-center justify-between">Owner Name <span class="text-red-500">*</span></label>
-                <input type="text" id="wiz_owner_name" placeholder="e.g. John Doe" required class="w-full bg-gray-50 rounded-xl px-3 py-2.5 sm:px-4 sm:py-3 border border-gray-100 outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-500/20 focus:bg-white transition-all text-slate-950 font-bold text-sm">
+                <input type="text" id="wiz_owner_name" placeholder="e.g. Ramesh Kumar" required class="w-full bg-gray-50 rounded-xl px-3 py-2.5 sm:px-4 sm:py-3 border border-gray-100 outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-500/20 focus:bg-white transition-all text-slate-950 font-bold text-sm">
               </div>
 
-              <div class="flex flex-col gap-2 relative md:col-span-1">
+              <!-- Owner Phone Number -->
+              <div class="flex flex-col gap-2 relative">
                 <label class="text-[10px] font-bold text-gray-500 uppercase tracking-wider flex items-center justify-between">Owner Phone Number <span class="text-red-500">*</span></label>
-                <input type="tel" id="wiz_owner_phone" placeholder="Last 4 digits (e.g. 1234)" pattern="[0-9]{4}" maxlength="4" required class="w-full bg-gray-50 rounded-xl px-3 py-2.5 sm:px-4 sm:py-3 border border-gray-100 outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-500/20 focus:bg-white transition-all text-slate-950 font-bold text-sm">
-                <div class="flex items-start gap-2 mt-1">
-                  <input type="checkbox" id="wiz_owner_phone_check" class="mt-0.5 w-4 h-4 rounded border-gray-300 text-blue-600 focus:ring-blue-500 cursor-pointer" onchange="toggleWizOwnerPhoneInput(this)">
-                  <label for="wiz_owner_phone_check" class="text-xs font-medium text-gray-500 cursor-pointer">Enter Full Number</label>
-                </div>
+                <input type="tel" id="wiz_owner_phone" pattern="[0-9]{4}" maxlength="4" placeholder="Last 4 digits (e.g. 1234)" required class="w-full bg-gray-50 rounded-xl px-3 py-2.5 sm:px-4 sm:py-3 border border-gray-100 outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-500/20 focus:bg-white transition-all text-slate-950 font-bold text-sm">
+              </div>
+
+              <!-- Owner Phone - Full Number toggle -->
+              <div class="flex items-start gap-3 md:col-span-2" id="wiz_owner_phone_check_wrapper">
+                <input type="checkbox" id="wiz_owner_phone_check" class="mt-0.5 w-4 h-4 rounded border-gray-300 text-red-600 focus:ring-red-500 cursor-pointer" onchange="toggleWizOwnerPhoneInput(this)">
+                <label for="wiz_owner_phone_check" class="text-[12px] font-semibold text-gray-600 cursor-pointer">Enter Full Number</label>
               </div>
 
               <div class="flex flex-col gap-2 relative md:col-span-2">
@@ -642,7 +638,6 @@
                   <label class="flex items-center gap-2 cursor-pointer"><input type="checkbox" value="Land" class="w-4 h-4 text-blue-600 border-gray-300 rounded"> <span class="text-sm font-bold text-slate-950">Land</span></label>
                   <label class="flex items-center gap-2 cursor-pointer"><input type="checkbox" value="Building" class="w-4 h-4 text-blue-600 border-gray-300 rounded"> <span class="text-sm font-bold text-slate-950">Building</span></label>
                   <label class="flex items-center gap-2 cursor-pointer"><input type="checkbox" value="Co-Working Space" class="w-4 h-4 text-blue-600 border-gray-300 rounded"> <span class="text-sm font-bold text-slate-950">Co-Working Space</span></label>
-                  <label class="flex items-center gap-2 cursor-pointer"><input type="checkbox" value="Other" class="w-4 h-4 text-blue-600 border-gray-300 rounded"> <span class="text-sm font-bold text-slate-950">Other</span></label>
                 </div>
               </div>
 
@@ -652,7 +647,7 @@
                   <label class="flex items-center gap-2 cursor-pointer"><input type="checkbox" value="Agriculture land" class="w-4 h-4 text-blue-600 border-gray-300 rounded"> <span class="text-sm font-bold text-slate-950">Agriculture land</span></label>
                   <label class="flex items-center gap-2 cursor-pointer"><input type="checkbox" value="Resort" class="w-4 h-4 text-blue-600 border-gray-300 rounded"> <span class="text-sm font-bold text-slate-950">Resort</span></label>
                   <label class="flex items-center gap-2 cursor-pointer"><input type="checkbox" value="Homestay" class="w-4 h-4 text-blue-600 border-gray-300 rounded"> <span class="text-sm font-bold text-slate-950">Homestay</span></label>
-                  <label class="flex items-center gap-2 cursor-pointer"><input type="checkbox" value="Other" class="w-4 h-4 text-blue-600 border-gray-300 rounded"> <span class="text-sm font-bold text-slate-950">Other</span></label>
+                  <label class="flex items-center gap-2 cursor-pointer"><input type="checkbox" value="Others" class="w-4 h-4 text-blue-600 border-gray-300 rounded"> <span class="text-sm font-bold text-slate-950">Others</span></label>
                 </div>
               </div>
 
@@ -802,6 +797,38 @@
               </div>
             </div>
           </div>
+
+          <!-- Property Documents -->
+          <div class="bg-white rounded-3xl p-4 sm:p-6 md:p-8 border border-gray-100 shadow-sm max-w-4xl mx-auto mt-6">
+            <h3 class="text-lg font-bold text-slate-950 mb-1 flex items-center gap-2"><i data-lucide="file-text" class="w-5 h-5 text-red-500" aria-hidden="true"></i> Property Documents</h3>
+            <p class="text-[11px] text-gray-400 font-medium mb-5">Optional. Upload title deed, tax receipt, floor plan, approvals, etc. PDF, JPG or PNG — up to 3 MB each.</p>
+
+            <label class="w-full border-2 border-dashed border-gray-200 rounded-2xl bg-gray-50 hover:bg-gray-100 hover:border-red-300 transition-all cursor-pointer flex flex-col items-center justify-center py-6 px-4 text-center">
+              <i data-lucide="upload-cloud" class="w-6 h-6 text-red-500 mb-2" aria-hidden="true"></i>
+              <span class="text-xs font-bold text-slate-950">Click to choose documents</span>
+              <span class="text-[10px] font-medium text-gray-400 mt-1">Multiple files allowed</span>
+              <input type="file" id="wiz_documents" multiple accept=".pdf,.jpg,.jpeg,.png,application/pdf,image/jpeg,image/png" class="hidden" onchange="handleWizDocuments(this)">
+            </label>
+            <ul id="wizDocumentList" class="hidden mt-3 flex flex-col gap-2"></ul>
+
+            <fieldset id="wizDocSharingGroup" class="mt-5 pt-5 border-t border-gray-100">
+              <legend class="text-[10px] font-bold text-gray-500 uppercase tracking-wider mb-3">Who can see these documents?</legend>
+              <div class="flex flex-col gap-3">
+                <label class="flex items-start gap-3 cursor-pointer">
+                  <input type="radio" name="wiz_doc_sharing" value="private" checked class="mt-1 w-4 h-4 text-red-600 border-gray-300 focus:ring-red-500">
+                  <span class="text-sm font-semibold text-slate-950">Keep private <span class="block text-[11px] font-medium text-gray-400">Only the R2s Realtors team can view them (recommended)</span></span>
+                </label>
+                <label class="flex items-start gap-3 cursor-pointer">
+                  <input type="radio" name="wiz_doc_sharing" value="network" class="mt-1 w-4 h-4 text-red-600 border-gray-300 focus:ring-red-500">
+                  <span class="text-sm font-semibold text-slate-950">Share with R2s verified partners <span class="block text-[11px] font-medium text-gray-400">NAR Realtors, Channel Partners and Associates working on your property</span></span>
+                </label>
+                <label class="flex items-start gap-3 cursor-pointer">
+                  <input type="radio" name="wiz_doc_sharing" value="buyers" class="mt-1 w-4 h-4 text-red-600 border-gray-300 focus:ring-red-500">
+                  <span class="text-sm font-semibold text-slate-950">Share with serious buyers on request <span class="block text-[11px] font-medium text-gray-400">R2s will ask for your approval before releasing them to a buyer</span></span>
+                </label>
+              </div>
+            </fieldset>
+          </div>
         </div>
 
       </div>
@@ -846,8 +873,7 @@
       <!-- Body -->
       <div class="flex-1 overflow-y-auto custom-scrollbar bg-[#f8fafc] p-4 sm:p-6 md:p-8 flex flex-col gap-8 w-full">
         
-        <!-- Contact Information -->
-        <div class="bg-white rounded-3xl p-4 sm:p-6 md:p-8 border border-gray-100 shadow-sm">
+                <div class="bg-white rounded-3xl p-4 sm:p-6 md:p-8 border border-gray-100 shadow-sm">
           <div class="flex items-center gap-3 mb-6 pb-6 border-b border-gray-100">
             <div class="w-12 h-12 rounded-full bg-red-50 flex items-center justify-center"><i data-lucide="user" class="w-6 h-6 text-red-500" aria-hidden="true"></i></div>
             <div>
@@ -855,101 +881,107 @@
               <p class="text-[11px] font-bold text-gray-400 uppercase tracking-wider">Your name and contact numbers</p>
             </div>
           </div>
-          
           <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div class="flex flex-col gap-2 relative md:col-span-2">
-              <label class="text-[10px] font-bold text-gray-500 uppercase tracking-wider flex items-center justify-between">Full Name <span class="text-red-500">*</span></label>
-              <input type="text" id="profileEditName" value="Test User" class="w-full bg-gray-50 rounded-xl px-3 py-2.5 sm:px-4 sm:py-3 border border-gray-100 outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-500/20 focus:bg-white transition-all text-slate-950 font-bold text-sm">
+              <label for="profileEditName" class="text-[10px] font-bold text-gray-500 uppercase tracking-wider">Full Name <span class="text-red-500">*</span></label>
+              <input type="text" id="profileEditName" placeholder="" class="w-full bg-gray-50 rounded-xl px-3 py-2.5 sm:px-4 sm:py-3 border border-gray-100 outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-500/20 focus:bg-white transition-all text-slate-950 font-bold text-sm">
             </div>
-            
             <div class="flex flex-col gap-2 relative">
-              <label class="text-[10px] font-bold text-gray-500 uppercase tracking-wider flex items-center justify-between">Phone Number <span class="text-red-500">*</span></label>
-              <div class="flex">
-                <div class="bg-gray-100 border border-gray-100 border-r-0 rounded-l-xl px-3 py-2.5 sm:px-4 sm:py-3 flex items-center gap-2 text-sm font-bold text-gray-500">
-                  🇮🇳 <span>+91</span>
-                </div>
-                <input type="tel" id="profileEditPhone" value="98765 43210" class="w-full bg-gray-50 rounded-r-xl px-3 py-2.5 sm:px-4 sm:py-3 border border-gray-100 outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-500/20 focus:bg-white transition-all text-slate-950 font-bold text-sm">
-              </div>
+              <label for="profileEditPhone" class="text-[10px] font-bold text-gray-500 uppercase tracking-wider">Phone Number</label>
+              <input type="tel" id="profileEditPhone" placeholder="" readonly class="w-full bg-gray-50 rounded-xl px-3 py-2.5 sm:px-4 sm:py-3 border border-gray-100 outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-500/20 focus:bg-white transition-all text-slate-950 font-bold text-sm !bg-gray-100 !text-gray-500 cursor-not-allowed">
             </div>
-
             <div class="flex flex-col gap-2 relative">
-              <label class="text-[10px] font-bold text-gray-500 uppercase tracking-wider">WhatsApp</label>
-              <div class="flex">
-                <div class="bg-gray-100 border border-gray-100 border-r-0 rounded-l-xl px-3 py-2.5 sm:px-4 sm:py-3 flex items-center gap-2 text-sm font-bold text-gray-500">
-                  🇮🇳 <span>+91</span>
-                </div>
-                <input type="tel" placeholder="Same as phone?" class="w-full bg-gray-50 rounded-r-xl px-3 py-2.5 sm:px-4 sm:py-3 border border-gray-100 outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-500/20 focus:bg-white transition-all text-slate-950 font-bold text-sm">
-              </div>
+              <label for="pe_whatsapp" class="text-[10px] font-bold text-gray-500 uppercase tracking-wider">WhatsApp</label>
+              <input type="tel" id="pe_whatsapp" placeholder="WhatsApp number" class="w-full bg-gray-50 rounded-xl px-3 py-2.5 sm:px-4 sm:py-3 border border-gray-100 outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-500/20 focus:bg-white transition-all text-slate-950 font-bold text-sm">
             </div>
-
             <div class="flex flex-col gap-2 relative md:col-span-2">
-              <label class="text-[10px] font-bold text-gray-500 uppercase tracking-wider flex items-center justify-between">Email Address <span class="text-red-500">*</span></label>
-              <input type="email" id="profileEditEmail" value="tester@example.com" readonly class="w-full bg-gray-100 rounded-xl px-3 py-2.5 sm:px-4 sm:py-3 border border-gray-100 outline-none cursor-not-allowed text-gray-500 font-bold text-sm">
+              <label for="profileEditEmail" class="text-[10px] font-bold text-gray-500 uppercase tracking-wider">Email Address <span class="text-red-500">*</span></label>
+              <input type="email" id="profileEditEmail" placeholder="" readonly class="w-full bg-gray-50 rounded-xl px-3 py-2.5 sm:px-4 sm:py-3 border border-gray-100 outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-500/20 focus:bg-white transition-all text-slate-950 font-bold text-sm !bg-gray-100 !text-gray-500 cursor-not-allowed">
+            </div>
+            <div class="flex flex-col gap-2 relative md:col-span-2" data-roles="owner">
+              <label for="pe_ownerReferral" class="text-[10px] font-bold text-gray-500 uppercase tracking-wider">Referral</label>
+              <input type="text" id="pe_ownerReferral" placeholder="Who referred you?" class="w-full bg-gray-50 rounded-xl px-3 py-2.5 sm:px-4 sm:py-3 border border-gray-100 outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-500/20 focus:bg-white transition-all text-slate-950 font-bold text-sm">
+            </div>
+            <div class="flex flex-col gap-2 relative md:col-span-2" data-roles="nri">
+              <label for="pe_nriReferral" class="text-[10px] font-bold text-gray-500 uppercase tracking-wider">Referral Name</label>
+              <input type="text" id="pe_nriReferral" placeholder="Who referred you?" class="w-full bg-gray-50 rounded-xl px-3 py-2.5 sm:px-4 sm:py-3 border border-gray-100 outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-500/20 focus:bg-white transition-all text-slate-950 font-bold text-sm">
             </div>
           </div>
         </div>
-
-        <!-- Professional Website -->
-        <div class="bg-white rounded-3xl p-4 sm:p-6 md:p-8 border border-gray-100 shadow-sm">
+        <div class="bg-white rounded-3xl p-4 sm:p-6 md:p-8 border border-gray-100 shadow-sm" data-roles="nri" data-pe-section="nri">
           <div class="flex items-center gap-3 mb-6 pb-6 border-b border-gray-100">
-            <div class="w-12 h-12 rounded-full bg-indigo-50 flex items-center justify-center"><i data-lucide="globe" class="w-6 h-6 text-indigo-500" aria-hidden="true"></i></div>
+            <div class="w-12 h-12 rounded-full bg-blue-50 flex items-center justify-center"><i data-lucide="globe" class="w-6 h-6 text-blue-500" aria-hidden="true"></i></div>
+            <div>
+              <h3 class="text-lg font-bold text-slate-950">NRI Details</h3>
+              <p class="text-[11px] font-bold text-gray-400 uppercase tracking-wider">Residence and secondary contact</p>
+            </div>
+          </div>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div class="flex flex-col gap-2 relative md:col-span-2" data-roles="nri">
+              <label for="pe_nriCountry" class="text-[10px] font-bold text-gray-500 uppercase tracking-wider">Current Country of Residence</label>
+              <div class="relative"><select id="pe_nriCountry" class="w-full bg-gray-50 rounded-xl px-3 py-2.5 sm:px-4 sm:py-3 border border-gray-100 outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-500/20 focus:bg-white transition-all text-slate-950 font-bold text-sm appearance-none cursor-pointer"><option value="">— Select Country —</option><option value="ae">United Arab Emirates</option><option value="us">United States</option><option value="gb">United Kingdom</option><option value="au">Australia</option><option value="sg">Singapore</option><option value="sa">Saudi Arabia</option><option value="qa">Qatar</option><option value="kw">Kuwait</option><option value="om">Oman</option><option value="bh">Bahrain</option><option value="ca">Canada</option><option value="de">Germany</option><option value="in">India</option></select><i data-lucide="chevron-down" class="w-4 h-4 absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none" aria-hidden="true"></i></div>
+            </div>
+            <div class="flex flex-col gap-2 relative" data-roles="nri">
+              <label for="pe_nriSecondaryName" class="text-[10px] font-bold text-gray-500 uppercase tracking-wider">Secondary Contact Name</label>
+              <input type="text" id="pe_nriSecondaryName" placeholder="e.g. Family member in India" class="w-full bg-gray-50 rounded-xl px-3 py-2.5 sm:px-4 sm:py-3 border border-gray-100 outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-500/20 focus:bg-white transition-all text-slate-950 font-bold text-sm">
+            </div>
+            <div class="flex flex-col gap-2 relative" data-roles="nri">
+              <label for="pe_nriSecondaryPhone" class="text-[10px] font-bold text-gray-500 uppercase tracking-wider">Secondary Contact Number</label>
+              <input type="tel" id="pe_nriSecondaryPhone" placeholder="+91 98765 43210" class="w-full bg-gray-50 rounded-xl px-3 py-2.5 sm:px-4 sm:py-3 border border-gray-100 outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-500/20 focus:bg-white transition-all text-slate-950 font-bold text-sm">
+            </div>
+          </div>
+        </div>
+        <div class="bg-white rounded-3xl p-4 sm:p-6 md:p-8 border border-gray-100 shadow-sm" data-roles="nar,partner,builder" data-pe-section="pro">
+          <div class="flex items-center gap-3 mb-6 pb-6 border-b border-gray-100">
+            <div class="w-12 h-12 rounded-full bg-indigo-50 flex items-center justify-center"><i data-lucide="briefcase" class="w-6 h-6 text-indigo-500" aria-hidden="true"></i></div>
             <div>
               <h3 class="text-lg font-bold text-slate-950">Professional Details</h3>
-              <p class="text-[11px] font-bold text-gray-400 uppercase tracking-wider">Website and affiliations</p>
+              <p class="text-[11px] font-bold text-gray-400 uppercase tracking-wider">Company, website and affiliations</p>
             </div>
           </div>
-          
           <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div class="flex flex-col gap-2 relative">
-              <label class="text-[10px] font-bold text-gray-500 uppercase tracking-wider">Website / Profile URL</label>
-              <input type="url" placeholder="https://www.yoursite.com" class="w-full bg-gray-50 rounded-xl px-3 py-2.5 sm:px-4 sm:py-3 border border-gray-100 outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-500/20 focus:bg-white transition-all text-slate-950 font-bold text-sm">
+            <div class="flex flex-col gap-2 relative" data-roles="nar,partner,builder">
+              <label for="pe_company" class="text-[10px] font-bold text-gray-500 uppercase tracking-wider">Company Name</label>
+              <input type="text" id="pe_company" placeholder="Your company name" class="w-full bg-gray-50 rounded-xl px-3 py-2.5 sm:px-4 sm:py-3 border border-gray-100 outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-500/20 focus:bg-white transition-all text-slate-950 font-bold text-sm">
             </div>
-            <div class="flex flex-col gap-2 relative">
-              <label class="text-[10px] font-bold text-gray-500 uppercase tracking-wider">NAR Member ID</label>
-              <input type="text" placeholder="NAR-XXXXXXXX" class="w-full bg-gray-50 rounded-xl px-3 py-2.5 sm:px-4 sm:py-3 border border-gray-100 outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-500/20 focus:bg-white transition-all text-slate-950 font-bold text-sm">
+            <div class="flex flex-col gap-2 relative" data-roles="nar,partner,builder">
+              <label for="pe_designation" class="text-[10px] font-bold text-gray-500 uppercase tracking-wider">Designation</label>
+              <input type="text" id="pe_designation" placeholder="e.g. Managing Director" class="w-full bg-gray-50 rounded-xl px-3 py-2.5 sm:px-4 sm:py-3 border border-gray-100 outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-500/20 focus:bg-white transition-all text-slate-950 font-bold text-sm">
+            </div>
+            <div class="flex flex-col gap-2 relative" data-roles="nar">
+              <label for="pe_website" class="text-[10px] font-bold text-gray-500 uppercase tracking-wider">Website / Profile URL</label>
+              <input type="url" id="pe_website" placeholder="https://www.yoursite.com" class="w-full bg-gray-50 rounded-xl px-3 py-2.5 sm:px-4 sm:py-3 border border-gray-100 outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-500/20 focus:bg-white transition-all text-slate-950 font-bold text-sm">
+            </div>
+            <div class="flex flex-col gap-2 relative" data-roles="nar">
+              <label for="pe_narId" class="text-[10px] font-bold text-gray-500 uppercase tracking-wider">NAR Number <span class="text-red-500">*</span></label>
+              <input type="text" id="pe_narId" placeholder="NAR-XXXXXXXX" class="w-full bg-gray-50 rounded-xl px-3 py-2.5 sm:px-4 sm:py-3 border border-gray-100 outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-500/20 focus:bg-white transition-all text-slate-950 font-bold text-sm" style="text-transform:uppercase">
+            </div>
+            <div class="flex flex-col gap-2 relative" data-roles="nar">
+              <label for="pe_narReraNumber" class="text-[10px] font-bold text-gray-500 uppercase tracking-wider">RERA Number</label>
+              <input type="text" id="pe_narReraNumber" placeholder="KRERA-XXXX-00000" class="w-full bg-gray-50 rounded-xl px-3 py-2.5 sm:px-4 sm:py-3 border border-gray-100 outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-500/20 focus:bg-white transition-all text-slate-950 font-bold text-sm" style="text-transform:uppercase">
+            </div>
+            <div class="flex flex-col gap-2 relative" data-roles="partner">
+              <label for="pe_reraRegistered" class="text-[10px] font-bold text-gray-500 uppercase tracking-wider">RERA Registered</label>
+              <div class="relative"><select id="pe_reraRegistered" class="w-full bg-gray-50 rounded-xl px-3 py-2.5 sm:px-4 sm:py-3 border border-gray-100 outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-500/20 focus:bg-white transition-all text-slate-950 font-bold text-sm appearance-none cursor-pointer"><option value="">— Select —</option><option value="Yes">Yes</option><option value="No">No</option></select><i data-lucide="chevron-down" class="w-4 h-4 absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none" aria-hidden="true"></i></div>
+            </div>
+            <div class="flex flex-col gap-2 relative" data-roles="partner">
+              <label for="pe_reraNumber" class="text-[10px] font-bold text-gray-500 uppercase tracking-wider">RERA Register Number</label>
+              <input type="text" id="pe_reraNumber" placeholder="KRERA-XXXX-00000" class="w-full bg-gray-50 rounded-xl px-3 py-2.5 sm:px-4 sm:py-3 border border-gray-100 outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-500/20 focus:bg-white transition-all text-slate-950 font-bold text-sm" style="text-transform:uppercase">
+            </div>
+            <div class="flex flex-col gap-2 relative" data-roles="builder">
+              <label for="pe_pcName" class="text-[10px] font-bold text-gray-500 uppercase tracking-wider">Primary Contact Name</label>
+              <input type="text" id="pe_pcName" placeholder="Name" class="w-full bg-gray-50 rounded-xl px-3 py-2.5 sm:px-4 sm:py-3 border border-gray-100 outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-500/20 focus:bg-white transition-all text-slate-950 font-bold text-sm">
+            </div>
+            <div class="flex flex-col gap-2 relative" data-roles="builder">
+              <label for="pe_pcPhone" class="text-[10px] font-bold text-gray-500 uppercase tracking-wider">Primary Contact Number</label>
+              <input type="tel" id="pe_pcPhone" placeholder="Phone" class="w-full bg-gray-50 rounded-xl px-3 py-2.5 sm:px-4 sm:py-3 border border-gray-100 outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-500/20 focus:bg-white transition-all text-slate-950 font-bold text-sm">
+            </div>
+            <div class="flex flex-col gap-2 relative md:col-span-2" data-roles="builder">
+              <label for="pe_project" class="text-[10px] font-bold text-gray-500 uppercase tracking-wider">Project Name</label>
+              <textarea id="pe_project" placeholder="List your current / upcoming project names..." class="w-full bg-gray-50 rounded-xl px-3 py-2.5 sm:px-4 sm:py-3 border border-gray-100 outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-500/20 focus:bg-white transition-all text-slate-950 font-bold text-sm min-h-[80px] custom-scrollbar"></textarea>
             </div>
           </div>
         </div>
-
-        <!-- Channel Partner / Builder Details -->
-        <div class="bg-white rounded-3xl p-4 sm:p-6 md:p-8 border border-gray-100 shadow-sm">
-          <div class="flex items-center gap-3 mb-6 pb-6 border-b border-gray-100">
-            <div class="w-12 h-12 rounded-full bg-amber-50 flex items-center justify-center"><i data-lucide="briefcase" class="w-6 h-6 text-amber-500" aria-hidden="true"></i></div>
-            <div>
-              <h3 class="text-lg font-bold text-slate-950">Business Credentials</h3>
-              <p class="text-[11px] font-bold text-gray-400 uppercase tracking-wider">RERA and Builder Info</p>
-            </div>
-          </div>
-          
-          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div class="flex flex-col gap-2 relative">
-              <label class="text-[10px] font-bold text-gray-500 uppercase tracking-wider">RERA Registered</label>
-              <select class="w-full bg-gray-50 rounded-xl px-3 py-2.5 sm:px-4 sm:py-3 border border-gray-100 outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-500/20 focus:bg-white transition-all text-slate-950 font-bold text-sm cursor-pointer appearance-none">
-                <option value="">— Select —</option>
-                <option>Yes</option>
-                <option>No</option>
-              </select>
-            </div>
-            <div class="flex flex-col gap-2 relative">
-              <label class="text-[10px] font-bold text-gray-500 uppercase tracking-wider">RERA Register Number</label>
-              <input type="text" placeholder="KRERA-XXXX-00000" class="w-full bg-gray-50 rounded-xl px-3 py-2.5 sm:px-4 sm:py-3 border border-gray-100 outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-500/20 focus:bg-white transition-all text-slate-950 font-bold text-sm">
-            </div>
-            <div class="flex flex-col gap-2 relative">
-              <label class="text-[10px] font-bold text-gray-500 uppercase tracking-wider">Builder Name</label>
-              <input type="text" value="Rajesh Builders" class="w-full bg-gray-50 rounded-xl px-3 py-2.5 sm:px-4 sm:py-3 border border-gray-100 outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-500/20 focus:bg-white transition-all text-slate-950 font-bold text-sm">
-            </div>
-            <div class="flex flex-col gap-2 relative">
-              <label class="text-[10px] font-bold text-gray-500 uppercase tracking-wider">Available Number of Flats</label>
-              <input type="number" placeholder="e.g. 48" class="w-full bg-gray-50 rounded-xl px-3 py-2.5 sm:px-4 sm:py-3 border border-gray-100 outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-500/20 focus:bg-white transition-all text-slate-950 font-bold text-sm">
-            </div>
-            <div class="flex flex-col gap-2 relative md:col-span-2">
-              <label class="text-[10px] font-bold text-gray-500 uppercase tracking-wider">Project Name</label>
-              <textarea placeholder="List your current / upcoming project names..." class="w-full bg-gray-50 rounded-xl px-3 py-2.5 sm:px-4 sm:py-3 border border-gray-100 outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-500/20 focus:bg-white transition-all text-slate-950 font-bold text-sm min-h-[80px] custom-scrollbar"></textarea>
-            </div>
-          </div>
-        </div>
-
-        <!-- Location Details -->
         <div class="bg-white rounded-3xl p-4 sm:p-6 md:p-8 border border-gray-100 shadow-sm">
           <div class="flex items-center gap-3 mb-6 pb-6 border-b border-gray-100">
             <div class="w-12 h-12 rounded-full bg-emerald-50 flex items-center justify-center"><i data-lucide="map-pin" class="w-6 h-6 text-emerald-500" aria-hidden="true"></i></div>
@@ -958,38 +990,30 @@
               <p class="text-[11px] font-bold text-gray-400 uppercase tracking-wider">Address and operating area</p>
             </div>
           </div>
-          
           <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div class="flex flex-col gap-2 relative md:col-span-2">
-              <label class="text-[10px] font-bold text-gray-500 uppercase tracking-wider">Full Address</label>
-              <textarea placeholder="House / Flat No, Street, Area..." class="w-full bg-gray-50 rounded-xl px-3 py-2.5 sm:px-4 sm:py-3 border border-gray-100 outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-500/20 focus:bg-white transition-all text-slate-950 font-bold text-sm min-h-[80px] custom-scrollbar"></textarea>
+              <label for="pe_address" class="text-[10px] font-bold text-gray-500 uppercase tracking-wider">Full Address</label>
+              <textarea id="pe_address" placeholder="House / Flat No, Street, Area..." class="w-full bg-gray-50 rounded-xl px-3 py-2.5 sm:px-4 sm:py-3 border border-gray-100 outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-500/20 focus:bg-white transition-all text-slate-950 font-bold text-sm min-h-[80px] custom-scrollbar"></textarea>
             </div>
             <div class="flex flex-col gap-2 relative">
-              <label class="text-[10px] font-bold text-gray-500 uppercase tracking-wider">City</label>
-              <input type="text" placeholder="e.g. Kozhikode" class="w-full bg-gray-50 rounded-xl px-3 py-2.5 sm:px-4 sm:py-3 border border-gray-100 outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-500/20 focus:bg-white transition-all text-slate-950 font-bold text-sm">
+              <label for="pe_city" class="text-[10px] font-bold text-gray-500 uppercase tracking-wider">City</label>
+              <input type="text" id="pe_city" placeholder="e.g. Kozhikode" class="w-full bg-gray-50 rounded-xl px-3 py-2.5 sm:px-4 sm:py-3 border border-gray-100 outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-500/20 focus:bg-white transition-all text-slate-950 font-bold text-sm">
             </div>
             <div class="flex flex-col gap-2 relative">
-              <label class="text-[10px] font-bold text-gray-500 uppercase tracking-wider">State</label>
-              <select class="w-full bg-gray-50 rounded-xl px-3 py-2.5 sm:px-4 sm:py-3 border border-gray-100 outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-500/20 focus:bg-white transition-all text-slate-950 font-bold text-sm cursor-pointer appearance-none">
-                <option value="">Select State</option>
-                <option>Kerala</option>
-                <option>Tamil Nadu</option>
-                <option>Karnataka</option>
-                <option>Maharashtra</option>
-                <option>Other</option>
-              </select>
+              <label for="pe_state" class="text-[10px] font-bold text-gray-500 uppercase tracking-wider">State</label>
+              <div class="relative"><select id="pe_state" class="w-full bg-gray-50 rounded-xl px-3 py-2.5 sm:px-4 sm:py-3 border border-gray-100 outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-500/20 focus:bg-white transition-all text-slate-950 font-bold text-sm appearance-none cursor-pointer"><option value="">Select State</option><option value="Andhra Pradesh">Andhra Pradesh</option><option value="Arunachal Pradesh">Arunachal Pradesh</option><option value="Assam">Assam</option><option value="Bihar">Bihar</option><option value="Chhattisgarh">Chhattisgarh</option><option value="Goa">Goa</option><option value="Gujarat">Gujarat</option><option value="Haryana">Haryana</option><option value="Himachal Pradesh">Himachal Pradesh</option><option value="Jharkhand">Jharkhand</option><option value="Karnataka">Karnataka</option><option value="Kerala">Kerala</option><option value="Madhya Pradesh">Madhya Pradesh</option><option value="Maharashtra">Maharashtra</option><option value="Manipur">Manipur</option><option value="Meghalaya">Meghalaya</option><option value="Mizoram">Mizoram</option><option value="Nagaland">Nagaland</option><option value="Odisha">Odisha</option><option value="Punjab">Punjab</option><option value="Rajasthan">Rajasthan</option><option value="Sikkim">Sikkim</option><option value="Tamil Nadu">Tamil Nadu</option><option value="Telangana">Telangana</option><option value="Tripura">Tripura</option><option value="Uttar Pradesh">Uttar Pradesh</option><option value="Uttarakhand">Uttarakhand</option><option value="West Bengal">West Bengal</option><option value="Andaman and Nicobar Islands">Andaman and Nicobar Islands</option><option value="Chandigarh">Chandigarh</option><option value="Dadra and Nagar Haveli and Daman and Diu">Dadra and Nagar Haveli and Daman and Diu</option><option value="Delhi">Delhi</option><option value="Jammu and Kashmir">Jammu and Kashmir</option><option value="Ladakh">Ladakh</option><option value="Lakshadweep">Lakshadweep</option><option value="Puducherry">Puducherry</option></select><i data-lucide="chevron-down" class="w-4 h-4 absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none" aria-hidden="true"></i></div>
             </div>
             <div class="flex flex-col gap-2 relative">
-              <label class="text-[10px] font-bold text-gray-500 uppercase tracking-wider">PIN Code</label>
-              <input type="text" placeholder="673001" maxlength="6" class="w-full bg-gray-50 rounded-xl px-3 py-2.5 sm:px-4 sm:py-3 border border-gray-100 outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-500/20 focus:bg-white transition-all text-slate-950 font-bold text-sm">
+              <label for="pe_pin" class="text-[10px] font-bold text-gray-500 uppercase tracking-wider">PIN Code</label>
+              <input type="text" id="pe_pin" placeholder="673001" class="w-full bg-gray-50 rounded-xl px-3 py-2.5 sm:px-4 sm:py-3 border border-gray-100 outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-500/20 focus:bg-white transition-all text-slate-950 font-bold text-sm" maxlength="6" inputmode="numeric">
             </div>
             <div class="flex flex-col gap-2 relative">
-              <label class="text-[10px] font-bold text-gray-500 uppercase tracking-wider">Area of Operation</label>
-              <input type="text" placeholder="e.g. North Kerala" class="w-full bg-gray-50 rounded-xl px-3 py-2.5 sm:px-4 sm:py-3 border border-gray-100 outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-500/20 focus:bg-white transition-all text-slate-950 font-bold text-sm">
+              <label for="pe_area" class="text-[10px] font-bold text-gray-500 uppercase tracking-wider">Area of Operation</label>
+              <input type="text" id="pe_area" placeholder="e.g. North Kerala" class="w-full bg-gray-50 rounded-xl px-3 py-2.5 sm:px-4 sm:py-3 border border-gray-100 outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-500/20 focus:bg-white transition-all text-slate-950 font-bold text-sm">
             </div>
           </div>
         </div>
-
+        <p id="profileEditError" class="hidden text-red-600 text-xs font-bold bg-red-50 border border-red-100 rounded-xl px-4 py-3" role="alert"></p>
       </div>
       
       <!-- Footer -->
@@ -1049,6 +1073,7 @@
       const modal = document.getElementById('editProfileModal');
       const content = document.getElementById('editProfileContent');
       if (modal.classList.contains('opacity-0')) {
+        populateEditProfile(); // always show the latest saved details
         modal.classList.remove('opacity-0', 'pointer-events-none');
         setTimeout(() => content.classList.remove('scale-95'), 10);
       } else {
@@ -1270,6 +1295,59 @@
       }
     }
 
+    // ---- Property Documents (Add Property wizard, step 3) ----
+    // Kept in memory (not only in the <input>) so single files can be removed.
+    window.wizDocuments = [];
+    const WIZ_DOC_MAX_BYTES = 3 * 1024 * 1024; // keeps the base64 JSON upload under Vercel's 4.5 MB body limit
+    const WIZ_DOC_EXT = /\.(pdf|jpe?g|png)$/i;
+
+    function handleWizDocuments(input) {
+      const rejected = [];
+      Array.from(input.files || []).forEach(file => {
+        if (!WIZ_DOC_EXT.test(file.name)) { rejected.push(file.name + ' (only PDF, JPG, PNG)'); return; }
+        if (file.size > WIZ_DOC_MAX_BYTES) { rejected.push(file.name + ' (over 3 MB)'); return; }
+        if (window.wizDocuments.some(f => f.name === file.name && f.size === file.size)) return;
+        if (window.wizDocuments.length >= 10) { rejected.push(file.name + ' (max 10 documents)'); return; }
+        window.wizDocuments.push(file);
+      });
+      input.value = ''; // allow choosing the same file again after removing it
+      if (rejected.length) alert('Some files were not added:\n• ' + rejected.join('\n• '));
+      renderWizDocuments();
+    }
+
+    function removeWizDocument(index) {
+      window.wizDocuments.splice(index, 1);
+      renderWizDocuments();
+    }
+
+    function renderWizDocuments() {
+      const list = document.getElementById('wizDocumentList');
+      if (!list) return;
+      list.innerHTML = '';
+      list.classList.toggle('hidden', window.wizDocuments.length === 0);
+      window.wizDocuments.forEach((file, i) => {
+        const li = document.createElement('li');
+        li.className = 'flex items-center justify-between gap-3 bg-gray-50 border border-gray-100 rounded-xl px-3 py-2';
+        const name = document.createElement('span');
+        name.className = 'text-xs font-bold text-slate-950 truncate';
+        name.textContent = file.name; // textContent: file names are user input
+        const size = document.createElement('span');
+        size.className = 'text-[10px] font-semibold text-gray-400 shrink-0';
+        size.textContent = (file.size / 1024 < 1024 ? Math.max(1, Math.round(file.size / 1024)) + ' KB' : (file.size / 1048576).toFixed(1) + ' MB');
+        const btn = document.createElement('button');
+        btn.type = 'button';
+        btn.setAttribute('aria-label', 'Remove ' + file.name);
+        btn.className = 'w-6 h-6 rounded-full bg-white border border-gray-200 text-gray-500 hover:text-red-600 hover:bg-red-50 flex items-center justify-center shrink-0 text-xs font-bold';
+        btn.textContent = '×';
+        btn.onclick = () => removeWizDocument(i);
+        const left = document.createElement('div');
+        left.className = 'flex items-center gap-2 min-w-0';
+        left.append(name, size);
+        li.append(left, btn);
+        list.appendChild(li);
+      });
+    }
+
     function removeFeatured(e) {
       e.stopPropagation();
       e.preventDefault();
@@ -1410,32 +1488,115 @@
       });
     }
 
+    // ---- Update Profile: shows what was entered at signup, saves edits ----
+    // form field id  ->  key in the saved profile (r2s_profile_<identity>, written by signup.html)
+    const PROFILE_FIELDS = {
+      profileEditName: 'fullName', profileEditPhone: 'phone', profileEditEmail: 'email',
+      pe_whatsapp: 'whatsapp', pe_ownerReferral: 'ownerReferral', pe_nriReferral: 'nriReferral',
+      pe_nriCountry: 'nriCountry', pe_nriSecondaryName: 'nriSecondaryName', pe_nriSecondaryPhone: 'nriSecondaryPhone',
+      pe_company: 'company', pe_designation: 'designation', pe_website: 'website',
+      pe_narId: 'narId', pe_narReraNumber: 'narReraNumber',
+      pe_reraRegistered: 'reraRegistered', pe_reraNumber: 'reraNumber',
+      pe_pcName: 'primaryContactName', pe_pcPhone: 'primaryContactPhone', pe_project: 'projectName',
+      pe_address: 'address', pe_city: 'city', pe_state: 'state', pe_pin: 'pin', pe_area: 'area',
+    };
+    // Fields the user may not change here (login identity / verified at signup).
+    const PROFILE_READONLY = new Set(['profileEditPhone', 'profileEditEmail']);
+
+    function getSavedProfile() {
+      try {
+        const identity = localStorage.getItem('r2s_current_user');
+        const raw = identity ? localStorage.getItem('r2s_profile_' + identity) : null;
+        return { identity, profile: raw ? JSON.parse(raw) : null };
+      } catch (e) {
+        return { identity: null, profile: null };
+      }
+    }
+
+    function populateEditProfile() {
+      const { profile } = getSavedProfile();
+      const role = profile?.role || '';
+
+      // Show only the fields that belong to this person's role.
+      document.querySelectorAll('#editProfileModal [data-roles]').forEach(el => {
+        const visible = !!role && el.dataset.roles.split(',').includes(role);
+        el.style.display = visible ? '' : 'none';
+      });
+
+      Object.entries(PROFILE_FIELDS).forEach(([id, key]) => {
+        const el = document.getElementById(id);
+        if (!el) return;
+        const value = profile && profile[key] != null ? String(profile[key]) : '';
+        if (el.tagName === 'SELECT' && value && ![...el.options].some(o => o.value === value)) {
+          el.add(new Option(value, value)); // keep unexpected values visible instead of dropping them
+        }
+        el.value = value;
+      });
+
+      const err = document.getElementById('profileEditError');
+      if (err) err.classList.add('hidden');
+    }
+
     function saveProfile() {
       const btn = document.getElementById('btnSaveProfile');
+      const err = document.getElementById('profileEditError');
+      const { identity, profile } = getSavedProfile();
+      const val = id => (document.getElementById(id)?.value || '').trim();
+      const fail = msg => { err.textContent = msg; err.classList.remove('hidden'); err.scrollIntoView({ behavior: 'smooth', block: 'nearest' }); };
+      err.classList.add('hidden');
+
+      if (!identity || !profile) return fail('Please log in again to edit your profile.');
+      const role = profile.role;
+      const has = id => { const el = document.getElementById(id); return el && el.closest('[data-roles]') ? el.closest('[data-roles]').style.display !== 'none' : !!el; };
+
+      if (!val('profileEditName')) return fail('Full Name is required.');
+      if (has('pe_narId') && !val('pe_narId')) return fail('NAR Number is required for NAR Realtors.');
+      if (val('pe_website') && !/^https?:\/\/\S+\.\S+/i.test(val('pe_website'))) return fail('Website must start with http:// or https://');
+      if (val('pe_pin') && !/^\d{6}$/.test(val('pe_pin'))) return fail('PIN Code must be 6 digits.');
+      const phoneOk = v => { const d = v.replace(/\D/g, ''); return d.length >= 7 && d.length <= 15 && !/[^\d+\s()-]/.test(v); };
+      if (val('pe_whatsapp') && !phoneOk(val('pe_whatsapp'))) return fail('Please enter a valid WhatsApp number.');
+      if (role === 'nri') {
+        const n = val('pe_nriSecondaryName'), ph = val('pe_nriSecondaryPhone');
+        if (n && !ph) return fail('Please enter the secondary contact number.');
+        if (ph && !n) return fail('Please enter the secondary contact name.');
+        if (ph && !phoneOk(ph)) return fail('Please enter a valid secondary contact number.');
+      }
+
+      // Write every editable field back into the saved profile.
+      const updated = { ...profile };
+      Object.entries(PROFILE_FIELDS).forEach(([id, key]) => {
+        if (PROFILE_READONLY.has(id)) return;
+        const el = document.getElementById(id);
+        if (!el) return;
+        const hiddenForRole = el.closest('[data-roles]') && el.closest('[data-roles]').style.display === 'none';
+        if (hiddenForRole) return; // never overwrite fields this role doesn't have
+        updated[key] = (key === 'narId' || key === 'narReraNumber' || key === 'reraNumber') ? val(id).toUpperCase() : val(id);
+      });
+      try {
+        localStorage.setItem('r2s_profile_' + identity, JSON.stringify(updated));
+      } catch (e) {
+        return fail('Could not save on this device (browser storage is unavailable).');
+      }
+
+      ['profileDropdownName', 'pageHeaderName'].forEach(id => {
+        const el = document.getElementById(id);
+        if (el) el.textContent = updated.fullName || el.textContent;
+      });
+
       const originalHtml = btn.innerHTML;
-      
-      // Loading state
-      btn.innerHTML = '<i data-lucide="loader-2" class="w-4 h-4 animate-spin" aria-hidden="true"></i> Saving...';
+      btn.classList.remove('bg-slate-950', 'hover:bg-slate-800');
+      btn.classList.add('bg-green-500', 'hover:bg-green-600');
+      btn.innerHTML = '<i data-lucide="check" class="w-4 h-4" aria-hidden="true"></i> Saved!';
       if(window.lucide) lucide.createIcons();
-      
-      // Simulate save
       setTimeout(() => {
-        btn.classList.remove('bg-slate-950', 'hover:bg-slate-800');
-        btn.classList.add('bg-green-500', 'hover:bg-green-600');
-        btn.innerHTML = '<i data-lucide="check" class="w-4 h-4" aria-hidden="true"></i> Saved!';
-        if(window.lucide) lucide.createIcons();
-        
-        // Close modal and reset button after delay
+        toggleEditProfile();
         setTimeout(() => {
-          toggleEditProfile();
-          setTimeout(() => {
-            btn.classList.remove('bg-green-500', 'hover:bg-green-600');
-            btn.classList.add('bg-slate-950', 'hover:bg-slate-800');
-            btn.innerHTML = originalHtml;
-            if(window.lucide) lucide.createIcons();
-          }, 500);
-        }, 1500);
-      }, 1000);
+          btn.classList.remove('bg-green-500', 'hover:bg-green-600');
+          btn.classList.add('bg-slate-950', 'hover:bg-slate-800');
+          btn.innerHTML = originalHtml;
+          if(window.lucide) lucide.createIcons();
+        }, 500);
+      }, 1200);
     }
 
     
@@ -2008,62 +2169,14 @@
 </script>
 
 <script>
-  // Zoho's search API can take a few seconds to index a record that was
-  // just created, so fetching the list again immediately after a submit
-  // can miss the property that was just added (the "lag" the property
-  // list can otherwise show). To keep things feeling instant we build a
-  // lightweight local copy of the new property right after a successful
-  // submit and merge it in here — either passed in directly (same-page
-  // modal submit) or stashed in sessionStorage across the add-property.html
-  // -> dashboard.html redirect.
-  async function renderProperties(pendingProperty) {
+  // Last property list CRM returned, so a freshly added property can be
+  // painted instantly (before the CRM round-trip finishes).
+  let lastServerProperties = [];
+
+  function paintProperties(props) {
     const container = document.getElementById('dynamicPropertiesContainer');
     const emptyState = document.getElementById('emptyStateContainer');
     if(!container || !emptyState) return;
-
-    let props = [];
-
-    if (!pendingProperty) {
-      try {
-        const stashedRaw = sessionStorage.getItem('r2s_pending_property');
-        if (stashedRaw) pendingProperty = JSON.parse(stashedRaw);
-      } catch (e) {
-        // Ignore malformed stash — just skip the optimistic merge.
-      }
-    }
-
-    // Prefer fetching the real, current list straight from CRM so the
-    // dashboard reflects properties added anywhere (website or directly
-    // in CRM) — not just what happens to be in this browser's storage.
-    const identity = localStorage.getItem('r2s_current_user');
-    const profileRaw = identity ? localStorage.getItem('r2s_profile_' + identity) : null;
-    const profile = profileRaw ? JSON.parse(profileRaw) : null;
-
-    if (profile?.role && profile?.crmRecordId) {
-      try {
-        const res = await fetch(`/api/get-properties?role=${encodeURIComponent(profile.role)}&recordId=${encodeURIComponent(profile.crmRecordId)}`);
-        const result = await res.json();
-        if (result.success) {
-          props = result.properties;
-        } else {
-          console.error('Failed to fetch properties from CRM:', result.error);
-        }
-      } catch (err) {
-        console.error('Network error fetching properties from CRM:', err);
-      }
-    } else {
-      // No CRM identity known yet (e.g. logged in without signing up
-      // this session) — fall back to whatever's saved locally.
-      props = window.getMyProperties ? window.getMyProperties() : [];
-    }
-
-    // If CRM search has already caught up and returned the just-created
-    // record, don't show a duplicate — otherwise, show the optimistic
-    // version up front until the next natural refresh replaces it.
-    if (pendingProperty && !props.some((p) => p.id === pendingProperty.id)) {
-      props = [pendingProperty, ...props];
-    }
-    sessionStorage.removeItem('r2s_pending_property');
 
     if (props.length === 0) {
       container.classList.add('hidden');
@@ -2109,6 +2222,62 @@
     }
   }
 
+  // Zoho's search API can take a while to index a record that was just
+  // created, so fetching the list again immediately after a submit can miss
+  // the property that was just added (which used to force a manual page
+  // refresh). To keep things instant, every successful submit remembers a
+  // lightweight copy of the new property (R2sPending, see main.js) and it is
+  // merged into the CRM list here until CRM returns the real record. That
+  // also survives the add-property.html -> dashboard.html redirect, several
+  // quick adds in a row, and a page reload.
+  async function renderProperties(pendingProperty) {
+    const container = document.getElementById('dynamicPropertiesContainer');
+    const emptyState = document.getElementById('emptyStateContainer');
+    if(!container || !emptyState) return;
+
+    // Start from the last list CRM gave us, so a failed refresh doesn't blank the list.
+    let props = lastServerProperties;
+
+    if (pendingProperty) {
+      window.R2sPending.add('property', pendingProperty);
+      // Show it right away; the CRM refresh below then confirms/updates.
+      paintProperties(window.R2sPending.merge('property', lastServerProperties));
+    }
+
+    // Prefer fetching the real, current list straight from CRM so the
+    // dashboard reflects properties added anywhere (website or directly
+    // in CRM) — not just what happens to be in this browser's storage.
+    const identity = localStorage.getItem('r2s_current_user');
+    const profileRaw = identity ? localStorage.getItem('r2s_profile_' + identity) : null;
+    const profile = profileRaw ? JSON.parse(profileRaw) : null;
+
+    if (profile?.role && profile?.crmRecordId) {
+      try {
+        const res = await fetch(`/api/get-properties?role=${encodeURIComponent(profile.role)}&recordId=${encodeURIComponent(profile.crmRecordId)}`);
+        const result = await res.json();
+        if (result.success) {
+          props = result.properties;
+          lastServerProperties = props;
+          if (result.warning) console.warn('CRM property lookup:', result.warning);
+        } else {
+          console.error('Failed to fetch properties from CRM:', result.error);
+        }
+      } catch (err) {
+        console.error('Network error fetching properties from CRM:', err);
+      }
+    } else {
+      // No CRM identity known yet (e.g. logged in without signing up
+      // this session) — fall back to whatever's saved locally.
+      props = window.getMyProperties ? window.getMyProperties() : [];
+    }
+
+    // Recently saved properties CRM hasn't returned yet go on top; anything
+    // CRM now returns is dropped from the pending list so it never shows twice.
+    props = window.R2sPending.merge('property', props);
+
+    paintProperties(props);
+  }
+
   // Converts a File object into a plain base64 string (no "data:" prefix),
   // so it can be sent as JSON to /api/upload-attachment.
   function fileToBase64(file) {
@@ -2145,6 +2314,8 @@
   window.submitPropertyForm = async function(e) {
     e.preventDefault();
     const propName = document.getElementById('wiz_prop_name') || document.getElementById('prop_name');
+    const propOwnerName = document.getElementById('wiz_owner_name');
+    const propOwnerPhone = document.getElementById('wiz_owner_phone');
     const propPrice = document.getElementById('wiz_price') || document.getElementById('prop_price');
     const propKind = document.getElementById('wiz_kind') || document.getElementById('prop_kind');
     const propStatus = document.getElementById('wiz_status') || document.getElementById('prop_status');
@@ -2165,6 +2336,9 @@
       : '';
     
     if(!propName || !propName.value) return showPremiumAlert('error');
+    if (!propLocation || !propLocation.value) {
+      return showPremiumAlert('error', 'Please select a Location. Photos are stored location-wise, so it is required.');
+    }
 
     // Look up who's currently logged in, so this property gets linked
     // back to their own Owner/Agent/Partner/Builder/NAR CRM record.
@@ -2190,14 +2364,13 @@
     }
     const videoPromotion = !!document.getElementById('wiz_video_promotion')?.checked;
     const videoFile = document.getElementById('wiz_video_file')?.files[0];
-
-    const propOwnerName = document.getElementById('wiz_owner_name');
-    const propOwnerPhone = document.getElementById('wiz_owner_phone');
+    const documents = Array.isArray(window.wizDocuments) ? window.wizDocuments.slice() : [];
+    const docSharing = document.querySelector('input[name="wiz_doc_sharing"]:checked')?.value || 'private';
 
     const property = {
-      name: propName.value,
       ownerName: propOwnerName ? propOwnerName.value : '',
       ownerPhone: propOwnerPhone ? propOwnerPhone.value : '',
+      name: propName.value,
       price: propPrice ? propPrice.value : '',
       kind: propKind ? propKind.value : '',
       status: propStatus ? propStatus.value : '',
@@ -2217,7 +2390,11 @@
       advertisingPlatforms: adPlatforms.join(', '),
       // Paid Video Promotion (Req. 5)
       videoPromotionRequested: videoPromotion ? 'Yes' : 'No',
-      hasVideoUpload: videoFile ? 'Yes' : 'No'
+      hasVideoUpload: videoFile ? 'Yes' : 'No',
+      // Property Documents: who may see them (only meaningful if any were added)
+      documentsSharing: documents.length
+        ? ({ private: 'Private - R2s team only', network: 'R2s verified partners', buyers: 'Serious buyers on request' }[docSharing] || 'Private - R2s team only')
+        : ''
     };
 
     // Send the ticket data to Zoho CRM
@@ -2225,7 +2402,7 @@
     let zohoResultRecordId = null;
     let zohoErrorMessage = 'Something went wrong. Please try again.';
     try {
-      const res = await fetch('/api/submit-to-zoho', {
+      const res = await window.fetchWithTimeout('/api/submit-to-zoho', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -2234,7 +2411,7 @@
           linkRole: profile?.role,
           linkId: profile?.crmRecordId,
         }),
-      });
+      }, 30000);
       const result = await res.json();
       zohoOk = !!result.success;
       zohoResultRecordId = result.zohoRecordId;
@@ -2272,6 +2449,36 @@
       if (galleryInput && galleryInput.files.length) {
         filesToUpload.push(...galleryInput.files);
       }
+
+      // Property documents are attached too, named "DOC-<sharing>-<file>" so
+      // they're never mistaken for a photo and the sharing choice travels with
+      // each file in CRM.
+      const docFiles = documents.map(file => ({
+        file,
+        name: 'DOC-' + docSharing + '-' + file.name.replace(/[^\w.\- ]+/g, '_'),
+      }));
+      const docFailures = [];
+      await Promise.all(docFiles.map(async ({ file, name }) => {
+        try {
+          const base64 = await fileToBase64(file);
+          const uploadRes = await fetch('/api/upload-attachment', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ module: 'Products', recordId: recordId, fileName: name, fileBase64: base64 }),
+          });
+          const uploadResult = await uploadRes.json().catch(() => ({}));
+          if (!uploadResult.success) throw new Error(uploadResult.error || 'upload failed');
+        } catch (err) {
+          console.error('Document upload failed for', file.name, err);
+          docFailures.push(file.name);
+        }
+      }));
+      if (docFailures.length) {
+        // The property itself is saved; tell the user which documents need re-adding.
+        setTimeout(() => alert('Your property was created, but these documents could not be uploaded: ' + docFailures.join(', ') + '. Please contact R2s Realtors to add them.'), 1200);
+      }
+      window.wizDocuments = [];
+      renderWizDocuments();
 
       await Promise.all(filesToUpload.map(async (file) => {
         try {
@@ -2321,23 +2528,17 @@
     // Show success
     showPremiumAlert('success');
 
+    // Remember the new property and paint it right away (behind the success
+    // animation) — no need to wait for CRM's search index or a page refresh.
+    if (recordId) renderProperties(optimisticProperty);
+
     // Redirect or update UI
     setTimeout(() => {
       if(window.location.pathname.includes('add-property.html')) {
-        // Stash the optimistic property so dashboard.html can show it the
-        // instant it loads, instead of waiting on CRM's search index.
-        if (recordId) {
-          try {
-            sessionStorage.setItem('r2s_pending_property', JSON.stringify(optimisticProperty));
-          } catch (e) {
-            // sessionStorage unavailable (private browsing, etc) — fine,
-            // dashboard will just show it once CRM indexes it normally.
-          }
-        }
         window.location.href = 'dashboard.html';
       } else {
         if(typeof toggleAddProperty !== 'undefined') toggleAddProperty();
-        renderProperties(recordId ? optimisticProperty : undefined);
+        if(!recordId) renderProperties();
         if(typeof updateDashboardStats !== 'undefined') updateDashboardStats();
       }
     }, 1000);
@@ -2366,34 +2567,45 @@
       : '';
 
     const nameEl = document.getElementById('profileDropdownName');
+    const codeEl = document.getElementById('profileDropdownCode');
     const emailEl = document.getElementById('profileDropdownEmail');
     const roleEl = document.getElementById('profileDropdownRole');
-    const codeEl = document.getElementById('profileDropdownCode');
     const headerNameEl = document.getElementById('pageHeaderName');
     const editNameEl = document.getElementById('profileEditName');
     const editPhoneEl = document.getElementById('profileEditPhone');
     const editEmailEl = document.getElementById('profileEditEmail');
 
     if (nameEl) nameEl.textContent = displayName;
+    if (codeEl) {
+      if (profile?.uniqueCode) {
+        codeEl.textContent = 'Code: ' + profile.uniqueCode;
+        codeEl.classList.remove('hidden');
+      } else {
+        codeEl.classList.add('hidden');
+      }
+    }
     if (emailEl && displayEmail) emailEl.textContent = displayEmail;
     if (roleEl && displayRole) roleEl.textContent = displayRole;
-    const codeContainerEl = document.getElementById('profileDropdownCodeContainer');
-    if (codeEl && profile?.userCode) {
-      codeEl.textContent = profile.userCode;
-      if (codeContainerEl) codeContainerEl.classList.remove('hidden');
-      else codeEl.classList.remove('hidden');
-    }
     if (headerNameEl) headerNameEl.textContent = displayName;
     if (editNameEl) editNameEl.value = displayName;
     if (editPhoneEl && profile?.phone) editPhoneEl.value = profile.phone;
     if (editEmailEl && displayEmail) editEmailEl.value = displayEmail;
+  });
+
+  // Old "edit-profile.html" links land here and open the Update Profile form.
+  document.addEventListener('DOMContentLoaded', function() {
+    if (typeof populateEditProfile === 'function') populateEditProfile();
+    if (location.hash === '#edit-profile' && typeof toggleEditProfile === 'function') {
+      history.replaceState(null, '', location.pathname + location.search);
+      toggleEditProfile();
+    }
   });
 </script>
 
 
 <script>
   // Network Leads uses the existing Buyer Lead -> Zoho CRM workflow.
-  const NETWORK_BUYER_ALLOWED_ROLES = ['nar', 'partner', 'agent', 'nri_channel'];
+  const NETWORK_BUYER_ALLOWED_ROLES = ['nar', 'partner', 'agent', 'associate', 'nri'];
 
   function getNetworkBuyerProfile() {
     const identity = localStorage.getItem('r2s_current_user');
@@ -2447,50 +2659,112 @@
     }
   }
 
-  function toggleBuyerPhoneInput(checkbox) {
-    const input = document.getElementById('network_buyer_contact');
-    if (checkbox.checked) {
-      input.pattern = "[0-9]{10}";
-      input.maxLength = 10;
-      input.placeholder = "10-digit mobile number";
-    } else {
-      input.pattern = "[0-9]{4}";
-      input.maxLength = 4;
-      input.placeholder = "Last 4 digits (e.g. 1234)";
-    }
-    input.value = "";
+  // ==================== Network Buyer Contact masking ====================
+  // CHANGED: previously this field either collected only the last 4
+  // digits, or (if the checkbox was ticked, or the role was "agent") the
+  // full number in plain text — and switching modes wiped whatever was
+  // already typed, and the default mode had a hard maxlength of 4 so it
+  // was IMPOSSIBLE to type more than 4 digits even if you wanted to.
+  // Now the field always collects the full 10-digit number in
+  // networkBuyerContactDigits; the visible input only ever shows a
+  // masked version (or the real thing, while "Show full number" is
+  // checked). beforeinput is used instead of reading the field's own
+  // value, since the field's value is masked text, not the real digits.
+  let networkBuyerContactDigits = '';
+  let networkBuyerContactRevealed = false;
+
+  function maskNetworkBuyerContact(digits) {
+    if (digits.length <= 4) return digits;
+    return 'X'.repeat(digits.length - 4) + digits.slice(-4);
   }
+
+  function renderNetworkBuyerContactField() {
+    const input = document.getElementById('network_buyer_contact');
+    if (!input) return;
+    input.value = networkBuyerContactRevealed ? networkBuyerContactDigits : maskNetworkBuyerContact(networkBuyerContactDigits);
+  }
+
+  function toggleNetworkBuyerContactReveal(isChecked) {
+    networkBuyerContactRevealed = !!isChecked;
+    renderNetworkBuyerContactField();
+  }
+
+  function resetNetworkBuyerContactField() {
+    networkBuyerContactDigits = '';
+    networkBuyerContactRevealed = false;
+    const checkbox = document.getElementById('network_buyer_contact_check');
+    if (checkbox) checkbox.checked = false;
+    renderNetworkBuyerContactField();
+  }
+
+  function initNetworkBuyerContactMasking() {
+    const input = document.getElementById('network_buyer_contact');
+    if (!input || input.dataset.maskingBound) return;
+    input.dataset.maskingBound = 'true';
+
+    // beforeinput fires before the field's own value changes, and tells
+    // us exactly what the user did (typed a digit, pasted, backspaced)
+    // via e.inputType / e.data — so we can update the real digits and
+    // then fully control what's displayed.
+    input.addEventListener('beforeinput', (e) => {
+      e.preventDefault();
+
+      if (
+        e.inputType === 'insertText' ||
+        e.inputType === 'insertFromPaste' ||
+        e.inputType === 'insertFromDrop'
+      ) {
+        const incoming = (e.data || '').replace(/\D/g, '');
+        if (incoming) {
+          networkBuyerContactDigits = (networkBuyerContactDigits + incoming).slice(0, 10);
+        }
+      } else if (
+        e.inputType === 'deleteContentBackward' ||
+        e.inputType === 'deleteContentForward'
+      ) {
+        networkBuyerContactDigits = networkBuyerContactDigits.slice(0, -1);
+      } else if (
+        e.inputType === 'deleteByCut' ||
+        e.inputType === 'deleteContent'
+      ) {
+        networkBuyerContactDigits = '';
+      }
+
+      renderNetworkBuyerContactField();
+    });
+
+    // Fallback for older browsers where a pasted value doesn't show up
+    // in beforeinput's e.data.
+    input.addEventListener('paste', (e) => {
+      if (networkBuyerContactDigits) return; // beforeinput already handled it
+      const text = (e.clipboardData || window.clipboardData)?.getData('text') || '';
+      const digits = text.replace(/\D/g, '');
+      if (digits) {
+        networkBuyerContactDigits = digits.slice(0, 10);
+        renderNetworkBuyerContactField();
+      }
+    });
+  }
+  // =========================================================================
 
   function toggleNetworkBuyerModal() {
     const modal = document.getElementById('networkAddBuyerModal');
     if (!modal) return;
-    
-    const profile = getNetworkBuyerProfile();
-    const checkboxWrapper = document.getElementById('network_buyer_contact_check_wrapper');
-    const checkbox = document.getElementById('network_buyer_contact_check');
-    const input = document.getElementById('network_buyer_contact');
-    
-    if (profile && profile.role === 'agent') {
-      if (checkboxWrapper) checkboxWrapper.classList.add('hidden');
-      if (checkbox) checkbox.checked = true;
-      if (input) {
-        input.pattern = "[0-9]{10}";
-        input.maxLength = 10;
-        input.placeholder = "10-digit mobile number";
-      }
-    } else {
-      if (checkboxWrapper) checkboxWrapper.classList.remove('hidden');
-      if (checkbox) checkbox.checked = false;
-      if (input) {
-        input.pattern = "[0-9]{4}";
-        input.maxLength = 4;
-        input.placeholder = "Last 4 digits (e.g. 1234)";
-      }
-    }
+
+    initNetworkBuyerContactMasking();
 
     modal.classList.toggle('hidden');
     modal.classList.toggle('flex');
+
+    if (!modal.classList.contains('hidden')) {
+      resetNetworkBuyerContactField();
+    }
   }
+
+  // Last buyer list CRM returned, and a counter so a slow, older response can
+  // never overwrite a newer one.
+  let lastServerBuyerLeads = [];
+  let buyerLoadSeq = 0;
 
   function renderNetworkBuyerLeads(leads) {
     const list = document.getElementById('networkBuyerList');
@@ -2504,18 +2778,10 @@
     }
 
     empty.classList.add('hidden');
-    list.innerHTML = leads.map(l => `
-      <div class="bg-white rounded-2xl p-5 border border-gray-100 shadow-[0_4px_20px_rgb(0,0,0,0.03)] flex items-center justify-between gap-4">
-        <div>
-          <h3 class="font-bold text-slate-950">${l.buyerName || 'Unnamed Buyer'}</h3>
-          <p class="text-sm text-gray-500 font-semibold mt-0.5">${l.buyerContactMasked || 'XXXXXXXXXX'}</p>
-          <p class="text-xs text-gray-400 font-medium mt-1 flex items-center gap-1"><i data-lucide="map-pin" class="w-3 h-3"></i> ${l.preferredLocation || 'Not specified'}</p>
-        </div>
-        <span class="text-[10px] font-bold text-gray-400 uppercase tracking-wider">${l.createdAt ? new Date(l.createdAt).toLocaleDateString() : ''}</span>
-      </div>
-    `).join('');
-
-    if (typeof lucide !== 'undefined') lucide.createIcons();
+    // Cards show the masked number (last 4 digits) with an eye button to
+    // reveal the full number — see BuyerLeadUI in main.js.
+    window.BuyerLeadUI.bind(list);
+    window.BuyerLeadUI.render(list, leads);
   }
 
   async function loadNetworkBuyerLeads() {
@@ -2535,11 +2801,12 @@
     unauthorized?.classList.add('hidden');
     errorBox?.classList.add('hidden');
 
+    const seq = ++buyerLoadSeq;
     try {
       const res = await fetch(`/api/get-buyer-leads?role=${encodeURIComponent(profile.role)}&recordId=${encodeURIComponent(profile.crmRecordId)}`);
       const result = await res.json();
       if (!result.success) throw new Error(result.error || 'Failed to load network leads');
-      renderNetworkBuyerLeads(result.leads);
+      lastServerBuyerLeads = result.leads;
     } catch (err) {
       console.error('Could not load network leads:', err);
       if (errorBox) {
@@ -2547,6 +2814,11 @@
         errorBox.classList.remove('hidden');
       }
     }
+    if (seq !== buyerLoadSeq) return; // a newer load is already in charge
+
+    // Buyers saved a moment ago may not be in CRM's search results yet —
+    // keep showing them until CRM returns them.
+    renderNetworkBuyerLeads(window.R2sPending.merge('buyerlead', lastServerBuyerLeads));
   }
 
   async function submitNetworkBuyerLead(e) {
@@ -2557,10 +2829,21 @@
       return;
     }
 
+    // CHANGED: the real number lives in networkBuyerContactDigits — the
+    // visible field only ever shows masked or fully-revealed text, never
+    // something safe to read back with .value.
+    if (networkBuyerContactDigits.length !== 10) {
+      const input = document.getElementById('network_buyer_contact');
+      input.setCustomValidity('Enter the full 10-digit mobile number.');
+      input.reportValidity();
+      return;
+    }
+    document.getElementById('network_buyer_contact').setCustomValidity('');
+
     const payload = {
       formType: 'buyerlead',
       buyerName: document.getElementById('network_buyer_name').value,
-      buyerContact: document.getElementById('network_buyer_contact').value,
+      buyerContact: networkBuyerContactDigits,
       preferredLocation: document.getElementById('network_buyer_preferred_location').value,
       consentGiven: 'Yes',
       consentAt: new Date().toISOString(),
@@ -2569,18 +2852,33 @@
     };
 
     try {
-      const res = await fetch('/api/submit-to-zoho', {
+      const res = await window.fetchWithTimeout('/api/submit-to-zoho', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(payload),
-      });
+      }, 30000);
       const result = await res.json();
       if (!result.success) throw new Error(result.error || 'Zoho rejected the record');
 
       showPremiumAlert('success');
       document.getElementById('networkAddBuyerForm').reset();
+      resetNetworkBuyerContactField();
       toggleNetworkBuyerModal();
-      setTimeout(() => loadNetworkBuyerLeads(), 500);
+
+      // Show the new buyer straight away instead of waiting for CRM's
+      // search index (which is why the list used to need a manual refresh).
+      if (result.zohoRecordId) {
+        window.R2sPending.add('buyerlead', {
+          id: result.zohoRecordId,
+          buyerName: payload.buyerName,
+          buyerContact: payload.buyerContact,
+          buyerContactMasked: window.maskPhoneNumber(payload.buyerContact),
+          preferredLocation: payload.preferredLocation,
+          createdAt: new Date().toISOString(),
+        });
+      }
+      renderNetworkBuyerLeads(window.R2sPending.merge('buyerlead', lastServerBuyerLeads));
+      loadNetworkBuyerLeads(); // quiet background refresh from CRM
     } catch (err) {
       console.error('Network buyer lead submission failed:', err);
       showPremiumAlert('error');

@@ -182,6 +182,12 @@
               <span class="w-2 h-2 rounded-full bg-cyan-400"></span> Agent
             </p>
           </div>
+          <div class="text-center">
+            <h4 class="text-lg font-extrabold text-gray-900" id="donut-nri-percent">—</h4>
+            <p class="text-[10px] font-bold text-gray-400 uppercase flex items-center justify-center gap-1 mt-1">
+              <span class="w-2 h-2 rounded-full bg-indigo-500"></span> NRI
+            </p>
+          </div>
         </div>
       </div>
     </div>
@@ -258,7 +264,50 @@
         <svg class="absolute bottom-0 left-0 w-full h-16 text-white/20" preserveAspectRatio="none" viewBox="0 0 100 100"><path fill="currentColor" d="M0,100 C30,70 40,80 60,40 C80,10 100,60 100,100 Z"></path></svg>
       </div>
 
+
+
+      <!-- NRI Card -->
+      <div class="stat-card-4 rounded-3xl p-6 shadow-lg shadow-indigo-500/20 relative overflow-hidden group">
+        <div class="relative z-10 flex flex-col h-full justify-between gap-4">
+          <div class="flex justify-between items-start">
+            <p class="text-white/90 text-sm font-bold tracking-wide">NRI Clients</p>
+            <div class="w-8 h-8 rounded-full bg-white/20 flex items-center justify-center text-white backdrop-blur-sm">
+              <i data-lucide="globe-2" class="w-4 h-4"></i>
+            </div>
+          </div>
+          <div>
+            <h3 class="text-3xl font-extrabold text-white mb-1" id="card-nri">...</h3>
+            <p class="text-white/80 text-[10px] font-bold uppercase tracking-wider">Registered NRI profiles</p>
+          </div>
+        </div>
+      </div>
     </div>
+
+    <!-- NRI Details -->
+    <section class="bg-white rounded-3xl p-6 md:p-8 shadow-sm border border-gray-100 no-print">
+      <div class="flex items-center justify-between gap-4 mb-5">
+        <div>
+          <h2 class="text-xl font-extrabold text-gray-900">NRI Details</h2>
+          <p class="text-sm text-gray-500 font-medium">Latest NRI profiles from Zoho CRM</p>
+        </div>
+        <span id="nriCountBadge" class="px-3 py-1.5 rounded-full bg-indigo-50 text-indigo-600 text-xs font-bold">0</span>
+      </div>
+      <div class="overflow-x-auto">
+        <table class="w-full text-left">
+          <thead>
+            <tr class="bg-slate-50 text-gray-500 text-[10px] uppercase tracking-widest font-bold">
+              <th class="p-3">Name</th>
+              <th class="p-3">Phone</th>
+              <th class="p-3">Email</th>
+              <th class="p-3">Country</th>
+              <th class="p-3">Created</th>
+            </tr>
+          </thead>
+          <tbody id="nriDetailsBody" class="divide-y divide-gray-100"></tbody>
+        </table>
+      </div>
+      <div id="nriDetailsEmpty" class="hidden text-center py-8 text-sm font-semibold text-gray-400">No NRI records found.</div>
+    </section>
 
     <!-- Bottom Row: Activities & Table -->
     <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
@@ -531,16 +580,17 @@
     new Chart(ctxDonut, {
       type: 'doughnut',
       data: {
-        labels: ['Owner', 'Builder', 'Associate', 'NAR', 'Partner', 'Agent'],
+        labels: ['Owner', 'Builder', 'Associate', 'NAR', 'Partner', 'Agent', 'NRI'],
         datasets: [{
-          data: [45, 20, 15, 10, 5, 5],
+          data: [40, 18, 14, 9, 5, 5, 9],
           backgroundColor: [
             '#3b82f6', // Blue
             '#10b981', // Emerald
             '#8b5cf6', // Purple
             '#ec4899', // Pink
             '#fb923c', // Orange
-            '#22d3ee'  // Cyan
+            '#22d3ee', // Cyan
+            '#6366f1'  // NRI
           ],
           borderWidth: 0,
           hoverOffset: 4
@@ -725,6 +775,30 @@
       set('card-realtors', 'totalRealtors');
       set('card-leads', 'totalBuyerLeads');
       set('card-builders', 'totalBuilders');
+      set('card-nri', 'totalNRIs');
+    }
+
+    function renderNriDetails(stats) {
+      const body = document.getElementById('nriDetailsBody');
+      const empty = document.getElementById('nriDetailsEmpty');
+      const badge = document.getElementById('nriCountBadge');
+      if (!body) return;
+      const rows = Array.isArray(stats?.nriDetails) ? stats.nriDetails : [];
+      if (badge) badge.textContent = String(stats?.totalNRIs ?? rows.length);
+      if (!rows.length) {
+        body.innerHTML = '';
+        empty?.classList.remove('hidden');
+        return;
+      }
+      empty?.classList.add('hidden');
+      body.innerHTML = rows.map(r => `
+        <tr class="hover:bg-slate-50/70">
+          <td class="p-3 font-bold text-gray-900">${r.name || '—'}</td>
+          <td class="p-3 text-sm font-semibold text-gray-600">${r.phone || '—'}</td>
+          <td class="p-3 text-sm font-semibold text-gray-600">${r.email || '—'}</td>
+          <td class="p-3 text-sm font-semibold text-gray-600">${r.country || '—'}</td>
+          <td class="p-3 text-sm font-semibold text-gray-500">${r.createdAt ? new Date(r.createdAt).toLocaleDateString() : '—'}</td>
+        </tr>`).join('');
     }
 
     async function loadStats() {
@@ -734,6 +808,7 @@
         if (!result.success) throw new Error(result.error || 'Failed to load stats');
         
         renderHero(result.stats, result.errors);
+        renderNriDetails(result.stats);
       } catch (err) {
         console.error('Admin stats load failed (using mock data):', err);
         // Render mock data so the dashboard stays premium looking offline
@@ -743,8 +818,11 @@
           totalAssociates: 120,
           totalRealtors: 84,
           totalBuyerLeads: 45,
-          totalBuilders: 12
+          totalBuilders: 12,
+          totalNRIs: 0,
+          nriDetails: []
         }, {});
+        renderNriDetails({ totalNRIs: 0, nriDetails: [] });
       }
     }
 

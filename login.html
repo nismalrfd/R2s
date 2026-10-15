@@ -4,27 +4,30 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>R2s Realtors</title>
-  <link rel="stylesheet" href="/src/style.css" />
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <script src="https://unpkg.com/lucide@latest"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/css/intlTelInput.css" />
   <style>
+    /* International phone input (country-code selector) — same look as signup */
     .iti { width: 100%; display: block; }
     .iti__flag-container { padding: 4px; }
-    .iti__selected-flag { border-radius: 12px; transition: background 0.2s; background-color: transparent !important; }
+    .iti__selected-flag { border-radius: 16px 0 0 16px; transition: background 0.2s; background-color: transparent !important; }
     .iti__selected-flag:hover { background-color: #f9fafb !important; }
     .iti__country-list { border-radius: 12px; border: 1px solid #f3f4f6; box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1); font-family: inherit; z-index: 100; max-width: 300px; -ms-overflow-style: none; scrollbar-width: none; }
     .iti__country-list::-webkit-scrollbar { display: none; }
     .iti__dial-code { color: #64748b; font-weight: 700; }
     .iti__country-name { color: #0f172a; font-weight: 600; font-size: 14px; }
-    .iti--allow-dropdown input { padding-left: 5rem !important; }
+    .iti__selected-dial-code { font-size: 0.95rem; font-weight: 700; }
+    .iti--allow-dropdown input[type="tel"] { padding-right: 1.25rem; }
     .iti--separate-dial-code .iti__selected-flag { background-color: transparent; }
   </style>
+
   <!-- PWA Meta Tags -->
   <link rel="manifest" href="/manifest.json" />
   <link rel="icon" href="/LOGO.png" type="image/png" />
   <link rel="apple-touch-icon" href="/LOGO.png" />
   <meta name="theme-color" content="#ffffff" />
+  <meta name="mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
   <meta name="apple-mobile-web-app-title" content="R2s Realtors" />
@@ -195,8 +198,8 @@
           <!-- Mobile Input Group -->
           <div id="mobileInputGroup" class="flex flex-col gap-1.5 relative">
             <label class="text-[11px] font-bold text-gray-500 uppercase tracking-wider ml-1">Mobile Number</label>
-            <div class="w-full relative">
-              <input type="tel" id="phoneInput" class="w-full bg-white rounded-2xl px-5 py-4 border border-gray-200 outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-500/20 transition-all text-slate-950 font-bold text-lg tracking-wide" placeholder="98765 43210" required>
+            <div id="mobileInputWrapper" class="rounded-2xl transition-all">
+              <input type="tel" id="phoneInput" class="w-full bg-white rounded-2xl px-5 py-4 border border-gray-200 outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-500/20 transition-all text-slate-950 font-bold text-lg tracking-wide" placeholder="98765 43210" maxlength="15" required>
             </div>
             <!-- Custom Mobile Error -->
             <div id="mobileError" class="hidden opacity-0 translate-y-1 transition-all duration-300 flex items-center gap-2 text-blue-600 bg-blue-50 p-2.5 rounded-lg border border-red-100 text-xs font-bold">
@@ -208,7 +211,7 @@
           <!-- Email Input Group (Hidden by default) -->
           <div id="emailInputGroup" class="hidden flex flex-col gap-1.5 relative">
             <label class="text-[11px] font-bold text-gray-500 uppercase tracking-wider ml-1">Email Address</label>
-            <div class="relative">
+            <div id="emailInputWrapper" class="relative rounded-2xl transition-all">
               <i data-lucide="mail" class="w-5 h-5 absolute left-5 top-1/2 -translate-y-1/2 text-gray-400"></i>
               <input type="email" id="emailInput" class="w-full bg-white rounded-2xl pl-12 pr-5 py-4 border border-gray-200 outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-500/20 transition-all text-slate-950 font-bold text-base" placeholder="you@example.com">
             </div>
@@ -220,8 +223,8 @@
           </div>
           
           <!-- Submit Button -->
-          <button type="submit" class="w-full bg-blue-600 hover:-translate-y-0.5 hover:shadow-lg text-white py-4 mt-2 rounded-full font-bold hover:bg-blue-700 hover:scale-105 hover:shadow-[0_4px_20px_rgba(37,99,235,0.4)] transition-all duration-300 text-sm flex items-center justify-center gap-2 group mb-6">
-            Send OTP <i data-lucide="arrow-right" class="w-4 h-4 transition-transform group-hover:translate-x-1"></i>
+          <button type="submit" id="sendOtpBtn" class="w-full bg-blue-600 hover:-translate-y-0.5 hover:shadow-lg text-white py-4 mt-2 rounded-full font-bold hover:bg-blue-700 hover:scale-105 hover:shadow-[0_4px_20px_rgba(37,99,235,0.4)] transition-all duration-300 text-sm flex items-center justify-center gap-2 group mb-6 disabled:opacity-70 disabled:pointer-events-none">
+            Sign In <i data-lucide="arrow-right" class="w-4 h-4 transition-transform group-hover:translate-x-1"></i>
           </button>
         </form>
         
@@ -242,21 +245,16 @@
         </div>
         
         <p class="text-gray-500 text-base font-medium mb-10">
-          We've sent a 4-digit code to <br><span id="displayContact" class="font-bold text-slate-950">+91 98765 43210</span>
+          We've sent a <span id="otpLengthText">4-digit</span> code to <br><span id="displayContact" class="font-bold text-slate-950">+91 98765 43210</span>
         </p>
         
         <form id="otpForm" class="w-full flex flex-col gap-6" onsubmit="handleVerify(event)">
-          <div class="flex justify-between gap-3 px-1">
-            <input type="number" maxlength="1" class="w-16 h-20 text-center text-3xl font-bold bg-white border border-gray-200 rounded-2xl focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 outline-none transition-all shadow-sm otp-input text-slate-950" />
-            <input type="number" maxlength="1" class="w-16 h-20 text-center text-3xl font-bold bg-white border border-gray-200 rounded-2xl focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 outline-none transition-all shadow-sm otp-input text-slate-950" />
-            <input type="number" maxlength="1" class="w-16 h-20 text-center text-3xl font-bold bg-white border border-gray-200 rounded-2xl focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 outline-none transition-all shadow-sm otp-input text-slate-950" />
-            <input type="number" maxlength="1" class="w-16 h-20 text-center text-3xl font-bold bg-white border border-gray-200 rounded-2xl focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 outline-none transition-all shadow-sm otp-input text-slate-950" />
-          </div>
+          <div id="otpInputs" class="flex justify-between gap-3 px-1"></div>
           
           <!-- Elegant Minimal Warning -->
           <div id="otpError" class="hidden opacity-0 translate-y-2 transition-all duration-300 flex items-center justify-center gap-2 text-blue-600 bg-blue-50 p-3.5 rounded-xl border border-red-100 text-xs font-bold w-full mx-auto">
             <i data-lucide="alert-circle" class="w-4 h-4 shrink-0"></i> 
-            <span>Incorrect code. Please enter <span class="bg-red-100 px-1.5 py-0.5 rounded text-red-700 mx-0.5">1234</span></span>
+            <span id="otpErrorText">Incorrect code. Please try again.</span>
           </div>
 
           <button type="submit" id="verifyBtn" class="w-full bg-blue-600 hover:-translate-y-0.5 hover:shadow-lg text-white py-4 mt-2 rounded-full font-bold hover:bg-blue-700 hover:scale-105 hover:shadow-[0_4px_20px_rgba(37,99,235,0.4)] transition-all duration-300 text-sm flex items-center justify-center gap-2 group relative overflow-hidden">
@@ -268,7 +266,7 @@
         
         <div class="mt-8 text-center text-sm font-medium">
           <span class="text-gray-500">Didn't receive the code?</span>
-          <button type="button" class="text-slate-950 ml-1 font-bold hover:underline transition-all active:scale-95">Resend in 00:59</button>
+          <button type="button" id="resendBtn" onclick="handleResend()" class="text-slate-950 ml-1 font-bold hover:underline transition-all active:scale-95 disabled:text-gray-400 disabled:no-underline disabled:pointer-events-none">Resend in 00:59</button>
         </div>
       </div> <!-- End of step-otp -->
     </div> <!-- End of max-w-400px container -->
@@ -278,7 +276,33 @@
       <img src="/watermark.png" alt="RHenova Tech" class="w-[80px] md:w-[110px] h-auto object-contain grayscale">
     </div>
   </div>
-<script>
+<!-- International Phone Input (country-code selector) — same library/config as signup -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/intlTelInput.min.js"></script>
+  <script>
+    let phoneIti;
+    // The country-code box ("flag ▾ +91") has a different width per country, so the
+    // typed number's left padding is measured from the real box (same as signup).
+    function syncItiPadding() {
+      const input = document.getElementById('phoneInput');
+      const box = input && input.parentElement && input.parentElement.querySelector('.iti__flag-container');
+      if (box && box.offsetWidth) input.style.paddingLeft = (box.offsetWidth + 4) + 'px';
+    }
+    document.addEventListener('DOMContentLoaded', () => {
+      const phoneInput = document.querySelector('#phoneInput');
+      if (!phoneInput || typeof window.intlTelInput === 'undefined') return;
+      phoneIti = window.intlTelInput(phoneInput, {
+        initialCountry: 'in',
+        separateDialCode: true,
+        preferredCountries: ['in', 'ae', 'us', 'gb', 'au', 'sg', 'sa'],
+        utilsScript: 'https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/utils.js',
+      });
+      syncItiPadding();
+      phoneInput.addEventListener('countrychange', syncItiPadding);
+      if (document.fonts && document.fonts.ready) document.fonts.ready.then(syncItiPadding);
+    });
+  </script>
+
+  <script>
     if (typeof lucide !== 'undefined') lucide.createIcons();
     
     // ==================== TABS LOGIC ====================
@@ -330,6 +354,7 @@
         
         phoneInput.required = true;
         emailInput.required = false;
+        if (typeof syncItiPadding === 'function') syncItiPadding();
       } else {
         tabEmail.classList.add('bg-white', 'shadow-sm', 'text-slate-950');
         tabEmail.classList.remove('text-gray-500');
@@ -348,7 +373,7 @@
     function showFieldError(type, message) {
       const errBox = document.getElementById(`${type}Error`);
       const errText = document.getElementById(`${type}ErrorText`);
-      const wrapper = document.getElementById(`${type}Input`);
+      const wrapper = document.getElementById(`${type}InputWrapper`);
       
       errText.innerText = message;
       errBox.classList.remove('hidden');
@@ -357,57 +382,132 @@
         errBox.classList.add('opacity-100', 'translate-y-0');
       }, 10);
       
-      wrapper.classList.add('border-blue-500', 'ring-4', 'ring-red-500/10');
-      
-      // Shake animation
-      wrapper.style.transform = 'translateX(4px)';
-      setTimeout(() => wrapper.style.transform = 'translateX(-4px)', 100);
-      setTimeout(() => wrapper.style.transform = 'translateX(4px)', 200);
-      setTimeout(() => wrapper.style.transform = 'translateX(0)', 300);
+      if (wrapper) {
+        wrapper.classList.add('ring-4', 'ring-red-500/10');
+        // Shake animation
+        wrapper.style.transform = 'translateX(4px)';
+        setTimeout(() => wrapper.style.transform = 'translateX(-4px)', 100);
+        setTimeout(() => wrapper.style.transform = 'translateX(4px)', 200);
+        setTimeout(() => wrapper.style.transform = 'translateX(0)', 300);
+      }
       
       if (typeof lucide !== 'undefined') lucide.createIcons();
     }
 
     function hideFieldError(type) {
       const errBox = document.getElementById(`${type}Error`);
-      const wrapper = document.getElementById(`${type}Input`);
+      const wrapper = document.getElementById(`${type}InputWrapper`);
       
       errBox.classList.remove('opacity-100', 'translate-y-0');
       errBox.classList.add('opacity-0', 'translate-y-1');
       setTimeout(() => errBox.classList.add('hidden'), 300);
       
-      wrapper.classList.remove('border-blue-500', 'ring-4', 'ring-red-500/10');
+      if (wrapper) wrapper.classList.remove('ring-4', 'ring-red-500/10');
     }
 
-    function handleLogin(e) {
-      e.preventDefault();
+    // ==================== PHONE (with country code) ====================
+    // Returns { valid, e164, dialCode, national, raw } for whatever is typed,
+    // using the selected country code (same selector as signup).
+    function readPhone() {
+      const input = document.getElementById('phoneInput');
+      const raw = input.value.trim();
+      const dialCode = phoneIti ? String(phoneIti.getSelectedCountryData().dialCode || '91') : '91';
+      const national = raw.replace(/\D/g, '').replace(/^0+/, '');
+      const utilsReady = !!(phoneIti && window.intlTelInputUtils);
+
+      let valid, e164;
+      if (utilsReady) {
+        valid = phoneIti.isValidNumber();
+        e164 = phoneIti.getNumber();
+      } else {
+        // Country-format data hasn't loaded (offline / blocked CDN): fall back to a length check.
+        valid = dialCode === '91' ? national.length === 10 : national.length >= 6 && national.length <= 14;
+        e164 = '+' + dialCode + national;
+      }
+      return { valid, e164, dialCode, national, raw };
+    }
+
+    // ==================== LOGIN IDENTITY ====================
+    // The rest of the app (dashboard, add-property, ...) looks up the user's saved profile with
+    // localStorage keys "r2s_profile_<identity>". Signup saves it under the full international
+    // number (e.g. +919876543210) or the email. Before the country selector, login stored
+    // "+91 <digits as typed>". To not lose any existing data, pick whichever form already has
+    // data on this device; otherwise use the signup format.
+    function resolveIdentity(candidates, email) {
+      const PROFILE = 'r2s_profile_';
+      for (const c of candidates) {
+        if (localStorage.getItem(PROFILE + c)) return c;
+      }
+      if (email) {
+        for (let i = 0; i < localStorage.length; i++) {
+          const key = localStorage.key(i);
+          if (!key || !key.startsWith(PROFILE)) continue;
+          try {
+            const prof = JSON.parse(localStorage.getItem(key));
+            if (prof && String(prof.email || '').trim().toLowerCase() === email) return key.slice(PROFILE.length);
+          } catch (_) { /* ignore unreadable entries */ }
+        }
+      }
+      try {
+        const props = JSON.parse(localStorage.getItem('r2s_properties') || '[]');
+        for (const c of candidates) {
+          if (Array.isArray(props) && props.some(p => p && p.addedBy === c)) return c;
+        }
+      } catch (_) { /* ignore */ }
+      return candidates[0];
+    }
+
+    // ==================== OTP BOXES (6 digits, both mobile SMS and e-mail) ====================
+    let otpInputs = [];
+    let otpLength = 4;
+    let otpMode = 'mobile';       // which flow the OTP screen belongs to
+    let emailOtpToken = null;     // signed token returned by /api/send-otp
+    let otpEmail = '';            // normalised e-mail the code was sent to
+    let loginIdentity = null;     // what gets saved as r2s_current_user
+    let resendTimer = null;
+
+    function buildOtpInputs(n) {
+      otpLength = n;
+      const wrap = document.getElementById('otpInputs');
+      wrap.innerHTML = '';
+      wrap.className = 'flex justify-between px-1 ' + (n > 4 ? 'gap-2' : 'gap-3');
+      const size = n > 4 ? 'w-12 h-16 text-2xl' : 'w-16 h-20 text-3xl';
+      for (let i = 0; i < n; i++) {
+        const input = document.createElement('input');
+        input.type = 'text';
+        input.inputMode = 'numeric';
+        input.maxLength = 1;
+        input.autocomplete = i === 0 ? 'one-time-code' : 'off';
+        input.className = size + ' text-center font-bold bg-white border border-gray-200 rounded-2xl focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 outline-none transition-all shadow-sm otp-input text-slate-950 min-w-0';
+        wrap.appendChild(input);
+      }
+      otpInputs = Array.from(wrap.querySelectorAll('.otp-input'));
+      otpInputs.forEach((input, index) => {
+        input.addEventListener('input', () => {
+          input.value = input.value.replace(/\D/g, '').slice(-1);
+          if (input.value && index < otpInputs.length - 1) otpInputs[index + 1].focus();
+          hideError();
+        });
+        input.addEventListener('keydown', (e) => {
+          if (e.key === 'Backspace' && !input.value && index > 0) otpInputs[index - 1].focus();
+        });
+        input.addEventListener('paste', (e) => {
+          e.preventDefault();
+          const digits = (e.clipboardData.getData('text') || '').replace(/\D/g, '').slice(0, otpInputs.length);
+          digits.split('').forEach((ch, i) => { otpInputs[i].value = ch; });
+          if (digits.length) otpInputs[Math.min(digits.length, otpInputs.length - 1)].focus();
+          hideError();
+        });
+      });
+    }
+    buildOtpInputs(6);
+
+    function showOtpStep(contactLabel) {
       const stepLogin = document.getElementById('step-login');
       const stepOtp = document.getElementById('step-otp');
-      const displayContact = document.getElementById('displayContact');
-      
-      let contactVal = "";
-      if (currentLoginMode === 'mobile') {
-        const phone = document.getElementById('phoneInput').value;
-        if (phone.length < 5) { 
-          showFieldError('mobile', 'Please enter a valid mobile number.'); 
-          return; 
-        }
-        contactVal = loginPhoneIti.getNumber();
-        // Keep the raw digits around so handleVerify() can check them
-        // against the Admin list once OTP verification succeeds.
-        window.loginPhoneRaw = phone;
-      } else {
-        const email = document.getElementById('emailInput').value;
-        if (!email || !email.includes('@')) { 
-          showFieldError('email', 'Please enter a valid email address.'); 
-          return; 
-        }
-        contactVal = email;
-      }
-      
-      // Update dynamic contact info in OTP view
-      displayContact.innerText = contactVal;
-      
+      document.getElementById('displayContact').innerText = contactLabel;
+      document.getElementById('otpLengthText').innerText = otpLength + '-digit';
+
       // Execute Slide Animation Out
       stepLogin.classList.remove('translate-x-0', 'opacity-100');
       stepLogin.classList.add('-translate-x-full', 'opacity-0', 'pointer-events-none');
@@ -417,9 +517,203 @@
       stepOtp.classList.add('translate-x-0', 'opacity-100');
       
       // Auto-focus first OTP input after transition
-      setTimeout(() => {
-        document.querySelectorAll('.otp-input')[0].focus();
-      }, 500);
+      setTimeout(() => otpInputs[0] && otpInputs[0].focus(), 500);
+    }
+
+    // ==================== E-MAIL OTP (Gmail SMTP via /api/send-otp) ====================
+    async function requestEmailOtp(email) {
+      let res, data = null;
+      try {
+        res = await fetch('/api/send-otp', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ email }),
+        });
+        data = await res.json();
+      } catch (err) {
+        throw new Error('Could not reach the server. Please check your connection and try again.');
+      }
+      if (!res.ok || !data || !data.success) {
+        throw new Error((data && data.error) || 'Could not send the code. Please try again.');
+      }
+      emailOtpToken = data.token;
+      otpEmail = email;
+    }
+
+    // ==================== SMS OTP (Telinfy via /api/send-otp-sms) ====================
+    let smsOtpToken = null;  // signed token returned by /api/send-otp-sms
+    let registeredUser = null;
+    let otpPhone = '';       // E.164 number the code was sent to
+    async function requestSmsOtp(phoneE164) {
+      let res, data = null;
+      try {
+        res = await fetch('/api/send-otp-sms', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ phone: phoneE164 }),
+        });
+        data = await res.json();
+      } catch (err) {
+        throw new Error('Could not reach the server. Please check your connection and try again.');
+      }
+      if (!res.ok || !data || !data.success) {
+        throw new Error((data && data.error) || 'Could not send the code. Please try again.');
+      }
+      smsOtpToken = data.token;
+      otpPhone = phoneE164;
+    }
+
+    function startResendTimer(seconds = 60) {
+      const btn = document.getElementById('resendBtn');
+      clearInterval(resendTimer);
+      let left = seconds - 1;
+      const paint = () => {
+        btn.disabled = left > 0;
+        btn.textContent = left > 0 ? 'Resend in 00:' + String(left).padStart(2, '0') : 'Resend code';
+      };
+      paint();
+      resendTimer = setInterval(() => {
+        left--;
+        paint();
+        if (left <= 0) clearInterval(resendTimer);
+      }, 1000);
+    }
+
+    async function handleResend() {
+      if (otpMode !== 'email' && otpMode !== 'mobile') return;
+      const btn = document.getElementById('resendBtn');
+      btn.disabled = true;
+      btn.textContent = 'Sending...';
+      try {
+        if (otpMode === 'email') {
+          await requestEmailOtp(otpEmail);
+        } else {
+          await requestSmsOtp(otpPhone);
+        }
+        otpInputs.forEach(i => { i.value = ''; });
+        hideError();
+        startResendTimer();
+        otpInputs[0].focus();
+      } catch (err) {
+        showError(err.message);
+        startResendTimer(30);
+      }
+    }
+
+    async function handleLogin(e) {
+      e.preventDefault();
+      window.loginPhoneRaw = null;
+      window.loginPhoneE164 = null;
+      
+      const btn = document.getElementById('sendOtpBtn');
+      const original = btn.innerHTML;
+
+      if (currentLoginMode === 'mobile') {
+        const ph = readPhone();
+        if (!ph.valid) { 
+          showFieldError('mobile', 'Please enter a valid mobile number for the selected country.'); 
+          return; 
+        }
+        hideFieldError('mobile');
+
+        btn.disabled = true;
+        btn.innerHTML = '<i data-lucide="loader-2" class="w-4 h-4 animate-spin"></i> Signing in...';
+        if (typeof lucide !== 'undefined') lucide.createIcons();
+
+        try {
+          // Verify registered user or admin
+          const userCheck = await fetch('/api/check-user', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ phone: ph.e164 }),
+          });
+          const userData = await userCheck.json().catch(() => null);
+          if (!userCheck.ok) {
+            throw new Error(userData?.error || 'Could not verify the mobile number right now.');
+          }
+
+          let isAdmin = false;
+          if (!userData?.registered) {
+            const adminCheck = await fetch('/api/check-admin', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ mobile: ph.e164 }),
+            });
+            const adminData = await adminCheck.json().catch(() => null);
+            if (!adminCheck.ok || !adminData?.isAdmin) {
+              throw new Error('This mobile number is not registered. Please sign up first.');
+            }
+            isAdmin = true;
+            registeredUser = { role: 'admin', recordId: '', name: 'Admin' };
+          } else {
+            registeredUser = userData;
+            try {
+              const adminCheck = await fetch('/api/check-admin', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ mobile: ph.e164 }),
+              });
+              const adminData = await adminCheck.json().catch(() => null);
+              if (adminData?.isAdmin) isAdmin = true;
+            } catch (_) {}
+          }
+
+          // Direct login success
+          btn.classList.replace('bg-blue-600', 'bg-emerald-500');
+          btn.classList.replace('hover:bg-blue-700', 'hover:bg-emerald-600');
+          btn.innerHTML = '<i data-lucide="check" class="w-5 h-5"></i> Sign In Successful';
+          if (typeof lucide !== 'undefined') lucide.createIcons();
+
+          const contactVal = '+' + ph.dialCode + ' ' + ph.raw;
+          loginIdentity = resolveIdentity([ph.e164, contactVal], null);
+          localStorage.setItem('r2s_current_user', loginIdentity || ph.e164);
+
+          if (registeredUser && registeredUser.role !== 'admin') {
+            const identity = ph.e164;
+            const existingProfile = JSON.parse(localStorage.getItem('r2s_profile_' + identity) || '{}');
+            localStorage.setItem('r2s_profile_' + identity, JSON.stringify({
+              ...existingProfile,
+              phone: identity,
+              role: registeredUser.role,
+              crmRecordId: registeredUser.recordId,
+              fullName: registeredUser.name || existingProfile.fullName || ''
+            }));
+          }
+
+          localStorage.setItem('r2s_is_admin', isAdmin ? 'true' : 'false');
+          setTimeout(() => {
+            window.location.href = isAdmin ? '/admin-dashboard.html' : '/dashboard.html';
+          }, 500);
+        } catch (err) {
+          showFieldError('mobile', err.message);
+          btn.disabled = false;
+          btn.innerHTML = original;
+          if (typeof lucide !== 'undefined') lucide.createIcons();
+        }
+      } else {
+        const emailRaw = document.getElementById('emailInput').value.trim();
+        const email = emailRaw.toLowerCase();
+        if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email)) { 
+          showFieldError('email', 'Please enter a valid email address.'); 
+          return; 
+        }
+        hideFieldError('email');
+
+        btn.disabled = true;
+        btn.innerHTML = '<i data-lucide="loader-2" class="w-4 h-4 animate-spin"></i> Signing in...';
+        if (typeof lucide !== 'undefined') lucide.createIcons();
+
+        btn.classList.replace('bg-blue-600', 'bg-emerald-500');
+        btn.classList.replace('hover:bg-blue-700', 'hover:bg-emerald-600');
+        btn.innerHTML = '<i data-lucide="check" class="w-5 h-5"></i> Sign In Successful';
+        if (typeof lucide !== 'undefined') lucide.createIcons();
+
+        localStorage.setItem('r2s_current_user', email);
+        localStorage.setItem('r2s_is_admin', 'false');
+        setTimeout(() => {
+          window.location.href = '/dashboard.html';
+        }, 500);
+      }
     }
 
     function goBackToLogin() {
@@ -435,42 +729,17 @@
       stepLogin.classList.add('translate-x-0', 'opacity-100');
       
       // Reset OTP fields
-      document.querySelectorAll('.otp-input').forEach(input => input.value = '');
+      otpInputs.forEach(input => input.value = '');
+      clearInterval(resendTimer);
+      emailOtpToken = null;
       hideError();
     }
 
-    // ==================== OTP INPUT & VALIDATION LOGIC ====================
-    const otpInputs = document.querySelectorAll('.otp-input');
-    
-    otpInputs.forEach((input, index) => {
-      // Auto-focus next input
-      input.addEventListener('keyup', (e) => {
-        // Enforce max length of 1 directly via js since type=number can be tricky
-        if (input.value.length > 1) input.value = input.value.slice(0, 1);
-        
-        if (e.key >= 0 && e.key <= 9 && index < otpInputs.length - 1) {
-          otpInputs[index + 1].focus();
-        } else if (e.key === 'Backspace' && index > 0) {
-          otpInputs[index - 1].focus();
-        }
-        hideError();
-      });
-      // Handle paste
-      input.addEventListener('paste', (e) => {
-        e.preventDefault();
-        const text = e.clipboardData.getData('text').slice(0, 4);
-        text.split('').forEach((char, i) => {
-          if (i < 4 && !isNaN(char)) otpInputs[i].value = char;
-        });
-        if (text.length > 0) {
-          const focusIndex = Math.min(text.length, 3);
-          otpInputs[focusIndex].focus();
-        }
-      });
-    });
-
-    function showError() {
+    // ==================== OTP VALIDATION LOGIC ====================
+    function showError(message) {
       const err = document.getElementById('otpError');
+      const text = document.getElementById('otpErrorText');
+      text.textContent = message || 'Incorrect code. Please try again.';
       err.classList.remove('hidden');
       // Small delay to allow display:flex to apply before animating opacity
       setTimeout(() => {
@@ -499,71 +768,136 @@
       });
     }
 
-    function handleVerify(e) {
+    async function handleVerify(e) {
       e.preventDefault();
-      let code = Array.from(otpInputs).map(input => input.value).join('');
-      
-      if (code === '1234') {
-        // Add green border success state to OTP inputs
-        otpInputs.forEach(input => {
-          input.classList.remove('border-gray-200', 'border-blue-500', 'text-blue-600', 'bg-blue-50', 'focus:border-blue-500');
-          input.classList.add('border-emerald-500', 'text-emerald-600', 'bg-emerald-50');
-        });
-        
+      const code = otpInputs.map(input => input.value).join('');
+
+      if (code.length !== otpLength) {
+        showError('Please enter the ' + otpLength + '-digit code.');
+        return;
+      }
+
+      if (otpMode === 'email' || otpMode === 'mobile') {
         const btn = document.getElementById('verifyBtn');
         const content = document.getElementById('verifyBtnContent');
-        
-        // Ensure button keeps its width during transition
-        btn.style.width = btn.offsetWidth + 'px';
-        
-        // Show processing state
-        content.innerHTML = '<i data-lucide="loader-2" class="w-5 h-5 animate-spin"></i> Processing...';
+        const originalHtml = content.innerHTML;
+        btn.disabled = true;
+        content.innerHTML = '<i data-lucide="loader-2" class="w-5 h-5 animate-spin"></i> Verifying...';
         if (typeof lucide !== 'undefined') lucide.createIcons();
-        btn.classList.remove('bg-blue-600', 'hover:-translate-y-0.5', 'hover:shadow-lg', 'hover:bg-blue-700');
-        btn.classList.add('bg-slate-950', 'hover:bg-slate-800');
-        
-        // Advanced validating state animation on OTP inputs
-        otpInputs.forEach((inp, idx) => {
-          inp.style.animationDelay = (idx * 0.1) + 's';
-          inp.classList.add('otp-validating');
-        });
-        
-        setTimeout(() => {
-          // Cleanup validating animation
-          otpInputs.forEach(inp => {
-            inp.classList.remove('otp-validating');
-            inp.style.animationDelay = '0s';
+        let ok = false, message = 'Verification failed. Please try again.';
+        try {
+          const endpoint = otpMode === 'email' ? '/api/verify-otp' : '/api/verify-otp-sms';
+          const body = otpMode === 'email'
+            ? { email: otpEmail, code, token: emailOtpToken }
+            : { phone: otpPhone, code, token: smsOtpToken };
+          const res = await fetch(endpoint, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(body),
           });
-          
-          // Show success state (green)
-          content.innerHTML = '<i data-lucide="check" class="w-5 h-5"></i> Verification Successful';
+          const data = await res.json().catch(() => null);
+          ok = !!(res.ok && data && data.success);
+          if (!ok && data && data.error) message = data.error;
+        } catch (err) {
+          message = 'Could not reach the server. Please try again.';
+        }
+        btn.disabled = false;
+        if (!ok) {
+          content.innerHTML = originalHtml;
           if (typeof lucide !== 'undefined') lucide.createIcons();
-          btn.classList.replace('bg-slate-950', 'bg-emerald-500');
-          btn.classList.replace('hover:bg-slate-800', 'hover:bg-emerald-600');
-          
-          // Save the logged-in identity so the dashboard can filter
-          // properties to just this user's own listings.
-          const contactVal = document.getElementById('displayContact').innerText;
-          localStorage.setItem('r2s_current_user', contactVal);
-
-          // Req. 10: same OTP flow doubles as Admin Login — ask the
-          // backend whether this verified mobile number belongs to an
-          // authorized Admin, and route accordingly. The check is done
-          // server-side (api/check-admin.js) so the admin list is never
-          // exposed to or trusted from the browser.
-          setTimeout(async () => {
-            let isAdmin = false;
-            // Removed backend integration for testing as requested
-            if (window.loginPhoneRaw === '8111918852') {
-              isAdmin = true;
-            }
-            localStorage.setItem('r2s_is_admin', isAdmin ? 'true' : 'false');
-            window.location.href = isAdmin ? '/admin-dashboard.html' : '/dashboard.html';
-          }, 1000);
-        }, 1200);
+          showError(message);
+          return;
+        }
+        content.innerHTML = originalHtml;
+        onOtpVerified();
       } else {
         showError();
       }
+    }
+
+    function onOtpVerified() {
+      // Add green border success state to OTP inputs
+      otpInputs.forEach(input => {
+        input.classList.remove('border-gray-200', 'border-blue-500', 'text-blue-600', 'bg-blue-50', 'focus:border-blue-500');
+        input.classList.add('border-emerald-500', 'text-emerald-600', 'bg-emerald-50');
+      });
+      clearInterval(resendTimer);
+      
+      const btn = document.getElementById('verifyBtn');
+      const content = document.getElementById('verifyBtnContent');
+      
+      // Ensure button keeps its width during transition
+      btn.style.width = btn.offsetWidth + 'px';
+      
+      // Show processing state
+      content.innerHTML = '<i data-lucide="loader-2" class="w-5 h-5 animate-spin"></i> Processing...';
+      if (typeof lucide !== 'undefined') lucide.createIcons();
+      btn.classList.remove('bg-blue-600', 'hover:-translate-y-0.5', 'hover:shadow-lg', 'hover:bg-blue-700');
+      btn.classList.add('bg-slate-950', 'hover:bg-slate-800');
+      
+      // Advanced validating state animation on OTP inputs
+      otpInputs.forEach((inp, idx) => {
+        inp.style.animationDelay = (idx * 0.1) + 's';
+        inp.classList.add('otp-validating');
+      });
+      
+      setTimeout(() => {
+        // Cleanup validating animation
+        otpInputs.forEach(inp => {
+          inp.classList.remove('otp-validating');
+          inp.style.animationDelay = '0s';
+        });
+        
+        // Show success state (green)
+        content.innerHTML = '<i data-lucide="check" class="w-5 h-5"></i> Verification Successful';
+        if (typeof lucide !== 'undefined') lucide.createIcons();
+        btn.classList.replace('bg-slate-950', 'bg-emerald-500');
+        btn.classList.replace('hover:bg-slate-800', 'hover:bg-emerald-600');
+        
+        // Save the logged-in identity so the dashboard can filter
+        // properties to just this user's own listings.
+        localStorage.setItem('r2s_current_user', loginIdentity || document.getElementById('displayContact').innerText);
+        if (otpMode === 'mobile' && window.loginPhoneE164 && registeredUser && registeredUser.role !== 'admin') {
+          const identity = window.loginPhoneE164;
+          const existingProfile = JSON.parse(localStorage.getItem('r2s_profile_' + identity) || '{}');
+          localStorage.setItem('r2s_profile_' + identity, JSON.stringify({
+            ...existingProfile,
+            phone: identity,
+            role: registeredUser.role,
+            crmRecordId: registeredUser.recordId,
+            fullName: registeredUser.name || existingProfile.fullName || ''
+          }));
+        }
+
+        // Req. 10: same OTP flow doubles as Admin Login — ask the
+        // backend whether this verified mobile number belongs to an
+        // authorized Admin, and route accordingly. The check is done
+        // server-side (api/check-admin.js) so the admin list is never
+        // exposed to or trusted from the browser. E-mail logins are
+        // never admin logins.
+        setTimeout(async () => {
+          let isAdmin = false;
+          if (otpMode === 'mobile' && window.loginPhoneE164) {
+            try {
+              const res = await fetch('/api/check-admin', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ mobile: window.loginPhoneE164 }),
+              });
+              if (!res.ok) throw new Error('API response not OK');
+              const result = await res.json();
+              isAdmin = !!result.isAdmin;
+            } catch (err) {
+              console.error('Admin check failed, checking local fallback:', err);
+              if (window.loginPhoneE164 === '+918111918852') {
+                isAdmin = true;
+              }
+            }
+          }
+          localStorage.setItem('r2s_is_admin', isAdmin ? 'true' : 'false');
+          window.location.href = isAdmin ? '/admin-dashboard.html' : '/dashboard.html';
+        }, 1000);
+      }, 1200);
     }
   </script>
 
@@ -682,17 +1016,5 @@
 
   <!-- Powered By Watermark -->
   
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/intlTelInput.min.js"></script>
-  <script>
-    let loginPhoneIti;
-    document.addEventListener("DOMContentLoaded", () => {
-      const phoneInput = document.querySelector("#phoneInput");
-      loginPhoneIti = window.intlTelInput(phoneInput, {
-        initialCountry: "in",
-        separateDialCode: true,
-        preferredCountries: ["in", "ae", "us", "gb", "au", "sg", "sa"],
-        utilsScript: "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/utils.js"
-      });
-    });
-  </script>
+
 </body>

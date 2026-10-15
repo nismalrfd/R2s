@@ -4,7 +4,6 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>R2s Realtors</title>
-  <link rel="stylesheet" href="/src/style.css" />
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <script src="https://unpkg.com/lucide@latest"></script>
 
@@ -13,6 +12,7 @@
   <link rel="icon" href="/LOGO.png" type="image/png" />
   <link rel="apple-touch-icon" href="/LOGO.png" />
   <meta name="theme-color" content="#ffffff" />
+  <meta name="mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
   <meta name="apple-mobile-web-app-title" content="R2s Realtors" />
@@ -240,21 +240,23 @@
     <form class="flex flex-col gap-10" onsubmit="submitPropertyForm(event)" novalidate>
       
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-6 gap-y-6">
-        
+
         <!-- Owner Name -->
-        <div class="flex flex-col gap-2 relative lg:col-span-1">
+        <div class="flex flex-col gap-2 relative">
           <label class="text-sm font-bold text-gray-700">Owner Name *</label>
-          <input type="text" id="prop_owner_name" class="w-full bg-gray-50 rounded-2xl px-5 py-4 border border-gray-200 outline-none focus:border-blue-500 focus:bg-white transition-colors text-slate-950 font-semibold" placeholder="e.g. John Doe" required>
+          <input type="text" id="prop_owner_name" class="w-full bg-gray-50 rounded-2xl px-5 py-4 border border-gray-200 outline-none focus:border-blue-500 focus:bg-white transition-colors text-slate-950 font-semibold" placeholder="e.g. Ramesh Kumar" required>
         </div>
 
         <!-- Owner Phone Number -->
-        <div class="flex flex-col gap-2 relative lg:col-span-1">
+        <div class="flex flex-col gap-2 relative">
           <label class="text-sm font-bold text-gray-700">Owner Phone Number *</label>
-          <input type="tel" id="prop_owner_phone" class="w-full bg-gray-50 rounded-2xl px-5 py-4 border border-gray-200 outline-none focus:border-blue-500 focus:bg-white transition-colors text-slate-950 font-semibold" placeholder="Last 4 digits (e.g. 1234)" pattern="[0-9]{4}" maxlength="4" required>
-          <div class="flex items-start gap-2 mt-1">
-            <input type="checkbox" id="prop_owner_phone_check" class="mt-0.5 w-4 h-4 rounded border-gray-300 text-blue-600 focus:ring-blue-500 cursor-pointer" onchange="toggleOwnerPhoneInput(this)">
-            <label for="prop_owner_phone_check" class="text-xs font-medium text-gray-500 cursor-pointer">Enter Full Number</label>
-          </div>
+          <input type="tel" id="prop_owner_phone" pattern="[0-9]{4}" maxlength="4" placeholder="Last 4 digits (e.g. 1234)" class="w-full bg-gray-50 rounded-2xl px-5 py-4 border border-gray-200 outline-none focus:border-blue-500 focus:bg-white transition-colors text-slate-950 font-semibold" required>
+        </div>
+
+        <!-- Owner Phone - Full Number toggle -->
+        <div class="flex items-start gap-3 lg:col-span-3" id="prop_owner_phone_check_wrapper">
+          <input type="checkbox" id="prop_owner_phone_check" class="mt-0.5 w-4 h-4 rounded border-gray-300 text-red-600 focus:ring-red-500 cursor-pointer" onchange="toggleOwnerPhoneInput(this)">
+          <label for="prop_owner_phone_check" class="text-[12px] font-semibold text-gray-600 cursor-pointer">Enter Full Number</label>
         </div>
 
         <!-- Property Name -->
@@ -313,7 +315,6 @@
             <label class="flex items-center gap-2 cursor-pointer"><input type="checkbox" value="Land" class="w-5 h-5 text-blue-600 border-gray-300 rounded"> <span class="text-sm font-bold text-slate-950">Land</span></label>
             <label class="flex items-center gap-2 cursor-pointer"><input type="checkbox" value="Building" class="w-5 h-5 text-blue-600 border-gray-300 rounded"> <span class="text-sm font-bold text-slate-950">Building</span></label>
             <label class="flex items-center gap-2 cursor-pointer"><input type="checkbox" value="Co-Working Space" class="w-5 h-5 text-blue-600 border-gray-300 rounded"> <span class="text-sm font-bold text-slate-950">Co-Working Space</span></label>
-            <label class="flex items-center gap-2 cursor-pointer"><input type="checkbox" value="Other" class="w-5 h-5 text-blue-600 border-gray-300 rounded"> <span class="text-sm font-bold text-slate-950">Other</span></label>
           </div>
         </div>
 
@@ -324,7 +325,7 @@
             <label class="flex items-center gap-2 cursor-pointer"><input type="checkbox" value="Agriculture land" class="w-5 h-5 text-blue-600 border-gray-300 rounded"> <span class="text-sm font-bold text-slate-950">Agriculture land</span></label>
             <label class="flex items-center gap-2 cursor-pointer"><input type="checkbox" value="Resort" class="w-5 h-5 text-blue-600 border-gray-300 rounded"> <span class="text-sm font-bold text-slate-950">Resort</span></label>
             <label class="flex items-center gap-2 cursor-pointer"><input type="checkbox" value="Homestay" class="w-5 h-5 text-blue-600 border-gray-300 rounded"> <span class="text-sm font-bold text-slate-950">Homestay</span></label>
-            <label class="flex items-center gap-2 cursor-pointer"><input type="checkbox" value="Other" class="w-5 h-5 text-blue-600 border-gray-300 rounded"> <span class="text-sm font-bold text-slate-950">Other</span></label>
+            <label class="flex items-center gap-2 cursor-pointer"><input type="checkbox" value="Others" class="w-5 h-5 text-blue-600 border-gray-300 rounded"> <span class="text-sm font-bold text-slate-950">Others</span></label>
           </div>
         </div>
 
@@ -343,6 +344,17 @@
               <option value="sqft">Sq Ft</option>
               <option value="cent">Cent</option>
               <option value="acre">Acre</option>
+            </select>
+            <i data-lucide="chevron-down" class="w-5 h-5 absolute right-5 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none"></i>
+          </div>
+        </div>
+
+        <!-- Location (CRM Locations lookup — required; drives WorkDrive image folder) -->
+        <div class="flex flex-col gap-2 relative">
+          <label class="text-sm font-bold text-gray-700">Location <span class="text-red-500">*</span></label>
+          <div class="relative">
+            <select id="prop_loc" required class="w-full bg-gray-50 rounded-2xl px-5 py-4 border border-gray-200 outline-none focus:border-blue-500 focus:bg-white transition-colors text-slate-950 font-semibold appearance-none cursor-pointer">
+              <option value="">Select a location</option>
             </select>
             <i data-lucide="chevron-down" class="w-5 h-5 absolute right-5 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none"></i>
           </div>
@@ -440,6 +452,23 @@
 
   <script>
     if (typeof lucide !== 'undefined') lucide.createIcons();
+
+    // Owner Phone Number: defaults to last-4-digit entry like Add Buyer's
+    // Contact Number field; checking "Enter Full Number" switches it to a
+    // full 10-digit number.
+    function toggleOwnerPhoneInput(checkbox) {
+      const input = document.getElementById('prop_owner_phone');
+      if (checkbox.checked) {
+        input.pattern = "[0-9]{10}";
+        input.maxLength = 10;
+        input.placeholder = "10-digit mobile number";
+      } else {
+        input.pattern = "[0-9]{4}";
+        input.maxLength = 4;
+        input.placeholder = "Last 4 digits (e.g. 1234)";
+      }
+      input.value = "";
+    }
 
     // ==================== ADVANCED CUSTOM VALIDATION ====================
     function showFieldError(inputEl, message) {
@@ -738,20 +767,6 @@
         });
       }
     });
-
-    function toggleOwnerPhoneInput(checkbox) {
-      const input = document.getElementById('prop_owner_phone');
-      if (checkbox.checked) {
-        input.pattern = "[0-9]{10}";
-        input.maxLength = 10;
-        input.placeholder = "10-digit mobile number";
-      } else {
-        input.pattern = "[0-9]{4}";
-        input.maxLength = 4;
-        input.placeholder = "Last 4 digits (e.g. 1234)";
-      }
-      input.value = "";
-    }
 </script>
 
 <script>
@@ -851,6 +866,8 @@
     const propOwnerPhone = document.getElementById('wiz_owner_phone') || document.getElementById('prop_owner_phone');
 
     if (!propName || !propName.value) return showPremiumAlert('error', 'Please enter a property name.');
+    if (!propLocation || !propLocation.value) return showPremiumAlert('error', 'Please select a Location. Photos are stored location-wise, so it is required.');
+    const propLocationName = propLocation.selectedIndex > 0 ? propLocation.options[propLocation.selectedIndex].textContent : '';
 
     // Look up who's currently logged in, so this property gets linked
     // back to their own Owner/Agent/Partner/Builder/NAR CRM record —
@@ -863,9 +880,9 @@
     const videoPromotion = !!(propVideoPromotion && propVideoPromotion.checked);
 
     const property = {
-      name: propName.value,
       ownerName: propOwnerName ? propOwnerName.value : '',
       ownerPhone: propOwnerPhone ? propOwnerPhone.value : '',
+      name: propName.value,
       price: propPrice ? propPrice.value : '',
       kind: propKind ? propKind.value : '',
       status: propStatus ? propStatus.value : '',
@@ -876,7 +893,8 @@
       estType: propEstType ? propEstType.value : '',
       notes: propNotes ? propNotes.value : '',
       date: propDate ? propDate.value : '',
-      location: propLocation ? propLocation.value : 'Kochi, Kerala',
+      location: propLocation ? propLocation.value : '',
+      serviceType: (document.getElementById('prop_service_type') || {}).value || '',
       advertisingConsent: advertisingConsent ? 'Yes' : 'No',
       advertisingConsentAt: advertisingConsent ? new Date().toISOString() : '',
       advertisingConsentBy: advertisingConsent ? (identity || 'unknown') : '',
@@ -887,7 +905,7 @@
     let zohoResultRecordId = null;
     let zohoErrorMessage = 'Something went wrong. Please try again.';
     try {
-      const res = await fetch('/api/submit-to-zoho', {
+      const res = await window.fetchWithTimeout('/api/submit-to-zoho', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -896,7 +914,7 @@
           linkRole: profile?.role,
           linkId: profile?.crmRecordId,
         }),
-      });
+      }, 30000);
       const result = await res.json();
       zohoOk = !!result.success;
       zohoResultRecordId = result.zohoRecordId;
@@ -949,6 +967,23 @@
       window.saveProperty({ ...property, id: recordId });
     }
 
+    // Remember the new property so dashboard.html shows it the moment it
+    // loads, instead of waiting for CRM's search index to catch up.
+    if (recordId && window.R2sPending) {
+      window.R2sPending.add('property', {
+        id: recordId,
+        name: property.name,
+        kind: property.kind,
+        status: property.status,
+        price: property.price,
+        unit: property.unit,
+        floors: property.floors,
+        date: new Date().toISOString().split('T')[0],
+        image: null,
+        location: propLocationName || null,
+      });
+    }
+
     // Show success
     showPremiumAlert('success');
 
@@ -965,6 +1000,20 @@
   };
 
   document.addEventListener('DOMContentLoaded', renderProperties);
+
+  // Fill the Location dropdown from CRM (value = Zoho Locations record id).
+  document.addEventListener('DOMContentLoaded', function () {
+    var sel = document.getElementById('prop_loc');
+    if (!sel) return;
+    fetch('/api/get-locations').then(function (r) { return r.json(); }).then(function (r) {
+      (r.success ? r.locations : []).forEach(function (loc) {
+        var o = document.createElement('option');
+        o.value = loc.id;
+        o.textContent = loc.district ? loc.name + ', ' + loc.district : loc.name;
+        sel.appendChild(o);
+      });
+    }).catch(function (e) { console.error('Failed to load locations:', e); });
+  });
 </script>
 
 </body>

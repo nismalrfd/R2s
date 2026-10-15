@@ -6,14 +6,9 @@
 // always reflects real CRM data instead of relying on local browser storage.
 
 import { getAccessToken, safeReadJson } from "./_zohoAuth.js";
+import { PRODUCT_ROLE_LOOKUP_FIELD, isImageAttachment } from "./_zohoConfig.js";
 
-const ROLE_LOOKUP_FIELD = {
-  owner: "Seller",
-  nar: "NAR_Realtors",
-  partner: "Channel_Partners",
-  builder: "Builder_Modules",
-  agent: "Agent_Modules",
-};
+const ROLE_LOOKUP_FIELD = PRODUCT_ROLE_LOOKUP_FIELD;
 
 export default async function handler(req, res) {
   if (req.method !== "GET") {
@@ -53,6 +48,27 @@ export default async function handler(req, res) {
       return res.status(200).json({ success: true, properties: [] });
     }
 
+    // Zoho answers "INVALID_QUERY / Invalid query formed" when the field we
+    // filter on can't be searched — in practice: the Lookup field name for
+    // this role doesn't match the real API name on the Products module (see
+    // _zohoConfig.js). That's a CRM setup problem, not something the person
+    // using the dashboard did wrong, and the property they just saved is
+    // still safely in CRM — so don't turn it into a failed request (which
+    // shows up as a red 400 in the browser). Return an empty list plus a
+    // warning, and leave a clear explanation in the server log.
+    if (zohoData.code === "INVALID_QUERY" || /invalid query/i.test(zohoData.message || "")) {
+      console.warn(
+        `[get-properties] Zoho rejected the search on Products field "${lookupField}" ` +
+          `(role "${role}"): ${zohoData.message}. Check that "${lookupField}" is the API name of ` +
+          `a single-value Lookup field on the Products module (Zoho CRM > Setup > Modules and Fields > Products).`
+      );
+      return res.status(200).json({
+        success: true,
+        properties: [],
+        warning: `CRM could not search Products by "${lookupField}" (${zohoData.message}).`,
+      });
+    }
+
     if (!zohoData.data) {
       return res.status(400).json({
         success: false,
@@ -73,7 +89,7 @@ export default async function handler(req, res) {
             { headers: { Authorization: `Zoho-oauthtoken ${accessToken}` } }
           );
           const { json: attachData } = await safeReadJson(attachRes);
-          const firstAttachment = attachData?.data?.[0];
+          const firstAttachment = (attachData?.data || []).find(isImageAttachment);
           if (firstAttachment) {
             imageProxyUrl = `/api/property-image?module=Products&recordId=${rec.id}&attachmentId=${firstAttachment.id}`;
           }
@@ -92,6 +108,8 @@ export default async function handler(req, res) {
           floors: rec.Total_Floor,
           date: rec.Created_Time ? rec.Created_Time.split("T")[0] : "",
           image: imageProxyUrl,
+          propertyLink: rec.Property_Link || null,
+          propertyCode: rec.Product_Code || null,
           // Location is a Lookup field, so Zoho returns { id, name } —
           // pull the display name back out for the dashboard card.
           location: rec.Location?.name || null,

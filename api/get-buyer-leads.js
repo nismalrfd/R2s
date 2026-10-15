@@ -10,24 +10,20 @@ const BUYERLEAD_LOOKUP_FIELD = {
   nar: "NAR_Realtor",
   partner: "Channel_Partner",
   agent: "Agent",
+  nri: "NRI",
 };
 
-// Mask phone number for display.
+// Mask phone number for display: only the LAST 4 digits stay visible
+// (9876543210 -> XXXXXX3210). Keep identical to window.maskPhoneNumber
+// in main.js, which masks a lead the moment it is added.
 function maskPhoneNumber(number) {
   const digits = String(number || "").replace(/\D/g, "");
 
-  if (digits.length < 6) {
+  if (!digits) {
     return "XXXXXXXXXX";
   }
 
-  const head = digits.slice(0, digits.length - 8);
-  const firstVisible = digits.slice(
-    digits.length - 8,
-    digits.length - 7
-  );
-  const last5 = digits.slice(-5);
-
-  return `${head}${firstVisible}XXX${last5}`;
+  return "X".repeat(Math.max(6, digits.length - 4)) + digits.slice(-4);
 }
 
 export default async function handler(req, res) {
@@ -48,21 +44,26 @@ export default async function handler(req, res) {
       });
     }
 
+    // Normalize role so NRI / nri / Nri all work.
+    const normalizedRole = String(role)
+      .trim()
+      .toLowerCase();
+
     // Find the correct Lookup field based on logged-in user's role.
-    const lookupField = BUYERLEAD_LOOKUP_FIELD[role];
+    const lookupField =
+      BUYERLEAD_LOOKUP_FIELD[normalizedRole];
 
     if (!lookupField) {
       return res.status(403).json({
         success: false,
-        error: `Role "${role}" cannot view Buyer Leads`,
+        error: `Role "${normalizedRole}" cannot view Buyer Leads`,
       });
     }
 
     const accessToken = await getAccessToken();
 
-    // Search the actual Leads module.
-    // Example for a Channel Partner:
-    // Channel_Partner equals the logged-in Partner CRM record ID.
+    // Use the SAME Zoho Search API flow already used
+    // for NAR, Partner and Agent.
     const criteria = encodeURIComponent(
       `(${lookupField}:equals:${recordId})`
     );
@@ -71,14 +72,16 @@ export default async function handler(req, res) {
       `${process.env.ZOHO_API_DOMAIN}/crm/v2/Leads/search?criteria=${criteria}`;
 
     console.log("GET BUYER LEADS");
-    console.log("Role:", role);
+    console.log("Role:", normalizedRole);
     console.log("Record ID:", recordId);
     console.log("Lookup Field:", lookupField);
     console.log("Zoho Search URL:", zohoUrl);
 
     const zohoRes = await fetch(zohoUrl, {
+      method: "GET",
       headers: {
-        Authorization: `Zoho-oauthtoken ${accessToken}`,
+        Authorization:
+          `Zoho-oauthtoken ${accessToken}`,
       },
     });
 
@@ -97,48 +100,72 @@ export default async function handler(req, res) {
       rawText
     );
 
-    // Zoho can return 204 when no records are found.
-    if (zohoRes.status === 204 || !zohoData) {
+    // No records found.
+    if (zohoRes.status === 204) {
       return res.status(200).json({
         success: true,
         leads: [],
       });
     }
 
-    if (!zohoData.data) {
-      return res.status(400).json({
+    // Zoho returned something that is not JSON.
+    if (!zohoData) {
+      return res.status(500).json({
         success: false,
         error:
-          zohoData?.message ||
-          "Zoho search failed",
-        zohoResponse: zohoData,
+          "Zoho CRM returned an invalid response",
         raw: rawText,
       });
     }
 
+    // Zoho returned an error.
+    if (!zohoRes.ok) {
+      return res.status(zohoRes.status).json({
+        success: false,
+        error:
+          zohoData?.message ||
+          zohoData?.code ||
+          "Zoho search failed",
+        zohoResponse: zohoData,
+      });
+    }
+
+    if (!Array.isArray(zohoData.data)) {
+      return res.status(400).json({
+        success: false,
+        error:
+          zohoData?.message ||
+          "Zoho search did not return Buyer Leads",
+        zohoResponse: zohoData,
+      });
+    }
+
     // Convert CRM Leads into the structure
-    // already expected by the existing HTML.
+    // already expected by the existing dashboard.
     const leads = zohoData.data.map((rec) => ({
       id: rec.id,
 
-      // CRM Leads:
       // Buyer Name → Last_Name
-      buyerName: rec.Last_Name || "Unnamed Buyer",
+      buyerName:
+        rec.Last_Name ||
+        "Unnamed Buyer",
 
-      // CRM Leads:
       // Contact Number → Phone
-      buyerContact: rec.Phone || "",
+      buyerContact:
+        rec.Phone ||
+        "",
 
-      buyerContactMasked: maskPhoneNumber(
-        rec.Phone
-      ),
+      buyerContactMasked:
+        maskPhoneNumber(rec.Phone),
 
-      // CRM Leads:
       // Preferred Location → Preferred_Locations
       preferredLocation:
-        rec.Preferred_Locations || "",
+        rec.Preferred_Locations ||
+        "",
 
-      createdAt: rec.Created_Time,
+      createdAt:
+        rec.Created_Time ||
+        null,
     }));
 
     return res.status(200).json({
@@ -149,12 +176,14 @@ export default async function handler(req, res) {
   } catch (err) {
     console.error(
       "get-buyer-leads error:",
-      err.message
+      err
     );
 
     return res.status(500).json({
       success: false,
-      error: err.message,
+      error:
+        err?.message ||
+        "Failed to fetch Buyer Leads",
     });
   }
 }

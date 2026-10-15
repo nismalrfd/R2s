@@ -4,20 +4,25 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>R2s Realtors</title>
-  <link rel="stylesheet" href="/src/style.css" />
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <script src="https://unpkg.com/lucide@latest"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/css/intlTelInput.css" />
   <style>
+    /* International phone input (country-code selector) */
     .iti { width: 100%; display: block; }
     .iti__flag-container { padding: 4px; }
-    .iti__selected-flag { border-radius: 12px; transition: background 0.2s; background-color: transparent !important; }
+    .iti__selected-flag { border-radius: 12px 0 0 12px; transition: background 0.2s; background-color: transparent !important; }
     .iti__selected-flag:hover { background-color: #f9fafb !important; }
     .iti__country-list { border-radius: 12px; border: 1px solid #f3f4f6; box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1); font-family: inherit; z-index: 100; max-width: 300px; -ms-overflow-style: none; scrollbar-width: none; }
     .iti__country-list::-webkit-scrollbar { display: none; }
     .iti__dial-code { color: #64748b; font-weight: 700; }
     .iti__country-name { color: #0f172a; font-weight: 600; font-size: 14px; }
-    .iti--allow-dropdown input { padding-left: 4.5rem !important; }
+    /* The dial code ("+91") uses the same type as the number typed after it. */
+    .iti__selected-dial-code { font-size: 0.875rem; font-weight: 700; }
+    /* Same right inset as the other fields (the library resets it to 6px). Left padding is
+       measured in JS (syncItiPadding) from the real country-code box: a fixed value overlapped
+       the number with wider dial codes such as +971. */
+    .iti--allow-dropdown input[type="tel"] { padding-right: 0.75rem; }
     .iti--separate-dial-code .iti__selected-flag { background-color: transparent; }
   </style>
   <style>
@@ -245,33 +250,25 @@
             <label class="radio-card cursor-pointer relative h-full group">
               <input type="radio" name="role" value="agent" class="absolute opacity-0 w-0 h-0">
               <div class="w-full h-full bg-white border border-gray-200 rounded-[16px] p-2 sm:p-3 flex flex-col items-center justify-center text-center transition-all duration-300 hover:border-gray-300 hover:-translate-y-1 hover:shadow-md">
-                <div class="flex items-center gap-3">
-                  
+                
                 <div class="w-10 h-10 sm:w-12 sm:h-12 mx-auto mb-2 rounded-[12px] sm:rounded-[16px] bg-gradient-to-br from-white via-white to-red-50 shadow-[0_8px_24px_rgba(239,68,68,0.15)] flex items-center justify-center border border-red-50 transition-transform duration-300 group-hover:scale-110">
                   <i data-lucide="arrow-right-left" class="w-5 h-5 sm:w-6 sm:h-6 text-red-600" stroke-width="2.5" aria-hidden="true"></i>
                 </div>
-                  <div class="text-center">
-                    <h3 class="font-bold text-slate-950 text-sm mb-0.5">Associate</h3>
-                    <p class="text-[10px] font-medium text-gray-400">Represent buyers</p>
-                  </div>
-                </div>
+                <h3 class="font-bold text-slate-950 text-xs mb-0.5">Associate</h3>
+                <p class="text-[10px] font-medium text-gray-400">Represent buyers & sellers</p>
               </div>
             </label>
 
-            <!-- 6. NRI Client -->
+            <!-- 6. NRI Client (buyer access) -->
             <label class="radio-card cursor-pointer relative h-full group">
-              <input type="radio" name="role" value="nri_channel" class="absolute opacity-0 w-0 h-0">
+              <input type="radio" name="role" value="nri" class="absolute opacity-0 w-0 h-0">
               <div class="w-full h-full bg-white border border-gray-200 rounded-[16px] p-2 sm:p-3 flex flex-col items-center justify-center text-center transition-all duration-300 hover:border-gray-300 hover:-translate-y-1 hover:shadow-md">
-                <div class="flex items-center gap-3">
-                  
+                
                 <div class="w-10 h-10 sm:w-12 sm:h-12 mx-auto mb-2 rounded-[12px] sm:rounded-[16px] bg-gradient-to-br from-white via-white to-red-50 shadow-[0_8px_24px_rgba(239,68,68,0.15)] flex items-center justify-center border border-red-50 transition-transform duration-300 group-hover:scale-110">
                   <i data-lucide="globe" class="w-5 h-5 sm:w-6 sm:h-6 text-red-600" stroke-width="2.5" aria-hidden="true"></i>
                 </div>
-                  <div class="text-center">
-                    <h3 class="font-bold text-slate-950 text-sm mb-0.5 whitespace-nowrap">NRI Client</h3>
-                    <p class="text-[10px] font-medium text-gray-400">Global clients</p>
-                  </div>
-                </div>
+                <h3 class="font-bold text-slate-950 text-xs mb-0.5">NRI Client</h3>
+                <p class="text-[10px] font-medium text-gray-400">Browse & buy from abroad</p>
               </div>
             </label>
 
@@ -355,30 +352,30 @@
           <div class="flex flex-col gap-3 w-full animate-stagger-2">
             <h3 class="text-sm font-bold text-slate-950 flex items-center gap-2 mb-2"><i data-lucide="user" class="w-4 h-4 text-blue-600" aria-hidden="true"></i> Personal Details</h3>
             
-            <!-- NRI Referral Field -->
-            <div id="nri_referral_group" class="hidden flex-col gap-2 relative">
-              <label class="text-[10px] font-bold text-gray-500 uppercase tracking-wider">Referral Name (Optional)</label>
-              <input type="text" id="nri_referral" class="w-full bg-gray-50 rounded-xl px-3 py-2 sm:py-2.5 border border-gray-100 outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-500/20 focus:bg-white transition-all text-slate-950 font-bold text-sm" placeholder="e.g. John Doe">
-            </div>
-
             <div class="flex flex-col gap-2 relative">
               <label class="text-[10px] font-bold text-gray-500 uppercase tracking-wider">Full Name *</label>
               <input type="text" id="f_name" class="w-full bg-gray-50 rounded-xl px-3 py-2 sm:py-2.5 border border-gray-100 outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-500/20 focus:bg-white transition-all text-slate-950 font-bold text-sm" placeholder="e.g. Rajesh Kumar" required>
             </div>
             
-            <!-- NRI Country Field -->
+            <!-- NRI Client extra fields (Step 2) -->
             <div id="nri_country_group" class="hidden flex-col gap-2 relative">
-              <label class="text-[10px] font-bold text-gray-500 uppercase tracking-wider">Current Country *</label>
+              <label class="text-[10px] font-bold text-gray-500 uppercase tracking-wider">Current Country of Residence *</label>
               <div class="relative">
                 <select id="nri_country" onchange="syncCountryToPhone()" class="w-full bg-gray-50 rounded-xl px-3 py-2 sm:py-2.5 border border-gray-100 outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-500/20 focus:bg-white transition-all text-slate-950 font-bold text-sm appearance-none cursor-pointer">
                   <option value="">— Select Country —</option>
-                  <option value="in">India</option>
+                  <option value="ae">United Arab Emirates</option>
                   <option value="us">United States</option>
                   <option value="gb">United Kingdom</option>
-                  <option value="ae">United Arab Emirates</option>
                   <option value="au">Australia</option>
                   <option value="sg">Singapore</option>
                   <option value="sa">Saudi Arabia</option>
+                  <option value="qa">Qatar</option>
+                  <option value="kw">Kuwait</option>
+                  <option value="om">Oman</option>
+                  <option value="bh">Bahrain</option>
+                  <option value="ca">Canada</option>
+                  <option value="de">Germany</option>
+                  <option value="in">India</option>
                 </select>
                 <i data-lucide="chevron-down" class="w-4 h-4 absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none" aria-hidden="true"></i>
               </div>
@@ -386,9 +383,7 @@
 
             <div class="flex flex-col gap-2 relative">
               <label class="text-[10px] font-bold text-gray-500 uppercase tracking-wider">Phone Number *</label>
-              <div class="w-full relative">
-                <input type="tel" id="f_phone" class="w-full bg-gray-50 rounded-xl px-3 py-2 sm:py-2.5 border border-gray-100 outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-500/20 focus:bg-white transition-all text-slate-950 font-bold text-sm" placeholder="98765 43210" maxlength="15" required>
-              </div>
+              <input type="tel" id="f_phone" class="w-full bg-gray-50 rounded-xl px-3 py-2 sm:py-2.5 border border-gray-100 outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-500/20 focus:bg-white transition-all text-slate-950 font-bold text-sm" placeholder="98765 43210" maxlength="15" required>
             </div>
 
             <div class="flex flex-col gap-2 relative">
@@ -399,14 +394,36 @@
                   <span class="text-[10px] font-bold text-gray-400 uppercase tracking-wider group-hover:text-slate-950 transition-colors">Same as above</span>
                 </label>
               </div>
-              <div class="w-full relative">
-                <input type="tel" id="f_wa" class="w-full bg-gray-50 rounded-xl px-3 py-2 sm:py-2.5 border border-gray-100 outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-500/20 focus:bg-white transition-all text-slate-950 font-bold text-sm" placeholder="WhatsApp Number" maxlength="15">
+              <input type="tel" id="f_wa" class="w-full bg-gray-50 rounded-xl px-3 py-2 sm:py-2.5 border border-gray-100 outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-500/20 focus:bg-white transition-all text-slate-950 font-bold text-sm" placeholder="WhatsApp Number" maxlength="15">
+            </div>
+
+            <!-- NRI Referral Field -->
+            <div id="nri_referral_group" class="hidden flex-col gap-2 relative">
+              <label class="text-[10px] font-bold text-gray-500 uppercase tracking-wider">Referral Name (Optional)</label>
+              <input type="text" id="nri_referral" class="w-full bg-gray-50 rounded-xl px-3 py-2 sm:py-2.5 border border-gray-100 outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-500/20 focus:bg-white transition-all text-slate-950 font-bold text-sm" placeholder="e.g. John Doe">
+            </div>
+
+            <!-- NRI Secondary Contact (NRI role only) -->
+            <div id="nri_secondary_group" class="hidden grid-cols-2 gap-3">
+              <div class="flex flex-col gap-2 relative">
+                <label class="text-[10px] font-bold text-gray-500 uppercase tracking-wider">Secondary Contact Name</label>
+                <input type="text" id="nri_secondary_name" class="w-full bg-gray-50 rounded-xl px-3 py-2 sm:py-2.5 border border-gray-100 outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-500/20 focus:bg-white transition-all text-slate-950 font-bold text-sm" placeholder="e.g. Family member in India" maxlength="80">
+              </div>
+              <div class="flex flex-col gap-2 relative">
+                <label class="text-[10px] font-bold text-gray-500 uppercase tracking-wider">Secondary Contact Number</label>
+                <input type="tel" id="nri_secondary_phone" inputmode="tel" class="w-full bg-gray-50 rounded-xl px-3 py-2 sm:py-2.5 border border-gray-100 outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-500/20 focus:bg-white transition-all text-slate-950 font-bold text-sm" placeholder="+91 98765 43210" maxlength="20">
               </div>
             </div>
 
             <div class="flex flex-col gap-2 relative">
               <label class="text-[10px] font-bold text-gray-500 uppercase tracking-wider">Email Address *</label>
               <input type="email" id="f_email" class="w-full bg-gray-50 rounded-xl px-3 py-2 sm:py-2.5 border border-gray-100 outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-500/20 focus:bg-white transition-all text-slate-950 font-bold text-sm" placeholder="you@example.com" required>
+            </div>
+
+            <!-- Owner Referral (Owner role only) -->
+            <div id="owner_referral_group" class="hidden flex-col gap-2 relative">
+              <label class="text-[10px] font-bold text-gray-500 uppercase tracking-wider">Referral</label>
+              <input type="text" id="owner_referral" class="w-full bg-gray-50 rounded-xl px-3 py-2 sm:py-2.5 border border-gray-100 outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-500/20 focus:bg-white transition-all text-slate-950 font-bold text-sm" placeholder="Who referred you? (optional)" maxlength="100">
             </div>
             
             <button type="button" onclick="goToStep(2, 3)" class="w-full bg-blue-600 text-white py-3 mt-4 rounded-xl font-bold text-sm hover:bg-blue-700 hover:-translate-y-0.5 hover:scale-[1.02] hover:shadow-lg transition-all duration-300 flex items-center justify-center gap-2 group">
@@ -454,8 +471,8 @@
                   <input type="url" id="f_website" class="w-full bg-gray-50 rounded-xl px-3 py-2 sm:py-2.5 border border-gray-100 outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-500/20 focus:bg-white transition-all text-slate-950 font-bold text-sm" placeholder="https://www.yoursite.com">
                 </div>
                 <div class="flex flex-col gap-2 relative">
-                  <label class="text-[10px] font-bold text-gray-500 uppercase tracking-wider">NAR Member ID</label>
-                  <input type="text" id="f_nar_id" class="w-full bg-gray-50 rounded-xl px-3 py-2 sm:py-2.5 border border-gray-100 outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-500/20 focus:bg-white transition-all text-slate-950 font-bold text-sm uppercase" placeholder="NAR-XXXXXXXX">
+                  <label class="text-[10px] font-bold text-gray-500 uppercase tracking-wider">NAR Number <span class="text-red-500">*</span></label>
+                  <input type="text" id="f_nar_id" required class="w-full bg-gray-50 rounded-xl px-3 py-2 sm:py-2.5 border border-gray-100 outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-500/20 focus:bg-white transition-all text-slate-950 font-bold text-sm uppercase" placeholder="NAR-XXXXXXXX">
                 </div>
                 <!-- Req. 9: RERA Number field — shown only for the Realtor (nar) role -->
                 <div class="flex flex-col gap-2 relative">
@@ -494,8 +511,6 @@
                 </div>
               </div>
             </div>
-
-
 
             <!-- Dynamic Block: Builder -->
             <div id="cond_builder" class="w-full animate-stagger-2 hidden">
@@ -579,112 +594,48 @@
 
               <div class="flex flex-col gap-2 relative">
                 <label class="text-[10px] font-bold text-gray-500 uppercase tracking-wider">State</label>
-                <div class="relative" id="stateSelectContainer">
-                  <input type="hidden" id="f_state" name="f_state" value="">
-                  <button type="button" onclick="toggleStateDropdown()" class="w-full bg-gray-50 rounded-xl px-3 py-2 sm:py-2.5 border border-gray-100 flex justify-between items-center outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-500/20 transition-all text-sm font-bold">
-                    <span id="f_state_text" class="text-gray-400 font-medium">Select State</span>
-                    <i data-lucide="chevron-down" id="f_state_icon" class="w-4 h-4 text-gray-400 transition-transform duration-300"></i>
-                  </button>
-                  <div id="stateDropdown" class="absolute top-full left-0 w-full mt-2 bg-white/95 backdrop-blur-xl border border-gray-100 shadow-2xl rounded-xl z-50 hidden flex-col overflow-hidden origin-top opacity-0 scale-95 transition-all duration-200">
-                    <div class="p-2 border-b border-gray-50 bg-white/50">
-                      <div class="relative">
-                        <i data-lucide="search" class="absolute left-2.5 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-gray-400"></i>
-                        <input type="text" id="stateSearch" onkeyup="filterStates()" placeholder="Search state..." class="w-full bg-gray-50 rounded-lg pl-8 pr-3 py-1.5 text-xs font-medium text-slate-950 border border-gray-100 outline-none focus:border-blue-500 transition-colors">
-                      </div>
-                    </div>
-                    <div class="max-h-[220px] overflow-y-auto p-1.5 flex flex-col gap-0.5 custom-scrollbar-hide" id="stateList">
-                      <!-- All 36 Indian States and UTs -->
-                      <div onclick="selectState('Andaman and Nicobar Islands')" class="px-3 py-2 text-sm font-bold text-slate-700 hover:bg-blue-50 hover:text-blue-600 rounded-lg cursor-pointer transition-colors">Andaman and Nicobar Islands</div>
-                      <div onclick="selectState('Andhra Pradesh')" class="px-3 py-2 text-sm font-bold text-slate-700 hover:bg-blue-50 hover:text-blue-600 rounded-lg cursor-pointer transition-colors">Andhra Pradesh</div>
-                      <div onclick="selectState('Arunachal Pradesh')" class="px-3 py-2 text-sm font-bold text-slate-700 hover:bg-blue-50 hover:text-blue-600 rounded-lg cursor-pointer transition-colors">Arunachal Pradesh</div>
-                      <div onclick="selectState('Assam')" class="px-3 py-2 text-sm font-bold text-slate-700 hover:bg-blue-50 hover:text-blue-600 rounded-lg cursor-pointer transition-colors">Assam</div>
-                      <div onclick="selectState('Bihar')" class="px-3 py-2 text-sm font-bold text-slate-700 hover:bg-blue-50 hover:text-blue-600 rounded-lg cursor-pointer transition-colors">Bihar</div>
-                      <div onclick="selectState('Chandigarh')" class="px-3 py-2 text-sm font-bold text-slate-700 hover:bg-blue-50 hover:text-blue-600 rounded-lg cursor-pointer transition-colors">Chandigarh</div>
-                      <div onclick="selectState('Chhattisgarh')" class="px-3 py-2 text-sm font-bold text-slate-700 hover:bg-blue-50 hover:text-blue-600 rounded-lg cursor-pointer transition-colors">Chhattisgarh</div>
-                      <div onclick="selectState('Dadra and Nagar Haveli and Daman and Diu')" class="px-3 py-2 text-sm font-bold text-slate-700 hover:bg-blue-50 hover:text-blue-600 rounded-lg cursor-pointer transition-colors">Dadra and Nagar Haveli and Daman and Diu</div>
-                      <div onclick="selectState('Delhi')" class="px-3 py-2 text-sm font-bold text-slate-700 hover:bg-blue-50 hover:text-blue-600 rounded-lg cursor-pointer transition-colors">Delhi</div>
-                      <div onclick="selectState('Goa')" class="px-3 py-2 text-sm font-bold text-slate-700 hover:bg-blue-50 hover:text-blue-600 rounded-lg cursor-pointer transition-colors">Goa</div>
-                      <div onclick="selectState('Gujarat')" class="px-3 py-2 text-sm font-bold text-slate-700 hover:bg-blue-50 hover:text-blue-600 rounded-lg cursor-pointer transition-colors">Gujarat</div>
-                      <div onclick="selectState('Haryana')" class="px-3 py-2 text-sm font-bold text-slate-700 hover:bg-blue-50 hover:text-blue-600 rounded-lg cursor-pointer transition-colors">Haryana</div>
-                      <div onclick="selectState('Himachal Pradesh')" class="px-3 py-2 text-sm font-bold text-slate-700 hover:bg-blue-50 hover:text-blue-600 rounded-lg cursor-pointer transition-colors">Himachal Pradesh</div>
-                      <div onclick="selectState('Jammu and Kashmir')" class="px-3 py-2 text-sm font-bold text-slate-700 hover:bg-blue-50 hover:text-blue-600 rounded-lg cursor-pointer transition-colors">Jammu and Kashmir</div>
-                      <div onclick="selectState('Jharkhand')" class="px-3 py-2 text-sm font-bold text-slate-700 hover:bg-blue-50 hover:text-blue-600 rounded-lg cursor-pointer transition-colors">Jharkhand</div>
-                      <div onclick="selectState('Karnataka')" class="px-3 py-2 text-sm font-bold text-slate-700 hover:bg-blue-50 hover:text-blue-600 rounded-lg cursor-pointer transition-colors">Karnataka</div>
-                      <div onclick="selectState('Kerala')" class="px-3 py-2 text-sm font-bold text-slate-700 hover:bg-blue-50 hover:text-blue-600 rounded-lg cursor-pointer transition-colors">Kerala</div>
-                      <div onclick="selectState('Ladakh')" class="px-3 py-2 text-sm font-bold text-slate-700 hover:bg-blue-50 hover:text-blue-600 rounded-lg cursor-pointer transition-colors">Ladakh</div>
-                      <div onclick="selectState('Lakshadweep')" class="px-3 py-2 text-sm font-bold text-slate-700 hover:bg-blue-50 hover:text-blue-600 rounded-lg cursor-pointer transition-colors">Lakshadweep</div>
-                      <div onclick="selectState('Madhya Pradesh')" class="px-3 py-2 text-sm font-bold text-slate-700 hover:bg-blue-50 hover:text-blue-600 rounded-lg cursor-pointer transition-colors">Madhya Pradesh</div>
-                      <div onclick="selectState('Maharashtra')" class="px-3 py-2 text-sm font-bold text-slate-700 hover:bg-blue-50 hover:text-blue-600 rounded-lg cursor-pointer transition-colors">Maharashtra</div>
-                      <div onclick="selectState('Manipur')" class="px-3 py-2 text-sm font-bold text-slate-700 hover:bg-blue-50 hover:text-blue-600 rounded-lg cursor-pointer transition-colors">Manipur</div>
-                      <div onclick="selectState('Meghalaya')" class="px-3 py-2 text-sm font-bold text-slate-700 hover:bg-blue-50 hover:text-blue-600 rounded-lg cursor-pointer transition-colors">Meghalaya</div>
-                      <div onclick="selectState('Mizoram')" class="px-3 py-2 text-sm font-bold text-slate-700 hover:bg-blue-50 hover:text-blue-600 rounded-lg cursor-pointer transition-colors">Mizoram</div>
-                      <div onclick="selectState('Nagaland')" class="px-3 py-2 text-sm font-bold text-slate-700 hover:bg-blue-50 hover:text-blue-600 rounded-lg cursor-pointer transition-colors">Nagaland</div>
-                      <div onclick="selectState('Odisha')" class="px-3 py-2 text-sm font-bold text-slate-700 hover:bg-blue-50 hover:text-blue-600 rounded-lg cursor-pointer transition-colors">Odisha</div>
-                      <div onclick="selectState('Puducherry')" class="px-3 py-2 text-sm font-bold text-slate-700 hover:bg-blue-50 hover:text-blue-600 rounded-lg cursor-pointer transition-colors">Puducherry</div>
-                      <div onclick="selectState('Punjab')" class="px-3 py-2 text-sm font-bold text-slate-700 hover:bg-blue-50 hover:text-blue-600 rounded-lg cursor-pointer transition-colors">Punjab</div>
-                      <div onclick="selectState('Rajasthan')" class="px-3 py-2 text-sm font-bold text-slate-700 hover:bg-blue-50 hover:text-blue-600 rounded-lg cursor-pointer transition-colors">Rajasthan</div>
-                      <div onclick="selectState('Sikkim')" class="px-3 py-2 text-sm font-bold text-slate-700 hover:bg-blue-50 hover:text-blue-600 rounded-lg cursor-pointer transition-colors">Sikkim</div>
-                      <div onclick="selectState('Tamil Nadu')" class="px-3 py-2 text-sm font-bold text-slate-700 hover:bg-blue-50 hover:text-blue-600 rounded-lg cursor-pointer transition-colors">Tamil Nadu</div>
-                      <div onclick="selectState('Telangana')" class="px-3 py-2 text-sm font-bold text-slate-700 hover:bg-blue-50 hover:text-blue-600 rounded-lg cursor-pointer transition-colors">Telangana</div>
-                      <div onclick="selectState('Tripura')" class="px-3 py-2 text-sm font-bold text-slate-700 hover:bg-blue-50 hover:text-blue-600 rounded-lg cursor-pointer transition-colors">Tripura</div>
-                      <div onclick="selectState('Uttar Pradesh')" class="px-3 py-2 text-sm font-bold text-slate-700 hover:bg-blue-50 hover:text-blue-600 rounded-lg cursor-pointer transition-colors">Uttar Pradesh</div>
-                      <div onclick="selectState('Uttarakhand')" class="px-3 py-2 text-sm font-bold text-slate-700 hover:bg-blue-50 hover:text-blue-600 rounded-lg cursor-pointer transition-colors">Uttarakhand</div>
-                      <div onclick="selectState('West Bengal')" class="px-3 py-2 text-sm font-bold text-slate-700 hover:bg-blue-50 hover:text-blue-600 rounded-lg cursor-pointer transition-colors">West Bengal</div>
-                    </div>
-                  </div>
+                <div class="relative">
+                  <select id="f_state" class="w-full bg-gray-50 rounded-xl px-3 py-2 sm:py-2.5 border border-gray-100 outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-500/20 focus:bg-white transition-all text-slate-950 font-bold text-sm appearance-none cursor-pointer">
+                    <option value="">Select State</option>
+                    <option>Andhra Pradesh</option>
+                    <option>Arunachal Pradesh</option>
+                    <option>Assam</option>
+                    <option>Bihar</option>
+                    <option>Chhattisgarh</option>
+                    <option>Goa</option>
+                    <option>Gujarat</option>
+                    <option>Haryana</option>
+                    <option>Himachal Pradesh</option>
+                    <option>Jharkhand</option>
+                    <option>Karnataka</option>
+                    <option>Kerala</option>
+                    <option>Madhya Pradesh</option>
+                    <option>Maharashtra</option>
+                    <option>Manipur</option>
+                    <option>Meghalaya</option>
+                    <option>Mizoram</option>
+                    <option>Nagaland</option>
+                    <option>Odisha</option>
+                    <option>Punjab</option>
+                    <option>Rajasthan</option>
+                    <option>Sikkim</option>
+                    <option>Tamil Nadu</option>
+                    <option>Telangana</option>
+                    <option>Tripura</option>
+                    <option>Uttar Pradesh</option>
+                    <option>Uttarakhand</option>
+                    <option>West Bengal</option>
+                    <option>Andaman and Nicobar Islands</option>
+                    <option>Chandigarh</option>
+                    <option>Dadra and Nagar Haveli and Daman and Diu</option>
+                    <option>Delhi</option>
+                    <option>Jammu and Kashmir</option>
+                    <option>Ladakh</option>
+                    <option>Lakshadweep</option>
+                    <option>Puducherry</option>
+                  </select>
+                  <i data-lucide="chevron-down" class="w-4 h-4 absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none" aria-hidden="true"></i>
                 </div>
-                <style>
-                  .custom-scrollbar-hide::-webkit-scrollbar { display: none; }
-                  .custom-scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; }
-                </style>
-                <script>
-                  function toggleStateDropdown() {
-                    const dropdown = document.getElementById('stateDropdown');
-                    const icon = document.getElementById('f_state_icon');
-                    if (dropdown.classList.contains('hidden')) {
-                      dropdown.classList.remove('hidden');
-                      setTimeout(() => {
-                        dropdown.classList.remove('opacity-0', 'scale-95');
-                        icon.classList.add('rotate-180');
-                        document.getElementById('stateSearch').focus();
-                      }, 10);
-                    } else {
-                      dropdown.classList.add('opacity-0', 'scale-95');
-                      icon.classList.remove('rotate-180');
-                      setTimeout(() => dropdown.classList.add('hidden'), 200);
-                    }
-                  }
-                  function selectState(val) {
-                    document.getElementById('f_state').value = val;
-                    document.getElementById('f_state_text').textContent = val;
-                    document.getElementById('f_state_text').classList.replace('text-gray-400', 'text-slate-950');
-                    document.getElementById('f_state_text').classList.replace('font-medium', 'font-bold');
-                    toggleStateDropdown();
-                  }
-                  function filterStates() {
-                    const input = document.getElementById('stateSearch').value.toLowerCase();
-                    const items = document.getElementById('stateList').children;
-                    for (let i = 0; i < items.length; i++) {
-                      if (items[i].textContent.toLowerCase().includes(input)) {
-                        items[i].style.display = "";
-                      } else {
-                        items[i].style.display = "none";
-                      }
-                    }
-                  }
-                  document.addEventListener('click', function(e) {
-                    const container = document.getElementById('stateSelectContainer');
-                    if (container && !container.contains(e.target)) {
-                      const dropdown = document.getElementById('stateDropdown');
-                      const icon = document.getElementById('f_state_icon');
-                      if (dropdown && !dropdown.classList.contains('hidden')) {
-                        dropdown.classList.add('opacity-0', 'scale-95');
-                        if(icon) icon.classList.remove('rotate-180');
-                        setTimeout(() => dropdown.classList.add('hidden'), 200);
-                      }
-                    }
-                  });
-                </script>
               </div>
 
               <div class="flex flex-col gap-2 relative">
@@ -743,13 +694,15 @@
   <script>
     if (typeof lucide !== 'undefined') lucide.createIcons();
 
+    const CHANNEL_PARTNER_TERMS = '<div class="relative"><div class="flex flex-col gap-3 text-[11px] text-slate-700 leading-relaxed max-h-32 overflow-hidden pr-2 rounded-xl p-4 bg-gray-50 border border-gray-100 transition-all duration-300"><div><strong class="text-slate-950 block mb-1">Channel Partner & NAR Realtor Terms</strong><p class="mb-1">By submitting listings or leads through the R2s Realtors web app, you agree to:</p><ul class="list-disc pl-4 space-y-1"><li><strong>Scope & Management:</strong> All submissions integrate into the R2s Realtors CRM. We manage site visits, negotiations, and deal closures while keeping client contact details protected.</li><li><strong>Dashboard Access & Status:</strong> You can log into your partner dashboard anytime to review submitted data and track the live status of your deals.</li><li><strong>CRM Duplication Check:</strong><ul class="list-circle pl-4 space-y-1 mt-1"><li><strong>Properties:</strong> Requires location, project name, full details, owner name, and the last 5 digits of the owner\'s phone number. Duplicate listings will be auto-rejected; unique listings will be locked 100% to your account.</li><li><strong>Buyer Leads:</strong> Requires customer name and the last 5 digits of their phone number. Existing leads will be auto-rejected; new leads will be locked 100% to your account.</li></ul></li><li><strong>Commissions & Billing:</strong><ul class="list-circle pl-4 space-y-1 mt-1"><li><strong>Sales:</strong> 50:50 split on closed transactions. Partners are responsible for distributing payouts to their own sub-agents/networks.</li><li><strong>Rentals:</strong> Each party collects commission directly from their respective client (Owner or Tenant); no automatic commission sharing.</li><li><strong>Taxes:</strong> Statutory GST and government taxes apply to all service fees and payouts.</li></ul></li><li><strong>Agreement:</strong> This digital approval acts as an initial agreement, followed by a formal 3-month partner agreement for ongoing business. All submitted data must be authentic and legally authorized.</li></ul><p class="mt-2">By clicking "I Agree", you confirm acceptance of these terms.</p></div></div><div class="absolute bottom-0 left-0 w-full h-16 bg-gradient-to-t from-gray-50 via-gray-50/80 to-transparent flex items-end justify-center pb-2"><button type="button" onclick="this.parentElement.previousElementSibling.classList.remove(\'max-h-32\', \'overflow-hidden\'); this.parentElement.previousElementSibling.classList.add(\'max-h-64\', \'overflow-y-auto\', \'custom-scrollbar\'); this.parentElement.classList.add(\'hidden\');" class="text-slate-950 font-bold text-xs flex items-center bg-white px-4 py-1.5 rounded-full shadow-sm border border-gray-200 hover:bg-gray-50 transition-colors z-10">Read More <i data-lucide="chevron-down" class="w-3.5 h-3.5 ml-1"></i></button></div></div>';
     const roleTerms = {
       owner: '<div class="relative"><div id="ownerTermsContainer" class="flex flex-col gap-3 text-[11px] text-slate-700 leading-relaxed max-h-32 overflow-hidden pr-2 rounded-xl p-4 bg-gray-50 border border-gray-100 transition-all duration-300"><div><strong class="text-slate-950 block mb-0.5">1. Global Marketing & Representation Scope</strong><ul class="list-disc pl-4 space-y-1"><li><strong>Global Visibility:</strong> Promoted worldwide through R2s Realtors.</li><li><strong>Lead Handling:</strong> All inquiries routed exclusively through R2s. Direct owner details kept private.</li></ul></div><div><strong class="text-slate-950 block mb-0.5">2. Service Charge & Commission Structure</strong><ul class="list-disc pl-4 space-y-1"><li><strong>Property Sales:</strong> 2% of the total agreed sale price.</li><li><strong>Residential Rentals:</strong> 15 days of rent.</li><li><strong>Commercial Rentals:</strong> 1 month of rent.</li></ul></div><div><strong class="text-slate-950 block mb-0.5">3. Geographic Coverage & Ownership Verification</strong><ul class="list-disc pl-4 space-y-1"><li><strong>Pan-India Coverage:</strong> Open anywhere in India.</li><li><strong>Authenticity:</strong> You confirm legal ownership or valid authorization.</li><li><strong>Accuracy:</strong> You certify all specs and visuals are accurate.</li></ul></div><div><strong class="text-slate-950 block mb-0.5">4. Data Privacy & Confidentiality</strong><ul class="list-disc pl-4 space-y-1"><li><strong>Data Safety:</strong> Data securely encrypted and never sold to third parties.</li><li><strong>Public Control:</strong> Only general property characteristics are public.</li></ul></div><div><strong class="text-slate-950 block mb-0.5">5. Administrative Review & Listing Rights</strong><ul class="list-disc pl-4 space-y-1"><li><strong>Approval Process:</strong> R2s Realtors reserves the right to format, adjust, or reject listings.</li><li><strong>Modifications:</strong> You retain the right to update pricing or request removal at any time.</li></ul></div></div><div id="ownerTermsGradient" class="absolute bottom-0 left-0 w-full h-16 bg-gradient-to-t from-gray-50 via-gray-50/80 to-transparent flex items-end justify-center pb-2"><button type="button" onclick="document.getElementById(\'ownerTermsContainer\').classList.remove(\'max-h-32\', \'overflow-hidden\'); document.getElementById(\'ownerTermsContainer\').classList.add(\'max-h-64\', \'overflow-y-auto\', \'custom-scrollbar\'); document.getElementById(\'ownerTermsGradient\').classList.add(\'hidden\');" class="text-slate-950 font-bold text-xs flex items-center bg-white px-4 py-1.5 rounded-full shadow-sm border border-gray-200 hover:bg-gray-50 transition-colors z-10">Read More <i data-lucide="chevron-down" class="w-3.5 h-3.5 ml-1"></i></button></div></div>',
-      agent: "As an Agent, you agree to uphold professional brokerage standards and adhere strictly to local real estate commission guidelines.",
-      partner: '<div class="relative"><div class="flex flex-col gap-3 text-[11px] text-slate-700 leading-relaxed max-h-32 overflow-hidden pr-2 rounded-xl p-4 bg-gray-50 border border-gray-100 transition-all duration-300"><div><strong class="text-slate-950 block mb-1">Channel Partner & NAR Realtor Terms</strong><p class="mb-1">By submitting listings or leads through the R2s Realtors web app, you agree to:</p><ul class="list-disc pl-4 space-y-1"><li><strong>Scope & Management:</strong> All submissions integrate into the R2s Realtors CRM. We manage site visits, negotiations, and deal closures while keeping client contact details protected.</li><li><strong>Dashboard Access & Status:</strong> You can log into your partner dashboard anytime to review submitted data and track the live status of your deals.</li><li><strong>CRM Duplication Check:</strong><ul class="list-circle pl-4 space-y-1 mt-1"><li><strong>Properties:</strong> Requires location, project name, full details, owner name, and the last 5 digits of the owner\'s phone number. Duplicate listings will be auto-rejected; unique listings will be locked 100% to your account.</li><li><strong>Buyer Leads:</strong> Requires customer name and the last 5 digits of their phone number. Existing leads will be auto-rejected; new leads will be locked 100% to your account.</li></ul></li><li><strong>Commissions & Billing:</strong><ul class="list-circle pl-4 space-y-1 mt-1"><li><strong>Sales:</strong> 50:50 split on closed transactions. Partners are responsible for distributing payouts to their own sub-agents/networks.</li><li><strong>Rentals:</strong> Each party collects commission directly from their respective client (Owner or Tenant); no automatic commission sharing.</li><li><strong>Taxes:</strong> Statutory GST and government taxes apply to all service fees and payouts.</li></ul></li><li><strong>Agreement:</strong> This digital approval acts as an initial agreement, followed by a formal 3-month partner agreement for ongoing business. All submitted data must be authentic and legally authorized.</li></ul><p class="mt-2">By completing OTP verification and clicking "I Agree", you confirm acceptance of these terms.</p></div></div><div class="absolute bottom-0 left-0 w-full h-16 bg-gradient-to-t from-gray-50 via-gray-50/80 to-transparent flex items-end justify-center pb-2"><button type="button" onclick="this.parentElement.previousElementSibling.classList.remove(\'max-h-32\', \'overflow-hidden\'); this.parentElement.previousElementSibling.classList.add(\'max-h-64\', \'overflow-y-auto\', \'custom-scrollbar\'); this.parentElement.classList.add(\'hidden\');" class="text-slate-950 font-bold text-xs flex items-center bg-white px-4 py-1.5 rounded-full shadow-sm border border-gray-200 hover:bg-gray-50 transition-colors z-10">Read More <i data-lucide="chevron-down" class="w-3.5 h-3.5 ml-1"></i></button></div></div>',
-      nri_channel: '<div class="relative"><div class="flex flex-col gap-3 text-[11px] text-slate-700 leading-relaxed max-h-32 overflow-hidden pr-2 rounded-xl p-4 bg-gray-50 border border-gray-100 transition-all duration-300"><div><strong class="text-slate-950 block mb-1">Channel Partner & NAR Realtor Terms</strong><p class="mb-1">By submitting listings or leads through the R2s Realtors web app, you agree to:</p><ul class="list-disc pl-4 space-y-1"><li><strong>Scope & Management:</strong> All submissions integrate into the R2s Realtors CRM. We manage site visits, negotiations, and deal closures while keeping client contact details protected.</li><li><strong>Dashboard Access & Status:</strong> You can log into your partner dashboard anytime to review submitted data and track the live status of your deals.</li><li><strong>CRM Duplication Check:</strong><ul class="list-circle pl-4 space-y-1 mt-1"><li><strong>Properties:</strong> Requires location, project name, full details, owner name, and the last 5 digits of the owner\'s phone number. Duplicate listings will be auto-rejected; unique listings will be locked 100% to your account.</li><li><strong>Buyer Leads:</strong> Requires customer name and the last 5 digits of their phone number. Existing leads will be auto-rejected; new leads will be locked 100% to your account.</li></ul></li><li><strong>Commissions & Billing:</strong><ul class="list-circle pl-4 space-y-1 mt-1"><li><strong>Sales:</strong> 50:50 split on closed transactions. Partners are responsible for distributing payouts to their own sub-agents/networks.</li><li><strong>Rentals:</strong> Each party collects commission directly from their respective client (Owner or Tenant); no automatic commission sharing.</li><li><strong>Taxes:</strong> Statutory GST and government taxes apply to all service fees and payouts.</li></ul></li><li><strong>Agreement:</strong> This digital approval acts as an initial agreement, followed by a formal 3-month partner agreement for ongoing business. All submitted data must be authentic and legally authorized.</li></ul><p class="mt-2">By completing OTP verification and clicking "I Agree", you confirm acceptance of these terms.</p></div></div><div class="absolute bottom-0 left-0 w-full h-16 bg-gradient-to-t from-gray-50 via-gray-50/80 to-transparent flex items-end justify-center pb-2"><button type="button" onclick="this.parentElement.previousElementSibling.classList.remove(\'max-h-32\', \'overflow-hidden\'); this.parentElement.previousElementSibling.classList.add(\'max-h-64\', \'overflow-y-auto\', \'custom-scrollbar\'); this.parentElement.classList.add(\'hidden\');" class="text-slate-950 font-bold text-xs flex items-center bg-white px-4 py-1.5 rounded-full shadow-sm border border-gray-200 hover:bg-gray-50 transition-colors z-10">Read More <i data-lucide="chevron-down" class="w-3.5 h-3.5 ml-1"></i></button></div></div>',
+      // Associates accept the same Channel Partner Terms & Conditions.
+      agent: CHANNEL_PARTNER_TERMS,
+      partner: CHANNEL_PARTNER_TERMS,
       builder: "As a Builder, you agree to list only approved developments and provide transparent timelines.",
-      nar: '<div class="relative"><div class="flex flex-col gap-3 text-[11px] text-slate-700 leading-relaxed max-h-32 overflow-hidden pr-2 rounded-xl p-4 bg-gray-50 border border-gray-100 transition-all duration-300"><div><strong class="text-slate-950 block mb-1">Channel Partner & NAR Realtor Terms</strong><p class="mb-1">By submitting listings or leads through the R2s Realtors web app, you agree to:</p><ul class="list-disc pl-4 space-y-1"><li><strong>Scope & Management:</strong> All submissions integrate into the R2s Realtors CRM. We manage site visits, negotiations, and deal closures while keeping client contact details protected.</li><li><strong>Dashboard Access & Status:</strong> You can log into your partner dashboard anytime to review submitted data and track the live status of your deals.</li><li><strong>CRM Duplication Check:</strong><ul class="list-circle pl-4 space-y-1 mt-1"><li><strong>Properties:</strong> Requires location, project name, full details, owner name, and the last 5 digits of the owner\'s phone number. Duplicate listings will be auto-rejected; unique listings will be locked 100% to your account.</li><li><strong>Buyer Leads:</strong> Requires customer name and the last 5 digits of their phone number. Existing leads will be auto-rejected; new leads will be locked 100% to your account.</li></ul></li><li><strong>Commissions & Billing:</strong><ul class="list-circle pl-4 space-y-1 mt-1"><li><strong>Sales:</strong> 50:50 split on closed transactions. Partners are responsible for distributing payouts to their own sub-agents/networks.</li><li><strong>Rentals:</strong> Each party collects commission directly from their respective client (Owner or Tenant); no automatic commission sharing.</li><li><strong>Taxes:</strong> Statutory GST and government taxes apply to all service fees and payouts.</li></ul></li><li><strong>Agreement:</strong> This digital approval acts as an initial agreement, followed by a formal 3-month partner agreement for ongoing business. All submitted data must be authentic and legally authorized.</li></ul><p class="mt-2">By completing OTP verification and clicking "I Agree", you confirm acceptance of these terms.</p></div></div><div class="absolute bottom-0 left-0 w-full h-16 bg-gradient-to-t from-gray-50 via-gray-50/80 to-transparent flex items-end justify-center pb-2"><button type="button" onclick="this.parentElement.previousElementSibling.classList.remove(\'max-h-32\', \'overflow-hidden\'); this.parentElement.previousElementSibling.classList.add(\'max-h-64\', \'overflow-y-auto\', \'custom-scrollbar\'); this.parentElement.classList.add(\'hidden\');" class="text-slate-950 font-bold text-xs flex items-center bg-white px-4 py-1.5 rounded-full shadow-sm border border-gray-200 hover:bg-gray-50 transition-colors z-10">Read More <i data-lucide="chevron-down" class="w-3.5 h-3.5 ml-1"></i></button></div></div>'
+      nri: '<div class="relative"><div class="flex flex-col gap-3 text-[11px] text-slate-700 leading-relaxed max-h-32 overflow-hidden pr-2 rounded-xl p-4 bg-gray-50 border border-gray-100 transition-all duration-300"><div><strong class="text-slate-950 block mb-1">NRI Client Terms</strong><p class="mb-1">As an NRI Client registering from abroad, you agree to:</p><ul class="list-disc pl-4 space-y-1"><li><strong>Access:</strong> Your account has the same property and buyer-network access as the other registered modules. You can add properties, browse listings, shortlist properties, and add buyer leads.</li><li><strong>Contact & Verification:</strong> R2s Realtors or its verified partners may contact you on the phone/WhatsApp number and email provided to assist with your property search.</li><li><strong>Data Privacy:</strong> Your details are stored securely in our CRM and are never sold to third parties.</li><li><strong>Accuracy:</strong> You confirm the details provided are accurate and that you are the rightful applicant.</li></ul><p class="mt-2">By clicking "I Agree", you confirm acceptance of these terms.</p></div></div></div>',
+      nar: CHANNEL_PARTNER_TERMS
     };
 
     function goToStep(current, next) {
@@ -778,13 +731,13 @@
         configureRoleFields();
       }
 
-      // Step 2 dynamic fields based on role
+      // NRI-only fields (Current Country / Referral Name) inside Step 2
       if (next === 2) {
         const referralGroup = document.getElementById('nri_referral_group');
         const countryGroup = document.getElementById('nri_country_group');
         const countryInput = document.getElementById('nri_country');
-        
-        if (role === 'nri_channel') {
+
+        if (role === 'nri') {
           referralGroup.classList.remove('hidden');
           referralGroup.classList.add('flex');
           countryGroup.classList.remove('hidden');
@@ -799,11 +752,21 @@
           countryInput.removeAttribute('required');
           countryInput.removeAttribute('data-req');
         }
+
+        // NRI Secondary Contact (NRI only) and Owner Referral (Owner only)
+        const setGroup = (id, show) => {
+          const el = document.getElementById(id);
+          if (!el) return;
+          el.classList.toggle('hidden', !show);
+          el.classList.toggle(id === 'nri_secondary_group' ? 'grid' : 'flex', show);
+        };
+        setGroup('nri_secondary_group', role === 'nri');
+        setGroup('owner_referral_group', role === 'owner');
       }
 
-      // Special case: If role is Owner or Agent or NRI Client, they don't have dynamic fields.
+      // Special case: If role is Owner, Agent, or NRI Client, they don't have dynamic Step 3 fields.
       if (next === 3) {
-        if (role === 'owner' || role === 'agent' || role === 'nri_channel') {
+        if (role === 'owner' || role === 'agent' || role === 'nri') {
            if (current === 2) {
              goToStep(current, 4);
              return;
@@ -848,7 +811,7 @@
       document.getElementById('cond_builder').classList.add('hidden');
       document.getElementById('cond_none').classList.add('hidden');
       
-      const dynamicFields = document.querySelectorAll('#cond_nar input, #cond_cp select, #cond_builder input, #cond_cp input');
+      const dynamicFields = document.querySelectorAll('#cond_nar input, #cond_cp select, #cond_builder input');
       dynamicFields.forEach(f => {
         if(f.hasAttribute('data-req')) f.removeAttribute('required');
       });
@@ -861,8 +824,8 @@
         document.getElementById('cp_rera_reg').setAttribute('data-req', 'true');
       } else if (role === 'builder') {
         document.getElementById('cond_builder').classList.remove('hidden');
-        document.getElementById('bl_name').setAttribute('required', 'true');
-        document.getElementById('bl_name').setAttribute('data-req', 'true');
+        document.getElementById('bl_company').setAttribute('required', 'true');
+        document.getElementById('bl_company').setAttribute('data-req', 'true');
       } else {
         document.getElementById('cond_none').classList.remove('hidden');
       }
@@ -876,17 +839,25 @@
         waPhone.value = mainPhone;
         waPhone.readOnly = true;
         waPhone.classList.add('text-gray-400');
+        clearFieldError(waPhone);
         if (typeof phoneIti !== 'undefined' && typeof waIti !== 'undefined') {
           waIti.setCountry(phoneIti.getSelectedCountryData().iso2);
         }
-        clearFieldError(waPhone);
       } else {
         waPhone.value = '';
         waPhone.readOnly = false;
         waPhone.classList.remove('text-gray-400');
       }
     }
-    
+
+    document.getElementById('f_phone').addEventListener('input', (e) => {
+      if (document.getElementById('sameAsPhone').checked) {
+        document.getElementById('f_wa').value = e.target.value;
+      }
+    });
+
+    // NRI "Current Country" dropdown drives the phone/WhatsApp country-code
+    // selector, so the dial code always matches where the client actually is.
     function syncCountryToPhone() {
       const countryCode = document.getElementById('nri_country').value;
       if (countryCode && typeof phoneIti !== 'undefined') {
@@ -896,12 +867,6 @@
         }
       }
     }
-
-    document.getElementById('f_phone').addEventListener('input', (e) => {
-      if (document.getElementById('sameAsPhone').checked) {
-        document.getElementById('f_wa').value = e.target.value;
-      }
-    });
 
     function toggleSubmitButton() {
       const isChecked = document.getElementById('agreeTerms').checked;
@@ -953,10 +918,10 @@
 
     document.addEventListener('DOMContentLoaded', () => {
       document.body.addEventListener('input', (e) => {
-        if(e.target.hasAttribute('required')) clearFieldError(e.target);
+        if(e.target.hasAttribute('required') || (e.target.id || '').startsWith('nri_secondary')) clearFieldError(e.target);
       });
       document.body.addEventListener('change', (e) => {
-        if(e.target.hasAttribute('required')) clearFieldError(e.target);
+        if(e.target.hasAttribute('required') || (e.target.id || '').startsWith('nri_secondary')) clearFieldError(e.target);
       });
     });
 
@@ -973,12 +938,42 @@
           showFieldError(input, 'Please enter a valid email address.');
           isValid = false;
           if (!firstErr) firstErr = input;
-        } else if (input.type === 'tel' && input.value.length < 5) {
+        } else if (input.type === 'tel' && (input.id === 'f_phone' || input.id === 'f_wa')) {
+          // Phone/WhatsApp use intl-tel-input — validate against the
+          // selected country's number format instead of a fixed length,
+          // since NRI clients enter non-Indian numbers.
+          const iti = input.id === 'f_phone' ? phoneIti : waIti;
+          const validLength = input.id === 'f_wa' && !input.value.trim() ? true : (iti ? iti.isValidNumber() : input.value.length >= 7);
+          if (!validLength) {
+            showFieldError(input, 'Please enter a valid phone number.');
+            isValid = false;
+            if (!firstErr) firstErr = input;
+          }
+        } else if (input.type === 'tel' && input.value.length < 7) {
           showFieldError(input, 'Please enter a valid phone number.');
           isValid = false;
           if (!firstErr) firstErr = input;
         }
       });
+      // NRI Secondary Contact: optional, but name and number go together and
+      // the number must look like a real phone number.
+      const secName = stepEl.querySelector('#nri_secondary_name');
+      const secPhone = stepEl.querySelector('#nri_secondary_phone');
+      if (secName && secPhone && !secName.closest('.hidden')) {
+        const n = secName.value.trim();
+        const ph = secPhone.value.trim();
+        const digits = ph.replace(/\D/g, '');
+        if (n && !ph) {
+          showFieldError(secPhone, 'Please enter the secondary contact number.');
+          isValid = false;
+        } else if (ph && !n) {
+          showFieldError(secName, 'Please enter the secondary contact name.');
+          isValid = false;
+        } else if (ph && (digits.length < 7 || digits.length > 15 || /[^\d+\s()-]/.test(ph))) {
+          showFieldError(secPhone, 'Please enter a valid phone number.');
+          isValid = false;
+        }
+      }
       // Skip scrollIntoView since flex-col absolute takes care of positioning nicely
       return isValid;
     }
@@ -1011,6 +1006,7 @@
       }
     });
 
+    // Registration submit handler (direct registration without OTP)
     async function handleGenericForm(e) {
       e.preventDefault();
       
@@ -1032,16 +1028,19 @@
       // Collect the role + all step-2 personal fields into one payload.
       // Add any dynamic step-3 fields here too (by id) as your form grows.
       const role = document.querySelector('input[name="role"]:checked')?.value;
-      
-      const userCode = 'R2S-' + Math.floor(100000 + Math.random() * 900000);
-
       const payload = {
         formType: 'registration',
         role: role,
-        userCode: userCode,
         fullName: document.getElementById('f_name')?.value || '',
-        phone: document.getElementById('f_phone')?.value ? phoneIti?.getNumber() : '',
-        whatsapp: document.getElementById('f_wa')?.value ? waIti?.getNumber() : '',
+        // Use the full international (E.164) number from the country-code
+        // selector, e.g. "+971501234567", instead of just the raw digits —
+        // this is what makes login/lookup work correctly for NRI clients.
+        phone: document.getElementById('f_phone')?.value
+          ? (typeof phoneIti !== 'undefined' ? phoneIti.getNumber() : document.getElementById('f_phone').value)
+          : '',
+        whatsapp: document.getElementById('f_wa')?.value
+          ? (typeof waIti !== 'undefined' ? waIti.getNumber() : document.getElementById('f_wa').value)
+          : '',
         email: document.getElementById('f_email')?.value || '',
         // NAR Realtor extra fields
         website: document.getElementById('f_website')?.value || '',
@@ -1052,15 +1051,33 @@
         cpDesignation: document.getElementById('cp_designation')?.value || '',
         reraRegistered: document.getElementById('cp_rera_reg')?.value || '',
         reraNumber: document.getElementById('cp_rera_no')?.value || '',
-        // NRI Client extra fields
-        nriReferral: document.getElementById('nri_referral')?.value || '',
-        nriCountry: document.getElementById('nri_country')?.value || '',
         // Builder extra fields
         builderCompany: document.getElementById('bl_company')?.value || '',
         builderDesignation: document.getElementById('bl_designation')?.value || '',
         primaryContactName: document.getElementById('bl_pc_name')?.value || '',
         primaryContactPhone: document.getElementById('bl_pc_ph')?.value || '',
+        // NRI Client extra fields
+        nriCountry: document.getElementById('nri_country')?.value || '',
+        nriReferral: document.getElementById('nri_referral')?.value || '',
         projectName: document.getElementById('bl_project')?.value || '',
+        // NRI Secondary Contact
+        nriSecondaryName: document.getElementById('nri_secondary_name')?.value.trim() || '',
+        nriSecondaryPhone: document.getElementById('nri_secondary_phone')?.value.trim() || '',
+        // Owner Referral
+        ownerReferral: document.getElementById('owner_referral')?.value.trim() || '',
+        // Company / designation come from whichever role block the user filled in
+        company: (role === 'nar' ? document.getElementById('f_nar_company')
+                : role === 'partner' ? document.getElementById('cp_company')
+                : role === 'builder' ? document.getElementById('bl_company') : null)?.value.trim() || '',
+        designation: (role === 'nar' ? document.getElementById('f_nar_designation')
+                    : role === 'partner' ? document.getElementById('cp_designation')
+                    : role === 'builder' ? document.getElementById('bl_designation') : null)?.value.trim() || '',
+        // Location step
+        address: document.getElementById('f_address')?.value.trim() || '',
+        city: document.getElementById('f_city')?.value.trim() || '',
+        pin: document.getElementById('f_pin')?.value.trim() || '',
+        state: document.getElementById('f_state')?.value || '',
+        area: document.getElementById('f_area')?.value.trim() || '',
       };
 
       function resetButtonToError() {
@@ -1071,33 +1088,122 @@
         btn.dataset.submitting = 'false';
       }
 
-      let result = { success: true, zohoRecordId: 'simulated_12345' };
-      
-      // Removed backend integration (fetch to /api/submit-to-zoho) for testing purposes as requested.
+      let result = null;
+      try {
+        // Uses the shared fetchWithTimeout helper (main.js) — 30s is
+        // generous enough for a real Zoho round-trip so we don't abort
+        // (and show a false red X) on a request that was actually about
+        // to succeed.
+        const res = await window.fetchWithTimeout('/api/submit-to-zoho', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload),
+        }, 30000);
+        result = await res.json();
 
-      // Show Advanced Success Modal (only reached on real Zoho success or simulation)
+        if (!result.success) {
+          console.error('Zoho submission failed:', result.error);
+          resetButtonToError();
+          if (result.code === 'USER_ALREADY_EXISTS') {
+            alert(result.error || 'This mobile number is already registered for this user type. Please sign in or use another number.');
+          } else if (typeof showPremiumAlert === 'function') {
+            showPremiumAlert('error');
+          }
+          return; // stop here — don't show the success modal on failure
+        }
+      } catch (err) {
+        if (err.name === 'AbortError') {
+          console.error('Submit timed out after 15s with no response.');
+        } else {
+          console.error('Network error submitting to Zoho:', err);
+        }
+        resetButtonToError();
+        if (typeof showPremiumAlert === 'function') showPremiumAlert('error');
+        return;
+      }
+
+      // Show Advanced Success Modal (only reached on real Zoho success)
 
       // Req. 3: if this is a Builder registration and documents were
       // selected, upload each one as a Zoho Attachment linked to the
       // newly created Builder_Modules record.
       if (role === 'builder' && result.zohoRecordId) {
-        // simulation
+        const docsInput = document.getElementById('bl_documents');
+        const files = docsInput && docsInput.files ? Array.from(docsInput.files) : [];
+        if (files.length) {
+          function fileToBase64(file) {
+            return new Promise((resolve, reject) => {
+              const reader = new FileReader();
+              reader.onload = () => resolve(reader.result.split(',')[1]);
+              reader.onerror = reject;
+              reader.readAsDataURL(file);
+            });
+          }
+          await Promise.all(files.map(async (file) => {
+            try {
+              const base64 = await fileToBase64(file);
+              await fetch('/api/upload-attachment', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                  module: 'Builder_Modules',
+                  recordId: result.zohoRecordId,
+                  fileName: file.name,
+                  fileBase64: base64,
+                }),
+              });
+            } catch (err) {
+              // Don't block registration success on a document upload
+              // hiccup — the account is already created at this point.
+              console.error('Builder document upload failed for', file.name, err);
+            }
+          }));
+        }
       }
 
       // Save identity + profile locally so the dashboard can greet them
       // by name and filter "my properties" correctly. Also save the
       // Zoho record ID so future property submissions can link back
       // to this exact Owner/Agent/Partner/Builder/NAR record.
-      const identity = payload.phone ? ('+91 ' + payload.phone) : payload.email;
-      localStorage.setItem('r2s_current_user', identity);
-      localStorage.setItem('r2s_profile_' + identity, JSON.stringify({
+      // payload.phone is already a full international (E.164) number
+      // from the country-code selector (e.g. "+971501234567"), so it
+      // doubles as a stable identity key regardless of country.
+      const identity = payload.phone || payload.email;
+      try {
+        localStorage.setItem('r2s_current_user', identity);
+        localStorage.setItem('r2s_profile_' + identity, JSON.stringify({
         fullName: payload.fullName,
         phone: payload.phone,
         email: payload.email,
         role: payload.role,
-        userCode: payload.userCode,
         crmRecordId: result.zohoRecordId,
-      }));
+        uniqueCode: result.uniqueCode || '',
+        // Everything else entered during signup, so Edit Profile can show it back.
+        whatsapp: payload.whatsapp,
+        website: payload.website,
+        narId: payload.narId,
+        narReraNumber: payload.narReraNumber,
+        company: payload.company,
+        designation: payload.designation,
+        reraRegistered: payload.reraRegistered,
+        reraNumber: payload.reraNumber,
+        primaryContactName: payload.primaryContactName,
+        primaryContactPhone: payload.primaryContactPhone,
+        projectName: payload.projectName,
+        nriCountry: payload.nriCountry || '',
+        nriReferral: payload.nriReferral,
+        nriSecondaryName: payload.nriSecondaryName,
+        nriSecondaryPhone: payload.nriSecondaryPhone,
+        ownerReferral: payload.ownerReferral,
+        address: payload.address,
+        city: payload.city,
+        pin: payload.pin,
+        state: payload.state,
+        area: payload.area,
+        }));
+      } catch (storageError) {
+        console.warn('Profile storage failed; continuing to dashboard:', storageError);
+      }
 
       const modal = document.getElementById('successModal');
       const modalContent = document.getElementById('successContent');
@@ -1107,12 +1213,12 @@
       setTimeout(() => {
           modalContent.classList.remove('scale-95');
           setTimeout(() => {
-              if (progress) progress.style.width = '100%';
+              progress.style.width = '100%';
           }, 50);
       }, 10);
       
       setTimeout(() => {
-        window.location.href = 'dashboard.html';
+        window.location.replace('/dashboard.html');
       }, 2000);
     }
 
@@ -1132,6 +1238,49 @@
   </div>
 
   <script src="main.js"></script>
+
+  <!-- International Phone Input (country-code selector for Phone/WhatsApp) -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/intlTelInput.min.js"></script>
+  <script>
+    let phoneIti, waIti;
+    document.addEventListener('DOMContentLoaded', () => {
+      const phoneInput = document.querySelector('#f_phone');
+      const waInput = document.querySelector('#f_wa');
+      if (!phoneInput || !waInput || typeof window.intlTelInput === 'undefined') return;
+
+      const itiConfig = {
+        initialCountry: 'in',
+        separateDialCode: true,
+        preferredCountries: ['in', 'ae', 'us', 'gb', 'au', 'sg', 'sa'],
+        utilsScript: 'https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/utils.js',
+      };
+
+      phoneIti = window.intlTelInput(phoneInput, itiConfig);
+      waIti = window.intlTelInput(waInput, itiConfig);
+
+      // The country-code box ("flag ▾ +91") is a different width for every
+      // country (+1 vs +971) and changes once the web font loads, so the
+      // typed number's left padding is measured from the real box instead of
+      // being a fixed value — otherwise the number overlaps the dial code.
+      const syncItiPadding = (input) => {
+        const box = input.parentElement && input.parentElement.querySelector('.iti__flag-container');
+        if (box && box.offsetWidth) input.style.paddingLeft = (box.offsetWidth + 4) + 'px';
+      };
+      const syncAllItiPadding = () => { syncItiPadding(phoneInput); syncItiPadding(waInput); };
+      syncAllItiPadding();
+      phoneInput.addEventListener('countrychange', syncAllItiPadding);
+      waInput.addEventListener('countrychange', syncAllItiPadding);
+      if (document.fonts && document.fonts.ready) document.fonts.ready.then(syncAllItiPadding);
+
+      // Keep the WhatsApp field's country in sync whenever the phone
+      // number's country changes (only while "Same as above" is on).
+      phoneInput.addEventListener('countrychange', () => {
+        if (document.getElementById('sameAsPhone')?.checked) {
+          waIti.setCountry(phoneIti.getSelectedCountryData().iso2);
+        }
+      });
+    });
+  </script>
 
   <!-- PWA Service Worker Registration -->
   <script>
@@ -1282,24 +1431,6 @@
            }
         });
       });
-    });
-  </script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/intlTelInput.min.js"></script>
-  <script>
-    let phoneIti, waIti;
-    document.addEventListener("DOMContentLoaded", () => {
-      const phoneInput = document.querySelector("#f_phone");
-      const waInput = document.querySelector("#f_wa");
-      
-      const itiConfig = {
-        initialCountry: "in",
-        separateDialCode: true,
-        preferredCountries: ["in", "ae", "us", "gb", "au", "sg", "sa"],
-        utilsScript: "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/utils.js"
-      };
-
-      phoneIti = window.intlTelInput(phoneInput, itiConfig);
-      waIti = window.intlTelInput(waInput, itiConfig);
     });
   </script>
 </body>

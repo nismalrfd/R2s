@@ -192,7 +192,7 @@ window.getMyProperties = function() {
 
 window.saveProperty = function(property) {
   const props = window.getProperties();
-  property.id = Date.now().toString();
+  if (!property.id) property.id = Date.now().toString();
   property.addedBy = localStorage.getItem('r2s_current_user') || 'unknown';
   
   // Format date like '21 Jan 2026'
@@ -205,20 +205,142 @@ window.saveProperty = function(property) {
 };
 
 
-// Req. 8: mask a buyer's contact number everywhere it's shown in general
-// lists/dashboards/reports. Example from the spec: 91XXX88152 — keep the
-// country code + first digit and the last 5 digits, mask the middle.
-// NOTE: this is a display-layer convenience only. The real access control
-// must happen server-side (see api/get-buyer-leads.js) — never rely on
-// this function alone to keep a full number out of the page's data.
+// Mask a buyer's contact number everywhere it's shown in lists/dashboards.
+// Only the LAST 4 digits stay visible (e.g. 9876543210 -> XXXXXX3210); the
+// rest is replaced with X. A lead saved with just the last 4 digits (the
+// default in the Add Buyer form) is shown the same way: XXXXXX + 4 digits.
+// NOTE: this is a display-layer convenience only. Keep it identical to
+// maskPhoneNumber() in api/get-buyer-leads.js.
 window.maskPhoneNumber = function(number) {
   const digits = String(number || '').replace(/\D/g, '');
-  if (digits.length < 6) return 'XXXXXXXXXX';
-  const head = digits.slice(0, digits.length - 8);
-  const firstVisible = digits.slice(digits.length - 8, digits.length - 7);
-  const last5 = digits.slice(-5);
-  return `${head}${firstVisible}XXX${last5}`;
+  if (!digits) return 'XXXXXXXXXX';
+  return 'X'.repeat(Math.max(6, digits.length - 4)) + digits.slice(-4);
 };
+
+// --- Recently saved records -------------------------------------------
+// Zoho's search API (what /api/get-properties and /api/get-buyer-leads
+// use) can take a while to index a record that was JUST created, so a
+// re-fetch right after saving often doesn't include it and the user has
+// to refresh later to see it. To make new records show up instantly, we
+// remember them here (per tab, per logged-in user, for 10 minutes) and
+// merge them into whatever CRM returns, until CRM returns them itself.
+window.R2sPending = (function () {
+  const TTL_MS = 10 * 60 * 1000;
+
+  function keyFor(kind) {
+    const who = localStorage.getItem('r2s_current_user') || 'anon';
+    return 'r2s_pending_' + kind + '_' + who;
+  }
+
+  function read(kind) {
+    try {
+      const list = JSON.parse(sessionStorage.getItem(keyFor(kind)) || '[]');
+      const now = Date.now();
+      return Array.isArray(list)
+        ? list.filter((e) => e && e.item && e.item.id && now - e.ts < TTL_MS)
+        : [];
+    } catch (e) {
+      return [];
+    }
+  }
+
+  function write(kind, list) {
+    try {
+      sessionStorage.setItem(keyFor(kind), JSON.stringify(list));
+    } catch (e) {
+      // sessionStorage unavailable (private mode etc.) — records will
+      // simply appear once CRM's search index catches up.
+    }
+  }
+
+  return {
+    add(kind, item) {
+      if (!item || !item.id) return;
+      const list = read(kind).filter((e) => e.item.id !== item.id);
+      list.unshift({ item, ts: Date.now() });
+      write(kind, list);
+    },
+    // Returns [recently saved records CRM hasn't returned yet, ...CRM records].
+    // Records CRM now returns are forgotten so they never show twice.
+    merge(kind, serverItems) {
+      const fromServer = Array.isArray(serverItems) ? serverItems : [];
+      const have = new Set(fromServer.map((i) => i.id));
+      const stillPending = read(kind).filter((e) => !have.has(e.item.id));
+      write(kind, stillPending);
+      return stillPending.map((e) => e.item).concat(fromServer);
+    },
+  };
+})();
+
+// --- Buyer lead card (shared by dashboard.html and buyer-leads.html) ----
+// Shows the masked number (last 4 digits visible). When a full number was
+// captured, a small eye button next to it reveals / hides the full number.
+window.BuyerLeadUI = (function () {
+  const fullNumbers = new Map(); // lead id -> full phone number
+
+  function esc(v) {
+    return String(v == null ? '' : v).replace(/[&<>"']/g, (c) => (
+      { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]
+    ));
+  }
+
+  function digitsOf(v) {
+    return String(v || '').replace(/\D/g, '');
+  }
+
+  function cardHtml(l) {
+    const full = l.buyerContact || '';
+    const canReveal = digitsOf(full).length > 4;
+    if (canReveal) fullNumbers.set(String(l.id), full);
+
+    const masked = l.buyerContactMasked || window.maskPhoneNumber(full);
+    const revealBtn = canReveal
+      ? `<button type="button" data-phone-toggle data-lead-id="${esc(l.id)}" aria-pressed="false" aria-label="Show full phone number" class="w-5 h-5 rounded-full flex items-center justify-center text-gray-400 hover:text-slate-950 hover:bg-gray-100 transition-colors shrink-0"><i data-lucide="eye" class="w-3.5 h-3.5"></i></button>`
+      : '';
+
+    return `
+      <div class="bg-white rounded-2xl p-5 border border-gray-100 shadow-[0_4px_20px_rgb(0,0,0,0.03)] flex items-center justify-between gap-4">
+        <div>
+          <h3 class="font-bold text-slate-950">${esc(l.buyerName || 'Unnamed Buyer')}</h3>
+          <div class="flex items-center gap-1.5 mt-0.5">
+            <p data-phone-text class="text-sm text-gray-500 font-semibold">${esc(masked)}</p>
+            ${revealBtn}
+          </div>
+          <p class="text-xs text-gray-400 font-medium mt-1 flex items-center gap-1"><i data-lucide="map-pin" class="w-3 h-3"></i> ${esc(l.preferredLocation || 'Not specified')}</p>
+        </div>
+        <span class="text-[10px] font-bold text-gray-400 uppercase tracking-wider">${l.createdAt ? new Date(l.createdAt).toLocaleDateString() : ''}</span>
+      </div>
+    `;
+  }
+
+  function render(listEl, leads) {
+    fullNumbers.clear();
+    listEl.innerHTML = leads.map(cardHtml).join('');
+    if (typeof lucide !== 'undefined') lucide.createIcons();
+  }
+
+  // One delegated click handler per list, so it survives re-renders.
+  function bind(listEl) {
+    if (!listEl || listEl.dataset.phoneRevealBound) return;
+    listEl.dataset.phoneRevealBound = 'true';
+    listEl.addEventListener('click', (e) => {
+      const btn = e.target.closest('[data-phone-toggle]');
+      if (!btn) return;
+      const full = fullNumbers.get(btn.dataset.leadId);
+      const textEl = btn.parentElement.querySelector('[data-phone-text]');
+      if (!full || !textEl) return;
+
+      const show = btn.getAttribute('aria-pressed') !== 'true';
+      textEl.textContent = show ? full : window.maskPhoneNumber(full);
+      btn.setAttribute('aria-pressed', show ? 'true' : 'false');
+      btn.setAttribute('aria-label', show ? 'Hide full phone number' : 'Show full phone number');
+      btn.innerHTML = `<i data-lucide="${show ? 'eye-off' : 'eye'}" class="w-3.5 h-3.5"></i>`;
+      if (typeof lucide !== 'undefined') lucide.createIcons();
+    });
+  }
+
+  return { cardHtml, render, bind };
+})();
 
 // FIX: this used to only ever show a bare checkmark/X for 1.5s with no
 // text, so every failure (wrong field, duplicate name, network error,
@@ -288,4 +410,21 @@ window.showPremiumAlert = function(type, message) {
   // errors with no message fall back to the old short auto-dismiss.
   const autoDismissMs = type === 'success' ? 1500 : (message ? 5000 : 1500);
   setTimeout(dismiss, autoDismissMs);
+};
+
+// FIX: Add/Property, Add Buyer, and Network Buyer submissions had no
+// request timeout at all, so a slow/stalled connection just left the
+// button spinning forever with no tick or cross ever appearing — what
+// was reported as the app "hanging". Signup, meanwhile, used a fixed
+// 15s abort, which was too short for a real Zoho round-trip (token
+// refresh + record create) and could abort a request that was actually
+// about to succeed — showing a red X even though the record then landed
+// in CRM a moment later. This shared helper gives every submission the
+// same generous-but-bounded timeout, so success/failure is always shown
+// accurately and the wait never becomes indefinite.
+window.fetchWithTimeout = function(url, options = {}, timeoutMs = 30000) {
+  const controller = new AbortController();
+  const timeoutId = setTimeout(() => controller.abort(), timeoutMs);
+  return fetch(url, { ...options, signal: controller.signal })
+    .finally(() => clearTimeout(timeoutId));
 };

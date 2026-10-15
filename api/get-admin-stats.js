@@ -141,6 +141,7 @@ export default async function handler(req, res) {
       totalChannelPartners: "Channel_Partners",
       totalAssociates: "Agent_Modules",
       totalBuyerLeads: "Leads",
+      totalNRIs: "NRI",
     };
 
     await Promise.all(
@@ -155,6 +156,34 @@ export default async function handler(req, res) {
         }
       })
     );
+
+    // NRI details for the admin dashboard.
+    try {
+      const nriRecords = await fetchAllRecords(accessToken, "NRI", [
+        "id",
+        "Name",
+        "Phone_1",
+        "Email",
+        "Address_1_Country_Region",
+        "Created_Time",
+      ]);
+      stats.nriDetails = nriRecords
+        .sort((a, b) => String(b.Created_Time || "").localeCompare(String(a.Created_Time || "")))
+        .slice(0, 10)
+        .map((r) => ({
+          id: r.id,
+          name: r.Name || "Unnamed NRI",
+          phone: r.Phone_1 || "",
+          email: r.Email || "",
+          country: r.Address_1_Country_Region || "",
+          createdAt: r.Created_Time || "",
+        }));
+    } catch (e) {
+      console.warn("NRI details failed:", e.message);
+      stats.nriDetails = [];
+      errors.nriDetails = e.message;
+      stats.totalNRIs = stats.totalNRIs || 0;
+    }
 
     // success stays true so the dashboard still renders the numbers that
     // DID work — but it also gets told which ones didn't, and why.
